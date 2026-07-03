@@ -471,6 +471,10 @@
     "formProduct": "感兴趣的型号（选填）",
     "formMessage": "留言内容",
     "formSubmit": "发送留言",
+    "formSubmitting": "发送中...",
+    "formSuccessTitle": "留言已发送",
+    "formSuccessBody": "我们的团队将尽快与您联系。",
+    "formError": "发送失败，请重试。",
     "formNote": "此表单仅为界面示例，尚未连接实际留言后台。",
     "mapTitle": "公司地图"
   }

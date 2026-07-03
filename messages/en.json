@@ -471,6 +471,10 @@
     "formProduct": "Model of Interest (optional)",
     "formMessage": "Message",
     "formSubmit": "Send Message",
+    "formSubmitting": "Sending...",
+    "formSuccessTitle": "Message sent",
+    "formSuccessBody": "Our team will get back to you as soon as possible.",
+    "formError": "Something went wrong. Please try again.",
     "formNote": "This form is a UI placeholder only — it is not yet connected to a real messaging backend.",
     "mapTitle": "Company Map"
   }
