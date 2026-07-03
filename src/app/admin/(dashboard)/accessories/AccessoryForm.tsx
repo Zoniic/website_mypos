@@ -1,14 +1,17 @@
 "use client";
 
 import { useActionState } from "react";
+import { ImageUploadField } from "../ImageUploadField";
 
 export type AccessoryFormValues = {
   slug: string;
+  imageUrl: string | null;
   translations: Record<"th" | "en" | "zh", { name: string; description: string }>;
 };
 
 const emptyValues: AccessoryFormValues = {
   slug: "",
+  imageUrl: null,
   translations: {
     th: { name: "", description: "" },
     en: { name: "", description: "" },
@@ -37,6 +40,14 @@ export function AccessoryForm({
         <span className={labelClass}>Slug (unique identifier)</span>
         <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
       </label>
+
+      <ImageUploadField
+        name="image"
+        label="Photo"
+        currentUrl={initialValues.imageUrl}
+        ratio="1/1"
+        specHint="Square, at least 800×800px, plain/white background preferred. JPG, PNG, or WebP, max 5MB."
+      />
 
       {(["th", "en", "zh"] as const).map((locale) => (
         <section key={locale} className="rounded-xl border border-border p-4">

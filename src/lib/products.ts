@@ -37,6 +37,10 @@ export type Product = {
   datasheetUrl?: string;
   relatedSlugs: string[];
   featured?: boolean;
+  /** Main product photo, uploaded via admin. Undefined until one is set. */
+  imageUrl?: string;
+  /** Additional gallery photos (side/back/in-use), uploaded via admin. */
+  galleryUrls: string[];
 };
 
 type RowWithTranslations = ProductRow & { translations: ProductTranslation[] };
@@ -63,6 +67,8 @@ function toProduct(row: RowWithTranslations): Product {
     datasheetUrl: row.datasheetUrl ?? undefined,
     relatedSlugs: row.relatedSlugs.split(",").filter(Boolean),
     featured: row.featured,
+    imageUrl: row.imageUrl ?? undefined,
+    galleryUrls: row.galleryUrls.split(",").filter(Boolean),
   };
 }
 

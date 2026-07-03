@@ -69,6 +69,7 @@ export async function getMessages(locale: string): Promise<Messages> {
     slug: a.slug,
     name: a.translations[0]?.name ?? "",
     description: a.translations[0]?.description ?? "",
+    imageUrl: a.imageUrl ?? undefined,
   }));
 
   const referencesNs = ensureNamespace(messages, "references");

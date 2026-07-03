@@ -38,6 +38,8 @@ export default async function EditProductPage({
     featured: product.featured,
     businessTypes: product.businessTypes,
     relatedSlugs: product.relatedSlugs,
+    imageUrl: product.imageUrl,
+    galleryUrls: product.galleryUrls.split(",").filter(Boolean),
     translations: {
       th: findTranslation("th"),
       en: findTranslation("en"),

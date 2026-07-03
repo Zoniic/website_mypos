@@ -23,6 +23,7 @@ export default async function EditAccessoryPage({
 
   const initialValues: AccessoryFormValues = {
     slug: accessory.slug,
+    imageUrl: accessory.imageUrl,
     translations: {
       th: findTranslation("th"),
       en: findTranslation("en"),

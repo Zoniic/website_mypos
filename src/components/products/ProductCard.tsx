@@ -12,7 +12,7 @@ export function ProductCard({ product }: { product: Product }) {
       href={`/products/${product.slug}`}
       className="group flex flex-col overflow-hidden rounded-2xl border border-border p-4 transition-shadow hover:shadow-md"
     >
-      <PlaceholderImage ratio="1/1" label={`${product.name} photo`} />
+      <PlaceholderImage ratio="1/1" label={`${product.name} photo`} src={product.imageUrl} />
       <h3 className="mt-4 font-semibold">{product.name}</h3>
       <p className="mt-1 text-sm text-text-2">
         {t("priceFrom")}{" "}

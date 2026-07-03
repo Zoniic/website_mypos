@@ -25,6 +25,10 @@ model Product {
   featured       Boolean  @default(false)
   businessTypes  String
   relatedSlugs   String
+  /// Main product photo (square). Public URL under /uploads/products/.
+  imageUrl       String?
+  /// Additional gallery photos (side/back/in-use), comma-separated public URLs.
+  galleryUrls    String   @default("")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
@@ -47,6 +51,8 @@ model Accessory {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
   sortOrder Int      @default(0)
+  /// Product photo (square). Public URL under /uploads/accessories/.
+  imageUrl  String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

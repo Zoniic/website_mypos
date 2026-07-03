@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { ImageUploadField } from "../ImageUploadField";
 
 export type ProductFormValues = {
   slug: string;
@@ -19,6 +20,8 @@ export type ProductFormValues = {
   featured: boolean;
   businessTypes: string;
   relatedSlugs: string;
+  imageUrl: string | null;
+  galleryUrls: string[];
   translations: Record<"th" | "en" | "zh", { name: string; highlight: string }>;
 };
 
@@ -39,6 +42,8 @@ const emptyValues: ProductFormValues = {
   featured: false,
   businessTypes: "",
   relatedSlugs: "",
+  imageUrl: null,
+  galleryUrls: [],
   translations: {
     th: { name: "", highlight: "" },
     en: { name: "", highlight: "" },
@@ -155,6 +160,38 @@ export function ProductForm({
           />
           <span className={labelClass}>Featured on homepage</span>
         </label>
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Photos</h3>
+        <ImageUploadField
+          name="mainImage"
+          label="Main photo"
+          currentUrl={initialValues.imageUrl}
+          ratio="1/1"
+          specHint="Square, at least 1000×1000px, plain/white background preferred. JPG, PNG, or WebP, max 5MB."
+        />
+        <ImageUploadField
+          name="galleryImage1"
+          label="Gallery photo — side view"
+          currentUrl={initialValues.galleryUrls[0]}
+          ratio="1/1"
+          specHint="Same spec as main photo. Optional."
+        />
+        <ImageUploadField
+          name="galleryImage2"
+          label="Gallery photo — back view"
+          currentUrl={initialValues.galleryUrls[1]}
+          ratio="1/1"
+          specHint="Same spec as main photo. Optional."
+        />
+        <ImageUploadField
+          name="galleryImage3"
+          label="Gallery photo — in use"
+          currentUrl={initialValues.galleryUrls[2]}
+          ratio="1/1"
+          specHint="Same spec as main photo. Optional."
+        />
       </section>
 
       {(["th", "en", "zh"] as const).map((locale) => (

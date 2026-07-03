@@ -71,6 +71,19 @@ Data model (see `prisma/schema.prisma`):
 
 Use the admin panel: **Admin → Products/Accessories/Case Studies → New**. No code changes, no redeploy.
 
+## Uploading photos
+
+Product and accessory forms in the admin panel have a **Photos** section with file inputs. Each one shows the current photo (if any), the exact spec expected, and an instant preview of the file you just picked, before you save:
+
+- **Product main photo**: square, ≥1000×1000px, plain/white background preferred.
+- **Product gallery photos** (side/back/in-use): same spec, optional, up to 3.
+- **Accessory photo**: square, ≥800×800px.
+- All: JPG, PNG, or WebP, max 5MB.
+
+Uploaded files are saved to `public/uploads/{products|accessories}/` on the server disk (not committed to git — see `.gitignore`) and served at `/uploads/...`. **This only works when self-hosting** (a VPS, or `npm run start` on a persistent machine) — it will **not** work on Vercel, whose serverless functions have no persistent filesystem. If you deploy to Vercel later, this needs to be swapped for a cloud storage provider (S3, Cloudinary, Vercel Blob, etc.) — ask for that when you're ready.
+
+Pages fall back to a labeled gray placeholder tile automatically until a real photo is uploaded, so nothing breaks in the meantime.
+
 ## Editing marketing copy (hero, FAQ, about, etc.)
 
 **Admin → Page Content**, pick the namespace (e.g. `home`, `about`, `solutions`), edit the field for each language, save.

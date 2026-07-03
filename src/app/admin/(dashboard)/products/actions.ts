@@ -3,8 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { saveUploadedImage } from "@/lib/uploads";
 
 const locales = ["th", "en", "zh"] as const;
+const GALLERY_SLOTS = 3;
 
 function readProductFields(formData: FormData) {
   return {
@@ -27,6 +29,27 @@ function readProductFields(formData: FormData) {
   };
 }
 
+async function readImageFields(
+  formData: FormData,
+  slug: string,
+  existingImageUrl: string | null,
+  existingGalleryUrls: string[]
+) {
+  const mainFile = formData.get("mainImage") as File | null;
+  const newMainUrl = await saveUploadedImage(mainFile, "products", slug);
+  const imageUrl = newMainUrl ?? existingImageUrl;
+
+  const galleryUrls: string[] = [];
+  for (let i = 0; i < GALLERY_SLOTS; i++) {
+    const file = formData.get(`galleryImage${i + 1}`) as File | null;
+    const newUrl = await saveUploadedImage(file, "products", `${slug}-gallery-${i + 1}`);
+    const url = newUrl ?? existingGalleryUrls[i];
+    if (url) galleryUrls.push(url);
+  }
+
+  return { imageUrl, galleryUrls: galleryUrls.join(",") };
+}
+
 function revalidateProductPaths(slug: string) {
   revalidatePath("/[locale]/products", "page");
   revalidatePath(`/[locale]/products/${slug}`, "page");
@@ -38,7 +61,14 @@ export async function createProduct(_prevState: string | null, formData: FormDat
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
 
-  const product = await prisma.product.create({ data: fields });
+  let images: { imageUrl: string | null; galleryUrls: string };
+  try {
+    images = await readImageFields(formData, fields.slug, null, []);
+  } catch (error) {
+    return error instanceof Error ? error.message : "Failed to upload image.";
+  }
+
+  const product = await prisma.product.create({ data: { ...fields, ...images } });
 
   for (const locale of locales) {
     await prisma.productTranslation.create({
@@ -63,7 +93,22 @@ export async function updateProduct(
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
 
-  await prisma.product.update({ where: { id: productId }, data: fields });
+  const existing = await prisma.product.findUnique({ where: { id: productId } });
+  if (!existing) return "Product not found.";
+
+  let images: { imageUrl: string | null; galleryUrls: string };
+  try {
+    images = await readImageFields(
+      formData,
+      fields.slug,
+      existing.imageUrl,
+      existing.galleryUrls.split(",").filter(Boolean)
+    );
+  } catch (error) {
+    return error instanceof Error ? error.message : "Failed to upload image.";
+  }
+
+  await prisma.product.update({ where: { id: productId }, data: { ...fields, ...images } });
 
   for (const locale of locales) {
     await prisma.productTranslation.upsert({

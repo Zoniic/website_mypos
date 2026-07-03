@@ -30,7 +30,7 @@ export async function generateMetadata({
   };
 }
 
-type AccessoryItem = { slug: string; name: string; description: string };
+type AccessoryItem = { slug: string; name: string; description: string; imageUrl?: string };
 
 export default async function AccessoriesPage({
   params,
@@ -60,7 +60,7 @@ export default async function AccessoriesPage({
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((item) => (
             <div key={item.slug} className="rounded-2xl border border-border p-4">
-              <PlaceholderImage ratio="1/1" label={`${item.name} photo`} />
+              <PlaceholderImage ratio="1/1" label={`${item.name} photo`} src={item.imageUrl} />
               <h3 className="mt-4 font-semibold">{item.name}</h3>
               <p className="mt-1 text-sm text-text-2">{item.description}</p>
             </div>

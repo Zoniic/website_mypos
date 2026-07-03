@@ -14,11 +14,24 @@ export function PlaceholderImage({
   ratio = "4/3",
   label,
   className,
+  src,
 }: {
   ratio?: Ratio;
   label: string;
   className?: string;
+  /** Real uploaded photo URL. Falls back to a placeholder tile when unset. */
+  src?: string;
 }) {
+  if (src) {
+    return (
+      <div
+        className={`relative overflow-hidden rounded-xl bg-surface-2 ${ratioClass[ratio]} ${className ?? ""}`}
+      >
+        <Image src={src} alt={label} fill className="object-cover" />
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative overflow-hidden rounded-xl bg-surface-2 ${ratioClass[ratio]} ${className ?? ""}`}

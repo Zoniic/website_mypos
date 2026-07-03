@@ -116,7 +116,11 @@ export default async function ProductDetailPage({
       <Breadcrumb items={breadcrumbItems} />
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:px-8">
-        <ProductGallery name={product.name} />
+        <ProductGallery
+          name={product.name}
+          imageUrl={product.imageUrl}
+          galleryUrls={product.galleryUrls}
+        />
         <div>
           <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
           <p className="mt-3 text-2xl font-semibold text-text-1">
