@@ -9,6 +9,7 @@ const menuLinks = [
   { key: "accessories", href: "/accessories" },
   { key: "references", href: "/references" },
   { key: "software", href: "/software" },
+  { key: "knowledgeBase", href: "/knowledge-base" },
   { key: "service", href: "/service" },
   { key: "about", href: "/about" },
   { key: "contact", href: "/contact" },

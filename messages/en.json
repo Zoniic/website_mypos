@@ -12,6 +12,7 @@
     "accessories": "Accessories",
     "references": "Case Studies",
     "software": "Software",
+    "knowledgeBase": "Knowledge Base",
     "service": "Service",
     "about": "About Us",
     "contact": "Contact"
@@ -345,6 +346,7 @@
     "features": {
       "title": "Key Software Features",
       "items": [
+        { "title": "Web-Based Back Office Dashboard", "description": "Log in from any browser — no app install needed — to manage branches, menus, and reports from one central system." },
         { "title": "Manage Your Own Menu/Products", "description": "Add, edit, or disable items instantly from the back office — no need to wait on an IT team." },
         { "title": "Real-Time Sales Reports", "description": "View sales, best sellers, and performance for every branch, anytime, anywhere." },
         { "title": "Multi-Branch Support", "description": "Manage multiple branches from a single central dashboard and compare performance across locations." },
@@ -477,5 +479,29 @@
     "formError": "Something went wrong. Please try again.",
     "formNote": "This form is a UI placeholder only — it is not yet connected to a real messaging backend.",
     "mapTitle": "Company Map"
+  },
+  "kb": {
+    "metaTitle": "Knowledge Base | MYPOS",
+    "metaDescription": "Guides and manuals for MYPOS hardware and software — installation, troubleshooting, and how-to articles.",
+    "breadcrumb": "Knowledge Base",
+    "title": "Knowledge Base",
+    "subtitle": "Guides and manuals for your MYPOS hardware and software, so you can find answers without waiting for support.",
+    "searchPlaceholder": "Search guides and manuals...",
+    "sections": {
+      "hardware": {
+        "title": "Hardware",
+        "description": "Installation, setup, and troubleshooting guides for MYPOS terminals and accessories."
+      },
+      "software": {
+        "title": "Software",
+        "description": "How-to guides and walkthroughs for the MYPOS POS and back-office software."
+      }
+    },
+    "recommendedTitle": "Recommended",
+    "noArticles": "No articles in this category yet.",
+    "searchResultsTitle": "Search Results",
+    "searchResultsCount": "Found {count} result(s) for \"{query}\"",
+    "downloadPdf": "Download PDF",
+    "relatedProduct": "Related product"
   }
 }

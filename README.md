@@ -27,6 +27,21 @@ Two files, both gitignored:
 
 **Change `ADMIN_PASSWORD` and `SESSION_SECRET` before deploying** — the checked-in values are dev-only placeholders.
 
+### After pulling schema changes
+
+Whenever `prisma/schema.prisma` changes (new tables/columns), run on a machine that can reach the MySQL server:
+
+```bash
+npx prisma generate   # regenerate the typed client
+npx prisma db push    # sync the schema to MySQL (no formal migrations)
+```
+
+Some features also ship a one-off, idempotent script to push new copy into the DB (since page/UI text lives in MySQL, not `messages/*.json` — see below). Run each once after its feature is deployed:
+```bash
+npx tsx prisma/add-contact-form-feedback-keys.ts   # contact form loading/success/error text
+npx tsx prisma/add-kb-namespace.ts                 # Knowledge Base landing/section/search text
+```
+
 ## Project structure
 
 ```
@@ -69,6 +84,7 @@ Data model (see `prisma/schema.prisma`):
 - **`SiteSetting`** — phone, email, LINE, Facebook, Google Maps embed URL, and homepage stats (businesses served / years / support). Edit under **Admin → Site Settings**.
 - **`SiteImage`** — named photo slots (homepage hero, about page ×2, each solution's photo, software page hero) — a fixed set of 8 known image spots the site's layout expects. Edit under **Admin → Site Photos**.
 - **`TrustLogo`** — the "Trusted by" logo strip on the homepage. Falls back to showing the name as text until a logo image is uploaded. Edit under **Admin → Trust Logos**.
+- **`KbCategory`** + **`KbCategoryTranslation`** and **`KbArticle`** + **`KbArticleTranslation`** — the customer-facing Knowledge Base at `/knowledge-base` (self-serve manuals to reduce support load). Categories belong to a `section` (`hardware` or `software`); articles support a cover photo, an optional PDF download, an optional video link (YouTube/Google Drive, auto-embedded), and can optionally point at a `Product`/`Accessory` slug. Full-text search across title/summary/body. Edit under **Admin → KB Categories** / **Admin → KB Articles**.
 
 ### What's still not admin-editable
 

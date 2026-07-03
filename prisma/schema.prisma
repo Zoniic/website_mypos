@@ -140,3 +140,68 @@ model TrustLogo {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+/// Knowledge base category — belongs to one of two top-level sections
+/// (hardware / software) shown as separate landing pages.
+model KbCategory {
+  id        Int      @id @default(autoincrement())
+  section   String
+  slug      String   @unique
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations KbCategoryTranslation[]
+  articles     KbArticle[]
+}
+
+model KbCategoryTranslation {
+  id         Int    @id @default(autoincrement())
+  categoryId Int
+  locale     String
+  name       String
+
+  category KbCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, locale])
+}
+
+/// Knowledge base article. `productSlug`/`accessorySlug` are loose text
+/// references (matching the Product.relatedSlugs convention elsewhere in
+/// this schema) rather than foreign keys, so an article can point at a
+/// product/accessory without a hard DB constraint.
+model KbArticle {
+  id             Int      @id @default(autoincrement())
+  slug           String   @unique
+  categoryId     Int
+  productSlug    String?
+  accessorySlug  String?
+  /// Optional cover photo. Public URL under /uploads/kb/.
+  coverImageUrl  String?
+  /// Optional downloadable PDF. Public URL under /uploads/kb/.
+  pdfUrl         String?
+  /// Optional video link (YouTube/Drive) — embedded on the article page.
+  videoUrl       String?
+  /// Shown in the "Recommended" strip at the top of its section page.
+  featured       Boolean  @default(false)
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  category     KbCategory @relation(fields: [categoryId], references: [id])
+  translations KbArticleTranslation[]
+}
+
+model KbArticleTranslation {
+  id        Int    @id @default(autoincrement())
+  articleId Int
+  locale    String
+  title     String
+  summary   String @db.Text
+  body      String @db.Text
+
+  article KbArticle @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([articleId, locale])
+  @@index([locale])
+}

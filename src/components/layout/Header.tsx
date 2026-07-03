@@ -20,6 +20,7 @@ const primaryLinks = [
   { key: "accessories", href: "/accessories" },
   { key: "references", href: "/references" },
   { key: "software", href: "/software" },
+  { key: "knowledgeBase", href: "/knowledge-base" },
   { key: "service", href: "/service" },
   { key: "about", href: "/about" },
 ] as const;

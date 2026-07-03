@@ -2,14 +2,33 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
+export const MAX_PDF_BYTES = 20 * 1024 * 1024; // 20MB
 
-const ALLOWED_TYPES: Record<string, string> = {
+const ALLOWED_IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
 };
 
 const uploadsRoot = path.join(process.cwd(), "public", "uploads");
+
+async function saveUploadedFile(
+  file: File,
+  extension: string,
+  folder: string,
+  baseName: string
+): Promise<string> {
+  const safeBaseName = baseName.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+  const filename = `${safeBaseName}-${Date.now()}.${extension}`;
+
+  const dir = path.join(uploadsRoot, folder);
+  await mkdir(dir, { recursive: true });
+
+  const bytes = Buffer.from(await file.arrayBuffer());
+  await writeFile(path.join(dir, filename), bytes);
+
+  return `/uploads/${folder}/${filename}`;
+}
 
 /**
  * Saves an uploaded image file to public/uploads/{folder}/ and returns its
@@ -28,21 +47,34 @@ export async function saveUploadedImage(
     throw new Error(`Image is too large (max ${MAX_IMAGE_BYTES / (1024 * 1024)}MB).`);
   }
 
-  const extension = ALLOWED_TYPES[file.type];
+  const extension = ALLOWED_IMAGE_TYPES[file.type];
   if (!extension) {
     throw new Error("Image must be JPG, PNG, or WebP.");
   }
 
-  const safeBaseName = baseName.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-  const filename = `${safeBaseName}-${Date.now()}.${extension}`;
+  return saveUploadedFile(file, extension, folder, baseName);
+}
 
-  const dir = path.join(uploadsRoot, folder);
-  await mkdir(dir, { recursive: true });
+/**
+ * Saves an uploaded PDF to public/uploads/{folder}/ and returns its public
+ * URL. Same null/error conventions as saveUploadedImage.
+ */
+export async function saveUploadedPdf(
+  file: File | null,
+  folder: string,
+  baseName: string
+): Promise<string | null> {
+  if (!file || file.size === 0) return null;
 
-  const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(dir, filename), bytes);
+  if (file.size > MAX_PDF_BYTES) {
+    throw new Error(`PDF is too large (max ${MAX_PDF_BYTES / (1024 * 1024)}MB).`);
+  }
 
-  return `/uploads/${folder}/${filename}`;
+  if (file.type !== "application/pdf") {
+    throw new Error("File must be a PDF.");
+  }
+
+  return saveUploadedFile(file, "pdf", folder, baseName);
 }
 
 /** Saves multiple gallery images, skipping empty file inputs. */

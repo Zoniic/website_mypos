@@ -12,6 +12,7 @@
     "accessories": "配件",
     "references": "客户案例",
     "software": "软件系统",
+    "knowledgeBase": "知识库",
     "service": "服务支持",
     "about": "关于我们",
     "contact": "联系我们"
@@ -345,6 +346,7 @@
     "features": {
       "title": "核心软件功能",
       "items": [
+        { "title": "网页版后台管理系统", "description": "任意浏览器即可登录，无需安装应用程序，即可在同一后台管理门店、菜单与报表。" },
         { "title": "自主管理菜单/商品", "description": "可通过后台系统随时新增、修改或下架商品，无需等待 IT 团队处理。" },
         { "title": "实时销售报表", "description": "随时随地查看各门店的销售额、热销商品及经营状况。" },
         { "title": "支持多门店管理", "description": "通过统一后台管理多家门店，并可对比各门店销售数据。" },
@@ -477,5 +479,29 @@
     "formError": "发送失败，请重试。",
     "formNote": "此表单仅为界面示例，尚未连接实际留言后台。",
     "mapTitle": "公司地图"
+  },
+  "kb": {
+    "metaTitle": "知识库 | MYPOS",
+    "metaDescription": "MYPOS 硬件与软件的使用指南与手册——安装、故障排除与操作教程。",
+    "breadcrumb": "知识库",
+    "title": "知识库",
+    "subtitle": "MYPOS 硬件与软件的使用指南，无需等待客服即可自助查找答案。",
+    "searchPlaceholder": "搜索使用指南与手册...",
+    "sections": {
+      "hardware": {
+        "title": "硬件",
+        "description": "MYPOS 终端与配件的安装、设置与故障排除指南。"
+      },
+      "software": {
+        "title": "软件",
+        "description": "MYPOS POS 与后台系统的操作教程与说明。"
+      }
+    },
+    "recommendedTitle": "推荐",
+    "noArticles": "该分类下暂无文章。",
+    "searchResultsTitle": "搜索结果",
+    "searchResultsCount": "找到 {count} 条与\"{query}\"相关的结果",
+    "downloadPdf": "下载 PDF",
+    "relatedProduct": "相关产品"
   }
 }
