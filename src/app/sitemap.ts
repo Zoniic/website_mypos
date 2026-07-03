@@ -27,6 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     for (const locale of routing.locales) {
       languages[locale] = `${siteConfig.url}/${locale}${path}`;
     }
+    languages["x-default"] = `${siteConfig.url}/${routing.defaultLocale}${path}`;
 
     // One <url> entry per locale, each self-referencing every language
     // variant (including itself), per Google's hreflang sitemap guidance.

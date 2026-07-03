@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { getSiteImages } from "@/lib/siteSettings";
 
 export async function Hero() {
@@ -9,7 +10,7 @@ export async function Hero() {
 
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-24 lg:px-8">
-      <div>
+      <FadeIn>
         <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
           {t("eyebrow")}
         </p>
@@ -25,8 +26,10 @@ export async function Hero() {
             {t("ctaSecondary")}
           </Button>
         </div>
-      </div>
-      <PlaceholderImage ratio="4/3" label="Hero product photo" src={images.hero} />
+      </FadeIn>
+      <FadeIn delay={0.15}>
+        <PlaceholderImage ratio="4/3" label="Hero product photo" src={images.hero} />
+      </FadeIn>
     </section>
   );
 }

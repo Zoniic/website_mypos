@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MotionConfig } from "framer-motion";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -62,12 +63,14 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-full flex-col bg-bg text-text-1">
         <NextIntlClientProvider>
-          <Header />
-          <main id="main-content" className="flex-1 pb-16 lg:pb-0">
-            {children}
-          </main>
-          <Footer />
-          <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
+          <MotionConfig reducedMotion="user">
+            <Header />
+            <main id="main-content" className="flex-1 pb-16 lg:pb-0">
+              {children}
+            </main>
+            <Footer />
+            <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
+          </MotionConfig>
         </NextIntlClientProvider>
       </body>
     </html>

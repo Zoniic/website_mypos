@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { getSiteImages } from "@/lib/siteSettings";
 
 const solutionCards = [
@@ -24,26 +25,27 @@ export async function Solutions() {
       </div>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">
-        {solutionCards.map((card) => (
-          <Link
-            key={card.key}
-            href={card.href}
-            className={`group rounded-2xl border border-border p-6 transition-shadow hover:shadow-md ${
-              card.featured ? "lg:row-span-2 lg:p-8" : ""
-            }`}
-          >
-            <PlaceholderImage
-              ratio={card.featured ? "16/9" : "4/3"}
-              label={`${t(`items.${card.key}.title`)} photo`}
-              src={images[card.imageKey]}
-            />
-            <h3 className="mt-5 text-xl font-semibold">
-              {t(`items.${card.key}.title`)}
-            </h3>
-            <p className="mt-2 text-text-2">
-              {t(`items.${card.key}.description`)}
-            </p>
-          </Link>
+        {solutionCards.map((card, index) => (
+          <FadeIn key={card.key} delay={index * 0.08} className={card.featured ? "lg:row-span-2" : ""}>
+            <Link
+              href={card.href}
+              className={`group block h-full rounded-2xl border border-border p-6 transition-all hover:-translate-y-1 hover:shadow-md ${
+                card.featured ? "lg:p-8" : ""
+              }`}
+            >
+              <PlaceholderImage
+                ratio={card.featured ? "16/9" : "4/3"}
+                label={`${t(`items.${card.key}.title`)} photo`}
+                src={images[card.imageKey]}
+              />
+              <h3 className="mt-5 text-xl font-semibold">
+                {t(`items.${card.key}.title`)}
+              </h3>
+              <p className="mt-2 text-text-2">
+                {t(`items.${card.key}.description`)}
+              </p>
+            </Link>
+          </FadeIn>
         ))}
       </div>
     </section>

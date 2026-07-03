@@ -1,13 +1,11 @@
-import { getFormatter, getLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/Button";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { ProductCard } from "@/components/products/ProductCard";
 import { getFeaturedProducts } from "@/lib/products";
 
 export async function PopularProducts() {
   const locale = await getLocale();
   const t = await getTranslations({ locale, namespace: "home.products" });
-  const format = await getFormatter({ locale });
   const featured = await getFeaturedProducts(locale);
 
   return (
@@ -28,20 +26,7 @@ export async function PopularProducts() {
 
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {featured.map((product) => (
-          <Link
-            key={product.slug}
-            href={`/products/${product.slug}`}
-            className="group rounded-2xl border border-border p-4 transition-shadow hover:shadow-md"
-          >
-            <PlaceholderImage
-              ratio="1/1"
-              label={`${product.name} photo`}
-            />
-            <h3 className="mt-4 font-semibold">{product.name}</h3>
-            <p className="mt-1 text-sm text-text-2">
-              {t("priceFrom")} {format.number(product.priceFrom, { style: "currency", currency: "THB", maximumFractionDigits: 0 })}
-            </p>
-          </Link>
+          <ProductCard key={product.slug} product={product} />
         ))}
       </div>
     </section>

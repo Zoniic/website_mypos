@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { getSiteSettings } from "@/lib/siteSettings";
+import { FadeIn } from "@/components/ui/FadeIn";
+import { CountUp } from "@/components/ui/CountUp";
 
 const whyItems = ["manufacture", "support", "software"] as const;
 
@@ -26,26 +28,32 @@ export async function WhyMypos() {
         </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
-          {whyItems.map((key) => (
-            <div key={key} className="rounded-2xl bg-surface-1 p-6 shadow-sm">
-              <h3 className="text-lg font-semibold">
-                {t(`items.${key}.title`)}
-              </h3>
-              <p className="mt-2 text-text-2">
-                {t(`items.${key}.description`)}
-              </p>
-            </div>
+          {whyItems.map((key, index) => (
+            <FadeIn key={key} delay={index * 0.1}>
+              <div className="h-full rounded-2xl bg-surface-1 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]">
+                <h3 className="text-lg font-semibold">
+                  {t(`items.${key}.title`)}
+                </h3>
+                <p className="mt-2 text-text-2">
+                  {t(`items.${key}.description`)}
+                </p>
+              </div>
+            </FadeIn>
           ))}
         </div>
 
         <dl className="mt-12 grid grid-cols-3 gap-6 text-center">
-          {stats.map((stat) => (
-            <div key={stat.key}>
-              <dd className="text-3xl font-bold">{stat.value}</dd>
-              <dt className="mt-1 text-sm text-text-2">
-                {t(`stats.${stat.key}`)}
-              </dt>
-            </div>
+          {stats.map((stat, index) => (
+            <FadeIn key={stat.key} delay={index * 0.1}>
+              <div>
+                <dd className="bg-[image:var(--gradient-primary)] bg-clip-text text-3xl font-bold text-transparent">
+                  <CountUp value={stat.value} />
+                </dd>
+                <dt className="mt-1 text-sm text-text-2">
+                  {t(`stats.${stat.key}`)}
+                </dt>
+              </div>
+            </FadeIn>
           ))}
         </dl>
       </div>

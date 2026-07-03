@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 export function SolutionHero({
   eyebrow,
@@ -20,7 +21,7 @@ export function SolutionHero({
 }) {
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-16 lg:px-8">
-      <div>
+      <FadeIn>
         <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
           {eyebrow}
         </p>
@@ -36,8 +37,10 @@ export function SolutionHero({
             {ctaSecondary}
           </Button>
         </div>
-      </div>
-      <PlaceholderImage ratio="4/3" label={imageLabel} src={imageUrl} />
+      </FadeIn>
+      <FadeIn delay={0.15}>
+        <PlaceholderImage ratio="4/3" label={imageLabel} src={imageUrl} />
+      </FadeIn>
     </section>
   );
 }

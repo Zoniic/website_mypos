@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 export type FaqItem = { question: string; answer: string };
 
@@ -47,13 +48,20 @@ export function FaqAccordion({
                   </svg>
                 </button>
               </dt>
-              <dd
-                id={`faq-answer-${index}`}
-                hidden={!isOpen}
-                className="pb-4 text-text-2"
-              >
-                {item.answer}
-              </dd>
+              <AnimatePresence initial={false}>
+                {isOpen && (
+                  <motion.dd
+                    id={`faq-answer-${index}`}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.25, ease: "easeInOut" }}
+                    className="overflow-hidden text-text-2"
+                  >
+                    <p className="pb-4">{item.answer}</p>
+                  </motion.dd>
+                )}
+              </AnimatePresence>
             </div>
           );
         })}
