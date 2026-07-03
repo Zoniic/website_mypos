@@ -1,0 +1,42 @@
+import Link from "next/link";
+
+// Every page here reads live data straight from MySQL; never prerender it.
+export const dynamic = "force-dynamic";
+
+const navLinks = [
+  { href: "/admin", label: "Dashboard" },
+  { href: "/admin/products", label: "Products" },
+  { href: "/admin/accessories", label: "Accessories" },
+  { href: "/admin/references", label: "Case Studies" },
+  { href: "/admin/content", label: "Page Content" },
+];
+
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-h-screen">
+      <aside className="hidden w-56 shrink-0 border-r border-border bg-surface-0 p-4 sm:block">
+        <div className="text-lg font-bold">MYPOS Admin</div>
+        <nav className="mt-6 flex flex-col gap-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="rounded-lg px-3 py-2 text-sm font-medium text-text-2 hover:bg-surface-2 hover:text-text-1"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <form action="/admin/logout" method="post" className="mt-8">
+          <button
+            type="submit"
+            className="w-full rounded-lg border border-border-strong px-3 py-2 text-sm text-text-2 hover:bg-surface-2"
+          >
+            Log out
+          </button>
+        </form>
+      </aside>
+      <main className="flex-1 p-6 sm:p-8">{children}</main>
+    </div>
+  );
+}

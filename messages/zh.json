@@ -1,0 +1,477 @@
+{
+  "nav": {
+    "home": "首页",
+    "solutions": "解决方案",
+    "solutionsItems": {
+      "selfOrder": "自助点餐机",
+      "weighPay": "自助称重收银",
+      "pos": "门店收银系统",
+      "ticketing": "自助售票机"
+    },
+    "products": "产品",
+    "accessories": "配件",
+    "references": "客户案例",
+    "software": "软件系统",
+    "service": "服务支持",
+    "about": "关于我们",
+    "contact": "联系我们"
+  },
+  "common": {
+    "lineButton": "LINE 咨询",
+    "callButton": "致电我们",
+    "requestQuote": "索取报价",
+    "learnMore": "了解更多",
+    "skipToContent": "跳到主要内容"
+  },
+  "footer": {
+    "companyDesc": "泰国本土自助服务与收银系统制造商，从硬件、软件到售后服务一站式提供。",
+    "menuTitle": "菜单",
+    "contactTitle": "联系方式",
+    "followTitle": "关注我们",
+    "phone": "电话",
+    "email": "邮箱",
+    "address": "泰国曼谷",
+    "rights": "版权所有"
+  },
+  "stickyBar": {
+    "call": "致电",
+    "line": "LINE",
+    "quote": "索取报价"
+  },
+  "home": {
+    "metaTitle": "MYPOS | 泰国收银与自助服务系统一站式解决方案",
+    "metaDescription": "MYPOS 是泰国本土的收银系统与自助点餐机制造商，自主设计、生产并提供售后服务，适用于餐饮、零售、自助餐及主题乐园等行业。",
+    "hero": {
+      "eyebrow": "泰国收银与自助服务系统制造商",
+      "title": "缩短排队时间，提升销售额 —— 为泰国商家量身打造的自助服务系统",
+      "subtitle": "自助点餐机、自助称重收银、门店收银系统与自助售票机，一站式解决，本地团队全程售后支持。",
+      "ctaPrimary": "免费咨询",
+      "ctaSecondary": "查看全部解决方案"
+    },
+    "trust": {
+      "title": "众多品牌与商家的信赖之选"
+    },
+    "about": {
+      "eyebrow": "关于我们",
+      "title": "MYPOS 自主研发、自主生产、自主服务",
+      "description": "我们自主设计硬件、开发软件，并由自有团队提供售后支持，不经过多层代理，让客户获得更快速、更专业的服务体验。",
+      "cta": "了解更多关于我们"
+    },
+    "solutions": {
+      "eyebrow": "我们的解决方案",
+      "title": "选择适合您业务的系统",
+      "items": {
+        "selfOrder": {
+          "title": "自助点餐机",
+          "description": "减少排队、提升客单价，适用于餐厅、快餐及员工食堂。"
+        },
+        "weighPay": {
+          "title": "自助称重收银",
+          "description": "自动称重与结算系统，适用于麻辣烫、自助餐及烘焙柜台。"
+        },
+        "pos": {
+          "title": "门店收银系统",
+          "description": "一站式门店收银系统，适用于零售店、便利店及迷你超市。"
+        },
+        "ticketing": {
+          "title": "自助售票机",
+          "description": "自动售票系统，适用于主题乐园、酒店及景区。"
+        }
+      }
+    },
+    "why": {
+      "eyebrow": "为什么选择 MYPOS",
+      "title": "不仅仅是设备供应商",
+      "items": {
+        "manufacture": {
+          "title": "泰国本土生产",
+          "description": "严格品质把控，并可根据泰国商家实际需求定制。"
+        },
+        "support": {
+          "title": "本地专业团队",
+          "description": "响应迅速，设备使用全周期提供支持。"
+        },
+        "software": {
+          "title": "自主研发软件",
+          "description": "持续更新功能，无需依赖第三方平台。"
+        }
+      },
+      "stats": {
+        "clients": "服务商家数",
+        "years": "行业经验年数",
+        "support": "售后支持"
+      }
+    },
+    "products": {
+      "eyebrow": "热门产品",
+      "title": "客户首选机型",
+      "priceFrom": "起价",
+      "cta": "查看全部产品"
+    },
+    "faq": {
+      "title": "常见问题",
+      "items": [
+        {
+          "question": "MYPOS 是自主生产设备还是代理销售？",
+          "answer": "我们自主设计并生产硬件，同时由内部团队开发软件，从而全面把控产品质量与售后服务。"
+        },
+        {
+          "question": "安装大概需要多长时间？",
+          "answer": "根据商家规模与设备数量不同，安装及人员培训通常在 1-3 个工作日内完成。"
+        },
+        {
+          "question": "售后服务包含哪些内容？",
+          "answer": "本地团队将在设备使用全周期提供支持，包括上门服务与保修期内的理赔处理。"
+        },
+        {
+          "question": "适合小型商家使用吗？",
+          "answer": "适合。从小型店铺到大型连锁企业，我们均提供不同机型与套餐以满足各类预算与需求。"
+        }
+      ]
+    },
+    "invite": {
+      "title": "准备好让 MYPOS 助力您的业务了吗？",
+      "description": "立即通过 LINE 或电话联系我们，团队将为您提供免费咨询与现场评估。",
+      "cta": "立即联系我们"
+    }
+  },
+  "solutionsCommon": {
+    "breadcrumbHome": "首页",
+    "breadcrumbSolutions": "解决方案",
+    "painGainTitle": "常见痛点与改善效果对比",
+    "painLabel": "常见痛点",
+    "gainLabel": "改善效果",
+    "howItWorksTitle": "使用流程",
+    "referencesTitle": "真实使用效果示例",
+    "referencesNote": "以下为示例案例，待补充真实客户数据后更新。",
+    "problemLabel": "面临问题",
+    "installLabel": "安装方案",
+    "resultLabel": "效果",
+    "compareCta": "查看推荐机型",
+    "compareTitle": "推荐机型",
+    "compareModel": "型号",
+    "compareScreen": "屏幕尺寸",
+    "compareOs": "操作系统",
+    "comparePrice": "起价",
+    "faqTitle": "常见问题"
+  },
+  "solutions": {
+    "selfOrder": {
+      "metaTitle": "自助点餐机 | MYPOS",
+      "metaDescription": "MYPOS 自助点餐机可减少柜台排队、提升客单价，适用于餐厅、快餐及员工食堂。",
+      "hero": {
+        "eyebrow": "可衡量的实际效果",
+        "title": "自助点餐机，减少柜台排队、提升客单价",
+        "subtitle": "适用于希望减轻柜台人员负担、提升客单价的餐厅、快餐店及员工食堂。"
+      },
+      "painGain": [
+        { "pain": "高峰时段排队过长，顾客流失", "gain": "顾客可在多个点位同时自助点餐，缩短等待时间" },
+        { "pain": "员工忘记推荐加购项目，销售额难提升", "gain": "系统自动为每笔订单推荐加购菜品" },
+        { "pain": "手写订单出错，导致后厨混乱", "gain": "订单自动传送至后厨，减少出错" }
+      ],
+      "steps": [
+        { "title": "选择菜品", "description": "顾客在屏幕上自行选择菜品与加购选项" },
+        { "title": "完成支付", "description": "在机台上即时支付，支持多种支付方式" },
+        { "title": "订单传送后厨", "description": "订单自动传送至后厨或收银台，无需手写" }
+      ],
+      "cases": [
+        { "business": "某户外连锁快餐店", "problem": "午市高峰排队过长，顾客流失", "install": "在店门口安装 2 台自助点餐机", "result": "平均等待时间减少 40%" },
+        { "business": "某商场快餐门店", "problem": "高峰时段人手不足", "install": "以 3 台自助点餐机替代加设柜台", "result": "平均客单价提升 15%" }
+      ],
+      "faq": [
+        { "question": "自助点餐机能否与后厨系统对接？", "answer": "可以，订单会直接传送至后厨显示屏或自动打印，无需重复录入。" },
+        { "question": "不熟悉操作的顾客也能顺利点餐吗？", "answer": "界面设计简洁、步骤清晰，必要时员工仍可提供协助。" },
+        { "question": "是否支持促销或折扣设置？", "answer": "支持，可通过后台系统设置促销活动、折扣与推荐菜品。" }
+      ]
+    },
+    "weighPay": {
+      "metaTitle": "自助称重收银 | MYPOS",
+      "metaDescription": "MYPOS 自助称重收银系统自动称重并计价，适用于麻辣烫、自助餐及烘焙柜台。",
+      "hero": {
+        "eyebrow": "可衡量的实际效果",
+        "title": "精准称重计价，缩短结账排队时间",
+        "subtitle": "适用于需要精准计价、缩短高峰排队时间的麻辣烫、自助餐及烘焙柜台。"
+      },
+      "painGain": [
+        { "pain": "员工称重出错，价格经常不准确", "gain": "自动称重计价，结果精准" },
+        { "pain": "高峰时段结账排队缓慢", "gain": "顾客可在多个点位自助称重结账" },
+        { "pain": "食材成本难以掌控", "gain": "实时销售数据，成本分析更容易" }
+      ],
+      "steps": [
+        { "title": "取餐装盘", "description": "顾客照常将食物或食材装入容器" },
+        { "title": "自助称重", "description": "放置于秤台，系统自动计算价格" },
+        { "title": "完成支付", "description": "在机台上直接支付，无需排队等待收银" }
+      ],
+      "cases": [
+        { "business": "社区商场内的麻辣烫店", "problem": "需等待员工称重，结账缓慢", "install": "安装 2 台自助称重收银机", "result": "结账时间减少 50%" },
+        { "business": "写字楼区域的自助沙拉店", "problem": "员工称重计价经常出错", "install": "全店改为自助称重收银", "result": "计价错误几乎消除" }
+      ],
+      "faq": [
+        { "question": "称重精度如何？", "answer": "采用工业级称重传感器，误差极低，并可精细设置每克单价。" },
+        { "question": "一台设备能否设置多种菜品价格？", "answer": "可以，可通过后台系统按品类设置不限数量的称重单价。" },
+        { "question": "能否防止顾客在称重环节作弊？", "answer": "系统会记录每笔称重交易的画面，方便事后核查。" }
+      ]
+    },
+    "pos": {
+      "metaTitle": "门店收银系统 | MYPOS",
+      "metaDescription": "MYPOS 门店收银系统结账更快、自动扣减库存，适用于零售店、便利店及迷你超市。",
+      "hero": {
+        "eyebrow": "可衡量的实际效果",
+        "title": "结账更快，库存自动更新",
+        "subtitle": "适用于需要高效结账与精准库存数据的零售店、迷你超市及便利店。"
+      },
+      "painGain": [
+        { "pain": "结账速度慢，柜台排队严重", "gain": "扫码结账，速度更快" },
+        { "pain": "库存数据与实际货架不符", "gain": "每笔订单自动扣减库存" },
+        { "pain": "各门店销售情况难以及时掌握", "gain": "各门店销售数据实时可查" }
+      ],
+      "steps": [
+        { "title": "扫描商品", "description": "扫描条码或从菜单中选择商品" },
+        { "title": "自动结算", "description": "系统自动计算金额并扣减库存" },
+        { "title": "完成收款", "description": "支持多种支付方式，即时打印小票" }
+      ],
+      "cases": [
+        { "business": "社区口迷你超市", "problem": "傍晚高峰结账缓慢，排队严重", "install": "两家门店全部更换为 MYPOS 收银系统", "result": "结账速度提升一倍" },
+        { "business": "连锁零售品牌", "problem": "各门店库存数据不一致", "install": "将所有门店收银系统接入统一后台", "result": "库存数据实现实时同步" }
+      ],
+      "faq": [
+        { "question": "能否与现有财务系统对接？", "answer": "支持导出销售数据，与主流财务系统对接。" },
+        { "question": "能否同时管理多家门店？", "answer": "可以，通过统一后台即可查看所有门店的销售与库存情况。" },
+        { "question": "网络中断时还能正常使用吗？", "answer": "系统支持短时离线运行，网络恢复后自动同步数据。" }
+      ]
+    },
+    "ticketing": {
+      "metaTitle": "自助售票机 | MYPOS",
+      "metaDescription": "MYPOS 自助售票机适用于主题乐园、酒店及景区，有效减少售票窗口排队。",
+      "hero": {
+        "eyebrow": "可衡量的实际效果",
+        "title": "缩短购票排队时间，提升增值项目销售",
+        "subtitle": "适用于需要同时服务大量游客的主题乐园、酒店及景区。"
+      },
+      "painGain": [
+        { "pain": "入口购票排队时间长", "gain": "游客可在多个点位自助购票" },
+        { "pain": "节假日售票人手不足", "gain": "减少固定售票窗口人力需求" },
+        { "pain": "售票数据难以及时统计", "gain": "实时售票数据统计" }
+      ],
+      "steps": [
+        { "title": "选择票种", "description": "在屏幕上选择票种或套餐" },
+        { "title": "完成支付", "description": "在自助机上即时完成支付" },
+        { "title": "领取门票", "description": "立即获取门票或二维码，无需排队" }
+      ],
+      "cases": [
+        { "business": "户外主题乐园", "problem": "长假期间购票排队严重", "install": "安装 4 台自助售票机", "result": "购票排队等待时间减少 60%" },
+        { "business": "海滨度假酒店", "problem": "入住高峰前台人手不足", "install": "安装自助机销售增值活动票券", "result": "增值活动销售额提升 20%" }
+      ],
+      "faq": [
+        { "question": "能否以二维码形式出票？", "answer": "可以，系统可根据设置以二维码或纸质票形式出票。" },
+        { "question": "一台设备能否销售多种票种？", "answer": "可以，可通过后台系统设置不限数量的票种与套餐。" },
+        { "question": "能否与现场检票系统对接？", "answer": "可以，二维码门票可与现场扫码设备对接，用于核验与人数统计。" }
+      ]
+    }
+  },
+  "productsCommon": {
+    "metaTitle": "全部产品 | MYPOS",
+    "metaDescription": "选购 MYPOS 自助点餐机、自助称重设备、收银系统与自助售票机，支持按行业类型、操作系统与屏幕尺寸搜索筛选。",
+    "breadcrumbProducts": "产品",
+    "searchPlaceholder": "搜索型号名称或功能",
+    "filterBusinessType": "行业类型",
+    "filterOs": "操作系统",
+    "filterScreenSize": "屏幕尺寸",
+    "filterCategory": "功能分类",
+    "allLabel": "全部",
+    "noResults": "没有符合条件的产品，请调整筛选条件。",
+    "priceFrom": "起价",
+    "viewDetails": "查看详情",
+    "resultsCount": "找到 {count} 项结果",
+    "businessTypes": {
+      "restaurant": "餐厅",
+      "retail": "零售",
+      "buffet": "自助餐",
+      "convenience": "便利店",
+      "themepark": "主题乐园",
+      "hotel": "酒店",
+      "cafeteria": "食堂",
+      "bakery": "烘焙店",
+      "manufacturing": "制造业"
+    },
+    "categories": {
+      "self-order": "自助点餐机",
+      "weigh-pay": "自助称重收银",
+      "pos": "门店收银系统",
+      "ticketing": "自助售票机"
+    }
+  },
+  "productDetail": {
+    "specsTitle": "核心规格",
+    "screenSize": "屏幕尺寸",
+    "os": "操作系统",
+    "cpu": "处理器",
+    "ram": "内存",
+    "storage": "存储空间",
+    "connectivity": "连接方式",
+    "dimensions": "机身尺寸",
+    "weight": "重量",
+    "warranty": "保修期",
+    "warrantyValue": "{months} 个月",
+    "requestQuote": "索取此型号报价",
+    "lineQuote": "通过 LINE 咨询",
+    "datasheetTitle": "产品规格书 (Datasheet)",
+    "datasheetDownload": "下载 PDF",
+    "datasheetUnavailable": "规格书正在准备中，请联系销售团队获取更多资料。",
+    "relatedTitle": "相关 / 可搭配机型",
+    "galleryLabel": "产品图集"
+  },
+  "products": {
+    "items": {
+      "f82": { "highlight": "8 英寸紧凑屏幕，适合空间有限的柜台，可即时连接收据打印机与钱箱。" },
+      "f88": { "highlight": "F82 升级版，内存与存储空间更大，适合商品种类较多的门店。" },
+      "f100": { "highlight": "10 英寸宽视角触控屏，适合台式或壁挂式自助点餐机。" },
+      "o11": { "highlight": "11 英寸大屏配高内存，流畅呈现图文丰富的菜单与促销动画。" },
+      "ranger-t8": { "highlight": "内置高精度称重模块，自动计算称重价格，减少柜台操作步骤。" },
+      "windows-i3": { "highlight": "性能强劲，15 英寸大屏，适合需同时运行财务或其他附加软件的门店。" },
+      "kiosk-22": { "highlight": "22 英寸落地式自助机，强光环境下依旧清晰可见，适合户外售票点。" },
+      "kiosk-32": { "highlight": "32 英寸超大屏幕，远距离清晰可见，适合人流密集区域。" }
+    }
+  },
+  "software": {
+    "metaTitle": "MYPOS 软件系统 | 自主研发，非 POSPOS",
+    "metaDescription": "MYPOS 软件系统完全由自有团队研发，并非 POSPOS。支持自助点餐、自助称重、收银及自助售票机，持续更新功能。",
+    "hero": {
+      "eyebrow": "100% 自主研发软件",
+      "title": "MYPOS 软件系统自主研发，并非 POSPOS",
+      "subtitle": "我们的软件团队专为泰国商家设计系统，持续推出新功能，无需依赖任何第三方平台。",
+      "cta": "预约演示 (Demo)"
+    },
+    "features": {
+      "title": "核心软件功能",
+      "items": [
+        { "title": "自主管理菜单/商品", "description": "可通过后台系统随时新增、修改或下架商品，无需等待 IT 团队处理。" },
+        { "title": "实时销售报表", "description": "随时随地查看各门店的销售额、热销商品及经营状况。" },
+        { "title": "支持多门店管理", "description": "通过统一后台管理多家门店，并可对比各门店销售数据。" },
+        { "title": "断网仍可继续运行", "description": "系统支持短时离线运行，网络恢复后自动同步数据。" },
+        { "title": "自主设置促销活动", "description": "可通过后台系统自行设置折扣、促销活动与推荐商品。" },
+        { "title": "持续更新功能", "description": "本地研发团队根据客户实际需求持续更新与优化功能。" }
+      ]
+    },
+    "screenshots": {
+      "title": "系统界面示例"
+    }
+  },
+  "references": {
+    "metaTitle": "客户案例 | MYPOS",
+    "metaDescription": "了解各行业商家如何使用 MYPOS 系统，涵盖餐厅、零售、自助餐、主题乐园及酒店等领域。",
+    "breadcrumb": "客户案例",
+    "title": "客户案例",
+    "subtitle": "以下为使用 MYPOS 系统的真实商家案例示例，按行业类型筛选查看与您相近的案例。",
+    "filterLabel": "按行业类型筛选",
+    "noResults": "该分类下暂无案例，请尝试选择其他行业类型。",
+    "items": [
+      { "business": "某户外连锁快餐店", "businessType": "restaurant", "problem": "午市高峰排队过长，顾客流失", "install": "在店门口安装 2 台自助点餐机", "result": "平均等待时间减少 40%" },
+      { "business": "社区口迷你超市", "businessType": "convenience", "problem": "傍晚高峰结账缓慢，排队严重", "install": "两家门店全部更换为 MYPOS 收银系统", "result": "结账速度提升一倍" },
+      { "business": "社区商场内的麻辣烫店", "businessType": "buffet", "problem": "需等待员工称重，结账缓慢", "install": "安装 2 台自助称重收银机", "result": "结账时间减少 50%" },
+      { "business": "DreamWorld", "businessType": "themepark", "problem": "需要能同时支持乐园内多个服务点销售的系统", "install": "安装了完整的 POS 系统，包含 Android POS 与自助点餐机", "result": "可流畅支持多个销售点同时运作" },
+      { "business": "Ruengrawin Metal", "businessType": "manufacturing", "problem": "需要管理大量五金及零件的销售", "install": "采用高效能 Windows POS 系统进行库存与销售管理", "result": "高效管理大型零件库存与销售流程" },
+      { "business": "海滨度假酒店", "businessType": "hotel", "problem": "入住高峰前台人手不足", "install": "安装自助机销售增值活动票券", "result": "增值活动销售额提升 20%" },
+      { "business": "SME Retail Chain", "businessType": "convenience", "problem": "希望以有限预算扩张门店", "install": "安装标准化、易用且经济实惠的 Android POS 系统", "result": "以具成本效益的方式持续扩张门店" },
+      { "business": "某写字楼员工食堂", "businessType": "cafeteria", "problem": "员工午休排队买餐浪费时间", "install": "安装 3 台自助点餐机", "result": "排队时间减少超过一半" },
+      { "business": "商场内烘焙柜台", "businessType": "bakery", "problem": "员工称重计价经常出错", "install": "全店改为自助称重收银", "result": "计价错误几乎消除" }
+    ]
+  },
+  "accessories": {
+    "metaTitle": "配件 | MYPOS",
+    "metaDescription": "MYPOS 收银与自助服务系统配件，包括钱箱、条码扫描枪、收据打印机及热敏纸。",
+    "breadcrumb": "配件",
+    "title": "配件",
+    "subtitle": "以下配件均可直接与 MYPOS 系统搭配使用，欢迎联系销售团队咨询价格及与您机型的兼容性。",
+    "cta": "咨询配件",
+    "items": [
+      { "slug": "cash-drawer", "name": "钱箱", "description": "坚固钢制钱箱，通过数据线或 RJ11 接口连接收银机，每笔交易完成后自动弹出。" },
+      { "slug": "barcode-scanner", "name": "条码扫描枪", "description": "快速识别 1D/2D 条码，支持有线与无线款式，兼容所有 MYPOS 收银机型。" },
+      { "slug": "receipt-printer", "name": "收据打印机", "description": "支持 USB/LAN/Bluetooth 连接的高速热敏打印机，具备自动切纸功能。" },
+      { "slug": "thermal-paper", "name": "热敏纸", "description": "优质热敏收据纸，提供 58mm 与 80mm 标准规格，支持大包装采购。" }
+    ]
+  },
+  "service": {
+    "metaTitle": "售后服务 | MYPOS",
+    "metaDescription": "MYPOS 提供上门安装、保修理赔与售后支持，本地团队全程陪伴设备使用周期。",
+    "breadcrumb": "服务支持",
+    "hero": {
+      "eyebrow": "售后服务",
+      "cta": "联系服务团队",
+      "title": "设备使用全周期陪伴，售后绝不缺席",
+      "subtitle": "本地团队从安装首日到设备使用全周期，全程提供专业售后支持。"
+    },
+    "types": {
+      "title": "我们的服务",
+      "items": [
+        { "title": "上门安装", "description": "技术人员亲临门店完成安装并培训员工，无需自行运送设备。" },
+        { "title": "保修理赔与维修", "description": "通过 LINE 或电话报修，团队协调快速维修或更换设备。" },
+        { "title": "产品保修", "description": "所有机型均享有保修服务，涵盖正常使用下产生的损坏。" }
+      ]
+    },
+    "process": {
+      "title": "服务流程",
+      "steps": [
+        { "title": "报修", "description": "通过 LINE 或客服热线报告问题。" },
+        { "title": "评估与预约", "description": "团队初步评估情况并预约维修或理赔时间。" },
+        { "title": "处理解决", "description": "根据情况进行维修、更换零件或提供备用机。" }
+      ]
+    },
+    "faq": {
+      "title": "服务常见问题",
+      "items": [
+        { "question": "保修期是多久？", "answer": "所有机型均享有标准 12 个月保修，涵盖正常使用下的损坏，不包含意外或进水损坏。" },
+        { "question": "如何申请理赔？", "answer": "通过 LINE 或客服热线报告问题，团队评估后安排维修，并在维修期间提供备用机。" },
+        { "question": "保修范围外是否需要额外付费？", "answer": "超出保修范围的损坏（如意外损坏）将按实际情况收费，团队会在处理前告知费用。" }
+      ]
+    }
+  },
+  "about": {
+    "metaTitle": "关于我们 | MYPOS",
+    "metaDescription": "MYPOS 是泰国本土收银与自助服务系统制造商，自主设计、生产并由自有团队提供全程售后服务。",
+    "breadcrumb": "关于我们",
+    "hero": {
+      "eyebrow": "关于 MYPOS",
+      "title": "泰国本土收银与自助服务系统制造商，全程自主服务",
+      "subtitle": "从硬件、软件到售后支持，我们全程自主完成，让客户获得真正理解自身业务、响应迅速的服务体验。"
+    },
+    "story": {
+      "title": "我们的故事",
+      "description": "MYPOS 源于我们看到泰国商家在使用进口收银系统时面临的困境——难以定制、售后响应缓慢。于是我们决定自主研发硬件与软件，专为泰国商家需求打造，并始终保持与客户的紧密联系。"
+    },
+    "why": {
+      "title": "为什么我们坚持自主生产",
+      "description": "同时掌控硬件与软件，让我们能够针对不同行业快速定制系统。当客户需要协助时，我们可以立即处理，无需等待与海外制造商沟通协调。"
+    },
+    "stats": {
+      "clients": "服务商家数",
+      "years": "行业经验年数",
+      "support": "售后支持"
+    },
+    "cta": {
+      "title": "想更了解我们？",
+      "description": "随时通过留言或电话联系我们的团队，我们很乐意为您解答任何问题。",
+      "cta": "联系我们"
+    }
+  },
+  "contact": {
+    "metaTitle": "联系我们 | MYPOS",
+    "metaDescription": "通过 LINE、电话、邮箱或在线表单联系 MYPOS，团队将为您提供免费咨询服务。",
+    "breadcrumb": "联系我们",
+    "title": "联系我们",
+    "subtitle": "最快的联系方式是 LINE 聊天，团队将在工作时间内回复。",
+    "lineTitle": "LINE 聊天咨询",
+    "lineDescription": "扫描二维码或点击按钮，立即与销售团队开始对话。",
+    "lineCta": "打开 LINE 聊天",
+    "callTitle": "致电我们",
+    "emailTitle": "邮箱",
+    "formTitle": "或留言给我们",
+    "formName": "姓名",
+    "formPhone": "电话号码",
+    "formProduct": "感兴趣的型号（选填）",
+    "formMessage": "留言内容",
+    "formSubmit": "发送留言",
+    "formNote": "此表单仅为界面示例，尚未连接实际留言后台。",
+    "mapTitle": "公司地图"
+  }
+}

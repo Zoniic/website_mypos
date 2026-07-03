@@ -1,0 +1,477 @@
+{
+  "nav": {
+    "home": "Home",
+    "solutions": "Solutions",
+    "solutionsItems": {
+      "selfOrder": "Self-Order Kiosk",
+      "weighPay": "Self-Service Weigh & Pay",
+      "pos": "Point of Sale",
+      "ticketing": "Ticketing Kiosk"
+    },
+    "products": "Products",
+    "accessories": "Accessories",
+    "references": "Case Studies",
+    "software": "Software",
+    "service": "Service",
+    "about": "About Us",
+    "contact": "Contact"
+  },
+  "common": {
+    "lineButton": "Chat on LINE",
+    "callButton": "Call Us",
+    "requestQuote": "Request a Quote",
+    "learnMore": "Learn More",
+    "skipToContent": "Skip to main content"
+  },
+  "footer": {
+    "companyDesc": "A Thai manufacturer of self-service and POS systems — end-to-end from hardware and software to after-sales support.",
+    "menuTitle": "Menu",
+    "contactTitle": "Contact",
+    "followTitle": "Follow Us",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Bangkok, Thailand",
+    "rights": "All rights reserved"
+  },
+  "stickyBar": {
+    "call": "Call",
+    "line": "LINE",
+    "quote": "Get a Quote"
+  },
+  "home": {
+    "metaTitle": "MYPOS | Full-Service POS & Self-Service Systems for Retail and F&B",
+    "metaDescription": "MYPOS is a Thai manufacturer of POS and self-order kiosk systems — designed, built, and supported in-house. Built for restaurants, retail, buffets, and theme parks.",
+    "hero": {
+      "eyebrow": "Thai Manufacturer of POS & Self-Service Systems",
+      "title": "Shorter Queues, Higher Sales — Self-Service Built for Thai Businesses",
+      "subtitle": "Self-order kiosks, weigh & pay stations, front-of-house POS, and ticketing kiosks — all in one place, backed by a local support team for the life of your equipment.",
+      "ctaPrimary": "Get a Free Consultation",
+      "ctaSecondary": "View All Solutions"
+    },
+    "trust": {
+      "title": "Trusted by Brands and Businesses"
+    },
+    "about": {
+      "eyebrow": "Who We Are",
+      "title": "MYPOS Builds and Supports Every Step In-House",
+      "description": "We design the hardware, develop the software, and handle after-sales support with our own team — no layers of resellers in between. That means faster support from people who understand your business.",
+      "cta": "Learn More About Us"
+    },
+    "solutions": {
+      "eyebrow": "Our Solutions",
+      "title": "Choose the System That Fits Your Business",
+      "items": {
+        "selfOrder": {
+          "title": "Self-Order Kiosk",
+          "description": "Cut queues and boost average order value. Ideal for restaurants, fast food, and cafeterias."
+        },
+        "weighPay": {
+          "title": "Self-Service Weigh & Pay",
+          "description": "Automatic weighing and checkout. Ideal for hot pot, buffet, and bakery counters."
+        },
+        "pos": {
+          "title": "Point of Sale",
+          "description": "Full front-of-house POS system for retail, mini-marts, and convenience stores."
+        },
+        "ticketing": {
+          "title": "Ticketing Kiosk",
+          "description": "Automated ticket sales. Ideal for theme parks, hotels, and attractions."
+        }
+      }
+    },
+    "why": {
+      "eyebrow": "Why MYPOS",
+      "title": "More Than Just Hardware",
+      "items": {
+        "manufacture": {
+          "title": "Made in Thailand",
+          "description": "Quality control and customization built for real Thai business needs."
+        },
+        "support": {
+          "title": "Local Support Team",
+          "description": "Fast response and hands-on help for the life of your equipment."
+        },
+        "software": {
+          "title": "In-House Software",
+          "description": "Continuously updated features, no dependency on third-party platforms."
+        }
+      },
+      "stats": {
+        "clients": "Businesses Served",
+        "years": "Years of Experience",
+        "support": "After-Sales Support"
+      }
+    },
+    "products": {
+      "eyebrow": "Popular Products",
+      "title": "Our Best-Selling Models",
+      "priceFrom": "Starting at",
+      "cta": "View All Products"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": [
+        {
+          "question": "Does MYPOS manufacture the hardware, or resell it?",
+          "answer": "We design and manufacture our own hardware, and develop our software in-house — giving us full control over quality and support."
+        },
+        {
+          "question": "How long does installation take?",
+          "answer": "Installation and staff training are typically completed within 1-3 business days, depending on business size and number of units."
+        },
+        {
+          "question": "What after-sales support do you offer?",
+          "answer": "Our local support team is available for the life of your equipment, including on-site service and warranty claims."
+        },
+        {
+          "question": "Is this suitable for small businesses?",
+          "answer": "Yes — we serve everything from small shops to large retail chains, with models and packages to fit different budgets and needs."
+        }
+      ]
+    },
+    "invite": {
+      "title": "Ready for MYPOS to Support Your Business?",
+      "description": "Message us on LINE or give us a call today. Our team is ready to consult and provide a free on-site assessment.",
+      "cta": "Contact Us Now"
+    }
+  },
+  "solutionsCommon": {
+    "breadcrumbHome": "Home",
+    "breadcrumbSolutions": "Solutions",
+    "painGainTitle": "Common Pain Points vs. What Changes",
+    "painLabel": "Common Pain Point",
+    "gainLabel": "What Changes",
+    "howItWorksTitle": "How It Works",
+    "referencesTitle": "Real-World Results",
+    "referencesNote": "Illustrative example cases — to be updated with real client data.",
+    "problemLabel": "Challenge",
+    "installLabel": "Installation",
+    "resultLabel": "Result",
+    "compareCta": "View Recommended Models",
+    "compareTitle": "Recommended Models",
+    "compareModel": "Model",
+    "compareScreen": "Screen Size",
+    "compareOs": "OS",
+    "comparePrice": "Starting Price",
+    "faqTitle": "Frequently Asked Questions"
+  },
+  "solutions": {
+    "selfOrder": {
+      "metaTitle": "Self-Order Kiosk | MYPOS",
+      "metaDescription": "MYPOS self-order kiosks cut counter queues and increase average order value. Ideal for restaurants, fast food, and cafeterias.",
+      "hero": {
+        "eyebrow": "Measurable Results",
+        "title": "Shorter Counter Queues, Higher Average Order Value with Self-Order Kiosks",
+        "subtitle": "Ideal for restaurants, fast food, and cafeterias looking to reduce counter staff workload and boost average order value."
+      },
+      "painGain": [
+        { "pain": "Long queues at peak hours drive customers away", "gain": "Customers order themselves at multiple stations, cutting wait times" },
+        { "pain": "Staff forget to upsell, limiting sales growth", "gain": "The system automatically suggests add-ons on every order" },
+        { "pain": "Mis-heard orders confuse the kitchen", "gain": "Orders are sent straight to the kitchen automatically, reducing errors" }
+      ],
+      "steps": [
+        { "title": "Choose Items", "description": "Customers select menu items and add-ons on screen themselves" },
+        { "title": "Pay", "description": "Pay instantly at the kiosk with multiple payment options" },
+        { "title": "Kitchen Receives Order", "description": "Orders are sent automatically to the kitchen or cashier, no manual writing" }
+      ],
+      "cases": [
+        { "business": "An outdoor made-to-order restaurant chain", "problem": "Long queues at lunch rush drove customers away", "install": "Installed 2 self-order kiosks at the storefront", "result": "Average wait time cut by 40%" },
+        { "business": "A mall fast-food outlet", "problem": "Not enough staff during peak hours", "install": "Installed 3 kiosks in place of an extra counter", "result": "Average order value increased by 15%" }
+      ],
+      "faq": [
+        { "question": "Can the kiosk connect to our kitchen system?", "answer": "Yes — orders from the kiosk go straight to the kitchen display or print automatically, no re-entry needed." },
+        { "question": "Can customers unfamiliar with technology still order?", "answer": "The interface is designed to be simple with clear steps, and staff can still assist when needed." },
+        { "question": "Does it support promotions or discounts?", "answer": "Yes — promotions, discounts, and featured items can all be configured from the back office." }
+      ]
+    },
+    "weighPay": {
+      "metaTitle": "Self-Service Weigh & Pay | MYPOS",
+      "metaDescription": "MYPOS self-service weigh & pay stations automatically weigh and price items. Ideal for hot pot, buffet, and bakery counters.",
+      "hero": {
+        "eyebrow": "Measurable Results",
+        "title": "Accurate Weighing and Pricing, Shorter Checkout Queues with Self-Service Weigh & Pay",
+        "subtitle": "Ideal for hot pot, buffet, and bakery counters that need accuracy and shorter queues during peak hours."
+      },
+      "painGain": [
+        { "pain": "Staff frequently misweigh items, causing pricing errors", "gain": "Weighing and pricing are automatic and accurate" },
+        { "pain": "Slow checkout queues during peak hours", "gain": "Customers can weigh and pay themselves at multiple stations" },
+        { "pain": "Hard to control ingredient costs", "gain": "Real-time sales data makes cost analysis easier" }
+      ],
+      "steps": [
+        { "title": "Fill Container", "description": "Customers fill their container with food or ingredients as usual" },
+        { "title": "Weigh", "description": "Place it on the scale — the system calculates the price automatically" },
+        { "title": "Pay", "description": "Pay directly at the station, no cashier queue needed" }
+      ],
+      "cases": [
+        { "business": "A hot pot restaurant in a community mall", "problem": "Slow checkout waiting for staff to weigh items", "install": "Installed 2 self-service weigh & pay stations", "result": "Checkout time cut by 50%" },
+        { "business": "An office-area salad buffet", "problem": "Frequent staff pricing errors during weighing", "install": "Switched the whole store to self-service weigh & pay", "result": "Pricing errors nearly eliminated" }
+      ],
+      "faq": [
+        { "question": "How accurate are the scales?", "answer": "We use industrial-grade weighing sensors with low error margins and fine per-gram pricing configuration." },
+        { "question": "Can I set prices for multiple menu items on one unit?", "answer": "Yes — per-weight pricing can be configured for unlimited food categories from the back office." },
+        { "question": "Can it prevent customers from tampering with the weight?", "answer": "The system records a screenshot of every weighing transaction for later review." }
+      ]
+    },
+    "pos": {
+      "metaTitle": "Point of Sale | MYPOS",
+      "metaDescription": "MYPOS front-of-house POS systems check out faster and update stock automatically. Ideal for retail, mini-marts, and convenience stores.",
+      "hero": {
+        "eyebrow": "Measurable Results",
+        "title": "Faster Checkout, Automatic Stock Updates with a Front-of-House POS System",
+        "subtitle": "Ideal for retail stores, mini-marts, and convenience stores that need speed and accurate stock data."
+      },
+      "painGain": [
+        { "pain": "Slow checkout, long queues at the counter", "gain": "Faster checkout with barcode scanning" },
+        { "pain": "Stock counts don't match what's on the shelf", "gain": "Stock is deducted automatically with every order" },
+        { "pain": "Hard to keep up with sales across branches", "gain": "Real-time sales reports for every branch" }
+      ],
+      "steps": [
+        { "title": "Scan Item", "description": "Scan the barcode or select the item from the menu" },
+        { "title": "Calculate Total", "description": "The system calculates the total and deducts stock automatically" },
+        { "title": "Accept Payment", "description": "Accept payment through multiple channels and print the receipt instantly" }
+      ],
+      "cases": [
+        { "business": "A neighborhood mini-mart", "problem": "Slow checkout with long evening queues", "install": "Switched both branches to MYPOS POS", "result": "Checkout speed doubled" },
+        { "business": "A retail chain", "problem": "Stock mismatches between branches", "install": "Connected POS across all branches to a central system", "result": "Stock data now matches in real time across branches" }
+      ],
+      "faq": [
+        { "question": "Can it connect to our existing accounting system?", "answer": "Yes — sales data can be exported to connect with popular accounting systems." },
+        { "question": "Can I manage multiple branches at once?", "answer": "Yes — view sales and stock for every branch from a single central dashboard." },
+        { "question": "Does it still work when the internet drops?", "answer": "The system keeps working offline temporarily and syncs data automatically once the connection returns." }
+      ]
+    },
+    "ticketing": {
+      "metaTitle": "Ticketing Kiosk | MYPOS",
+      "metaDescription": "MYPOS automated ticketing kiosks are ideal for theme parks, hotels, and attractions — cutting queues at the ticket counter.",
+      "hero": {
+        "eyebrow": "Measurable Results",
+        "title": "Shorter Ticket Queues, More Add-On Sales with Automated Ticketing Kiosks",
+        "subtitle": "Ideal for theme parks, hotels, and attractions that need to serve large numbers of guests at once."
+      },
+      "painGain": [
+        { "pain": "Long ticket queues at the entrance", "gain": "Guests can buy tickets themselves at multiple stations" },
+        { "pain": "Not enough ticket staff on busy holidays", "gain": "Fewer dedicated ticket-counter staff needed" },
+        { "pain": "Hard to track ticket sales", "gain": "Real-time ticket sales reporting" }
+      ],
+      "steps": [
+        { "title": "Choose a Ticket", "description": "Select a ticket type or package on the screen" },
+        { "title": "Pay", "description": "Pay instantly at the kiosk" },
+        { "title": "Receive Ticket", "description": "Receive a ticket or QR code instantly, no queuing needed" }
+      ],
+      "cases": [
+        { "business": "An outdoor theme park", "problem": "Long ticket queues during long holidays", "install": "Installed 4 ticketing kiosks", "result": "Ticket queue wait time cut by 60%" },
+        { "business": "A beachside resort hotel", "problem": "Not enough front-desk staff during check-in rush", "install": "Installed kiosks selling add-on activity passes", "result": "Add-on activity sales increased by 20%" }
+      ],
+      "faq": [
+        { "question": "Can it issue tickets as a QR code?", "answer": "Yes — the system can issue tickets as a QR code or print a paper ticket, depending on configuration." },
+        { "question": "Can one unit sell multiple ticket types?", "answer": "Yes — unlimited ticket types and packages can be configured from the back office." },
+        { "question": "Can it connect to an on-site scanning system?", "answer": "Yes — QR code tickets connect to on-site scanners for entry verification and headcounts." }
+      ]
+    }
+  },
+  "productsCommon": {
+    "metaTitle": "All Products | MYPOS",
+    "metaDescription": "Shop self-order kiosks, weigh & pay scales, POS terminals, and ticketing kiosks from MYPOS. Search and filter by business type, OS, and screen size.",
+    "breadcrumbProducts": "Products",
+    "searchPlaceholder": "Search by model name or function",
+    "filterBusinessType": "Business Type",
+    "filterOs": "Operating System",
+    "filterScreenSize": "Screen Size",
+    "filterCategory": "Function",
+    "allLabel": "All",
+    "noResults": "No products match your filters. Try adjusting them.",
+    "priceFrom": "Starting at",
+    "viewDetails": "View Details",
+    "resultsCount": "{count} results found",
+    "businessTypes": {
+      "restaurant": "Restaurant",
+      "retail": "Retail",
+      "buffet": "Buffet",
+      "convenience": "Convenience Store",
+      "themepark": "Theme Park",
+      "hotel": "Hotel",
+      "cafeteria": "Cafeteria",
+      "bakery": "Bakery",
+      "manufacturing": "Manufacturing"
+    },
+    "categories": {
+      "self-order": "Self-Order Kiosk",
+      "weigh-pay": "Self-Service Weigh & Pay",
+      "pos": "Point of Sale",
+      "ticketing": "Ticketing Kiosk"
+    }
+  },
+  "productDetail": {
+    "specsTitle": "Key Specs",
+    "screenSize": "Screen Size",
+    "os": "Operating System",
+    "cpu": "Processor",
+    "ram": "RAM",
+    "storage": "Storage",
+    "connectivity": "Connectivity",
+    "dimensions": "Dimensions",
+    "weight": "Weight",
+    "warranty": "Warranty",
+    "warrantyValue": "{months} months",
+    "requestQuote": "Request a Quote for This Model",
+    "lineQuote": "Ask via LINE",
+    "datasheetTitle": "Product Datasheet",
+    "datasheetDownload": "Download PDF",
+    "datasheetUnavailable": "Datasheet is being prepared. Contact our sales team for more information.",
+    "relatedTitle": "Related / Complementary Models",
+    "galleryLabel": "Product Gallery"
+  },
+  "products": {
+    "items": {
+      "f82": { "highlight": "A compact 8-inch screen ideal for tight counter spaces, with instant receipt printer and cash drawer connectivity." },
+      "f88": { "highlight": "An upgraded F82 with more RAM and storage, built for stores with a wider product range." },
+      "f100": { "highlight": "A 10-inch wide-view touchscreen, ideal for tabletop or wall-mounted self-order kiosks." },
+      "o11": { "highlight": "An 11-inch large display with high RAM, handling image-heavy menus and promo animations smoothly." },
+      "ranger-t8": { "highlight": "A built-in high-precision scale that automatically calculates per-weight pricing, cutting counter steps." },
+      "windows-i3": { "highlight": "Powerful specs with a large 15-inch screen, ideal for stores that also run accounting or other add-on software." },
+      "kiosk-22": { "highlight": "A 22-inch freestanding kiosk, clearly visible even in bright outdoor light — ideal for outdoor ticketing points." },
+      "kiosk-32": { "highlight": "An extra-large 32-inch display, visible from far away — ideal for high-traffic areas." }
+    }
+  },
+  "software": {
+    "metaTitle": "MYPOS Software | Built In-House, Not POSPOS",
+    "metaDescription": "MYPOS software is developed entirely in-house by our own team — not POSPOS. Powers self-order kiosks, weigh & pay, POS, and ticketing kiosks, with continuous feature updates.",
+    "hero": {
+      "eyebrow": "100% Our Own Software",
+      "title": "MYPOS Software Is Built In-House — Every Feature, Not POSPOS",
+      "subtitle": "Our software team designs the system specifically for Thai businesses, continuously shipping new features without relying on any third-party platform.",
+      "cta": "Request a Demo"
+    },
+    "features": {
+      "title": "Key Software Features",
+      "items": [
+        { "title": "Manage Your Own Menu/Products", "description": "Add, edit, or disable items instantly from the back office — no need to wait on an IT team." },
+        { "title": "Real-Time Sales Reports", "description": "View sales, best sellers, and performance for every branch, anytime, anywhere." },
+        { "title": "Multi-Branch Support", "description": "Manage multiple branches from a single central dashboard and compare performance across locations." },
+        { "title": "Keeps Working Offline", "description": "The system keeps running temporarily offline and syncs automatically once the connection returns." },
+        { "title": "Set Your Own Promotions", "description": "Create discounts, promotions, and featured items yourself from the back office." },
+        { "title": "Continuous Feature Updates", "description": "Our local development team ships updates and fixes based on real customer needs on an ongoing basis." }
+      ]
+    },
+    "screenshots": {
+      "title": "System Screenshots"
+    }
+  },
+  "references": {
+    "metaTitle": "Case Studies | MYPOS",
+    "metaDescription": "See how businesses use MYPOS — from restaurants and retail to buffets, theme parks, and hotels.",
+    "breadcrumb": "Case Studies",
+    "title": "Case Studies",
+    "subtitle": "Real-world examples of businesses using MYPOS. Filter by your business type to see the closest match.",
+    "filterLabel": "Filter by Business Type",
+    "noResults": "No cases in this category yet. Try a different business type.",
+    "items": [
+      { "business": "An outdoor made-to-order restaurant chain", "businessType": "restaurant", "problem": "Long queues at lunch rush drove customers away", "install": "Installed 2 self-order kiosks at the storefront", "result": "Average wait time cut by 40%" },
+      { "business": "A neighborhood mini-mart", "businessType": "convenience", "problem": "Slow checkout with long evening queues", "install": "Switched both branches to MYPOS POS", "result": "Checkout speed doubled" },
+      { "business": "A hot pot restaurant in a community mall", "businessType": "buffet", "problem": "Slow checkout waiting for staff to weigh items", "install": "Installed 2 self-service weigh & pay stations", "result": "Checkout time cut by 50%" },
+      { "business": "DreamWorld", "businessType": "themepark", "problem": "Needed a sales system supporting multiple simultaneous service points across the theme park", "install": "Installed a full POS system — both Android POS and Self-Service Kiosk", "result": "Smoothly supports sales at multiple points at once" },
+      { "business": "Ruengrawin Metal", "businessType": "manufacturing", "problem": "Needed to manage sales of hardware and large parts at volume", "install": "Adopted a high-performance Windows POS system for stock and sales management", "result": "Manages large parts inventory and sales efficiently" },
+      { "business": "A beachside resort hotel", "businessType": "hotel", "problem": "Not enough front-desk staff during check-in rush", "install": "Installed kiosks selling add-on activity passes", "result": "Add-on activity sales increased by 20%" },
+      { "business": "SME Retail Chain", "businessType": "convenience", "problem": "Wanted to expand branches on a limited budget", "install": "Installed a standard, easy-to-use, affordable Android POS system", "result": "Expanded branches continuously at a cost-effective rate" },
+      { "business": "An office cafeteria", "businessType": "cafeteria", "problem": "Staff lost lunch-break time queuing for food", "install": "Installed 3 self-order kiosks", "result": "Queue time cut by more than half" },
+      { "business": "A mall bakery counter", "businessType": "bakery", "problem": "Frequent staff pricing errors during weighing", "install": "Switched the whole store to self-service weigh & pay", "result": "Pricing errors nearly eliminated" }
+    ]
+  },
+  "accessories": {
+    "metaTitle": "Accessories | MYPOS",
+    "metaDescription": "Accessories for MYPOS POS and self-service systems — cash drawers, barcode scanners, receipt printers, and thermal paper.",
+    "breadcrumb": "Accessories",
+    "title": "Accessories",
+    "subtitle": "Accessories that work with your MYPOS system right out of the box. Contact our sales team for pricing and compatibility with your model.",
+    "cta": "Ask About Accessories",
+    "items": [
+      { "slug": "cash-drawer", "name": "Cash Drawer", "description": "A sturdy steel cash drawer connecting to your POS via cable or RJ11 port, opening automatically on every sale." },
+      { "slug": "barcode-scanner", "name": "Barcode Scanner", "description": "Fast 1D/2D barcode scanning, available wired or wireless, compatible with every MYPOS POS model." },
+      { "slug": "receipt-printer", "name": "Receipt Printer", "description": "High-speed thermal receipt printing over USB/LAN/Bluetooth, with automatic paper cutting." },
+      { "slug": "thermal-paper", "name": "Thermal Paper", "description": "High-quality thermal receipt paper in standard 58mm and 80mm sizes, available in bulk packs." }
+    ]
+  },
+  "service": {
+    "metaTitle": "After-Sales Service | MYPOS",
+    "metaDescription": "On-site installation, warranty claims, and support from MYPOS. Our local support team is available for the life of your equipment.",
+    "breadcrumb": "Service",
+    "hero": {
+      "eyebrow": "After-Sales Service",
+      "cta": "Contact Our Service Team",
+      "title": "Supported for the Life of Your Equipment — We Don't Disappear After the Sale",
+      "subtitle": "Our local support team is with you from day-one installation through after-sales support for as long as you use your equipment."
+    },
+    "types": {
+      "title": "Our Services",
+      "items": [
+        { "title": "On-Site Installation", "description": "Our technicians come to your store to install and train your staff — no need to ship equipment anywhere." },
+        { "title": "Warranty Claims & Repairs", "description": "Report an issue via LINE or phone, and our team coordinates fast repair or replacement." },
+        { "title": "Product Warranty", "description": "Every model is covered under warranty terms for damage from normal use." }
+      ]
+    },
+    "process": {
+      "title": "How Service Works",
+      "steps": [
+        { "title": "Report the Issue", "description": "Report the problem via LINE or our support hotline." },
+        { "title": "Assessment & Scheduling", "description": "Our team does an initial assessment and schedules a repair or claim visit." },
+        { "title": "Resolution", "description": "We repair, replace parts, or swap in a loaner unit as appropriate." }
+      ]
+    },
+    "faq": {
+      "title": "Service FAQ",
+      "items": [
+        { "question": "How long is the warranty?", "answer": "A standard 12-month warranty covers every model for damage from normal use, excluding accidents or water damage." },
+        { "question": "How do I file a warranty claim?", "answer": "Report the issue via LINE or our support hotline. Our team will assess it and schedule a repair, providing a loaner unit while yours is serviced." },
+        { "question": "Are there any extra costs beyond warranty?", "answer": "Damage outside warranty terms (e.g. accidents) is charged at actual cost, and our team always confirms pricing with you before any work begins." }
+      ]
+    }
+  },
+  "about": {
+    "metaTitle": "About Us | MYPOS",
+    "metaDescription": "MYPOS is a Thai manufacturer of POS and self-service systems, designing, building, and supporting every step in-house with our own team.",
+    "breadcrumb": "About Us",
+    "hero": {
+      "eyebrow": "About MYPOS",
+      "title": "A Thai Manufacturer of POS & Self-Service Systems, Supported In-House Every Step of the Way",
+      "subtitle": "From hardware and software to after-sales support, we handle every step ourselves — so customers get fast support from people who understand their business."
+    },
+    "story": {
+      "title": "Our Story",
+      "description": "MYPOS started from seeing how much Thai businesses struggled with imported POS systems that were hard to customize and slow to support. So we decided to build our own hardware and software — designed to fit Thai businesses precisely, with support that stays close to our customers."
+    },
+    "why": {
+      "title": "Why We Build In-House",
+      "description": "Controlling both hardware and software lets us customize the system quickly for each type of business. And when a customer needs help, we can solve it immediately — no waiting on coordination with an overseas manufacturer."
+    },
+    "stats": {
+      "clients": "Businesses Served",
+      "years": "Years of Experience",
+      "support": "After-Sales Support"
+    },
+    "cta": {
+      "title": "Want to Know Us Better?",
+      "description": "Message or call our team anytime — we're happy to answer any question.",
+      "cta": "Contact Us"
+    }
+  },
+  "contact": {
+    "metaTitle": "Contact Us | MYPOS",
+    "metaDescription": "Contact MYPOS via LINE, phone, email, or our quote request form. Our team is ready to help, free of charge.",
+    "breadcrumb": "Contact",
+    "title": "Contact Us",
+    "subtitle": "The fastest way to reach us is LINE chat. Our team replies during business hours.",
+    "lineTitle": "Chat on LINE",
+    "lineDescription": "Scan the QR code or tap the button to chat with our sales team instantly.",
+    "lineCta": "Open LINE Chat",
+    "callTitle": "Call Us",
+    "emailTitle": "Email",
+    "formTitle": "Or Leave Us a Message",
+    "formName": "Full Name",
+    "formPhone": "Phone Number",
+    "formProduct": "Model of Interest (optional)",
+    "formMessage": "Message",
+    "formSubmit": "Send Message",
+    "formNote": "This form is a UI placeholder only — it is not yet connected to a real messaging backend.",
+    "mapTitle": "Company Map"
+  }
+}

@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id             Int      @id @default(autoincrement())
+  slug           String   @unique
+  priceFrom      Int
+  category       String
+  os             String
+  screenSize     String
+  cpu            String
+  ram            String
+  storage        String
+  connectivity   String
+  dimensions     String
+  weight         String
+  warrantyMonths Int
+  datasheetUrl   String?
+  featured       Boolean  @default(false)
+  businessTypes  String
+  relatedSlugs   String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  translations ProductTranslation[]
+}
+
+model ProductTranslation {
+  id        Int    @id @default(autoincrement())
+  productId Int
+  locale    String
+  name      String
+  highlight String @db.Text
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@unique([productId, locale])
+}
+
+model Accessory {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  translations AccessoryTranslation[]
+}
+
+model AccessoryTranslation {
+  id          Int    @id @default(autoincrement())
+  accessoryId Int
+  locale      String
+  name        String
+  description String @db.Text
+
+  accessory Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
+
+  @@unique([accessoryId, locale])
+}
+
+model ReferenceCase {
+  id           Int      @id @default(autoincrement())
+  businessType String
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  translations ReferenceCaseTranslation[]
+}
+
+model ReferenceCaseTranslation {
+  id       Int    @id @default(autoincrement())
+  caseId   Int
+  locale   String
+  business String
+  problem  String @db.Text
+  install  String @db.Text
+  result   String @db.Text
+
+  case ReferenceCase @relation(fields: [caseId], references: [id], onDelete: Cascade)
+
+  @@unique([caseId, locale])
+}
+
+/// Generic key-value store for all marketing copy (hero/about/faq/etc).
+/// `key` is a dot-path matching the original messages/*.json structure,
+/// e.g. namespace="home", key="hero.title". Arrays/objects (like FAQ items)
+/// are stored as a JSON string in `value`.
+model PageContent {
+  id        Int      @id @default(autoincrement())
+  namespace String
+  key       String
+  locale    String
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+
+  @@unique([namespace, key, locale])
+  @@index([namespace, locale])
+}
