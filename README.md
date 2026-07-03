@@ -21,7 +21,7 @@ npm run lint    # ESLint
 
 ### Environment variables
 
-Two files, both gitignored:
+Two files, both gitignored (see `.env.example` for the template):
 - `.env` — `DATABASE_URL` only (Prisma CLI reads `.env`, not `.env.local`).
 - `.env.local` — `DATABASE_URL` again (for the Next.js app at runtime), plus `ADMIN_PASSWORD` and `SESSION_SECRET`.
 
@@ -40,6 +40,8 @@ Some features also ship a one-off, idempotent script to push new copy into the D
 ```bash
 npx tsx prisma/add-contact-form-feedback-keys.ts   # contact form loading/success/error text
 npx tsx prisma/add-kb-namespace.ts                 # Knowledge Base landing/section/search text
+npx tsx prisma/update-software-features.ts         # ⚠️ overwrites software.features.items
+npx tsx prisma/add-legal-pages.ts                  # Privacy Policy / Terms / cookie banner text
 ```
 
 ## Project structure
@@ -110,7 +112,7 @@ Pages fall back to a labeled gray placeholder tile automatically until a real ph
 
 ## Editing marketing copy (hero, FAQ, about, etc.)
 
-**Admin → Page Content**, pick the namespace (e.g. `home`, `about`, `solutions`), edit the field for each language, save.
+**Admin → Page Content**, pick the namespace (e.g. `home`, `about`, `solutions`), edit the field for each language, save. Each namespace editor has a **live preview panel** on the right (desktop) showing the actual public page for the selected language — it auto-refreshes after a successful save, or use the "Refresh" button anytime.
 
 ## What's still placeholder — replace before launch
 
@@ -121,7 +123,13 @@ Pages fall back to a labeled gray placeholder tile automatically until a real ph
 - **Map** — `/contact` embeds a generic Google Maps query for "Bangkok, Thailand". Once you have a real address, update the `src` in `src/app/[locale]/contact/page.tsx`.
 - **LINE OA** — `siteConfig.lineUrl` points at `https://line.me/R/ti/p/@mypos` (real LINE ID from the brochure). The QR code image is still a placeholder tile.
 - **301 redirects** — `src/data/legacyRedirects.ts` has the mapping structure and commented examples, but no real entries yet. Fill it in from the old site's URL list / Search Console export.
-- **Contact form** — `src/components/contact/ContactForm.tsx` is a UI-only placeholder; it doesn't send anywhere yet (see Phase 8 below).
+- **Contact form** — `src/components/contact/ContactForm.tsx` shows real loading/success/error UI, but still doesn't send anywhere yet (see Phase 8 below).
+- **Privacy Policy / Terms of Service** (`legal` namespace, `/privacy-policy` and `/terms-of-service`) — generic drafted boilerplate, not legal advice. **Have a lawyer review before relying on this in production**, especially the PDPA-related claims in the Privacy Policy.
+
+## Security notes
+
+- **Admin login rate limiting** (`src/lib/rateLimit.ts`) — 5 failed attempts per 15 minutes per IP, in-memory. This is best-effort on serverless platforms (each instance has separate memory); for a hard guarantee under serverless, swap to a shared store (Redis/Upstash).
+- **Cookie consent banner** (`src/components/layout/CookieConsent.tsx`) — currently only essential cookies are set (consent choice, language). If analytics/ads are added later, gate them behind this consent.
 
 ## SEO
 

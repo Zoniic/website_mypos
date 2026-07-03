@@ -17,6 +17,8 @@ const staticPaths = [
   "/knowledge-base",
   "/knowledge-base/hardware",
   "/knowledge-base/software",
+  "/privacy-policy",
+  "/terms-of-service",
 ];
 
 const solutionPaths = solutionSlugs.map((slug) => `/solutions/${slug}`);

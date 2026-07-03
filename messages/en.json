@@ -32,7 +32,9 @@
     "phone": "Phone",
     "email": "Email",
     "address": "Bangkok, Thailand",
-    "rights": "All rights reserved"
+    "rights": "All rights reserved",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
   },
   "stickyBar": {
     "call": "Call",
@@ -503,5 +505,23 @@
     "searchResultsCount": "Found {count} result(s) for \"{query}\"",
     "downloadPdf": "Download PDF",
     "relatedProduct": "Related product"
+  },
+  "cookieConsent": {
+    "title": "Cookie notice",
+    "message": "We use cookies to make this site work properly. By continuing to browse, you agree to our",
+    "privacyLink": "Privacy Policy",
+    "accept": "Got it"
+  },
+  "legal": {
+    "privacyMetaTitle": "Privacy Policy | MYPOS",
+    "privacyMetaDescription": "How MYPOS collects, uses, and protects your personal data.",
+    "privacyTitle": "Privacy Policy",
+    "privacyLastUpdated": "Last updated: July 2026",
+    "privacyBody": "This Privacy Policy explains how MYPOS (\"we\", \"us\") collects, uses, and protects personal data submitted through this website, in accordance with Thailand's Personal Data Protection Act (PDPA).\n\nWhat we collect\nWhen you use our contact form, we collect the information you provide: name, phone number, email address (if given), the product you're interested in, and your message.\n\nWhy we collect it\nWe use this information solely to respond to your inquiry, provide quotes, and follow up on sales and support requests. We do not sell your personal data to third parties.\n\nHow long we keep it\nWe retain contact form submissions for as long as needed to handle your inquiry and any resulting business relationship, after which it is deleted or anonymized.\n\nYour rights\nUnder the PDPA, you have the right to access, correct, or request deletion of your personal data. To exercise these rights, contact us using the details on our Contact page.\n\nCookies\nThis site uses a minimal set of cookies necessary for the site to function (e.g. remembering your cookie consent choice, and your selected language). We do not currently use tracking or advertising cookies.\n\nChanges to this policy\nWe may update this policy from time to time. The \"Last updated\" date above reflects the most recent revision.",
+    "termsMetaTitle": "Terms of Service | MYPOS",
+    "termsMetaDescription": "Terms and conditions for using the MYPOS website and services.",
+    "termsTitle": "Terms of Service",
+    "termsLastUpdated": "Last updated: July 2026",
+    "termsBody": "By using this website, you agree to the following terms.\n\nUse of this website\nThis website provides information about MYPOS products, software, and services. Content is provided for general informational purposes and is subject to change without notice.\n\nProduct information and pricing\nProduct specifications, pricing, and availability shown on this site are indicative and subject to confirmation at the time of order. Please contact our sales team for a formal quotation.\n\nIntellectual property\nAll content on this website — including text, images, logos, and product designs — is the property of MYPOS or its licensors and may not be reproduced without permission.\n\nLimitation of liability\nWhile we make reasonable efforts to keep information on this site accurate and up to date, MYPOS is not liable for any loss or damage arising from reliance on content published here.\n\nGoverning law\nThese terms are governed by the laws of Thailand.\n\nContact\nQuestions about these terms can be directed to us via our Contact page."
   }
 }

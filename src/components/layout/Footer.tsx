@@ -105,8 +105,18 @@ export async function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-border px-4 py-4 text-center text-xs text-text-2 sm:px-6 lg:px-8">
-        © {year} MYPOS. {t("rights")}.
+      <div className="flex flex-col items-center gap-2 border-t border-border px-4 py-4 text-center text-xs text-text-2 sm:px-6 lg:px-8">
+        <p>
+          © {year} MYPOS. {t("rights")}.
+        </p>
+        <p className="flex gap-4">
+          <Link href="/privacy-policy" className="hover:text-text-1">
+            {t("privacyPolicy")}
+          </Link>
+          <Link href="/terms-of-service" className="hover:text-text-1">
+            {t("termsOfService")}
+          </Link>
+        </p>
       </div>
     </footer>
   );

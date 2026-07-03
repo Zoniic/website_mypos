@@ -10,6 +10,7 @@ import { getSiteSettings } from "@/lib/siteSettings";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
+import { CookieConsent } from "@/components/layout/CookieConsent";
 import "../globals.css";
 
 const fontSans = Prompt({
@@ -70,6 +71,7 @@ export default async function LocaleLayout({
             </main>
             <Footer />
             <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
+            <CookieConsent />
           </MotionConfig>
         </NextIntlClientProvider>
       </body>
