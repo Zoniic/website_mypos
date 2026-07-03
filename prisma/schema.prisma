@@ -110,3 +110,33 @@ model PageContent {
   @@unique([namespace, key, locale])
   @@index([namespace, locale])
 }
+
+/// Site-wide settings not tied to a locale: contact info, map, homepage
+/// stats. Simple key -> value store, no locale (numbers/links/URLs read
+/// the same across languages).
+model SiteSetting {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  value     String   @db.Text
+  updatedAt DateTime @updatedAt
+}
+
+/// Named image slots used across the site (hero photo, about photos,
+/// solution photos, software screenshot, ...). One row per slot; `url` is
+/// null until an admin uploads a photo for it.
+model SiteImage {
+  id        Int      @id @default(autoincrement())
+  key       String   @unique
+  url       String?
+  updatedAt DateTime @updatedAt
+}
+
+/// Customer/partner logos shown in the homepage "Trusted by" strip.
+model TrustLogo {
+  id        Int      @id @default(autoincrement())
+  name      String
+  imageUrl  String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

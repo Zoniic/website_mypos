@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 import { getFeaturedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
@@ -48,16 +49,17 @@ export default async function HomePage({
   const t = await getTranslations({ locale, namespace: "home" });
   const faqItems = t.raw("faq.items") as { question: string; answer: string }[];
   const featuredProducts = await getFeaturedProducts(locale);
+  const settings = await getSiteSettings();
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/images/placeholders/tile.svg`,
-    telephone: siteConfig.phone,
-    email: siteConfig.email,
-    sameAs: [siteConfig.lineUrl, siteConfig.facebookUrl],
+    logo: `${siteConfig.url}/images/brand/logo.png`,
+    telephone: settings.phone,
+    email: settings.email,
+    sameAs: [settings.lineUrl, settings.facebookUrl],
   };
 
   const faqSchema = {

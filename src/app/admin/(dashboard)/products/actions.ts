@@ -9,9 +9,11 @@ const locales = ["th", "en", "zh"] as const;
 const GALLERY_SLOTS = 3;
 
 function readProductFields(formData: FormData) {
+  const priceRaw = String(formData.get("priceFrom") ?? "").trim();
+  const warrantyRaw = String(formData.get("warrantyMonths") ?? "").trim();
   return {
     slug: String(formData.get("slug") ?? "").trim(),
-    priceFrom: Number(formData.get("priceFrom") ?? 0),
+    priceFrom: priceRaw ? Number(priceRaw) : 0,
     category: String(formData.get("category") ?? "pos"),
     os: String(formData.get("os") ?? "Android"),
     screenSize: String(formData.get("screenSize") ?? "").trim(),
@@ -21,12 +23,29 @@ function readProductFields(formData: FormData) {
     connectivity: String(formData.get("connectivity") ?? "").trim(),
     dimensions: String(formData.get("dimensions") ?? "").trim(),
     weight: String(formData.get("weight") ?? "").trim(),
-    warrantyMonths: Number(formData.get("warrantyMonths") ?? 12),
+    warrantyMonths: warrantyRaw ? Number(warrantyRaw) : 12,
     datasheetUrl: String(formData.get("datasheetUrl") ?? "").trim() || null,
     featured: formData.get("featured") === "on",
-    businessTypes: String(formData.get("businessTypes") ?? "").trim(),
-    relatedSlugs: String(formData.get("relatedSlugs") ?? "").trim(),
+    businessTypes: String(formData.get("businessTypes") ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .join(","),
+    relatedSlugs: String(formData.get("relatedSlugs") ?? "")
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean)
+      .join(","),
   };
+}
+
+function isUniqueConstraintError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2002"
+  );
 }
 
 async function readImageFields(
@@ -68,7 +87,13 @@ export async function createProduct(_prevState: string | null, formData: FormDat
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
-  const product = await prisma.product.create({ data: { ...fields, ...images } });
+  let product;
+  try {
+    product = await prisma.product.create({ data: { ...fields, ...images } });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) return `Slug "${fields.slug}" is already in use.`;
+    throw error;
+  }
 
   for (const locale of locales) {
     await prisma.productTranslation.create({
@@ -108,7 +133,12 @@ export async function updateProduct(
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
-  await prisma.product.update({ where: { id: productId }, data: { ...fields, ...images } });
+  try {
+    await prisma.product.update({ where: { id: productId }, data: { ...fields, ...images } });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) return `Slug "${fields.slug}" is already in use.`;
+    throw error;
+  }
 
   for (const locale of locales) {
     await prisma.productTranslation.upsert({

@@ -65,7 +65,15 @@ Data model (see `prisma/schema.prisma`):
 - **`Product`** + **`ProductTranslation`** (one row per locale: name, highlight) — specs/price/category are shared across locales.
 - **`Accessory`** + **`AccessoryTranslation`**.
 - **`ReferenceCase`** + **`ReferenceCaseTranslation`** (case studies on `/references` and each solution page).
-- **`PageContent`** — generic `(namespace, key, locale) -> value` store for everything else (hero text, FAQ, about, contact labels, ...). Arrays/objects (like FAQ items) are stored as a JSON string in `value`. Edit these under **Admin → Page Content**.
+- **`PageContent`** — generic `(namespace, key, locale) -> value` store for everything else (hero text, FAQ, about, contact labels, ...). Arrays/objects (like FAQ items) are stored as a JSON string in `value`, and are validated before saving — invalid JSON is rejected with an error instead of corrupting the field. Edit these under **Admin → Page Content**.
+- **`SiteSetting`** — phone, email, LINE, Facebook, Google Maps embed URL, and homepage stats (businesses served / years / support). Edit under **Admin → Site Settings**.
+- **`SiteImage`** — named photo slots (homepage hero, about page ×2, each solution's photo, software page hero) — a fixed set of 8 known image spots the site's layout expects. Edit under **Admin → Site Photos**.
+- **`TrustLogo`** — the "Trusted by" logo strip on the homepage. Falls back to showing the name as text until a logo image is uploaded. Edit under **Admin → Trust Logos**.
+
+### What's still not admin-editable
+
+- **Header/footer menu structure** (which links appear, their order) is hardcoded in `Header.tsx` / `Footer.tsx` — the page set is fixed by the file-based routes anyway, so this would need a dedicated menu-builder feature to become dynamic. Menu *labels* are editable via `nav.*` in Page Content.
+- **301 redirects** (`src/data/legacyRedirects.ts`) and **company name/domain** (`src/config/site.ts`) are still code, since they're deployment-level concerns rather than day-to-day content.
 
 ## Adding a product / accessory / case study
 

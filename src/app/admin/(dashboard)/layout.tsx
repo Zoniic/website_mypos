@@ -9,6 +9,9 @@ const navLinks = [
   { href: "/admin/accessories", label: "Accessories" },
   { href: "/admin/references", label: "Case Studies" },
   { href: "/admin/content", label: "Page Content" },
+  { href: "/admin/photos", label: "Site Photos" },
+  { href: "/admin/trust-logos", label: "Trust Logos" },
+  { href: "/admin/settings", label: "Site Settings" },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {

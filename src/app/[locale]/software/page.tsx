@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Invite } from "@/components/sections/Invite";
+import { getSiteImages } from "@/lib/siteSettings";
 
 export async function generateMetadata({
   params,
@@ -43,6 +44,7 @@ export default async function SoftwarePage({
 
   const t = await getTranslations({ locale, namespace: "software" });
   const features = t.raw("features.items") as FeatureItem[];
+  const images = await getSiteImages();
 
   const softwareSchema = {
     "@context": "https://schema.org",
@@ -72,7 +74,7 @@ export default async function SoftwarePage({
             </Button>
           </div>
         </div>
-        <PlaceholderImage ratio="4/3" label="Software UI photo" />
+        <PlaceholderImage ratio="4/3" label="Software UI photo" src={images["software-hero"]} />
       </section>
 
       <section className="border-y border-border bg-surface-0 py-16">

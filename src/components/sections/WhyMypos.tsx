@@ -1,15 +1,17 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+import { getSiteSettings } from "@/lib/siteSettings";
 
 const whyItems = ["manufacture", "support", "software"] as const;
 
-const stats = [
-  { key: "clients", value: "500+" },
-  { key: "years", value: "10+" },
-  { key: "support", value: "24/7" },
-] as const;
+export async function WhyMypos() {
+  const t = await getTranslations("home.why");
+  const settings = await getSiteSettings();
 
-export function WhyMypos() {
-  const t = useTranslations("home.why");
+  const stats = [
+    { key: "clients", value: settings.statsClients },
+    { key: "years", value: settings.statsYears },
+    { key: "support", value: settings.statsSupport },
+  ] as const;
 
   return (
     <section className="border-y border-border bg-surface-0 py-16">

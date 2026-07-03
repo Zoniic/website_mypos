@@ -3,6 +3,7 @@ import { getFormatter, getTranslations, setRequestLocale } from "next-intl/serve
 import { notFound } from "next/navigation";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -60,6 +61,7 @@ export default async function ProductDetailPage({
   const tCommon = await getTranslations({ locale, namespace: "productsCommon" });
   const tSolutionsCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
   const format = await getFormatter({ locale });
+  const settings = await getSiteSettings();
 
   const related = await getRelatedProducts(product, locale);
 
@@ -137,7 +139,7 @@ export default async function ProductDetailPage({
             <Button href={`/contact?product=${product.slug}`} variant="primary" size="lg">
               {tDetail("requestQuote")}
             </Button>
-            <Button href={siteConfig.lineUrl} external variant="line" size="lg">
+            <Button href={settings.lineUrl} external variant="line" size="lg">
               {tDetail("lineQuote")}
             </Button>
           </div>

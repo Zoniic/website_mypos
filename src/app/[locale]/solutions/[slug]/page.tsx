@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { getProductsByCategory } from "@/lib/products";
+import { getSiteImages } from "@/lib/siteSettings";
 import {
   isSolutionSlug,
   solutionCategory,
@@ -71,6 +72,7 @@ export default async function SolutionPage({
   const faqItems = t.raw("faq") as FaqItem[];
   const navLabel = tNav(`solutionsItems.${key}`);
   const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
+  const images = await getSiteImages();
 
   const breadcrumbItems = [
     { label: tCommon("breadcrumbHome"), href: "/" },
@@ -122,6 +124,7 @@ export default async function SolutionPage({
         ctaPrimary={tCommonUi("requestQuote")}
         ctaSecondary={tCommon("compareCta")}
         imageLabel={`${navLabel} photo`}
+        imageUrl={images[`solution-${slug}`]}
       />
       <PainGain
         title={tCommon("painGainTitle")}

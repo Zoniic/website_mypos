@@ -1,18 +1,10 @@
-import { useTranslations } from "next-intl";
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import { getTrustLogos } from "@/lib/siteSettings";
 
-// Real customer names/segments from the MYPOS brochure. Swap for actual
-// logo images (with the customer's permission) once available.
-const trustNames = [
-  "DreamWorld",
-  "Ruengrawin Metal",
-  "SME Retail Chain",
-  "F&B Chain",
-  "Convenience Store",
-  "Restaurant Group",
-];
-
-export function TrustLogos() {
-  const t = useTranslations("home.trust");
+export async function TrustLogos() {
+  const t = await getTranslations("home.trust");
+  const logos = await getTrustLogos();
 
   return (
     <section className="border-y border-border bg-surface-0 py-10">
@@ -21,14 +13,28 @@ export function TrustLogos() {
           {t("title")}
         </p>
         <div className="mt-6 grid grid-cols-3 gap-6 sm:grid-cols-6">
-          {trustNames.map((name) => (
-            <div
-              key={name}
-              className="flex h-12 items-center justify-center rounded-md bg-surface-2 px-2 text-center text-xs font-medium text-text-2"
-            >
-              {name}
-            </div>
-          ))}
+          {logos.map((logo) =>
+            logo.imageUrl ? (
+              <div
+                key={logo.id}
+                className="relative flex h-12 items-center justify-center rounded-md bg-surface-2 px-2"
+              >
+                <Image
+                  src={logo.imageUrl}
+                  alt={logo.name}
+                  fill
+                  className="object-contain p-2"
+                />
+              </div>
+            ) : (
+              <div
+                key={logo.id}
+                className="flex h-12 items-center justify-center rounded-md bg-surface-2 px-2 text-center text-xs font-medium text-text-2"
+              >
+                {logo.name}
+              </div>
+            )
+          )}
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { Prompt, JetBrains_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
@@ -52,6 +53,8 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
 
+  const settings = await getSiteSettings();
+
   return (
     <html
       lang={locale}
@@ -64,7 +67,7 @@ export default async function LocaleLayout({
             {children}
           </main>
           <Footer />
-          <StickyMobileBar />
+          <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
         </NextIntlClientProvider>
       </body>
     </html>

@@ -1,16 +1,18 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { getSiteImages } from "@/lib/siteSettings";
 
 const solutionCards = [
-  { key: "selfOrder", href: "/solutions/self-order", featured: true },
-  { key: "weighPay", href: "/solutions/weigh-pay", featured: false },
-  { key: "pos", href: "/solutions/pos", featured: false },
-  { key: "ticketing", href: "/solutions/ticketing", featured: false },
+  { key: "selfOrder", imageKey: "solution-self-order", href: "/solutions/self-order", featured: true },
+  { key: "weighPay", imageKey: "solution-weigh-pay", href: "/solutions/weigh-pay", featured: false },
+  { key: "pos", imageKey: "solution-pos", href: "/solutions/pos", featured: false },
+  { key: "ticketing", imageKey: "solution-ticketing", href: "/solutions/ticketing", featured: false },
 ] as const;
 
-export function Solutions() {
-  const t = useTranslations("home.solutions");
+export async function Solutions() {
+  const t = await getTranslations("home.solutions");
+  const images = await getSiteImages();
 
   return (
     <section id="solutions" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
@@ -33,6 +35,7 @@ export function Solutions() {
             <PlaceholderImage
               ratio={card.featured ? "16/9" : "4/3"}
               label={`${t(`items.${card.key}.title`)} photo`}
+              src={images[card.imageKey]}
             />
             <h3 className="mt-5 text-xl font-semibold">
               {t(`items.${card.key}.title`)}

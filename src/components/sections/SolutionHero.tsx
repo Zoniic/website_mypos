@@ -8,6 +8,7 @@ export function SolutionHero({
   ctaPrimary,
   ctaSecondary,
   imageLabel,
+  imageUrl,
 }: {
   eyebrow: string;
   title: string;
@@ -15,6 +16,7 @@ export function SolutionHero({
   ctaPrimary: string;
   ctaSecondary: string;
   imageLabel: string;
+  imageUrl?: string;
 }) {
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-16 lg:px-8">
@@ -35,7 +37,7 @@ export function SolutionHero({
           </Button>
         </div>
       </div>
-      <PlaceholderImage ratio="4/3" label={imageLabel} />
+      <PlaceholderImage ratio="4/3" label={imageLabel} src={imageUrl} />
     </section>
   );
 }

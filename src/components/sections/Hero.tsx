@@ -1,9 +1,11 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { getSiteImages } from "@/lib/siteSettings";
 
-export function Hero() {
-  const t = useTranslations("home.hero");
+export async function Hero() {
+  const t = await getTranslations("home.hero");
+  const images = await getSiteImages();
 
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-24 lg:px-8">
@@ -24,7 +26,7 @@ export function Hero() {
           </Button>
         </div>
       </div>
-      <PlaceholderImage ratio="4/3" label="Hero product photo" />
+      <PlaceholderImage ratio="4/3" label="Hero product photo" src={images.hero} />
     </section>
   );
 }

@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Button } from "@/components/ui/Button";
+import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 
 export async function generateMetadata({
   params,
@@ -30,12 +31,6 @@ export async function generateMetadata({
   };
 }
 
-const stats = [
-  { key: "clients", value: "500+" },
-  { key: "years", value: "10+" },
-  { key: "support", value: "24/7" },
-] as const;
-
 export default async function AboutPage({
   params,
 }: {
@@ -46,6 +41,14 @@ export default async function AboutPage({
 
   const t = await getTranslations({ locale, namespace: "about" });
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
+  const images = await getSiteImages();
+  const settings = await getSiteSettings();
+
+  const stats = [
+    { key: "clients", value: settings.statsClients },
+    { key: "years", value: settings.statsYears },
+    { key: "support", value: settings.statsSupport },
+  ] as const;
 
   return (
     <>
@@ -67,7 +70,7 @@ export default async function AboutPage({
       </section>
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-10 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
-        <PlaceholderImage ratio="4/3" label="Factory / team photo" />
+        <PlaceholderImage ratio="4/3" label="Factory / team photo" src={images["about-team"]} />
         <div>
           <h2 className="text-2xl font-bold tracking-tight">{t("story.title")}</h2>
           <p className="mt-4 text-text-2">{t("story.description")}</p>
@@ -80,7 +83,7 @@ export default async function AboutPage({
           <p className="mt-4 text-text-2">{t("why.description")}</p>
         </div>
         <div className="order-1 lg:order-2">
-          <PlaceholderImage ratio="4/3" label="Product assembly photo" />
+          <PlaceholderImage ratio="4/3" label="Product assembly photo" src={images["about-assembly"]} />
         </div>
       </section>
 

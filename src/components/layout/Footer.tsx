@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { siteConfig } from "@/config/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 
 const menuLinks = [
   { key: "home", href: "/" },
@@ -14,9 +14,10 @@ const menuLinks = [
   { key: "contact", href: "/contact" },
 ] as const;
 
-export function Footer() {
-  const t = useTranslations("footer");
-  const tNav = useTranslations("nav");
+export async function Footer() {
+  const t = await getTranslations("footer");
+  const tNav = await getTranslations("nav");
+  const settings = await getSiteSettings();
   const year = new Date().getFullYear();
 
   return (
@@ -60,14 +61,14 @@ export function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-text-2">
             <li>
               {t("phone")}:{" "}
-              <a href={`tel:${siteConfig.phone}`} className="hover:text-text-1">
-                {siteConfig.phoneDisplay}
+              <a href={`tel:${settings.phone}`} className="hover:text-text-1">
+                {settings.phoneDisplay}
               </a>
             </li>
             <li>
               {t("email")}:{" "}
-              <a href={`mailto:${siteConfig.email}`} className="hover:text-text-1">
-                {siteConfig.email}
+              <a href={`mailto:${settings.email}`} className="hover:text-text-1">
+                {settings.email}
               </a>
             </li>
             <li>{t("address")}</li>
@@ -81,7 +82,7 @@ export function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-text-2">
             <li>
               <a
-                href={siteConfig.lineUrl}
+                href={settings.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-text-1"
@@ -91,7 +92,7 @@ export function Footer() {
             </li>
             <li>
               <a
-                href="https://facebook.com/"
+                href={settings.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-text-1"

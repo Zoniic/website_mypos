@@ -52,7 +52,10 @@ function toProduct(row: RowWithTranslations): Product {
     name: translation?.name ?? row.slug,
     priceFrom: row.priceFrom,
     category: row.category as ProductCategory,
-    businessTypes: row.businessTypes.split(",").filter(Boolean) as BusinessType[],
+    businessTypes: row.businessTypes
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean) as BusinessType[],
     specs: {
       screenSize: row.screenSize,
       os: row.os as "Android" | "Windows",
@@ -65,7 +68,10 @@ function toProduct(row: RowWithTranslations): Product {
       warrantyMonths: row.warrantyMonths,
     },
     datasheetUrl: row.datasheetUrl ?? undefined,
-    relatedSlugs: row.relatedSlugs.split(",").filter(Boolean),
+    relatedSlugs: row.relatedSlugs
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean),
     featured: row.featured,
     imageUrl: row.imageUrl ?? undefined,
     galleryUrls: row.galleryUrls.split(",").filter(Boolean),

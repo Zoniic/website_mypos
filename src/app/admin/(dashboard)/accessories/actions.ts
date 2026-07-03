@@ -11,6 +11,15 @@ function revalidateAccessoryPaths() {
   revalidatePath("/[locale]/accessories", "page");
 }
 
+function isUniqueConstraintError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2002"
+  );
+}
+
 export async function createAccessory(_prevState: string | null, formData: FormData) {
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
@@ -23,9 +32,15 @@ export async function createAccessory(_prevState: string | null, formData: FormD
   }
 
   const count = await prisma.accessory.count();
-  const accessory = await prisma.accessory.create({
-    data: { slug, sortOrder: count, imageUrl },
-  });
+  let accessory;
+  try {
+    accessory = await prisma.accessory.create({
+      data: { slug, sortOrder: count, imageUrl },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) return `Slug "${slug}" is already in use.`;
+    throw error;
+  }
 
   for (const locale of locales) {
     await prisma.accessoryTranslation.create({
@@ -65,7 +80,12 @@ export async function updateAccessory(
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
-  await prisma.accessory.update({ where: { id: accessoryId }, data: { slug, imageUrl } });
+  try {
+    await prisma.accessory.update({ where: { id: accessoryId }, data: { slug, imageUrl } });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) return `Slug "${slug}" is already in use.`;
+    throw error;
+  }
 
   for (const locale of locales) {
     await prisma.accessoryTranslation.upsert({

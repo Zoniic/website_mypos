@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
+import { getSiteSettings } from "@/lib/siteSettings";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -43,6 +44,7 @@ export default async function ContactPage({
   const t = await getTranslations({ locale, namespace: "contact" });
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
   const tFooter = await getTranslations({ locale, namespace: "footer" });
+  const settings = await getSiteSettings();
 
   return (
     <>
@@ -64,7 +66,7 @@ export default async function ContactPage({
               <p className="mt-2 text-sm text-text-2">{t("lineDescription")}</p>
               <div className="mt-4 flex items-center gap-6">
                 <PlaceholderImage ratio="1/1" label="LINE QR code" className="w-32 shrink-0" />
-                <Button href={siteConfig.lineUrl} external variant="line">
+                <Button href={settings.lineUrl} external variant="line">
                   {t("lineCta")}
                 </Button>
               </div>
@@ -74,19 +76,19 @@ export default async function ContactPage({
               <div className="rounded-2xl border border-border p-6">
                 <h2 className="text-lg font-semibold">{t("callTitle")}</h2>
                 <a
-                  href={`tel:${siteConfig.phone}`}
+                  href={`tel:${settings.phone}`}
                   className="mt-2 block text-text-2 hover:text-text-1"
                 >
-                  {siteConfig.phoneDisplay}
+                  {settings.phoneDisplay}
                 </a>
               </div>
               <div className="rounded-2xl border border-border p-6">
                 <h2 className="text-lg font-semibold">{t("emailTitle")}</h2>
                 <a
-                  href={`mailto:${siteConfig.email}`}
+                  href={`mailto:${settings.email}`}
                   className="mt-2 block text-text-2 hover:text-text-1"
                 >
-                  {siteConfig.email}
+                  {settings.email}
                 </a>
               </div>
             </div>
@@ -96,7 +98,7 @@ export default async function ContactPage({
               <p className="mt-1 text-sm text-text-2">{tFooter("address")}</p>
               <iframe
                 title={t("mapTitle")}
-                src="https://maps.google.com/maps?q=Bangkok%2C%20Thailand&output=embed"
+                src={settings.mapEmbedUrl}
                 className="mt-3 h-64 w-full rounded-2xl border border-border"
                 loading="lazy"
               />
