@@ -141,6 +141,20 @@ model TrustLogo {
   updatedAt DateTime @updatedAt
 }
 
+/// Companies MYPOS is an authorized/official partner of (payment gateways,
+/// banks, hardware manufacturers) — shown on the About page. Distinct from
+/// TrustLogo, which shows customers who use MYPOS, not partners MYPOS
+/// represents.
+model OfficialPartner {
+  id         Int      @id @default(autoincrement())
+  name       String
+  imageUrl   String?
+  websiteUrl String?
+  sortOrder  Int      @default(0)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
 /// Knowledge base category — belongs to one of two top-level sections
 /// (hardware / software) shown as separate landing pages.
 model KbCategory {

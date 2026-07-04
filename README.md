@@ -42,6 +42,7 @@ npx tsx prisma/add-contact-form-feedback-keys.ts   # contact form loading/succes
 npx tsx prisma/add-kb-namespace.ts                 # Knowledge Base landing/section/search text
 npx tsx prisma/update-software-features.ts         # ⚠️ overwrites software.features.items
 npx tsx prisma/add-legal-pages.ts                  # Privacy Policy / Terms / cookie banner text
+npx tsx prisma/add-official-partners-copy.ts        # About page "Official Partners" section text
 ```
 
 ## Project structure
@@ -86,6 +87,7 @@ Data model (see `prisma/schema.prisma`):
 - **`SiteSetting`** — phone, email, LINE, Facebook, Google Maps embed URL, and homepage stats (businesses served / years / support). Edit under **Admin → Site Settings**.
 - **`SiteImage`** — named photo slots (homepage hero, about page ×2, each solution's photo, software page hero) — a fixed set of 8 known image spots the site's layout expects. Edit under **Admin → Site Photos**.
 - **`TrustLogo`** — the "Trusted by" logo strip on the homepage. Falls back to showing the name as text until a logo image is uploaded. Edit under **Admin → Trust Logos**.
+- **`OfficialPartner`** — companies MYPOS is an authorized/official partner of (payment gateways, banks, hardware manufacturers) — distinct from `TrustLogo`, which shows customers, not partners. Shown on the About page, optionally links out to the partner's website. Edit under **Admin → Official Partners**.
 - **`KbCategory`** + **`KbCategoryTranslation`** and **`KbArticle`** + **`KbArticleTranslation`** — the customer-facing Knowledge Base at `/knowledge-base` (self-serve manuals to reduce support load). Categories belong to a `section` (`hardware` or `software`); articles support a cover photo, an optional PDF download, an optional video link (YouTube/Google Drive, auto-embedded), and can optionally point at a `Product`/`Accessory` slug. Full-text search across title/summary/body. Edit under **Admin → KB Categories** / **Admin → KB Articles**.
 
 ### What's still not admin-editable

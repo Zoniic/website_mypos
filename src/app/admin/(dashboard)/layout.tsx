@@ -13,6 +13,7 @@ const navLinks = [
   { href: "/admin/content", label: "Page Content" },
   { href: "/admin/photos", label: "Site Photos" },
   { href: "/admin/trust-logos", label: "Trust Logos" },
+  { href: "/admin/official-partners", label: "Official Partners" },
   { href: "/admin/settings", label: "Site Settings" },
 ];
 

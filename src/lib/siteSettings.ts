@@ -40,3 +40,7 @@ export async function getSiteImages(): Promise<Record<string, string | undefined
 export async function getTrustLogos() {
   return prisma.trustLogo.findMany({ orderBy: { sortOrder: "asc" } });
 }
+
+export async function getOfficialPartners() {
+  return prisma.officialPartner.findMany({ orderBy: { sortOrder: "asc" } });
+}

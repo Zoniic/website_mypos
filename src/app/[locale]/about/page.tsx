@@ -5,6 +5,7 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Button } from "@/components/ui/Button";
+import { OfficialPartners } from "@/components/sections/OfficialPartners";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 
 export async function generateMetadata({
@@ -97,6 +98,8 @@ export default async function AboutPage({
           ))}
         </dl>
       </section>
+
+      <OfficialPartners />
 
       <section className="bg-surface-2 py-16 text-text-1">
         <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
