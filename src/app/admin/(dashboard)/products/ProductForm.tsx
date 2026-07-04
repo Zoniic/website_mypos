@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
+import { SeoHint } from "../SeoHint";
 
 export type ProductFormValues = {
   slug: string;
@@ -88,7 +89,11 @@ export function ProductForm({
   return (
     <form action={formAction} className="max-w-3xl space-y-8">
       <section className="grid gap-4 sm:grid-cols-2">
-        <Field label="Slug (URL, unique)" name="slug" defaultValue={initialValues.slug} />
+        <label className="block">
+          <span className={labelClass}>Slug (URL, unique)</span>
+          <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+          <SeoHint type="slug" />
+        </label>
         <Field
           label="Price From (THB)"
           name="priceFrom"
@@ -164,6 +169,7 @@ export function ProductForm({
 
       <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Photos</h3>
+        <SeoHint type="altText" />
         <ImageUploadField
           name="mainImage"
           label="Main photo"
@@ -198,11 +204,15 @@ export function ProductForm({
         <section key={locale} className="rounded-xl border border-border p-4">
           <h3 className="text-sm font-semibold uppercase text-text-2">{locale}</h3>
           <div className="mt-3 space-y-4">
-            <Field
-              label="Name"
-              name={`name_${locale}`}
-              defaultValue={initialValues.translations[locale].name}
-            />
+            <label className="block">
+              <span className={labelClass}>Name</span>
+              <input
+                name={`name_${locale}`}
+                defaultValue={initialValues.translations[locale].name}
+                className={inputClass}
+              />
+              {locale === "en" && <SeoHint type="name" />}
+            </label>
             <label className="block">
               <span className={labelClass}>Highlight (1-2 sentence description)</span>
               <textarea
@@ -211,6 +221,7 @@ export function ProductForm({
                 rows={3}
                 className={inputClass}
               />
+              {locale === "en" && <SeoHint type="description" />}
             </label>
           </div>
         </section>

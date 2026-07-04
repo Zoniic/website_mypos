@@ -8,6 +8,7 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export async function generateMetadata({
   params,
@@ -46,8 +47,19 @@ export default async function ContactPage({
   const tFooter = await getTranslations({ locale, namespace: "footer" });
   const settings = await getSiteSettings();
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: siteConfig.name,
+    url: `${siteConfig.url}/${locale}/contact`,
+    telephone: settings.phone,
+    email: settings.email,
+    address: tFooter("address"),
+  };
+
   return (
     <>
+      <JsonLd data={localBusinessSchema} />
       <Breadcrumb
         items={[
           { label: tCommon("breadcrumbHome"), href: "/" },

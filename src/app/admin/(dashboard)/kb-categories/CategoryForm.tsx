@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { SeoHint } from "../SeoHint";
 
 export type CategoryFormValues = {
   slug: string;
@@ -34,6 +35,7 @@ export function CategoryForm({
       <label className="block">
         <span className={labelClass}>Slug (URL, unique)</span>
         <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+        <SeoHint type="slug" />
       </label>
 
       <label className="block">

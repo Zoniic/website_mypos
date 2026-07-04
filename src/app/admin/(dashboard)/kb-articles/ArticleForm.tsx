@@ -1,8 +1,9 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
 import { PdfUploadField } from "../PdfUploadField";
+import { CharCounter, SeoHint } from "../SeoHint";
 
 export type ArticleFormValues = {
   slug: string;
@@ -48,6 +49,7 @@ export function ArticleForm({
   submitLabel: string;
 }) {
   const [error, formAction, isPending] = useActionState(action, null);
+  const [summaryLength, setSummaryLength] = useState(initialValues.translations.en.summary.length);
 
   return (
     <form action={formAction} className="max-w-3xl space-y-8">
@@ -55,6 +57,7 @@ export function ArticleForm({
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>
           <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+          <SeoHint type="slug" />
         </label>
 
         <label className="block">
@@ -122,6 +125,7 @@ export function ArticleForm({
           ratio="16/9"
           specHint="JPG, PNG, or WebP, max 5MB."
         />
+        <SeoHint type="altText" />
         <PdfUploadField
           name="pdf"
           label="Downloadable PDF (optional)"
@@ -141,6 +145,7 @@ export function ArticleForm({
                 defaultValue={initialValues.translations[locale].title}
                 className={inputClass}
               />
+              {locale === "en" && <SeoHint type="metaTitle" />}
             </label>
             <label className="block">
               <span className={labelClass}>Summary (shown in list/search results)</span>
@@ -149,7 +154,14 @@ export function ArticleForm({
                 defaultValue={initialValues.translations[locale].summary}
                 rows={2}
                 className={inputClass}
+                onChange={locale === "en" ? (e) => setSummaryLength(e.target.value.length) : undefined}
               />
+              {locale === "en" && (
+                <div className="mt-1">
+                  <CharCounter length={summaryLength} min={120} max={160} />
+                </div>
+              )}
+              {locale === "en" && <SeoHint type="metaDescription" />}
             </label>
             <label className="block">
               <span className={labelClass}>Body</span>

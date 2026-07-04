@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
+import { SeoHint } from "../SeoHint";
 
 export type TrustLogoFormValues = {
   name: string;
@@ -30,6 +31,7 @@ export function TrustLogoForm({
           defaultValue={initialValues.name}
           className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
         />
+        <SeoHint type="altText" />
       </label>
 
       <ImageUploadField

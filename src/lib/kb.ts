@@ -27,6 +27,8 @@ export type KbArticle = KbArticleSummary & {
   videoUrl: string | null;
   productSlug: string | null;
   accessorySlug: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export async function getAllKbArticleSlugs(): Promise<string[]> {
@@ -109,6 +111,8 @@ export async function getKbArticleBySlug(slug: string, locale: string): Promise<
     videoUrl: row.videoUrl,
     productSlug: row.productSlug,
     accessorySlug: row.accessorySlug,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
   };
 }
 

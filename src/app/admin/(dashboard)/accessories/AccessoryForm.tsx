@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
+import { SeoHint } from "../SeoHint";
 
 export type AccessoryFormValues = {
   slug: string;
@@ -39,6 +40,7 @@ export function AccessoryForm({
       <label className="block">
         <span className={labelClass}>Slug (unique identifier)</span>
         <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+        <SeoHint type="slug" />
       </label>
 
       <ImageUploadField
@@ -48,6 +50,7 @@ export function AccessoryForm({
         ratio="1/1"
         specHint="Square, at least 800×800px, plain/white background preferred. JPG, PNG, or WebP, max 5MB."
       />
+      <SeoHint type="altText" />
 
       {(["th", "en", "zh"] as const).map((locale) => (
         <section key={locale} className="rounded-xl border border-border p-4">
@@ -60,6 +63,7 @@ export function AccessoryForm({
                 defaultValue={initialValues.translations[locale].name}
                 className={inputClass}
               />
+              {locale === "en" && <SeoHint type="name" />}
             </label>
             <label className="block">
               <span className={labelClass}>Description</span>
@@ -69,6 +73,7 @@ export function AccessoryForm({
                 rows={3}
                 className={inputClass}
               />
+              {locale === "en" && <SeoHint type="description" />}
             </label>
           </div>
         </section>

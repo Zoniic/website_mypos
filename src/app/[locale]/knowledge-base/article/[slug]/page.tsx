@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { getKbArticleBySlug, getKbCategoryBySlug, toEmbedUrl } from "@/lib/kb";
 import { getProductBySlug } from "@/lib/products";
 import { prisma } from "@/lib/prisma";
@@ -50,8 +51,23 @@ export default async function KbArticlePage({
       })
     : null;
 
+  const articleUrl = `${siteConfig.url}/${locale}/knowledge-base/article/${slug}`;
+  const articleSchema = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: article.title,
+    description: article.summary,
+    image: article.coverImageUrl ? `${siteConfig.url}${article.coverImageUrl}` : undefined,
+    datePublished: article.createdAt.toISOString(),
+    dateModified: article.updatedAt.toISOString(),
+    author: { "@type": "Organization", name: siteConfig.name },
+    publisher: { "@type": "Organization", name: siteConfig.name },
+    mainEntityOfPage: articleUrl,
+  };
+
   return (
     <div>
+      <JsonLd data={articleSchema} />
       <Breadcrumb
         items={[
           { label: t("breadcrumb"), href: "/knowledge-base" },
