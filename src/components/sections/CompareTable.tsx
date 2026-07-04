@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { useFormatter } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { Product } from "@/lib/products";
@@ -42,8 +45,15 @@ export function CompareTable({
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {products.map((product) => (
-              <tr key={product.slug}>
+            {products.map((product, index) => (
+              <motion.tr
+                key={product.slug}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: index * 0.06, ease: "easeOut" }}
+                className="transition-colors hover:bg-surface-1"
+              >
                 <td className="px-4 py-4 font-medium sm:px-6">
                   <Link href={`/products/${product.slug}`} className="hover:underline">
                     {product.name}
@@ -62,7 +72,7 @@ export function CompareTable({
                     maximumFractionDigits: 0,
                   })}
                 </td>
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>

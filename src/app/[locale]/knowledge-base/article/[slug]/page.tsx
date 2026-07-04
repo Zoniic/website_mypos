@@ -91,8 +91,24 @@ export default async function KbArticlePage({
             href={article.pdfUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-flex items-center gap-2 rounded-button border border-border-strong px-5 py-2.5 text-sm font-semibold text-text-1 hover:bg-surface-2"
+            className="group mt-8 inline-flex items-center gap-2 rounded-button border border-border-strong px-5 py-2.5 text-sm font-semibold text-text-1 transition-all hover:-translate-y-0.5 hover:border-primary-400 hover:bg-surface-2 hover:shadow-[var(--shadow-glow-primary)]"
           >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+              className="transition-transform group-hover:translate-y-0.5"
+            >
+              <path
+                d="M8 1v9m0 0l-3.5-3.5M8 10l3.5-3.5M2 13h12"
+                stroke="currentColor"
+                fill="none"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
             {t("downloadPdf")}
           </a>
         )}

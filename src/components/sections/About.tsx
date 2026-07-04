@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { FadeIn } from "@/components/ui/FadeIn";
 import { getSiteImages } from "@/lib/siteSettings";
 
 export async function About() {
@@ -10,8 +11,10 @@ export async function About() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-        <PlaceholderImage ratio="4/3" label="Team / factory photo" src={images["about-team"]} />
-        <div>
+        <FadeIn x={-24} y={0}>
+          <PlaceholderImage ratio="4/3" label="Team / factory photo" src={images["about-team"]} />
+        </FadeIn>
+        <FadeIn x={24} y={0} delay={0.1}>
           <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
             {t("eyebrow")}
           </p>
@@ -21,11 +24,11 @@ export async function About() {
           <p className="mt-4 text-text-2">{t("description")}</p>
           <Link
             href="/about"
-            className="mt-6 inline-block text-sm font-semibold underline underline-offset-4"
+            className="mt-6 inline-block text-sm font-semibold underline underline-offset-4 transition-transform hover:translate-x-1"
           >
-            {t("cta")}
+            {t("cta")} →
           </Link>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );

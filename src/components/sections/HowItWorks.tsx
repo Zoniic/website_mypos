@@ -1,3 +1,7 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export type StepItem = { title: string; description: string };
 
 export function HowItWorks({
@@ -14,13 +18,20 @@ export function HowItWorks({
 
         <ol className="mt-10 grid gap-6 sm:grid-cols-3">
           {steps.map((step, index) => (
-            <li key={step.title} className="rounded-2xl bg-surface-1 p-6 shadow-sm">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-sm font-semibold text-text-1">
+            <motion.li
+              key={step.title}
+              initial={{ opacity: 0, y: 16, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
+              className="h-full rounded-2xl bg-surface-1 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[image:var(--gradient-primary)] text-sm font-bold text-text-1 shadow-[var(--shadow-glow-primary)]">
                 {index + 1}
               </span>
               <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>
               <p className="mt-2 text-text-2">{step.description}</p>
-            </li>
+            </motion.li>
           ))}
         </ol>
       </div>

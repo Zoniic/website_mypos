@@ -25,6 +25,9 @@ const primaryLinks = [
   { key: "about", href: "/about" },
 ] as const;
 
+const navLinkClass =
+  "relative py-2 text-sm font-medium text-text-2 hover:text-text-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100";
+
 export function Header() {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
@@ -40,7 +43,7 @@ export function Header() {
         {tCommon("skipToContent")}
       </a>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center transition-transform hover:scale-105">
           <Image
             src="/images/brand/logo.png"
             alt="MYPOS"
@@ -59,7 +62,7 @@ export function Header() {
           >
             <button
               type="button"
-              className="flex items-center gap-1 py-2 text-sm font-medium text-text-2 hover:text-text-1"
+              className={`flex items-center gap-1 ${navLinkClass}`}
               aria-expanded={solutionsOpen}
               onClick={() => setSolutionsOpen((open) => !open)}
             >
@@ -80,7 +83,7 @@ export function Header() {
                   <Link
                     key={slug}
                     href={solutionHrefs[slug]}
-                    className="block rounded-md px-3 py-2 text-sm text-text-2 hover:bg-surface-2"
+                    className="block rounded-md px-3 py-2 text-sm text-text-2 transition-all hover:translate-x-1 hover:bg-surface-2 hover:text-text-1"
                   >
                     {t(`solutionsItems.${slug}`)}
                   </Link>
@@ -90,11 +93,7 @@ export function Header() {
           </div>
 
           {primaryLinks.map((link) => (
-            <Link
-              key={link.key}
-              href={link.href}
-              className="py-2 text-sm font-medium text-text-2 hover:text-text-1"
-            >
+            <Link key={link.key} href={link.href} className={navLinkClass}>
               {t(link.key)}
             </Link>
           ))}

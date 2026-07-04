@@ -1,3 +1,5 @@
+import { FadeIn } from "@/components/ui/FadeIn";
+
 export type PainGainItem = { pain: string; gain: string };
 
 export function PainGain({
@@ -18,15 +20,17 @@ export function PainGain({
       <div className="mt-10 overflow-hidden rounded-2xl border border-border">
         <div className="grid grid-cols-2 divide-x divide-border bg-surface-0 text-sm font-semibold">
           <p className="px-4 py-3 sm:px-6">{painLabel}</p>
-          <p className="px-4 py-3 sm:px-6">{gainLabel}</p>
+          <p className="px-4 py-3 sm:px-6 text-primary-400">{gainLabel}</p>
         </div>
         <div className="divide-y divide-border">
-          {items.map((item) => (
+          {items.map((item, index) => (
             <div key={item.pain} className="grid grid-cols-2 divide-x divide-border">
-              <p className="px-4 py-4 text-sm text-text-2 sm:px-6">{item.pain}</p>
-              <p className="px-4 py-4 text-sm font-medium text-text-1 sm:px-6">
-                {item.gain}
-              </p>
+              <FadeIn x={-16} y={0} delay={index * 0.08} className="px-4 py-4 sm:px-6">
+                <p className="text-sm text-text-2">{item.pain}</p>
+              </FadeIn>
+              <FadeIn x={16} y={0} delay={index * 0.08 + 0.05} className="px-4 py-4 sm:px-6">
+                <p className="text-sm font-medium text-text-1">{item.gain}</p>
+              </FadeIn>
             </div>
           ))}
         </div>
