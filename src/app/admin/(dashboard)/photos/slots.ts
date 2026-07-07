@@ -54,4 +54,28 @@ export const SITE_IMAGE_SLOTS: SiteImageSlot[] = [
     hint: "Screenshot or UI mockup, landscape. At least 1200×900px.",
     ratio: "4/3",
   },
+  {
+    key: "software-screenshot-dashboard",
+    label: "Software page — dashboard screenshot",
+    hint: "Real UI screenshot, landscape. At least 1200×900px.",
+    ratio: "4/3",
+  },
+  {
+    key: "software-screenshot-menu",
+    label: "Software page — menu management screenshot",
+    hint: "Real UI screenshot, landscape. At least 1200×900px.",
+    ratio: "4/3",
+  },
+  {
+    key: "software-screenshot-sales",
+    label: "Software page — sales report screenshot",
+    hint: "Real UI screenshot, landscape. At least 1200×900px.",
+    ratio: "4/3",
+  },
+  {
+    key: "line-qr-code",
+    label: "Contact page — LINE QR code",
+    hint: "Square QR code image linking to your LINE Official Account. At least 400×400px.",
+    ratio: "1/1",
+  },
 ];

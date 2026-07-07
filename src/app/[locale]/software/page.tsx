@@ -98,9 +98,21 @@ export default async function SoftwarePage({
           {t("screenshots.title")}
         </h2>
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <PlaceholderImage ratio="4/3" label="Dashboard screenshot" />
-          <PlaceholderImage ratio="4/3" label="Menu management screenshot" />
-          <PlaceholderImage ratio="4/3" label="Sales report screenshot" />
+          <PlaceholderImage
+            ratio="4/3"
+            label="Dashboard screenshot"
+            src={images["software-screenshot-dashboard"]}
+          />
+          <PlaceholderImage
+            ratio="4/3"
+            label="Menu management screenshot"
+            src={images["software-screenshot-menu"]}
+          />
+          <PlaceholderImage
+            ratio="4/3"
+            label="Sales report screenshot"
+            src={images["software-screenshot-sales"]}
+          />
         </div>
       </section>
 

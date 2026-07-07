@@ -3,7 +3,7 @@ import { Suspense } from "react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
-import { getSiteSettings } from "@/lib/siteSettings";
+import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -46,6 +46,7 @@ export default async function ContactPage({
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
   const tFooter = await getTranslations({ locale, namespace: "footer" });
   const settings = await getSiteSettings();
+  const images = await getSiteImages();
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -77,7 +78,12 @@ export default async function ContactPage({
               <h2 className="text-lg font-semibold">{t("lineTitle")}</h2>
               <p className="mt-2 text-sm text-text-2">{t("lineDescription")}</p>
               <div className="mt-4 flex items-center gap-6">
-                <PlaceholderImage ratio="1/1" label="LINE QR code" className="w-32 shrink-0" />
+                <PlaceholderImage
+                  ratio="1/1"
+                  label="LINE QR code"
+                  className="w-32 shrink-0"
+                  src={images["line-qr-code"]}
+                />
                 <Button href={settings.lineUrl} external variant="line">
                   {t("lineCta")}
                 </Button>
