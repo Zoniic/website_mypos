@@ -73,7 +73,7 @@ export default async function ProductsPage({
         ]}
       />
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight">
+        <h1 className="font-display text-3xl font-bold tracking-tight">
           {t("breadcrumbProducts")}
         </h1>
         <div className="mt-8">

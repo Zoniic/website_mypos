@@ -81,10 +81,10 @@ export default async function ServicePage({
       />
 
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
-        <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
+        <p className="eyebrow-accent text-sm font-semibold uppercase tracking-wide">
           {t("hero.eyebrow")}
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="mt-4 font-display text-4xl font-bold tracking-tight sm:text-5xl">
           {t("hero.title")}
         </h1>
         <p className="mt-6 text-lg text-text-2">{t("hero.subtitle")}</p>

@@ -22,10 +22,10 @@ export function SolutionHero({
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-16 lg:px-8">
       <FadeIn>
-        <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
+        <p className="eyebrow-accent text-sm font-semibold uppercase tracking-wide">
           {eyebrow}
         </p>
-        <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+        <h1 className="mt-4 font-display text-4xl font-bold tracking-tight sm:text-5xl">
           {title}
         </h1>
         <p className="mt-6 text-lg text-text-2">{subtitle}</p>

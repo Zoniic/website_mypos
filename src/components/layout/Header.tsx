@@ -54,16 +54,21 @@ export function Header() {
           />
         </Link>
 
-        <nav className="hidden items-center gap-6 lg:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
           <div
             className="relative"
             onMouseEnter={() => setSolutionsOpen(true)}
             onMouseLeave={() => setSolutionsOpen(false)}
+            onFocus={() => setSolutionsOpen(true)}
+            onBlur={(e) => {
+              if (!e.currentTarget.contains(e.relatedTarget)) setSolutionsOpen(false);
+            }}
           >
             <button
               type="button"
               className={`flex items-center gap-1 ${navLinkClass}`}
               aria-expanded={solutionsOpen}
+              aria-haspopup="true"
               onClick={() => setSolutionsOpen((open) => !open)}
             >
               {t("solutions")}

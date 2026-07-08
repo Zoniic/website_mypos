@@ -48,7 +48,7 @@ export default async function KnowledgeBasePage({
     <div>
       <Breadcrumb items={[{ label: t("breadcrumb") }]} />
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <h1 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h1>
+        <h1 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h1>
         <p className="mt-3 max-w-2xl text-lg text-text-2">{t("subtitle")}</p>
 
         <form action="/knowledge-base/search" method="get" className="mt-8 max-w-xl">

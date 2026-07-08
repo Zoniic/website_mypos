@@ -2,7 +2,9 @@
 
 /* MYPOS Design System tokens — dark theme, orange primary brand color. */
 @theme {
-  --font-sans: var(--font-sans-loaded), "Noto Sans Thai", system-ui, sans-serif;
+  --font-sans: var(--font-sans-loaded), "Noto Sans Thai", "PingFang SC", "Microsoft YaHei",
+    "Noto Sans SC", system-ui, sans-serif;
+  --font-display: var(--font-display-loaded), var(--font-sans);
   --font-mono: var(--font-mono-loaded), "Courier New", monospace;
 
   /* ─── Backgrounds / surfaces ─────────────────────── */
@@ -86,11 +88,74 @@
     transparent 70%
   );
   --gradient-text: linear-gradient(90deg, #f06830 0%, #e85520 100%);
+
+  /* ─── Receipt motif — prototype (About page) ───────
+     Grounded in the product itself: printed receipts, till paper,
+     perforated tear edges. Additive tokens; existing dark theme
+     elsewhere is untouched. */
+  --color-ink: #14110f;
+  --color-ink-2: #1c1815;
+  --color-paper: #f3ead9;
+  --color-paper-2: #ece0c9;
+  --color-paper-text-1: #221a10;
+  --color-paper-text-2: #6b5c47;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text-1);
+}
+
+.eyebrow-accent {
+  background-image: var(--gradient-text);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Perforated receipt-tear rule — replaces plain hairline dividers on the
+   About page prototype. currentColor lets it sit on ink or paper bg. */
+.receipt-rule {
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor 0 5px,
+    transparent 5px 12px
+  );
+  opacity: 0.55;
+}
+
+/* Ticket-stub eyebrow tag — dashed bracket, monospace, evokes a price tag
+   or ticket stub instead of a decorative gradient label. */
+.ticket-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  padding: 0.2em 0.7em;
+  border: 1px dashed currentColor;
+  border-radius: var(--radius-tag);
+  opacity: 0.85;
+}
+
+/* Barcode-bar ambient texture — decorative only, aria-hidden. */
+.barcode-bars {
+  width: 72px;
+  height: 28px;
+  background-image: repeating-linear-gradient(
+    to right,
+    currentColor 0,
+    currentColor 2px,
+    transparent 2px,
+    transparent 5px,
+    currentColor 5px,
+    currentColor 6px,
+    transparent 6px,
+    transparent 10px
+  );
+  opacity: 0.4;
 }
 
 @keyframes marquee {

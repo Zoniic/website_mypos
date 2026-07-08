@@ -69,13 +69,13 @@ export default async function ContactPage({
       />
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">{t("title")}</h1>
         <p className="mt-3 max-w-2xl text-text-2">{t("subtitle")}</p>
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2">
           <div className="space-y-8">
-            <div className="rounded-2xl border border-emerald-600 bg-emerald-50 p-6">
-              <h2 className="text-lg font-semibold">{t("lineTitle")}</h2>
+            <div className="rounded-2xl border border-emerald-700/50 bg-emerald-950/30 p-6">
+              <h2 className="text-lg font-semibold text-text-1">{t("lineTitle")}</h2>
               <p className="mt-2 text-sm text-text-2">{t("lineDescription")}</p>
               <div className="mt-4 flex items-center gap-6">
                 <PlaceholderImage

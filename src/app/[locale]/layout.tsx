@@ -3,7 +3,7 @@ import { MotionConfig } from "framer-motion";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Prompt, JetBrains_Mono } from "next/font/google";
+import { Prompt, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
 import { getSiteSettings } from "@/lib/siteSettings";
@@ -18,6 +18,14 @@ const fontSans = Prompt({
   subsets: ["thai", "latin"],
   // Only the weights actually used in the UI (font-medium/semibold/bold + default 400).
   weight: ["400", "500", "600", "700"],
+});
+
+// Display face for h1/hero headings only — gives headings a distinct character
+// from body copy instead of reusing Prompt at every weight.
+const fontDisplay = IBM_Plex_Sans_Thai({
+  variable: "--font-display-loaded",
+  subsets: ["thai", "latin"],
+  weight: ["600", "700"],
 });
 
 const fontMono = JetBrains_Mono({
@@ -60,7 +68,7 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${fontSans.variable} ${fontMono.variable} h-full antialiased`}
+      className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg text-text-1">
         <NextIntlClientProvider>

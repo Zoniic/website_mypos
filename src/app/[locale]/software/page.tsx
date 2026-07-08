@@ -61,10 +61,10 @@ export default async function SoftwarePage({
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
+          <p className="eyebrow-accent text-sm font-semibold uppercase tracking-wide">
             {t("hero.eyebrow")}
           </p>
-          <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+          <h1 className="mt-4 font-display text-4xl font-bold tracking-tight sm:text-5xl">
             {t("hero.title")}
           </h1>
           <p className="mt-6 text-lg text-text-2">{t("hero.subtitle")}</p>
