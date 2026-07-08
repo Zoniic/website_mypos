@@ -13,9 +13,73 @@
     "references": "Case Studies",
     "software": "Software",
     "knowledgeBase": "Knowledge Base",
+    "blog": "Blog",
+    "careers": "Careers",
     "service": "Service",
     "about": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "search": "Search",
+    "compare": "Compare / Get Quote"
+  },
+  "search": {
+    "metaTitle": "Search | MYPOS",
+    "breadcrumb": "Search",
+    "title": "Search",
+    "placeholder": "Search products, accessories, articles...",
+    "resultsCount": "{count} results for \"{query}\"",
+    "noResults": "No results found. Try a different search term.",
+    "sectionProducts": "Products",
+    "sectionAccessories": "Accessories",
+    "sectionReferences": "Case Studies",
+    "sectionKb": "Knowledge Base"
+  },
+  "careers": {
+    "metaTitle": "Careers | MYPOS",
+    "metaDescription": "Open positions at MYPOS, a Thai manufacturer of POS and self-service systems.",
+    "breadcrumb": "Careers",
+    "title": "Careers",
+    "subtitle": "Join the MYPOS team.",
+    "noOpenings": "No open positions right now.",
+    "apply": "Apply for this role",
+    "applyMessage": "Interested in applying for: {title}"
+  },
+  "compare": {
+    "metaTitle": "Compare Products / Get a Quote | MYPOS",
+    "breadcrumb": "Compare / Get Quote",
+    "title": "Compare Products & Request a Quote",
+    "subtitle": "Add products you're interested in from the products page, then request a quote for multiple models at once here.",
+    "empty": "No products added yet. Browse and add products you're interested in.",
+    "browseProducts": "Browse All Products",
+    "product": "Product",
+    "price": "Starting Price",
+    "quantity": "Quantity",
+    "remove": "Remove",
+    "formTitle": "Submit Quote Request",
+    "formSubtitle": "Our sales team will follow up with a quote for the selected items.",
+    "formName": "Full Name",
+    "formCompany": "Company (optional)",
+    "formPhone": "Phone Number",
+    "formEmail": "Email",
+    "formMessage": "Additional Message (optional)",
+    "formSubmit": "Submit Quote Request",
+    "formSubmitting": "Submitting...",
+    "successTitle": "Quote request submitted",
+    "successBody": "Our sales team will contact you shortly.",
+    "backToBrowsing": "Add more products"
+  },
+  "blog": {
+    "metaTitle": "Blog | MYPOS",
+    "metaDescription": "Tips, guides, and news about POS and self-service systems from MYPOS.",
+    "breadcrumb": "Blog",
+    "title": "Blog",
+    "subtitle": "Tips, guides, and news about POS and self-service systems.",
+    "noPosts": "No posts yet."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "message": "This page may have been moved or removed. Try heading back home or browsing our products.",
+    "backHome": "Back to home",
+    "contactUs": "Contact us"
   },
   "common": {
     "lineButton": "Chat on LINE",
@@ -26,6 +90,12 @@
   },
   "footer": {
     "companyDesc": "A Thai manufacturer of self-service and POS systems — end-to-end from hardware and software to after-sales support.",
+    "newsletterTitle": "Get news and promotions",
+    "newsletterPlaceholder": "Your email",
+    "newsletterSubmit": "Subscribe",
+    "newsletterSuccess": "You're subscribed — thank you!",
+    "newsletterAlready": "This email is already subscribed.",
+    "newsletterInvalid": "Please enter a valid email address.",
     "menuTitle": "Menu",
     "contactTitle": "Contact",
     "followTitle": "Follow Us",
@@ -289,6 +359,12 @@
     "priceFrom": "Starting at",
     "viewDetails": "View Details",
     "resultsCount": "{count} results found",
+    "stockInStock": "In stock",
+    "stockPreorder": "Pre-order",
+    "stockOutOfStock": "Out of stock",
+    "leadTimeLabel": "~{days} days",
+    "addToCompare": "Add to compare / quote",
+    "removeFromCompare": "Remove from compare list",
     "businessTypes": {
       "restaurant": "Restaurant",
       "retail": "Retail",
@@ -325,7 +401,12 @@
     "datasheetDownload": "Download PDF",
     "datasheetUnavailable": "Datasheet is being prepared. Contact our sales team for more information.",
     "relatedTitle": "Related / Complementary Models",
-    "galleryLabel": "Product Gallery"
+    "galleryLabel": "Product Gallery",
+    "stockInStock": "In stock",
+    "stockPreorder": "Pre-order",
+    "stockOutOfStock": "Temporarily out of stock",
+    "leadTimeLabel": "Estimated lead time: {days} days",
+    "videoTitle": "Product Demo Video"
   },
   "products": {
     "items": {
@@ -374,6 +455,8 @@
     "noResults": "No cases in this category yet. Try a different business type.",
     "clearFilters": "Clear filter",
     "noPhoto": "No photo yet",
+    "backToReferences": "Back to case studies",
+    "askAboutThisCase": "Ask about this case",
     "items": [
       { "business": "An outdoor made-to-order restaurant chain", "businessType": "restaurant", "problem": "Long queues at lunch rush drove customers away", "install": "Installed 2 self-order kiosks at the storefront", "result": "Average wait time cut by 40%" },
       { "business": "A neighborhood mini-mart", "businessType": "convenience", "problem": "Slow checkout with long evening queues", "install": "Switched both branches to MYPOS POS", "result": "Checkout speed doubled" },
@@ -425,6 +508,20 @@
         { "title": "Assessment & Scheduling", "description": "Our team does an initial assessment and schedules a repair or claim visit." },
         { "title": "Resolution", "description": "We repair, replace parts, or swap in a loaner unit as appropriate." }
       ]
+    },
+    "warranty": {
+      "title": "Submit a Warranty Claim / Report an Issue",
+      "subtitle": "Fill out the form below and our support team will follow up to schedule an inspection.",
+      "name": "Full Name",
+      "phone": "Phone Number",
+      "email": "Email",
+      "serialNumber": "Serial Number (if known)",
+      "issue": "Describe the Issue",
+      "submit": "Submit",
+      "submitting": "Submitting...",
+      "successTitle": "Claim submitted",
+      "successBody": "Our support team will contact you within 1-2 business days.",
+      "required": "Please fill in all required fields."
     },
     "faq": {
       "title": "Service FAQ",

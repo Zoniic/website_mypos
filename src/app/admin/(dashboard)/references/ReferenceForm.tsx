@@ -2,8 +2,10 @@
 
 import { useActionState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
+import { SeoHint } from "../SeoHint";
 
 export type ReferenceFormValues = {
+  slug: string;
   businessType: string;
   imageUrl: string | null;
   logoUrl: string | null;
@@ -14,6 +16,7 @@ export type ReferenceFormValues = {
 };
 
 const emptyValues: ReferenceFormValues = {
+  slug: "",
   businessType: "restaurant",
   imageUrl: null,
   logoUrl: null,
@@ -53,6 +56,12 @@ export function ReferenceForm({
 
   return (
     <form action={formAction} className="max-w-2xl space-y-8">
+      <label className="block">
+        <span className={labelClass}>Slug (URL, unique)</span>
+        <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+        <SeoHint type="slug" />
+      </label>
+
       <label className="block">
         <span className={labelClass}>Business Type</span>
         <select

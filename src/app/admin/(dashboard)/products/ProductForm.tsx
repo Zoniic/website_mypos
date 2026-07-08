@@ -21,6 +21,9 @@ export type ProductFormValues = {
   weight: string;
   warrantyMonths: number;
   datasheetUrl: string;
+  videoUrl: string;
+  stockStatus: string;
+  leadTimeDays: number | null;
   featured: boolean;
   businessTypes: string[];
   relatedSlugs: string[];
@@ -43,6 +46,9 @@ const emptyValues: ProductFormValues = {
   weight: "",
   warrantyMonths: 12,
   datasheetUrl: "",
+  videoUrl: "",
+  stockStatus: "in_stock",
+  leadTimeDays: null,
   featured: false,
   businessTypes: [],
   relatedSlugs: [],
@@ -143,6 +149,26 @@ export function ProductForm({
           label="Datasheet URL (optional)"
           name="datasheetUrl"
           defaultValue={initialValues.datasheetUrl}
+        />
+        <Field
+          label="Video URL (YouTube/Vimeo/Drive, optional)"
+          name="videoUrl"
+          defaultValue={initialValues.videoUrl}
+        />
+
+        <label className="block">
+          <span className={labelClass}>Stock Status</span>
+          <select name="stockStatus" defaultValue={initialValues.stockStatus} className={inputClass}>
+            <option value="in_stock">In stock</option>
+            <option value="preorder">Pre-order</option>
+            <option value="out_of_stock">Out of stock</option>
+          </select>
+        </label>
+        <Field
+          label="Lead Time (days, if not in stock)"
+          name="leadTimeDays"
+          type="number"
+          defaultValue={initialValues.leadTimeDays ?? undefined}
         />
 
         <div className="sm:col-span-2">

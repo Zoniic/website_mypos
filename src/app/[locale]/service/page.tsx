@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { HowItWorks, type StepItem } from "@/components/sections/HowItWorks";
 import { FaqAccordion, type FaqItem } from "@/components/sections/FaqAccordion";
 import { Invite } from "@/components/sections/Invite";
+import { WarrantyClaimForm } from "@/components/service/WarrantyClaimForm";
 
 export async function generateMetadata({
   params,
@@ -110,6 +111,26 @@ export default async function ServicePage({
       </section>
 
       <HowItWorks title={t("process.title")} steps={steps} />
+
+      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+        <WarrantyClaimForm
+          labels={{
+            title: t("warranty.title"),
+            subtitle: t("warranty.subtitle"),
+            name: t("warranty.name"),
+            phone: t("warranty.phone"),
+            email: t("warranty.email"),
+            serialNumber: t("warranty.serialNumber"),
+            issue: t("warranty.issue"),
+            submit: t("warranty.submit"),
+            submitting: t("warranty.submitting"),
+            successTitle: t("warranty.successTitle"),
+            successBody: t("warranty.successBody"),
+            required: t("warranty.required"),
+          }}
+        />
+      </section>
+
       <FaqAccordion title={t("faq.title")} items={faqItems} />
       <Invite />
     </>

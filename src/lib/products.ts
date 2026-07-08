@@ -26,6 +26,8 @@ export type ProductSpecs = {
   warrantyMonths: number;
 };
 
+export type StockStatus = "in_stock" | "preorder" | "out_of_stock";
+
 export type Product = {
   slug: string;
   name: string;
@@ -35,6 +37,11 @@ export type Product = {
   specs: ProductSpecs;
   /** Public URL to a PDF datasheet. Omit until a real file is available. */
   datasheetUrl?: string;
+  /** Optional YouTube/Vimeo/Drive link, embedded on the product detail page. */
+  videoUrl?: string;
+  stockStatus: StockStatus;
+  /** Estimated lead time in days. Only meaningful when stockStatus isn't "in_stock". */
+  leadTimeDays?: number;
   relatedSlugs: string[];
   featured?: boolean;
   /** Main product photo, uploaded via admin. Undefined until one is set. */
@@ -70,6 +77,9 @@ function toProduct(row: RowWithRelations): Product {
       warrantyMonths: row.warrantyMonths,
     },
     datasheetUrl: row.datasheetUrl ?? undefined,
+    videoUrl: row.videoUrl ?? undefined,
+    stockStatus: row.stockStatus as StockStatus,
+    leadTimeDays: row.leadTimeDays ?? undefined,
     relatedSlugs: row.relatedProducts.map((p) => p.slug),
     featured: row.featured,
     imageUrl: row.imageUrl ?? undefined,

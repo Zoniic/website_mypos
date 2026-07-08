@@ -11,6 +11,8 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { CookieConsent } from "@/components/layout/CookieConsent";
+import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { QuoteCartProvider } from "@/lib/quoteCart";
 import "../globals.css";
 
 const fontSans = Prompt({
@@ -71,16 +73,19 @@ export default async function LocaleLayout({
       className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg text-text-1">
+        <GoogleAnalytics />
         <NextIntlClientProvider>
-          <MotionConfig reducedMotion="user">
-            <Header />
-            <main id="main-content" className="flex-1 pb-16 lg:pb-0">
-              {children}
-            </main>
-            <Footer />
-            <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
-            <CookieConsent />
-          </MotionConfig>
+          <QuoteCartProvider>
+            <MotionConfig reducedMotion="user">
+              <Header />
+              <main id="main-content" className="flex-1 pb-16 lg:pb-0">
+                {children}
+              </main>
+              <Footer />
+              <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
+              <CookieConsent />
+            </MotionConfig>
+          </QuoteCartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

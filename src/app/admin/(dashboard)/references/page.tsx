@@ -26,6 +26,7 @@ export default async function AdminReferencesPage() {
             <tr>
               <th className="px-4 py-3 font-medium">Photo</th>
               <th className="px-4 py-3 font-medium">Business</th>
+              <th className="px-4 py-3 font-medium">Slug</th>
               <th className="px-4 py-3 font-medium">Type</th>
               <th className="px-4 py-3 font-medium">Logo</th>
               <th className="px-4 py-3 font-medium" />
@@ -42,6 +43,7 @@ export default async function AdminReferencesPage() {
                   </div>
                 </td>
                 <td className="px-4 py-3 font-medium">{c.translations[0]?.business}</td>
+                <td className="px-4 py-3 font-mono text-text-2">{c.slug}</td>
                 <td className="px-4 py-3 text-text-2">{c.businessType}</td>
                 <td className="px-4 py-3">
                   <div className="relative h-10 w-10 overflow-hidden rounded-md bg-surface-0">

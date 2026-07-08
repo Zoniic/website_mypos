@@ -27,6 +27,7 @@ export default async function EditReferencePage({
     };
 
   const initialValues: ReferenceFormValues = {
+    slug: referenceCase.slug,
     businessType: referenceCase.businessType,
     imageUrl: referenceCase.imageUrl,
     logoUrl: referenceCase.logoUrl,

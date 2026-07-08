@@ -7,6 +7,16 @@ const prisma = new PrismaClient();
 
 type CaseItem = { business: string; businessType: string; problem: string; install: string; result: string };
 
+function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 async function main() {
   const existing = await prisma.referenceCase.count();
   if (existing > 0) {
@@ -19,8 +29,9 @@ async function main() {
   const zhItems = zh.references.items as CaseItem[];
 
   for (let i = 0; i < thItems.length; i++) {
+    const slug = slugify(enItems[i]?.business || thItems[i].business || `case-${i}`) || `case-${i}`;
     const referenceCase = await prisma.referenceCase.create({
-      data: { businessType: thItems[i].businessType, sortOrder: i },
+      data: { slug, businessType: thItems[i].businessType, sortOrder: i },
     });
 
     for (const [locale, items] of [

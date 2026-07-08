@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { CompareCartLink } from "@/components/products/CompareCartLink";
 
 const solutionSlugs = ["selfOrder", "weighPay", "pos", "ticketing"] as const;
 const solutionHrefs: Record<(typeof solutionSlugs)[number], string> = {
@@ -21,6 +22,7 @@ const trailingLinks = [
   { key: "references", href: "/references" },
   { key: "software", href: "/software" },
   { key: "knowledgeBase", href: "/knowledge-base" },
+  { key: "blog", href: "/blog" },
   { key: "service", href: "/service" },
   { key: "about", href: "/about" },
 ] as const;
@@ -181,6 +183,17 @@ export function Header() {
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <Link
+            href="/search"
+            aria-label={t("search")}
+            className="p-1.5 text-text-2 hover:text-text-1"
+          >
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M18 18l-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </Link>
+          <CompareCartLink label={t("compare")} />
           <LanguageSwitcher />
           <Button href="/contact" variant="primary" size="sm">
             {t("contact")}
@@ -287,6 +300,21 @@ export function Header() {
               {t(link.key)}
             </Link>
           ))}
+
+          <Link
+            href="/search"
+            className="block py-2.5 text-base font-medium text-text-1"
+            onClick={() => setMobileOpen(false)}
+          >
+            {t("search")}
+          </Link>
+          <Link
+            href="/compare"
+            className="block py-2.5 text-base font-medium text-text-1"
+            onClick={() => setMobileOpen(false)}
+          >
+            {t("compare")}
+          </Link>
 
           <div className="mt-4 flex items-center justify-between gap-3">
             <LanguageSwitcher />

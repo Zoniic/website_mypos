@@ -12,6 +12,9 @@ import { ProductGallery } from "@/components/products/ProductGallery";
 import { SpecList } from "@/components/products/SpecList";
 import { DatasheetViewer } from "@/components/products/DatasheetViewer";
 import { ProductCard } from "@/components/products/ProductCard";
+import { StockBadge } from "@/components/products/StockBadge";
+import { AddToCompareButton } from "@/components/products/AddToCompareButton";
+import { toEmbedUrl } from "@/lib/kb";
 
 export async function generateMetadata({
   params,
@@ -133,6 +136,18 @@ export default async function ProductDetailPage({
               maximumFractionDigits: 0,
             })}
           </p>
+          <div className="mt-2">
+            <StockBadge
+              status={product.stockStatus}
+              leadTimeDays={product.leadTimeDays}
+              labels={{
+                inStock: tDetail("stockInStock"),
+                preorder: tDetail("stockPreorder"),
+                outOfStock: tDetail("stockOutOfStock"),
+                leadTime: tDetail.raw("leadTimeLabel"),
+              }}
+            />
+          </div>
           <p className="mt-4 text-text-2">{t("highlight")}</p>
 
           <div className="mt-8 flex flex-wrap gap-4">
@@ -142,6 +157,14 @@ export default async function ProductDetailPage({
             <Button href={settings.lineUrl} external variant="line" size="lg">
               {tDetail("lineQuote")}
             </Button>
+            <AddToCompareButton
+              slug={product.slug}
+              name={product.name}
+              imageUrl={product.imageUrl}
+              priceFrom={product.priceFrom}
+              addLabel={tCommon("addToCompare")}
+              removeLabel={tCommon("removeFromCompare")}
+            />
           </div>
         </div>
       </section>
@@ -154,6 +177,26 @@ export default async function ProductDetailPage({
         downloadLabel={tDetail("datasheetDownload")}
         unavailableLabel={tDetail("datasheetUnavailable")}
       />
+
+      {product.videoUrl &&
+        (() => {
+          const embedUrl = toEmbedUrl(product.videoUrl!);
+          if (!embedUrl) return null;
+          return (
+            <section className="mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+              <h2 className="text-2xl font-bold tracking-tight">{tDetail("videoTitle")}</h2>
+              <div className="mt-6 aspect-video overflow-hidden rounded-card bg-surface-2">
+                <iframe
+                  src={embedUrl}
+                  title={`${product.name} video`}
+                  className="h-full w-full"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </section>
+          );
+        })()}
 
       {related.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

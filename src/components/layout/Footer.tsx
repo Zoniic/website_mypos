@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSettings } from "@/lib/siteSettings";
+import { NewsletterForm } from "@/components/layout/NewsletterForm";
 
 const menuLinks = [
   { key: "home", href: "/" },
@@ -10,8 +11,10 @@ const menuLinks = [
   { key: "references", href: "/references" },
   { key: "software", href: "/software" },
   { key: "knowledgeBase", href: "/knowledge-base" },
+  { key: "blog", href: "/blog" },
   { key: "service", href: "/service" },
   { key: "about", href: "/about" },
+  { key: "careers", href: "/careers" },
   { key: "contact", href: "/contact" },
 ] as const;
 
@@ -102,6 +105,19 @@ export async function Footer() {
               </a>
             </li>
           </ul>
+        </div>
+      </div>
+
+      <div className="border-t border-border px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-md">
+          <NewsletterForm
+            title={t("newsletterTitle")}
+            placeholder={t("newsletterPlaceholder")}
+            submitLabel={t("newsletterSubmit")}
+            successMessage={t("newsletterSuccess")}
+            alreadyMessage={t("newsletterAlready")}
+            invalidMessage={t("newsletterInvalid")}
+          />
         </div>
       </div>
 

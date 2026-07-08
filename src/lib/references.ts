@@ -2,6 +2,7 @@ import type { ReferenceCase as ReferenceCaseRow, ReferenceCaseTranslation } from
 import { prisma } from "@/lib/prisma";
 
 export type ReferenceCase = {
+  slug: string;
   business: string;
   businessType: string;
   problem: string;
@@ -16,6 +17,7 @@ type RowWithTranslations = ReferenceCaseRow & { translations: ReferenceCaseTrans
 function toReferenceCase(row: RowWithTranslations): ReferenceCase {
   const translation = row.translations[0];
   return {
+    slug: row.slug,
     business: translation?.business ?? "",
     businessType: row.businessType,
     problem: translation?.problem ?? "",
@@ -32,4 +34,20 @@ export async function getAllReferenceCases(locale: string): Promise<ReferenceCas
     orderBy: { sortOrder: "asc" },
   });
   return rows.map(toReferenceCase);
+}
+
+export async function getReferenceCaseBySlug(
+  slug: string,
+  locale: string
+): Promise<ReferenceCase | null> {
+  const row = await prisma.referenceCase.findUnique({
+    where: { slug },
+    include: { translations: { where: { locale } } },
+  });
+  return row ? toReferenceCase(row) : null;
+}
+
+export async function getAllReferenceCaseSlugs(): Promise<string[]> {
+  const rows = await prisma.referenceCase.findMany({ select: { slug: true } });
+  return rows.map((r) => r.slug);
 }

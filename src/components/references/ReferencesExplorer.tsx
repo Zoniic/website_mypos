@@ -3,8 +3,10 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { Link } from "@/i18n/navigation";
 
 export type ReferenceCase = {
+  slug: string;
   business: string;
   businessType: string;
   problem: string;
@@ -82,8 +84,10 @@ export function ReferencesExplorer({
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((item, index) => (
-            <FadeIn key={`${item.business}-${index}`} delay={(index % 6) * 0.06}>
-              <div className="group h-full overflow-hidden rounded-card border border-border bg-surface-1/40 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]">
+            <FadeIn key={item.slug} delay={(index % 6) * 0.06}>
+              <Link
+                href={`/references/${item.slug}`}
+                className="group block h-full overflow-hidden rounded-card border border-border bg-surface-1/40 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]">
                 {item.imageUrl ? (
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">
                     <Image
@@ -126,7 +130,7 @@ export function ReferencesExplorer({
                     </div>
                   </dl>
                 </div>
-              </div>
+              </Link>
             </FadeIn>
           ))}
         </div>

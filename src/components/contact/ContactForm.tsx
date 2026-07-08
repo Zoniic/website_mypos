@@ -10,6 +10,7 @@ export function ContactForm() {
   const t = useTranslations("contact");
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product") ?? "";
+  const messageParam = searchParams.get("message") ?? "";
   const [status, setStatus] = useState<SubmitStatus>("idle");
 
   // No backend endpoint exists yet (see README Phase 8) — this only
@@ -86,6 +87,7 @@ export function ContactForm() {
           id="contact-message"
           name="message"
           rows={4}
+          defaultValue={messageParam}
           className="mt-1 w-full rounded-lg border border-border-strong px-3 py-2 text-sm"
         />
       </div>

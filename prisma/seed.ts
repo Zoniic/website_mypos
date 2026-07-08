@@ -179,11 +179,20 @@ async function seedReferences() {
   console.log("Seeding reference cases...");
   const messagesByLocale = Object.fromEntries(locales.map((l) => [l, loadMessages(l)]));
   const thItems = messagesByLocale.th.references.items as { business: string; businessType: string }[];
+  const enItemsForSlug = messagesByLocale.en.references.items as { business: string }[];
 
   for (let i = 0; i < thItems.length; i++) {
     const businessType = thItems[i].businessType;
+    const slugBase = (enItemsForSlug[i]?.business || thItems[i].business || `case-${i}`)
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[^a-z0-9\s-]/g, "")
+      .trim()
+      .replace(/\s+/g, "-")
+      .replace(/-+/g, "-");
+    const slug = slugBase || `case-${i}`;
     const created = await prisma.referenceCase.create({
-      data: { businessType, sortOrder: i },
+      data: { slug, businessType, sortOrder: i },
     });
 
     for (const locale of locales) {

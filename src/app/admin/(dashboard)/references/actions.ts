@@ -7,9 +7,19 @@ import { saveUploadedImage } from "@/lib/uploads";
 
 const locales = ["th", "en", "zh"] as const;
 
-function revalidateReferencePaths() {
+function isUniqueConstraintError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as { code?: string }).code === "P2002"
+  );
+}
+
+function revalidateReferencePaths(slug?: string) {
   revalidatePath("/[locale]/references", "page");
   revalidatePath("/[locale]/solutions/[slug]", "page");
+  if (slug) revalidatePath(`/[locale]/references/${slug}`, "page");
 }
 
 async function readReferenceImageFields(
@@ -31,20 +41,28 @@ async function readReferenceImageFields(
 }
 
 export async function createReference(_prevState: string | null, formData: FormData) {
+  const slug = String(formData.get("slug") ?? "").trim();
+  if (!slug) return "Slug is required.";
   const businessType = String(formData.get("businessType") ?? "").trim();
   if (!businessType) return "Business type is required.";
 
   let images: { imageUrl: string | null; logoUrl: string | null };
   try {
-    images = await readReferenceImageFields(formData, `case-${Date.now()}`, null, null);
+    images = await readReferenceImageFields(formData, slug, null, null);
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
   const count = await prisma.referenceCase.count();
-  const referenceCase = await prisma.referenceCase.create({
-    data: { businessType, sortOrder: count, ...images },
-  });
+  let referenceCase;
+  try {
+    referenceCase = await prisma.referenceCase.create({
+      data: { slug, businessType, sortOrder: count, ...images },
+    });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) return `Slug "${slug}" is already in use.`;
+    throw error;
+  }
 
   for (const locale of locales) {
     await prisma.referenceCaseTranslation.create({
@@ -59,7 +77,7 @@ export async function createReference(_prevState: string | null, formData: FormD
     });
   }
 
-  revalidateReferencePaths();
+  revalidateReferencePaths(slug);
   redirect("/admin/references");
 }
 
@@ -68,6 +86,8 @@ export async function updateReference(
   _prevState: string | null,
   formData: FormData
 ) {
+  const slug = String(formData.get("slug") ?? "").trim();
+  if (!slug) return "Slug is required.";
   const businessType = String(formData.get("businessType") ?? "").trim();
   if (!businessType) return "Business type is required.";
 
@@ -76,17 +96,17 @@ export async function updateReference(
 
   let images: { imageUrl: string | null; logoUrl: string | null };
   try {
-    images = await readReferenceImageFields(
-      formData,
-      `case-${caseId}`,
-      existing.imageUrl,
-      existing.logoUrl
-    );
+    images = await readReferenceImageFields(formData, slug, existing.imageUrl, existing.logoUrl);
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
-  await prisma.referenceCase.update({ where: { id: caseId }, data: { businessType, ...images } });
+  try {
+    await prisma.referenceCase.update({ where: { id: caseId }, data: { slug, businessType, ...images } });
+  } catch (error) {
+    if (isUniqueConstraintError(error)) return `Slug "${slug}" is already in use.`;
+    throw error;
+  }
 
   for (const locale of locales) {
     await prisma.referenceCaseTranslation.upsert({
@@ -108,7 +128,7 @@ export async function updateReference(
     });
   }
 
-  revalidateReferencePaths();
+  revalidateReferencePaths(slug);
   redirect("/admin/references");
 }
 

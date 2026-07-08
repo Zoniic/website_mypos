@@ -13,9 +13,73 @@
     "references": "客户案例",
     "software": "软件系统",
     "knowledgeBase": "知识库",
+    "blog": "博客",
+    "careers": "加入我们",
     "service": "服务支持",
     "about": "关于我们",
-    "contact": "联系我们"
+    "contact": "联系我们",
+    "search": "搜索",
+    "compare": "对比/获取报价"
+  },
+  "search": {
+    "metaTitle": "搜索 | MYPOS",
+    "breadcrumb": "搜索",
+    "title": "搜索",
+    "placeholder": "搜索产品、配件、文章...",
+    "resultsCount": "找到 {count} 条与\"{query}\"相关的结果",
+    "noResults": "未找到相关结果，请尝试其他关键词。",
+    "sectionProducts": "产品",
+    "sectionAccessories": "配件",
+    "sectionReferences": "客户案例",
+    "sectionKb": "知识库"
+  },
+  "careers": {
+    "metaTitle": "加入我们 | MYPOS",
+    "metaDescription": "MYPOS（泰国 POS 与自助服务系统制造商）招聘职位。",
+    "breadcrumb": "加入我们",
+    "title": "加入我们",
+    "subtitle": "成为 MYPOS 团队的一员。",
+    "noOpenings": "目前没有招聘职位。",
+    "apply": "申请此职位",
+    "applyMessage": "有意申请职位：{title}"
+  },
+  "compare": {
+    "metaTitle": "产品对比/获取报价 | MYPOS",
+    "breadcrumb": "对比/获取报价",
+    "title": "产品对比与报价申请",
+    "subtitle": "在产品页面添加您感兴趣的产品，即可在此一次性申请多款产品的报价。",
+    "empty": "尚未添加任何产品，请先浏览并添加您感兴趣的产品。",
+    "browseProducts": "浏览所有产品",
+    "product": "产品",
+    "price": "起价",
+    "quantity": "数量",
+    "remove": "移除",
+    "formTitle": "提交报价申请",
+    "formSubtitle": "我们的销售团队将尽快就所选产品与您联系。",
+    "formName": "姓名",
+    "formCompany": "公司（选填）",
+    "formPhone": "电话号码",
+    "formEmail": "电子邮箱",
+    "formMessage": "补充说明（选填）",
+    "formSubmit": "提交报价申请",
+    "formSubmitting": "提交中...",
+    "successTitle": "报价申请已提交",
+    "successBody": "我们的销售团队将尽快与您联系。",
+    "backToBrowsing": "继续添加产品"
+  },
+  "blog": {
+    "metaTitle": "博客 | MYPOS",
+    "metaDescription": "来自 MYPOS 的 POS 与自助服务系统技巧、指南与最新消息。",
+    "breadcrumb": "博客",
+    "title": "博客",
+    "subtitle": "关于 POS 与自助服务系统的技巧、指南与最新消息。",
+    "noPosts": "暂无文章。"
+  },
+  "notFound": {
+    "title": "找不到此页面",
+    "message": "此页面可能已被移动或删除。您可以返回首页或浏览我们的产品。",
+    "backHome": "返回首页",
+    "contactUs": "联系我们"
   },
   "common": {
     "lineButton": "LINE 咨询",
@@ -26,6 +90,12 @@
   },
   "footer": {
     "companyDesc": "泰国本土自助服务与收银系统制造商，从硬件、软件到售后服务一站式提供。",
+    "newsletterTitle": "订阅最新消息与优惠",
+    "newsletterPlaceholder": "您的邮箱",
+    "newsletterSubmit": "订阅",
+    "newsletterSuccess": "订阅成功，感谢您的关注！",
+    "newsletterAlready": "此邮箱已订阅。",
+    "newsletterInvalid": "请输入有效的电子邮箱地址。",
     "menuTitle": "菜单",
     "contactTitle": "联系方式",
     "followTitle": "关注我们",
@@ -289,6 +359,12 @@
     "priceFrom": "起价",
     "viewDetails": "查看详情",
     "resultsCount": "找到 {count} 项结果",
+    "stockInStock": "现货",
+    "stockPreorder": "预订",
+    "stockOutOfStock": "暂时缺货",
+    "leadTimeLabel": "约 {days} 天",
+    "addToCompare": "加入对比/报价清单",
+    "removeFromCompare": "从对比清单中移除",
     "businessTypes": {
       "restaurant": "餐厅",
       "retail": "零售",
@@ -325,7 +401,12 @@
     "datasheetDownload": "下载 PDF",
     "datasheetUnavailable": "规格书正在准备中，请联系销售团队获取更多资料。",
     "relatedTitle": "相关 / 可搭配机型",
-    "galleryLabel": "产品图集"
+    "galleryLabel": "产品图集",
+    "stockInStock": "现货",
+    "stockPreorder": "预订",
+    "stockOutOfStock": "暂时缺货",
+    "leadTimeLabel": "预计交货时间约 {days} 天",
+    "videoTitle": "产品演示视频"
   },
   "products": {
     "items": {
@@ -374,6 +455,8 @@
     "noResults": "该分类下暂无案例，请尝试选择其他行业类型。",
     "clearFilters": "清除筛选",
     "noPhoto": "暂无照片",
+    "backToReferences": "返回客户案例",
+    "askAboutThisCase": "咨询此案例",
     "items": [
       { "business": "某户外连锁快餐店", "businessType": "restaurant", "problem": "午市高峰排队过长，顾客流失", "install": "在店门口安装 2 台自助点餐机", "result": "平均等待时间减少 40%" },
       { "business": "社区口迷你超市", "businessType": "convenience", "problem": "傍晚高峰结账缓慢，排队严重", "install": "两家门店全部更换为 MYPOS 收银系统", "result": "结账速度提升一倍" },
@@ -425,6 +508,20 @@
         { "title": "评估与预约", "description": "团队初步评估情况并预约维修或理赔时间。" },
         { "title": "处理解决", "description": "根据情况进行维修、更换零件或提供备用机。" }
       ]
+    },
+    "warranty": {
+      "title": "提交保修理赔 / 报修",
+      "subtitle": "请填写以下表单，我们的支持团队将与您联系安排检修。",
+      "name": "姓名",
+      "phone": "电话号码",
+      "email": "电子邮箱",
+      "serialNumber": "机器序列号（如已知）",
+      "issue": "问题描述",
+      "submit": "提交",
+      "submitting": "提交中...",
+      "successTitle": "已提交理赔申请",
+      "successBody": "我们的支持团队将在 1-2 个工作日内与您联系。",
+      "required": "请完整填写所有必填项。"
     },
     "faq": {
       "title": "服务常见问题",

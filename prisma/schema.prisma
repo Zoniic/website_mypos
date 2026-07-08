@@ -41,6 +41,15 @@ model Product {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
+  /// Optional video (YouTube/Vimeo/Drive link), embedded on the product detail page.
+  videoUrl       String?
+  /// "in_stock" | "preorder" | "out_of_stock". Free-text (not an enum) to
+  /// match this schema's existing convention of plain strings for
+  /// admin-editable status fields.
+  stockStatus    String   @default("in_stock")
+  /// Estimated lead time in days when not in stock. Null when in_stock.
+  leadTimeDays   Int?
+
   translations  ProductTranslation[]
   categories    Category[]
   businessTypes BusinessType[]
@@ -107,6 +116,8 @@ model AccessoryTranslation {
 
 model ReferenceCase {
   id           Int      @id @default(autoincrement())
+  /// Powers the case study detail page URL (/references/[slug]).
+  slug         String   @unique
   businessType String
   sortOrder    Int      @default(0)
   /// On-site photo of the installation at the customer's location.
@@ -256,4 +267,116 @@ model KbArticleTranslation {
 
   @@unique([articleId, locale])
   @@index([locale])
+}
+
+/// Blog/news post for organic SEO content (buying guides, announcements),
+/// distinct from KbArticle which is customer support documentation.
+model BlogPost {
+  id            Int      @id @default(autoincrement())
+  slug          String   @unique
+  /// Cover photo. Public URL under /uploads/blog/.
+  coverImageUrl String?
+  featured      Boolean  @default(false)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  translations BlogPostTranslation[]
+}
+
+model BlogPostTranslation {
+  id      Int    @id @default(autoincrement())
+  postId  Int
+  locale  String
+  title   String
+  excerpt String @db.Text
+  body    String @db.Text
+
+  post BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, locale])
+  @@index([locale])
+}
+
+/// Open job posting shown on the careers page. Applications go through the
+/// existing contact form (prefilled with the job title), not a separate
+/// application-tracking flow.
+model JobPosting {
+  id             Int      @id @default(autoincrement())
+  slug           String   @unique
+  department     String
+  location       String
+  /// "full-time" | "part-time" | "contract" | "internship".
+  employmentType String
+  isOpen         Boolean  @default(true)
+  sortOrder      Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  translations JobPostingTranslation[]
+}
+
+model JobPostingTranslation {
+  id          Int    @id @default(autoincrement())
+  jobId       Int
+  locale      String
+  title       String
+  description String @db.Text
+
+  job JobPosting @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@unique([jobId, locale])
+}
+
+/// Email captured from the footer newsletter signup. No email-sending
+/// integration yet (no ESP API key configured) — this just stores leads
+/// for the admin to export/import into whatever ESP is chosen later.
+model NewsletterSubscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+/// A multi-item quote request built from the product comparison/quote cart.
+model QuoteRequest {
+  id        Int      @id @default(autoincrement())
+  name      String
+  company   String?
+  phone     String
+  email     String
+  message   String?  @db.Text
+  /// "new" | "contacted" | "closed".
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+
+  items QuoteRequestItem[]
+}
+
+model QuoteRequestItem {
+  id             Int    @id @default(autoincrement())
+  quoteRequestId Int
+  productSlug    String
+  /// Snapshot of the product name at request time, so the item stays
+  /// readable even if the product is later renamed or removed.
+  productName    String
+  quantity       Int    @default(1)
+
+  quoteRequest QuoteRequest @relation(fields: [quoteRequestId], references: [id], onDelete: Cascade)
+}
+
+/// Customer-submitted warranty/RMA claim, reviewed and progressed by an
+/// admin (open -> in_progress -> resolved). No customer-facing status
+/// tracking page yet — status is admin-only for now.
+model WarrantyClaim {
+  id           Int      @id @default(autoincrement())
+  name         String
+  phone        String
+  email        String
+  productSlug  String?
+  serialNumber String?
+  issue        String   @db.Text
+  /// "open" | "in_progress" | "resolved".
+  status       String   @default("open")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

@@ -11,6 +11,7 @@ const GALLERY_SLOTS = 3;
 function readProductFields(formData: FormData) {
   const priceRaw = String(formData.get("priceFrom") ?? "").trim();
   const warrantyRaw = String(formData.get("warrantyMonths") ?? "").trim();
+  const leadTimeRaw = String(formData.get("leadTimeDays") ?? "").trim();
   return {
     slug: String(formData.get("slug") ?? "").trim(),
     priceFrom: priceRaw ? Number(priceRaw) : 0,
@@ -28,6 +29,9 @@ function readProductFields(formData: FormData) {
     weight: String(formData.get("weight") ?? "").trim(),
     warrantyMonths: warrantyRaw ? Number(warrantyRaw) : 12,
     datasheetUrl: String(formData.get("datasheetUrl") ?? "").trim() || null,
+    videoUrl: String(formData.get("videoUrl") ?? "").trim() || null,
+    stockStatus: String(formData.get("stockStatus") ?? "in_stock"),
+    leadTimeDays: leadTimeRaw ? Number(leadTimeRaw) : null,
     featured: formData.get("featured") === "on",
     businessTypes: formData
       .getAll("businessTypes")
