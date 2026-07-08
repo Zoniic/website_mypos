@@ -4,7 +4,8 @@ import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { getAllAccessories } from "@/lib/accessories";
+import { AccessoriesExplorer } from "@/components/accessories/AccessoriesExplorer";
 
 export async function generateMetadata({
   params,
@@ -30,19 +31,21 @@ export async function generateMetadata({
   };
 }
 
-type AccessoryItem = { slug: string; name: string; description: string; imageUrl?: string };
-
 export default async function AccessoriesPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{ category?: string }>;
 }) {
   const { locale } = await params;
+  const { category } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "accessories" });
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
-  const items = t.raw("items") as AccessoryItem[];
+  const tProducts = await getTranslations({ locale, namespace: "productsCommon" });
+  const items = await getAllAccessories(locale);
 
   return (
     <>
@@ -57,14 +60,14 @@ export default async function AccessoriesPage({
         <h1 className="font-display text-3xl font-bold tracking-tight">{t("title")}</h1>
         <p className="mt-3 max-w-2xl text-text-2">{t("subtitle")}</p>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {items.map((item) => (
-            <div key={item.slug} className="rounded-2xl border border-border p-4">
-              <PlaceholderImage ratio="1/1" label={`${item.name} photo`} src={item.imageUrl} />
-              <h3 className="mt-4 font-semibold">{item.name}</h3>
-              <p className="mt-1 text-sm text-text-2">{item.description}</p>
-            </div>
-          ))}
+        <div className="mt-8">
+          <AccessoriesExplorer
+            items={items}
+            initialCategory={category ?? ""}
+            filterLabel={tProducts("filterCategory")}
+            allLabel={tProducts("allLabel")}
+            noResults={tProducts("noResults")}
+          />
         </div>
 
         <div className="mt-10">

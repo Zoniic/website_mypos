@@ -6,6 +6,8 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { getSessionUser } from "@/lib/adminAuth";
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 function isUniqueConstraintError(error: unknown): boolean {
   return (
     typeof error === "object" &&
@@ -21,6 +23,7 @@ export async function createAdminUser(_prevState: string | null, formData: FormD
   const password = String(formData.get("password") ?? "");
 
   if (!email || !name) return "Email and name are required.";
+  if (!EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
   if (password.length < 8) return "Password must be at least 8 characters.";
 
   const passwordHash = await bcrypt.hash(password, 10);
@@ -46,6 +49,7 @@ export async function updateAdminUser(
   const password = String(formData.get("password") ?? "");
 
   if (!email || !name) return "Email and name are required.";
+  if (!EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
   if (password && password.length < 8) return "Password must be at least 8 characters.";
 
   const data: { email: string; name: string; passwordHash?: string } = { email, name };

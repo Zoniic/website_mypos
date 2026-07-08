@@ -1,9 +1,12 @@
 "use client";
 
 import { useActionState } from "react";
+import { ImageUploadField } from "../ImageUploadField";
 
 export type ReferenceFormValues = {
   businessType: string;
+  imageUrl: string | null;
+  logoUrl: string | null;
   translations: Record<
     "th" | "en" | "zh",
     { business: string; problem: string; install: string; result: string }
@@ -12,6 +15,8 @@ export type ReferenceFormValues = {
 
 const emptyValues: ReferenceFormValues = {
   businessType: "restaurant",
+  imageUrl: null,
+  logoUrl: null,
   translations: {
     th: { business: "", problem: "", install: "", result: "" },
     en: { business: "", problem: "", install: "", result: "" },
@@ -62,6 +67,24 @@ export function ReferenceForm({
           ))}
         </select>
       </label>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Photos</h3>
+        <ImageUploadField
+          name="siteImage"
+          label="On-site photo"
+          currentUrl={initialValues.imageUrl}
+          ratio="4/3"
+          specHint="Photo of the actual installation at the customer's location. JPG, PNG, or WebP, max 5MB."
+        />
+        <ImageUploadField
+          name="logoImage"
+          label="Customer logo"
+          currentUrl={initialValues.logoUrl}
+          ratio="1/1"
+          specHint="Customer's brand logo, ideally on a transparent or white background. Optional."
+        />
+      </section>
 
       {(["th", "en", "zh"] as const).map((locale) => (
         <section key={locale} className="rounded-xl border border-border p-4">

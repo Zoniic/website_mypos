@@ -125,19 +125,18 @@ body {
   opacity: 0.55;
 }
 
-/* Ticket-stub eyebrow tag — dashed bracket, monospace, evokes a price tag
-   or ticket stub instead of a decorative gradient label. */
+/* Eyebrow label — tinted pill, no border. Uses the site's sans font so
+   Thai/Chinese glyphs render with correct metrics (monospace clipped them). */
 .ticket-tag {
   display: inline-flex;
   align-items: center;
   gap: 0.4em;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  padding: 0.2em 0.7em;
-  border: 1px dashed currentColor;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.35em 0.9em;
+  background-color: color-mix(in srgb, currentColor 12%, transparent);
   border-radius: var(--radius-tag);
-  opacity: 0.85;
 }
 
 /* Barcode-bar ambient texture — decorative only, aria-hidden. */
@@ -171,8 +170,55 @@ body {
   animation: marquee 28s linear infinite;
 }
 
+/* Ambient hero blobs — slow drifting glow, decorative only. */
+@keyframes blob-float-a {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(4%, 6%) scale(1.08);
+  }
+}
+
+@keyframes blob-float-b {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-5%, -4%) scale(1.1);
+  }
+}
+
+.animate-blob-a {
+  animation: blob-float-a 14s ease-in-out infinite;
+}
+
+.animate-blob-b {
+  animation: blob-float-b 17s ease-in-out infinite;
+}
+
+/* Floating UI badge over hero imagery — gentle bob. */
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float-y {
+  animation: float-y 5s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee {
+  .animate-marquee,
+  .animate-blob-a,
+  .animate-blob-b,
+  .animate-float-y {
     animation: none;
   }
 }

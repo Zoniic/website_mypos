@@ -12,10 +12,8 @@ export async function PopularProducts() {
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
-            {t("eyebrow")}
-          </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight">
+          <p className="ticket-tag text-primary-300">{t("eyebrow")}</p>
+          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
             {t("title")}
           </h2>
         </div>

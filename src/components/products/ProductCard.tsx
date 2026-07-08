@@ -20,9 +20,16 @@ export function ProductCard({ product }: { product: Product }) {
     >
       <Link
         href={`/products/${product.slug}`}
-        className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border p-4 transition-shadow hover:shadow-md"
+        className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 p-4 transition-all hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]"
       >
-        <PlaceholderImage ratio="1/1" label={`${product.name} photo`} src={product.imageUrl} />
+        <div className="overflow-hidden rounded-lg">
+          <PlaceholderImage
+            ratio="1/1"
+            label={`${product.name} photo`}
+            src={product.imageUrl}
+            className="transition-transform duration-500 ease-out group-hover:scale-105"
+          />
+        </div>
         <h3 className="mt-4 font-semibold">{product.name}</h3>
         <p className="mt-1 text-sm text-text-2">
           {t("priceFrom")}{" "}

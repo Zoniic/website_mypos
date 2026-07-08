@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
@@ -23,16 +24,32 @@ export default async function AdminReferencesPage() {
         <table className="w-full text-left text-sm">
           <thead className="bg-surface-0 text-text-2">
             <tr>
+              <th className="px-4 py-3 font-medium">Photo</th>
               <th className="px-4 py-3 font-medium">Business</th>
               <th className="px-4 py-3 font-medium">Type</th>
+              <th className="px-4 py-3 font-medium">Logo</th>
               <th className="px-4 py-3 font-medium" />
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
             {cases.map((c) => (
               <tr key={c.id}>
+                <td className="px-4 py-3">
+                  <div className="relative h-10 w-14 overflow-hidden rounded-md bg-surface-0">
+                    {c.imageUrl && (
+                      <Image src={c.imageUrl} alt="" fill className="object-cover" />
+                    )}
+                  </div>
+                </td>
                 <td className="px-4 py-3 font-medium">{c.translations[0]?.business}</td>
                 <td className="px-4 py-3 text-text-2">{c.businessType}</td>
+                <td className="px-4 py-3">
+                  <div className="relative h-10 w-10 overflow-hidden rounded-md bg-surface-0">
+                    {c.logoUrl && (
+                      <Image src={c.logoUrl} alt="" fill className="object-contain p-1" />
+                    )}
+                  </div>
+                </td>
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/references/${c.id}/edit`}

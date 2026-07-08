@@ -29,7 +29,11 @@ export function UserForm({
         <span className={labelClass}>Email</span>
         <input
           name="email"
-          type="email"
+          type="text"
+          inputMode="email"
+          autoCapitalize="off"
+          autoCorrect="off"
+          spellCheck={false}
           defaultValue={initialValues.email}
           autoComplete="off"
           className={inputClass}

@@ -28,6 +28,8 @@ export default async function EditReferencePage({
 
   const initialValues: ReferenceFormValues = {
     businessType: referenceCase.businessType,
+    imageUrl: referenceCase.imageUrl,
+    logoUrl: referenceCase.logoUrl,
     translations: {
       th: findTranslation("th"),
       en: findTranslation("en"),
