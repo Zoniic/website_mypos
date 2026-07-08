@@ -79,16 +79,23 @@ export function ProductsExplorer({
   );
 
   useEffect(() => {
-    const params = new URLSearchParams();
-    if (search) params.set("q", search);
-    if (category) params.set("category", category);
-    if (businessType) params.set("businessType", businessType);
-    if (os) params.set("os", os);
-    if (screenSize) params.set("screenSize", screenSize);
-    const query = params.toString();
-    if (query === lastQuery.current) return;
-    lastQuery.current = query;
-    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    // Debounced: typing in the search box would otherwise fire a
+    // router.replace (and a full server re-render, since this route is
+    // force-dynamic) on every keystroke, even though filtering already
+    // happens locally below via useMemo.
+    const timeout = setTimeout(() => {
+      const params = new URLSearchParams();
+      if (search) params.set("q", search);
+      if (category) params.set("category", category);
+      if (businessType) params.set("businessType", businessType);
+      if (os) params.set("os", os);
+      if (screenSize) params.set("screenSize", screenSize);
+      const query = params.toString();
+      if (query === lastQuery.current) return;
+      lastQuery.current = query;
+      router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+    }, 400);
+    return () => clearTimeout(timeout);
   }, [search, category, businessType, os, screenSize, pathname, router]);
 
   const businessTypes = useMemo(() => {

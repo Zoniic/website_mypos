@@ -16,7 +16,11 @@ export function LanguageSwitcher() {
   const pathname = usePathname();
 
   function handleChange(nextLocale: Locale) {
-    router.replace(pathname, { locale: nextLocale });
+    // Read the query string at click-time (rather than subscribing via
+    // useSearchParams) so this sitewide component never needs a Suspense
+    // boundary — it just needs to preserve whatever filters are active.
+    const query = window.location.search;
+    router.replace(`${pathname}${query}`, { locale: nextLocale });
   }
 
   return (
