@@ -2,6 +2,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
+/// Admin panel users — replaces the single shared ADMIN_PASSWORD.
+/// Bootstrap the first user with: npx tsx prisma/seed-admin-user.ts
+model AdminUser {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  name         String
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLoginAt  DateTime?
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")

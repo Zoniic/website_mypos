@@ -1,6 +1,9 @@
+import { cookies } from "next/headers";
 import { SignJWT, jwtVerify } from "jose";
 
 export const ADMIN_SESSION_COOKIE = "mypos_admin_session";
+
+export type SessionUser = { userId: number; email: string; name: string };
 
 function getSecret() {
   const secret = process.env.SESSION_SECRET;
@@ -10,20 +13,33 @@ function getSecret() {
   return new TextEncoder().encode(secret);
 }
 
-export async function createSessionToken(): Promise<string> {
-  return new SignJWT({ role: "admin" })
+export async function createSessionToken(user: SessionUser): Promise<string> {
+  return new SignJWT({ role: "admin", ...user })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
     .sign(getSecret());
 }
 
-export async function verifySessionToken(token: string | undefined): Promise<boolean> {
-  if (!token) return false;
+async function verifyPayload(token: string | undefined) {
+  if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, getSecret());
-    return payload.role === "admin";
+    if (payload.role !== "admin") return null;
+    return payload as { role: string; userId: number; email: string; name: string };
   } catch {
-    return false;
+    return null;
   }
+}
+
+export async function verifySessionToken(token: string | undefined): Promise<boolean> {
+  return (await verifyPayload(token)) !== null;
+}
+
+/** Reads the current admin's identity from the session cookie (server components/actions only). */
+export async function getSessionUser(): Promise<SessionUser | null> {
+  const cookieStore = await cookies();
+  const payload = await verifyPayload(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
+  if (!payload) return null;
+  return { userId: payload.userId, email: payload.email, name: payload.name };
 }

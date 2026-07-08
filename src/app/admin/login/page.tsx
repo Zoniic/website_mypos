@@ -15,7 +15,20 @@ export default function AdminLoginPage() {
         <h1 className="text-xl font-bold">MYPOS Admin</h1>
         <p className="mt-1 text-sm text-text-2">Sign in to manage site content.</p>
 
-        <label htmlFor="password" className="mt-6 block text-sm font-medium text-text-2">
+        <label htmlFor="email" className="mt-6 block text-sm font-medium text-text-2">
+          Email
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          required
+          autoFocus
+          autoComplete="username"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-text-1"
+        />
+
+        <label htmlFor="password" className="mt-4 block text-sm font-medium text-text-2">
           Password
         </label>
         <input
@@ -23,7 +36,7 @@ export default function AdminLoginPage() {
           name="password"
           type="password"
           required
-          autoFocus
+          autoComplete="current-password"
           className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-text-1"
         />
 

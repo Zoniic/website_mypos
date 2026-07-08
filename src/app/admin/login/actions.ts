@@ -1,7 +1,9 @@
 "use server";
 
+import bcrypt from "bcryptjs";
 import { cookies, headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { prisma } from "@/lib/prisma";
 import { ADMIN_SESSION_COOKIE, createSessionToken } from "@/lib/adminAuth";
 import { clearAttempts, isRateLimited, recordAttempt } from "@/lib/rateLimit";
 
@@ -21,19 +23,25 @@ export async function loginAction(_prevState: string | null, formData: FormData)
     return "Too many attempts. Please wait 15 minutes and try again.";
   }
 
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const password = formData.get("password");
 
-  if (typeof password !== "string" || password.length === 0) {
-    return "Password is required.";
+  if (!email || typeof password !== "string" || password.length === 0) {
+    return "Email and password are required.";
   }
 
-  if (password !== process.env.ADMIN_PASSWORD) {
+  const user = await prisma.adminUser.findUnique({ where: { email } });
+  const valid = user ? await bcrypt.compare(password, user.passwordHash) : false;
+
+  if (!user || !valid) {
     recordAttempt(clientKey);
-    return "Incorrect password.";
+    return "Incorrect email or password.";
   }
 
   clearAttempts(clientKey);
-  const token = await createSessionToken();
+  await prisma.adminUser.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
+
+  const token = await createSessionToken({ userId: user.id, email: user.email, name: user.name });
   const cookieStore = await cookies();
   cookieStore.set(ADMIN_SESSION_COOKIE, token, {
     httpOnly: true,
