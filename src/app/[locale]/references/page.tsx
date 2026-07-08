@@ -3,10 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import {
-  ReferencesExplorer,
-  type ReferenceCase,
-} from "@/components/references/ReferencesExplorer";
+import { ReferencesExplorer } from "@/components/references/ReferencesExplorer";
+import { getAllReferenceCases } from "@/lib/references";
 
 export async function generateMetadata({
   params,
@@ -44,7 +42,7 @@ export default async function ReferencesPage({
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
   const tProducts = await getTranslations({ locale, namespace: "productsCommon" });
 
-  const cases = t.raw("items") as ReferenceCase[];
+  const cases = await getAllReferenceCases(locale);
   const businessTypeLabels = tProducts.raw("businessTypes") as Record<string, string>;
 
   return (
@@ -67,6 +65,8 @@ export default async function ReferencesPage({
             filterLabel={t("filterLabel")}
             allLabel={tProducts("allLabel")}
             noResults={t("noResults")}
+            clearFilters={t("clearFilters")}
+            noPhoto={t("noPhoto")}
             problemLabel={tCommon("problemLabel")}
             installLabel={tCommon("installLabel")}
             resultLabel={tCommon("resultLabel")}

@@ -13,7 +13,7 @@ export default async function EditAccessoryPage({
 
   const accessory = await prisma.accessory.findUnique({
     where: { id: accessoryId },
-    include: { translations: true },
+    include: { translations: true, categories: true },
   });
 
   if (!accessory) notFound();
@@ -23,6 +23,7 @@ export default async function EditAccessoryPage({
 
   const initialValues: AccessoryFormValues = {
     slug: accessory.slug,
+    categories: accessory.categories.map((c) => c.slug),
     imageUrl: accessory.imageUrl,
     translations: {
       th: findTranslation("th"),

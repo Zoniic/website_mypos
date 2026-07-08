@@ -107,7 +107,7 @@ async function seedProducts() {
       create: {
         slug: product.slug,
         priceFrom: product.priceFrom,
-        category: product.category,
+        categories: { connectOrCreate: [{ where: { slug: product.category }, create: { slug: product.category } }] },
         os: product.specs.os,
         screenSize: product.specs.screenSize,
         cpu: product.specs.cpu,
@@ -119,8 +119,12 @@ async function seedProducts() {
         warrantyMonths: product.specs.warrantyMonths,
         datasheetUrl: product.datasheetUrl ?? null,
         featured: Boolean(product.featured),
-        businessTypes: product.businessTypes.join(","),
-        relatedSlugs: product.relatedSlugs.join(","),
+        businessTypes: {
+          connectOrCreate: product.businessTypes.map((slug) => ({
+            where: { slug },
+            create: { slug },
+          })),
+        },
       },
       update: {},
     });

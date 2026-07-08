@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter, usePathname } from "@/i18n/navigation";
 import { ProductCard } from "@/components/products/ProductCard";
 import type { BusinessType, Product, ProductCategory } from "@/lib/products";
 
@@ -40,13 +41,55 @@ function FilterSelect({
   );
 }
 
-export function ProductsExplorer({ products }: { products: Product[] }) {
+export function ProductsExplorer({
+  products,
+  initialSearch = "",
+  initialCategory = "",
+  initialBusinessType = "",
+  initialOs = "",
+  initialScreenSize = "",
+}: {
+  products: Product[];
+  initialSearch?: string;
+  initialCategory?: string;
+  initialBusinessType?: string;
+  initialOs?: string;
+  initialScreenSize?: string;
+}) {
   const t = useTranslations("productsCommon");
-  const [search, setSearch] = useState("");
-  const [businessType, setBusinessType] = useState("");
-  const [os, setOs] = useState("");
-  const [screenSize, setScreenSize] = useState("");
-  const [category, setCategory] = useState("");
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const [search, setSearch] = useState(initialSearch);
+  const [businessType, setBusinessType] = useState(initialBusinessType);
+  const [os, setOs] = useState(initialOs);
+  const [screenSize, setScreenSize] = useState(initialScreenSize);
+  const [category, setCategory] = useState(initialCategory);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+
+  const hasActiveFilters = Boolean(search || businessType || os || screenSize || category);
+  const lastQuery = useRef(
+    new URLSearchParams({
+      ...(initialSearch && { q: initialSearch }),
+      ...(initialCategory && { category: initialCategory }),
+      ...(initialBusinessType && { businessType: initialBusinessType }),
+      ...(initialOs && { os: initialOs }),
+      ...(initialScreenSize && { screenSize: initialScreenSize }),
+    }).toString()
+  );
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (search) params.set("q", search);
+    if (category) params.set("category", category);
+    if (businessType) params.set("businessType", businessType);
+    if (os) params.set("os", os);
+    if (screenSize) params.set("screenSize", screenSize);
+    const query = params.toString();
+    if (query === lastQuery.current) return;
+    lastQuery.current = query;
+    router.replace(query ? `${pathname}?${query}` : pathname, { scroll: false });
+  }, [search, category, businessType, os, screenSize, pathname, router]);
 
   const businessTypes = useMemo(() => {
     const set = new Set<BusinessType>();
@@ -64,7 +107,7 @@ export function ProductsExplorer({ products }: { products: Product[] }) {
       if (query) {
         const matchesQuery =
           product.name.toLowerCase().includes(query) ||
-          t(`categories.${product.category}`).toLowerCase().includes(query);
+          product.categories.some((c) => t(`categories.${c}`).toLowerCase().includes(query));
         if (!matchesQuery) return false;
       }
       if (businessType && !product.businessTypes.includes(businessType as BusinessType)) {
@@ -72,14 +115,49 @@ export function ProductsExplorer({ products }: { products: Product[] }) {
       }
       if (os && product.specs.os !== os) return false;
       if (screenSize && product.specs.screenSize !== screenSize) return false;
-      if (category && product.category !== category) return false;
+      if (category && !product.categories.includes(category as ProductCategory)) return false;
       return true;
     });
   }, [products, search, businessType, os, screenSize, category, t]);
 
+  function clearFilters() {
+    setSearch("");
+    setBusinessType("");
+    setOs("");
+    setScreenSize("");
+    setCategory("");
+  }
+
   return (
     <div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="flex items-center justify-between gap-4 sm:hidden">
+        <button
+          type="button"
+          onClick={() => setFiltersOpen((open) => !open)}
+          aria-expanded={filtersOpen}
+          className="flex items-center gap-2 rounded-lg border border-border-strong px-3 py-2 text-sm font-medium text-text-1"
+        >
+          {filtersOpen ? t("hideFilters") : t("showFilters")}
+          {hasActiveFilters && (
+            <span className="h-2 w-2 rounded-full bg-[image:var(--gradient-primary)]" />
+          )}
+        </button>
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="text-sm font-medium text-primary-400 hover:underline"
+          >
+            {t("clearFilters")}
+          </button>
+        )}
+      </div>
+
+      <div
+        className={`mt-4 grid gap-4 sm:mt-0 sm:grid-cols-2 lg:grid-cols-5 ${
+          filtersOpen ? "grid" : "hidden sm:grid"
+        }`}
+      >
         <label className="flex flex-col gap-1 text-sm sm:col-span-2 lg:col-span-1">
           <span className="font-medium text-text-2">{t("searchPlaceholder")}</span>
           <input
@@ -121,14 +199,35 @@ export function ProductsExplorer({ products }: { products: Product[] }) {
         />
       </div>
 
-      <p className="mt-6 text-sm text-text-2">
+      <div className="mt-6 hidden items-center justify-between sm:flex">
+        <p className="text-sm text-text-2">{t("resultsCount", { count: filtered.length })}</p>
+        {hasActiveFilters && (
+          <button
+            type="button"
+            onClick={clearFilters}
+            className="text-sm font-medium text-primary-400 hover:underline"
+          >
+            {t("clearFilters")}
+          </button>
+        )}
+      </div>
+      <p className="mt-4 text-sm text-text-2 sm:hidden">
         {t("resultsCount", { count: filtered.length })}
       </p>
 
       {filtered.length === 0 ? (
-        <p className="mt-10 rounded-xl border border-dashed border-border-strong p-8 text-center text-text-2">
-          {t("noResults")}
-        </p>
+        <div className="mt-10 rounded-xl border border-dashed border-border-strong p-8 text-center text-text-2">
+          <p>{t("noResults")}</p>
+          {hasActiveFilters && (
+            <button
+              type="button"
+              onClick={clearFilters}
+              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-400"
+            >
+              {t("clearFilters")}
+            </button>
+          )}
+        </div>
       ) : (
         <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((product) => (

@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
+import { FadeIn } from "@/components/ui/FadeIn";
 
 export type ReferenceCase = {
   business: string;
@@ -8,6 +10,8 @@ export type ReferenceCase = {
   problem: string;
   install: string;
   result: string;
+  imageUrl?: string;
+  logoUrl?: string;
 };
 
 export function ReferencesExplorer({
@@ -16,6 +20,8 @@ export function ReferencesExplorer({
   filterLabel,
   allLabel,
   noResults,
+  clearFilters,
+  noPhoto,
   problemLabel,
   installLabel,
   resultLabel,
@@ -25,6 +31,8 @@ export function ReferencesExplorer({
   filterLabel: string;
   allLabel: string;
   noResults: string;
+  clearFilters: string;
+  noPhoto: string;
   problemLabel: string;
   installLabel: string;
   resultLabel: string;
@@ -59,32 +67,67 @@ export function ReferencesExplorer({
       </label>
 
       {filtered.length === 0 ? (
-        <p className="mt-10 rounded-xl border border-dashed border-border-strong p-8 text-center text-text-2">
-          {noResults}
-        </p>
+        <div className="mt-10 rounded-xl border border-dashed border-border-strong p-8 text-center text-text-2">
+          <p>{noResults}</p>
+          {businessType && (
+            <button
+              type="button"
+              onClick={() => setBusinessType("")}
+              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-400"
+            >
+              {clearFilters}
+            </button>
+          )}
+        </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((item) => (
-            <div key={item.business} className="rounded-2xl border border-border p-6">
-              <span className="inline-block rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-text-2">
-                {businessTypeLabels[item.businessType] ?? item.businessType}
-              </span>
-              <h3 className="mt-3 text-lg font-semibold">{item.business}</h3>
-              <dl className="mt-4 space-y-3 text-sm">
-                <div>
-                  <dt className="font-medium text-text-2">{problemLabel}</dt>
-                  <dd className="mt-1 text-text-2">{item.problem}</dd>
+          {filtered.map((item, index) => (
+            <FadeIn key={`${item.business}-${index}`} delay={(index % 6) * 0.06}>
+              <div className="group h-full overflow-hidden rounded-card border border-border bg-surface-1/40 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]">
+                {item.imageUrl ? (
+                  <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">
+                    <Image
+                      src={item.imageUrl}
+                      alt={`${item.business} — on-site installation`}
+                      fill
+                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex aspect-[4/3] items-center justify-center bg-surface-2 text-xs text-text-2">
+                    {noPhoto}
+                  </div>
+                )}
+
+                <div className="p-6">
+                  <div className="flex items-center justify-between gap-3">
+                    <span className="inline-block rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-text-2">
+                      {businessTypeLabels[item.businessType] ?? item.businessType}
+                    </span>
+                    {item.logoUrl && (
+                      <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-border bg-surface-0">
+                        <Image src={item.logoUrl} alt={`${item.business} logo`} fill className="object-contain p-1" />
+                      </span>
+                    )}
+                  </div>
+                  <h3 className="mt-3 text-lg font-semibold">{item.business}</h3>
+                  <dl className="mt-4 space-y-3 text-sm">
+                    <div>
+                      <dt className="font-medium text-text-2">{problemLabel}</dt>
+                      <dd className="mt-1 text-text-2">{item.problem}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-text-2">{installLabel}</dt>
+                      <dd className="mt-1 text-text-2">{item.install}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-text-2">{resultLabel}</dt>
+                      <dd className="mt-1 font-semibold text-text-1">{item.result}</dd>
+                    </div>
+                  </dl>
                 </div>
-                <div>
-                  <dt className="font-medium text-text-2">{installLabel}</dt>
-                  <dd className="mt-1 text-text-2">{item.install}</dd>
-                </div>
-                <div>
-                  <dt className="font-medium text-text-2">{resultLabel}</dt>
-                  <dd className="mt-1 font-semibold text-text-1">{item.result}</dd>
-                </div>
-              </dl>
-            </div>
+              </div>
+            </FadeIn>
           ))}
         </div>
       )}

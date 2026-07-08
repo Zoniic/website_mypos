@@ -3,15 +3,18 @@
 import { useActionState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
 import { SeoHint } from "../SeoHint";
+import { CategoryCheckboxes } from "../CategoryCheckboxes";
 
 export type AccessoryFormValues = {
   slug: string;
+  categories: string[];
   imageUrl: string | null;
   translations: Record<"th" | "en" | "zh", { name: string; description: string }>;
 };
 
 const emptyValues: AccessoryFormValues = {
   slug: "",
+  categories: [],
   imageUrl: null,
   translations: {
     th: { name: "", description: "" },
@@ -42,6 +45,12 @@ export function AccessoryForm({
         <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
         <SeoHint type="slug" />
       </label>
+
+      <CategoryCheckboxes
+        name="categories"
+        label="Applies to categories (which POS types this accessory suits)"
+        defaultValue={initialValues.categories}
+      />
 
       <ImageUploadField
         name="image"

@@ -30,7 +30,7 @@ export type Product = {
   slug: string;
   name: string;
   priceFrom: number;
-  category: ProductCategory;
+  categories: ProductCategory[];
   businessTypes: BusinessType[];
   specs: ProductSpecs;
   /** Public URL to a PDF datasheet. Omit until a real file is available. */
@@ -43,19 +43,21 @@ export type Product = {
   galleryUrls: string[];
 };
 
-type RowWithTranslations = ProductRow & { translations: ProductTranslation[] };
+type RowWithRelations = ProductRow & {
+  translations: ProductTranslation[];
+  categories: { slug: string }[];
+  businessTypes: { slug: string }[];
+  relatedProducts: { slug: string }[];
+};
 
-function toProduct(row: RowWithTranslations): Product {
+function toProduct(row: RowWithRelations): Product {
   const translation = row.translations[0];
   return {
     slug: row.slug,
     name: translation?.name ?? row.slug,
     priceFrom: row.priceFrom,
-    category: row.category as ProductCategory,
-    businessTypes: row.businessTypes
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean) as BusinessType[],
+    categories: row.categories.map((c) => c.slug) as ProductCategory[],
+    businessTypes: row.businessTypes.map((b) => b.slug) as BusinessType[],
     specs: {
       screenSize: row.screenSize,
       os: row.os as "Android" | "Windows",
@@ -68,10 +70,7 @@ function toProduct(row: RowWithTranslations): Product {
       warrantyMonths: row.warrantyMonths,
     },
     datasheetUrl: row.datasheetUrl ?? undefined,
-    relatedSlugs: row.relatedSlugs
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean),
+    relatedSlugs: row.relatedProducts.map((p) => p.slug),
     featured: row.featured,
     imageUrl: row.imageUrl ?? undefined,
     galleryUrls: row.galleryUrls.split(",").filter(Boolean),
@@ -80,7 +79,12 @@ function toProduct(row: RowWithTranslations): Product {
 
 export async function getAllProducts(locale: string): Promise<Product[]> {
   const rows = await prisma.product.findMany({
-    include: { translations: { where: { locale } } },
+    include: {
+      translations: { where: { locale } },
+      categories: true,
+      businessTypes: true,
+      relatedProducts: { select: { slug: true } },
+    },
     orderBy: { id: "asc" },
   });
   return rows.map(toProduct);
@@ -89,7 +93,12 @@ export async function getAllProducts(locale: string): Promise<Product[]> {
 export async function getFeaturedProducts(locale: string): Promise<Product[]> {
   const rows = await prisma.product.findMany({
     where: { featured: true },
-    include: { translations: { where: { locale } } },
+    include: {
+      translations: { where: { locale } },
+      categories: true,
+      businessTypes: true,
+      relatedProducts: { select: { slug: true } },
+    },
     orderBy: { id: "asc" },
   });
   return rows.map(toProduct);
@@ -98,7 +107,12 @@ export async function getFeaturedProducts(locale: string): Promise<Product[]> {
 export async function getProductBySlug(slug: string, locale: string): Promise<Product | null> {
   const row = await prisma.product.findUnique({
     where: { slug },
-    include: { translations: { where: { locale } } },
+    include: {
+      translations: { where: { locale } },
+      categories: true,
+      businessTypes: true,
+      relatedProducts: { select: { slug: true } },
+    },
   });
   return row ? toProduct(row) : null;
 }
@@ -107,7 +121,12 @@ export async function getRelatedProducts(product: Product, locale: string): Prom
   if (product.relatedSlugs.length === 0) return [];
   const rows = await prisma.product.findMany({
     where: { slug: { in: product.relatedSlugs } },
-    include: { translations: { where: { locale } } },
+    include: {
+      translations: { where: { locale } },
+      categories: true,
+      businessTypes: true,
+      relatedProducts: { select: { slug: true } },
+    },
   });
   return rows.map(toProduct);
 }
@@ -117,8 +136,13 @@ export async function getProductsByCategory(
   locale: string
 ): Promise<Product[]> {
   const rows = await prisma.product.findMany({
-    where: { category },
-    include: { translations: { where: { locale } } },
+    where: { categories: { some: { slug: category } } },
+    include: {
+      translations: { where: { locale } },
+      categories: true,
+      businessTypes: true,
+      relatedProducts: { select: { slug: true } },
+    },
     orderBy: { id: "asc" },
   });
   return rows.map(toProduct);

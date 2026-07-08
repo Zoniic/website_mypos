@@ -33,10 +33,19 @@ export async function generateMetadata({
 
 export default async function ProductsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>;
+  searchParams: Promise<{
+    category?: string;
+    q?: string;
+    businessType?: string;
+    os?: string;
+    screenSize?: string;
+  }>;
 }) {
   const { locale } = await params;
+  const { category, q, businessType, os, screenSize } = await searchParams;
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "productsCommon" });
@@ -77,7 +86,14 @@ export default async function ProductsPage({
           {t("breadcrumbProducts")}
         </h1>
         <div className="mt-8">
-          <ProductsExplorer products={products} />
+          <ProductsExplorer
+            products={products}
+            initialSearch={q ?? ""}
+            initialCategory={category ?? ""}
+            initialBusinessType={businessType ?? ""}
+            initialOs={os ?? ""}
+            initialScreenSize={screenSize ?? ""}
+          />
         </div>
       </div>
     </>

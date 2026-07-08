@@ -283,6 +283,9 @@
     "filterCategory": "Function",
     "allLabel": "All",
     "noResults": "No products match your filters. Try adjusting them.",
+    "clearFilters": "Clear all filters",
+    "showFilters": "Show filters",
+    "hideFilters": "Hide filters",
     "priceFrom": "Starting at",
     "viewDetails": "View Details",
     "resultsCount": "{count} results found",
@@ -369,6 +372,8 @@
     "subtitle": "Real-world examples of businesses using MYPOS. Filter by your business type to see the closest match.",
     "filterLabel": "Filter by Business Type",
     "noResults": "No cases in this category yet. Try a different business type.",
+    "clearFilters": "Clear filter",
+    "noPhoto": "No photo yet",
     "items": [
       { "business": "An outdoor made-to-order restaurant chain", "businessType": "restaurant", "problem": "Long queues at lunch rush drove customers away", "install": "Installed 2 self-order kiosks at the storefront", "result": "Average wait time cut by 40%" },
       { "business": "A neighborhood mini-mart", "businessType": "convenience", "problem": "Slow checkout with long evening queues", "install": "Switched both branches to MYPOS POS", "result": "Checkout speed doubled" },

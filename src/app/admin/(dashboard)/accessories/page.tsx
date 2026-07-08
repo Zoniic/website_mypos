@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 export default async function AdminAccessoriesPage() {
   const accessories = await prisma.accessory.findMany({
-    include: { translations: { where: { locale: "th" } } },
+    include: { translations: { where: { locale: "th" } }, categories: true },
     orderBy: { sortOrder: "asc" },
   });
 
@@ -25,6 +25,7 @@ export default async function AdminAccessoriesPage() {
             <tr>
               <th className="px-4 py-3 font-medium">Name</th>
               <th className="px-4 py-3 font-medium">Slug</th>
+              <th className="px-4 py-3 font-medium">Categories</th>
               <th className="px-4 py-3 font-medium" />
             </tr>
           </thead>
@@ -33,6 +34,9 @@ export default async function AdminAccessoriesPage() {
               <tr key={accessory.id}>
                 <td className="px-4 py-3 font-medium">{accessory.translations[0]?.name}</td>
                 <td className="px-4 py-3 font-mono text-text-2">{accessory.slug}</td>
+                <td className="px-4 py-3 text-text-2">
+                  {accessory.categories.map((c) => c.slug).join(", ")}
+                </td>
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/accessories/${accessory.id}/edit`}

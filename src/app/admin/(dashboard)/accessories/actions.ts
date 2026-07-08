@@ -20,9 +20,17 @@ function isUniqueConstraintError(error: unknown): boolean {
   );
 }
 
+function readCategories(formData: FormData): string[] {
+  return formData
+    .getAll("categories")
+    .map((v) => String(v).trim())
+    .filter(Boolean);
+}
+
 export async function createAccessory(_prevState: string | null, formData: FormData) {
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
+  const categories = readCategories(formData);
 
   let imageUrl: string | null;
   try {
@@ -35,7 +43,12 @@ export async function createAccessory(_prevState: string | null, formData: FormD
   let accessory;
   try {
     accessory = await prisma.accessory.create({
-      data: { slug, sortOrder: count, imageUrl },
+      data: {
+        slug,
+        sortOrder: count,
+        imageUrl,
+        categories: { connect: categories.map((slug) => ({ slug })) },
+      },
     });
   } catch (error) {
     if (isUniqueConstraintError(error)) return `Slug "${slug}" is already in use.`;
@@ -64,6 +77,7 @@ export async function updateAccessory(
 ) {
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
+  const categories = readCategories(formData);
 
   const existing = await prisma.accessory.findUnique({ where: { id: accessoryId } });
   if (!existing) return "Accessory not found.";
@@ -81,7 +95,14 @@ export async function updateAccessory(
   }
 
   try {
-    await prisma.accessory.update({ where: { id: accessoryId }, data: { slug, imageUrl } });
+    await prisma.accessory.update({
+      where: { id: accessoryId },
+      data: {
+        slug,
+        imageUrl,
+        categories: { set: categories.map((slug) => ({ slug })) },
+      },
+    });
   } catch (error) {
     if (isUniqueConstraintError(error)) return `Slug "${slug}" is already in use.`;
     throw error;

@@ -283,6 +283,9 @@
     "filterCategory": "功能分类",
     "allLabel": "全部",
     "noResults": "没有符合条件的产品，请调整筛选条件。",
+    "clearFilters": "清除所有筛选",
+    "showFilters": "显示筛选条件",
+    "hideFilters": "隐藏筛选条件",
     "priceFrom": "起价",
     "viewDetails": "查看详情",
     "resultsCount": "找到 {count} 项结果",
@@ -369,6 +372,8 @@
     "subtitle": "以下为使用 MYPOS 系统的真实商家案例示例，按行业类型筛选查看与您相近的案例。",
     "filterLabel": "按行业类型筛选",
     "noResults": "该分类下暂无案例，请尝试选择其他行业类型。",
+    "clearFilters": "清除筛选",
+    "noPhoto": "暂无照片",
     "items": [
       { "business": "某户外连锁快餐店", "businessType": "restaurant", "problem": "午市高峰排队过长，顾客流失", "install": "在店门口安装 2 台自助点餐机", "result": "平均等待时间减少 40%" },
       { "business": "社区口迷你超市", "businessType": "convenience", "problem": "傍晚高峰结账缓慢，排队严重", "install": "两家门店全部更换为 MYPOS 收银系统", "result": "结账速度提升一倍" },

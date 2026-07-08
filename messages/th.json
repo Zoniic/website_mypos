@@ -286,6 +286,9 @@
     "priceFrom": "เริ่มต้น",
     "viewDetails": "ดูรายละเอียด",
     "resultsCount": "พบ {count} รายการ",
+    "clearFilters": "ล้างตัวกรองทั้งหมด",
+    "showFilters": "แสดงตัวกรอง",
+    "hideFilters": "ซ่อนตัวกรอง",
     "businessTypes": {
       "restaurant": "ร้านอาหาร",
       "retail": "ค้าปลีก",
@@ -369,6 +372,8 @@
     "subtitle": "ตัวอย่างธุรกิจที่นำระบบ MYPOS ไปใช้งานจริง กรองตามประเภทธุรกิจของคุณเพื่อดูเคสที่ใกล้เคียง",
     "filterLabel": "กรองตามประเภทธุรกิจ",
     "noResults": "ยังไม่มีเคสในหมวดนี้ ลองเลือกประเภทธุรกิจอื่น",
+    "clearFilters": "ล้างตัวกรอง",
+    "noPhoto": "ยังไม่มีรูปภาพ",
     "items": [
       { "business": "ร้านอาหารตามสั่งเชนกลางแจ้ง", "businessType": "restaurant", "problem": "คิวยาวช่วงพักเที่ยง ลูกค้าเดินหนี", "install": "ติดตั้งตู้ self-order 2 จุดหน้าร้าน", "result": "ลดเวลารอเฉลี่ยลง 40%" },
       { "business": "มินิมาร์ทหน้าปากซอย", "businessType": "convenience", "problem": "คิดเงินช้า คิวแน่นตอนเย็น", "install": "เปลี่ยนมาใช้ POS MYPOS ทั้ง 2 สาขา", "result": "คิดเงินเร็วขึ้นกว่าเดิม 2 เท่า" },

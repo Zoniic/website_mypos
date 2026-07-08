@@ -11,10 +11,22 @@ export default async function EditProductPage({
   const { id } = await params;
   const productId = Number(id);
 
-  const product = await prisma.product.findUnique({
-    where: { id: productId },
-    include: { translations: true },
-  });
+  const [product, otherProducts] = await Promise.all([
+    prisma.product.findUnique({
+      where: { id: productId },
+      include: {
+        translations: true,
+        categories: true,
+        businessTypes: true,
+        relatedProducts: { select: { slug: true } },
+      },
+    }),
+    prisma.product.findMany({
+      where: { id: { not: productId } },
+      include: { translations: { where: { locale: "th" } } },
+      orderBy: { id: "asc" },
+    }),
+  ]);
 
   if (!product) notFound();
 
@@ -24,7 +36,7 @@ export default async function EditProductPage({
   const initialValues: ProductFormValues = {
     slug: product.slug,
     priceFrom: product.priceFrom,
-    category: product.category,
+    categories: product.categories.map((c) => c.slug),
     os: product.os,
     screenSize: product.screenSize,
     cpu: product.cpu,
@@ -36,8 +48,8 @@ export default async function EditProductPage({
     warrantyMonths: product.warrantyMonths,
     datasheetUrl: product.datasheetUrl ?? "",
     featured: product.featured,
-    businessTypes: product.businessTypes,
-    relatedSlugs: product.relatedSlugs,
+    businessTypes: product.businessTypes.map((b) => b.slug),
+    relatedSlugs: product.relatedProducts.map((p) => p.slug),
     imageUrl: product.imageUrl,
     galleryUrls: product.galleryUrls.split(",").filter(Boolean),
     translations: {
@@ -47,6 +59,11 @@ export default async function EditProductPage({
     },
   };
 
+  const relatedProductOptions = otherProducts.map((p) => ({
+    slug: p.slug,
+    name: p.translations[0]?.name ?? p.slug,
+  }));
+
   const boundUpdate = updateProduct.bind(null, productId);
   const boundDelete = deleteProduct.bind(null, productId);
 
@@ -54,7 +71,12 @@ export default async function EditProductPage({
     <div>
       <h1 className="text-2xl font-bold">Edit Product</h1>
       <div className="mt-6">
-        <ProductForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <ProductForm
+          action={boundUpdate}
+          initialValues={initialValues}
+          relatedProductOptions={relatedProductOptions}
+          submitLabel="Save Changes"
+        />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

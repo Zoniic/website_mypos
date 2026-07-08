@@ -3,11 +3,14 @@
 import { useActionState } from "react";
 import { ImageUploadField } from "../ImageUploadField";
 import { SeoHint } from "../SeoHint";
+import { CategoryCheckboxes } from "../CategoryCheckboxes";
+import { BusinessTypeCheckboxes } from "../BusinessTypeCheckboxes";
+import { RelatedProductsCheckboxes } from "../RelatedProductsCheckboxes";
 
 export type ProductFormValues = {
   slug: string;
   priceFrom: number;
-  category: string;
+  categories: string[];
   os: string;
   screenSize: string;
   cpu: string;
@@ -19,8 +22,8 @@ export type ProductFormValues = {
   warrantyMonths: number;
   datasheetUrl: string;
   featured: boolean;
-  businessTypes: string;
-  relatedSlugs: string;
+  businessTypes: string[];
+  relatedSlugs: string[];
   imageUrl: string | null;
   galleryUrls: string[];
   translations: Record<"th" | "en" | "zh", { name: string; highlight: string }>;
@@ -29,7 +32,7 @@ export type ProductFormValues = {
 const emptyValues: ProductFormValues = {
   slug: "",
   priceFrom: 0,
-  category: "pos",
+  categories: ["pos"],
   os: "Android",
   screenSize: "",
   cpu: "",
@@ -41,8 +44,8 @@ const emptyValues: ProductFormValues = {
   warrantyMonths: 12,
   datasheetUrl: "",
   featured: false,
-  businessTypes: "",
-  relatedSlugs: "",
+  businessTypes: [],
+  relatedSlugs: [],
   imageUrl: null,
   galleryUrls: [],
   translations: {
@@ -78,10 +81,12 @@ function Field({
 export function ProductForm({
   action,
   initialValues = emptyValues,
+  relatedProductOptions = [],
   submitLabel,
 }: {
   action: (prevState: string | null, formData: FormData) => Promise<string | null>;
   initialValues?: ProductFormValues;
+  relatedProductOptions?: { slug: string; name: string }[];
   submitLabel: string;
 }) {
   const [error, formAction, isPending] = useActionState(action, null);
@@ -101,19 +106,13 @@ export function ProductForm({
           defaultValue={initialValues.priceFrom}
         />
 
-        <label className="block">
-          <span className={labelClass}>Category</span>
-          <select
-            name="category"
-            defaultValue={initialValues.category}
-            className={inputClass}
-          >
-            <option value="self-order">self-order</option>
-            <option value="weigh-pay">weigh-pay</option>
-            <option value="pos">pos</option>
-            <option value="ticketing">ticketing</option>
-          </select>
-        </label>
+        <div className="sm:col-span-2">
+          <CategoryCheckboxes
+            name="categories"
+            label="Categories (a product can belong to more than one)"
+            defaultValue={initialValues.categories}
+          />
+        </div>
 
         <label className="block">
           <span className={labelClass}>OS</span>
@@ -145,16 +144,23 @@ export function ProductForm({
           name="datasheetUrl"
           defaultValue={initialValues.datasheetUrl}
         />
-        <Field
-          label="Business Types (comma-separated)"
-          name="businessTypes"
-          defaultValue={initialValues.businessTypes}
-        />
-        <Field
-          label="Related Product Slugs (comma-separated)"
-          name="relatedSlugs"
-          defaultValue={initialValues.relatedSlugs}
-        />
+
+        <div className="sm:col-span-2">
+          <BusinessTypeCheckboxes
+            name="businessTypes"
+            label="Business Types (which kinds of businesses this suits)"
+            defaultValue={initialValues.businessTypes}
+          />
+        </div>
+
+        <div className="sm:col-span-2">
+          <RelatedProductsCheckboxes
+            name="relatedSlugs"
+            label="Related Products"
+            options={relatedProductOptions}
+            defaultValue={initialValues.relatedSlugs}
+          />
+        </div>
 
         <label className="flex items-center gap-2 pt-6">
           <input

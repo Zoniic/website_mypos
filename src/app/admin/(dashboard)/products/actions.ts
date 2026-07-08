@@ -14,7 +14,10 @@ function readProductFields(formData: FormData) {
   return {
     slug: String(formData.get("slug") ?? "").trim(),
     priceFrom: priceRaw ? Number(priceRaw) : 0,
-    category: String(formData.get("category") ?? "pos"),
+    categories: formData
+      .getAll("categories")
+      .map((v) => String(v).trim())
+      .filter(Boolean),
     os: String(formData.get("os") ?? "Android"),
     screenSize: String(formData.get("screenSize") ?? "").trim(),
     cpu: String(formData.get("cpu") ?? "").trim(),
@@ -26,16 +29,14 @@ function readProductFields(formData: FormData) {
     warrantyMonths: warrantyRaw ? Number(warrantyRaw) : 12,
     datasheetUrl: String(formData.get("datasheetUrl") ?? "").trim() || null,
     featured: formData.get("featured") === "on",
-    businessTypes: String(formData.get("businessTypes") ?? "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-      .join(","),
-    relatedSlugs: String(formData.get("relatedSlugs") ?? "")
-      .split(",")
-      .map((s) => s.trim())
-      .filter(Boolean)
-      .join(","),
+    businessTypes: formData
+      .getAll("businessTypes")
+      .map((v) => String(v).trim())
+      .filter(Boolean),
+    relatedSlugs: formData
+      .getAll("relatedSlugs")
+      .map((v) => String(v).trim())
+      .filter(Boolean),
   };
 }
 
@@ -79,6 +80,7 @@ function revalidateProductPaths(slug: string) {
 export async function createProduct(_prevState: string | null, formData: FormData) {
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
+  if (fields.categories.length === 0) return "Select at least one category.";
 
   let images: { imageUrl: string | null; galleryUrls: string };
   try {
@@ -87,9 +89,20 @@ export async function createProduct(_prevState: string | null, formData: FormDat
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
+  const { categories, businessTypes, relatedSlugs, ...scalarFields } = fields;
+
   let product;
   try {
-    product = await prisma.product.create({ data: { ...fields, ...images } });
+    product = await prisma.product.create({
+      data: {
+        ...scalarFields,
+        ...images,
+        categories: { connect: categories.map((slug) => ({ slug })) },
+        businessTypes: { connect: businessTypes.map((slug) => ({ slug })) },
+        relatedProducts: { connect: relatedSlugs.map((slug) => ({ slug })) },
+        relatedProductsBack: { connect: relatedSlugs.map((slug) => ({ slug })) },
+      },
+    });
   } catch (error) {
     if (isUniqueConstraintError(error)) return `Slug "${fields.slug}" is already in use.`;
     throw error;
@@ -117,6 +130,7 @@ export async function updateProduct(
 ) {
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
+  if (fields.categories.length === 0) return "Select at least one category.";
 
   const existing = await prisma.product.findUnique({ where: { id: productId } });
   if (!existing) return "Product not found.";
@@ -133,8 +147,20 @@ export async function updateProduct(
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
 
+  const { categories, businessTypes, relatedSlugs, ...scalarFields } = fields;
+
   try {
-    await prisma.product.update({ where: { id: productId }, data: { ...fields, ...images } });
+    await prisma.product.update({
+      where: { id: productId },
+      data: {
+        ...scalarFields,
+        ...images,
+        categories: { set: categories.map((slug) => ({ slug })) },
+        businessTypes: { set: businessTypes.map((slug) => ({ slug })) },
+        relatedProducts: { set: relatedSlugs.map((slug) => ({ slug })) },
+        relatedProductsBack: { set: relatedSlugs.map((slug) => ({ slug })) },
+      },
+    });
   } catch (error) {
     if (isUniqueConstraintError(error)) return `Slug "${fields.slug}" is already in use.`;
     throw error;

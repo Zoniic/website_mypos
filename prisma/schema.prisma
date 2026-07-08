@@ -23,7 +23,6 @@ model Product {
   id             Int      @id @default(autoincrement())
   slug           String   @unique
   priceFrom      Int
-  category       String
   os             String
   screenSize     String
   cpu            String
@@ -35,8 +34,6 @@ model Product {
   warrantyMonths Int
   datasheetUrl   String?
   featured       Boolean  @default(false)
-  businessTypes  String
-  relatedSlugs   String
   /// Main product photo (square). Public URL under /uploads/products/.
   imageUrl       String?
   /// Additional gallery photos (side/back/in-use), comma-separated public URLs.
@@ -44,7 +41,31 @@ model Product {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  translations ProductTranslation[]
+  translations  ProductTranslation[]
+  categories    Category[]
+  businessTypes BusinessType[]
+  /// Self many-to-many. The app connects both directions on save so the
+  /// relation behaves symmetrically (A related to B implies B related to A).
+  relatedProducts     Product[] @relation("RelatedProducts")
+  relatedProductsBack Product[] @relation("RelatedProducts")
+}
+
+/// Product/accessory category (self-order, weigh-pay, pos, ticketing).
+/// Replaces the old comma-separated Product.categories/Accessory.categories
+/// string columns with a real many-to-many relation.
+model Category {
+  id       Int         @id @default(autoincrement())
+  slug     String      @unique
+  products    Product[]
+  accessories Accessory[]
+}
+
+/// Business type a product suits (restaurant, retail, buffet, ...).
+/// Replaces the old comma-separated Product.businessTypes string column.
+model BusinessType {
+  id       Int       @id @default(autoincrement())
+  slug     String    @unique
+  products Product[]
 }
 
 model ProductTranslation {
@@ -69,6 +90,7 @@ model Accessory {
   updatedAt DateTime @updatedAt
 
   translations AccessoryTranslation[]
+  categories   Category[]
 }
 
 model AccessoryTranslation {
@@ -87,6 +109,10 @@ model ReferenceCase {
   id           Int      @id @default(autoincrement())
   businessType String
   sortOrder    Int      @default(0)
+  /// On-site photo of the installation at the customer's location.
+  imageUrl     String?
+  /// Customer's own logo, shown as a trust mark on the case study card.
+  logoUrl      String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

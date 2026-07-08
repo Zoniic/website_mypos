@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 export default async function AdminProductsPage() {
   const products = await prisma.product.findMany({
-    include: { translations: { where: { locale: "th" } } },
+    include: { translations: { where: { locale: "th" } }, categories: true },
     orderBy: { id: "asc" },
   });
 
@@ -36,7 +36,9 @@ export default async function AdminProductsPage() {
               <tr key={product.id}>
                 <td className="px-4 py-3 font-medium">{product.translations[0]?.name}</td>
                 <td className="px-4 py-3 font-mono text-text-2">{product.slug}</td>
-                <td className="px-4 py-3 text-text-2">{product.category}</td>
+                <td className="px-4 py-3 text-text-2">
+                  {product.categories.map((c) => c.slug).join(", ")}
+                </td>
                 <td className="px-4 py-3 font-mono">{product.priceFrom.toLocaleString()}</td>
                 <td className="px-4 py-3">{product.featured ? "Yes" : ""}</td>
                 <td className="px-4 py-3 text-right">
