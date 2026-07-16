@@ -49,6 +49,16 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
       </section>
 
       <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Homepage Hero</h3>
+        <Field
+          label="Background video URL (optional, .mp4)"
+          name="heroVideoUrl"
+          defaultValue={settings.heroVideoUrl}
+          hint="Leave blank to use the default animated gradient background. Should be a short, muted, looping clip of the product/hardware in use."
+        />
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Map</h3>
         <Field
           label="Google Maps embed URL"

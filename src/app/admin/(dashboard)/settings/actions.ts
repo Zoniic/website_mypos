@@ -14,6 +14,7 @@ const KEYS = [
   "statsClients",
   "statsYears",
   "statsSupport",
+  "heroVideoUrl",
 ] as const;
 
 export async function updateSiteSettings(_prevState: string | null, formData: FormData) {

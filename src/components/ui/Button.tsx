@@ -19,7 +19,7 @@ const sizeClasses: Record<ButtonSize, string> = {
 };
 
 const baseClasses =
-  "inline-flex items-center justify-center gap-2 rounded-button font-semibold transition-all hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:active:scale-100";
+  "inline-flex cursor-pointer items-center justify-center gap-2 rounded-button font-semibold transition-all hover:-translate-y-0.5 active:translate-y-0 active:scale-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0 disabled:active:scale-100";
 
 type CommonProps = {
   variant?: ButtonVariant;
@@ -63,9 +63,13 @@ export function Button(props: ButtonProps) {
 
   if ("href" in props && props.href) {
     if ("external" in props && props.external) {
-      const { href, external: _external, icon: _icon, ...rest } = props;
+      const { href, external: _external, icon: _icon, variant: _v, size: _s, className: _c, ...rest } =
+        props;
       void _external;
       void _icon;
+      void _v;
+      void _s;
+      void _c;
       return (
         <a
           href={href}
@@ -80,8 +84,12 @@ export function Button(props: ButtonProps) {
       );
     }
 
-    const { href, icon: _icon, ...rest } = props as ButtonAsInternalLink;
+    const { href, icon: _icon, variant: _v, size: _s, className: _c, ...rest } =
+      props as ButtonAsInternalLink;
     void _icon;
+    void _v;
+    void _s;
+    void _c;
 
     if (href.startsWith("#")) {
       return (
@@ -100,8 +108,11 @@ export function Button(props: ButtonProps) {
     );
   }
 
-  const { icon: _icon, ...rest } = props as ButtonAsButton;
+  const { icon: _icon, variant: _v, size: _s, className: _c, ...rest } = props as ButtonAsButton;
   void _icon;
+  void _v;
+  void _s;
+  void _c;
   return (
     <button className={cn} {...rest}>
       {icon}

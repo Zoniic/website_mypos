@@ -87,42 +87,11 @@
     rgba(232, 85, 32, 0.2) 0%,
     transparent 70%
   );
-  --gradient-text: linear-gradient(90deg, #f06830 0%, #e85520 100%);
-
-  /* ─── Receipt motif — prototype (About page) ───────
-     Grounded in the product itself: printed receipts, till paper,
-     perforated tear edges. Additive tokens; existing dark theme
-     elsewhere is untouched. */
-  --color-ink: #14110f;
-  --color-ink-2: #1c1815;
-  --color-paper: #f3ead9;
-  --color-paper-2: #ece0c9;
-  --color-paper-text-1: #221a10;
-  --color-paper-text-2: #6b5c47;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text-1);
-}
-
-.eyebrow-accent {
-  background-image: var(--gradient-text);
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-}
-
-/* Perforated receipt-tear rule — replaces plain hairline dividers on the
-   About page prototype. currentColor lets it sit on ink or paper bg. */
-.receipt-rule {
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    to right,
-    currentColor 0 5px,
-    transparent 5px 12px
-  );
-  opacity: 0.55;
 }
 
 /* Eyebrow label — tinted pill, no border. Uses the site's sans font so
@@ -137,24 +106,6 @@ body {
   padding: 0.35em 0.9em;
   background-color: color-mix(in srgb, currentColor 12%, transparent);
   border-radius: var(--radius-tag);
-}
-
-/* Barcode-bar ambient texture — decorative only, aria-hidden. */
-.barcode-bars {
-  width: 72px;
-  height: 28px;
-  background-image: repeating-linear-gradient(
-    to right,
-    currentColor 0,
-    currentColor 2px,
-    transparent 2px,
-    transparent 5px,
-    currentColor 5px,
-    currentColor 6px,
-    transparent 6px,
-    transparent 10px
-  );
-  opacity: 0.4;
 }
 
 @keyframes marquee {
@@ -199,26 +150,60 @@ body {
   animation: blob-float-b 17s ease-in-out infinite;
 }
 
-/* Floating UI badge over hero imagery — gentle bob. */
-@keyframes float-y {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float-y {
-  animation: float-y 5s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .animate-marquee,
   .animate-blob-a,
-  .animate-blob-b,
-  .animate-float-y {
+  .animate-blob-b {
     animation: none;
   }
+}
+
+/* Liquid-glass surface — subtle frosted panel with a soft gradient hairline
+   border. Used for the hero eyebrow pill and other overlays that need to
+   sit on top of imagery/video without a hard-edged card look. */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.04);
+  background-blend-mode: luminosity;
+  backdrop-filter: blur(12px);
+  border: none;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.4px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.15) 20%,
+    rgba(255, 255, 255, 0) 40%,
+    rgba(255, 255, 255, 0) 60%,
+    rgba(255, 255, 255, 0.15) 80%,
+    rgba(255, 255, 255, 0.45) 100%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Hero headline gradient — brand orange, not the generic indigo/purple/amber
+   AI-template default, since MYPOS's whole identity is the orange mark. */
+.text-gradient-hero {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-primary-300),
+    var(--color-primary-500) 55%,
+    var(--color-accent-400)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }

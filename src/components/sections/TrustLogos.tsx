@@ -5,7 +5,7 @@ import { getTrustLogos } from "@/lib/siteSettings";
 function LogoTile({ logo }: { logo: { id: number; name: string; imageUrl: string | null } }) {
   return logo.imageUrl ? (
     <div className="relative flex h-12 w-32 shrink-0 items-center justify-center rounded-md bg-surface-2 px-2">
-      <Image src={logo.imageUrl} alt={logo.name} fill className="object-contain p-2" />
+      <Image src={logo.imageUrl} alt={logo.name} fill sizes="128px" className="object-contain p-2" />
     </div>
   ) : (
     <div className="flex h-12 w-32 shrink-0 items-center justify-center rounded-md bg-surface-2 px-2 text-center text-xs font-medium text-text-2">
@@ -24,7 +24,7 @@ export async function TrustLogos() {
   const track = [...logos, ...logos];
 
   return (
-    <section className="border-y border-border bg-surface-0 py-10">
+    <section className="border-b border-border bg-bg py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <p className="text-center text-sm font-medium text-text-2">
           {t("title")}

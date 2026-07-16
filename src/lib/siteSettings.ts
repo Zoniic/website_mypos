@@ -11,6 +11,9 @@ export type SiteSettings = {
   statsClients: string;
   statsYears: string;
   statsSupport: string;
+  /** Optional looping background video for the homepage hero. Falls back
+   * to the static gradient/glow background when empty. */
+  heroVideoUrl: string;
 };
 
 const defaults: SiteSettings = {
@@ -24,6 +27,7 @@ const defaults: SiteSettings = {
   statsClients: "",
   statsYears: "",
   statsSupport: "",
+  heroVideoUrl: "",
 };
 
 export async function getSiteSettings(): Promise<SiteSettings> {
