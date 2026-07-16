@@ -43,7 +43,14 @@ export function ImageUploadField({
           className={`relative w-32 shrink-0 overflow-hidden rounded-lg border border-border-strong bg-surface-0 ${ratioClass}`}
         >
           {displayUrl ? (
-            <Image src={displayUrl} alt="" fill className="object-cover" unoptimized={Boolean(previewUrl)} />
+            <Image
+              src={displayUrl}
+              alt=""
+              fill
+              sizes="128px"
+              className="object-cover"
+              unoptimized={Boolean(previewUrl)}
+            />
           ) : (
             <span className="absolute inset-0 flex items-center justify-center px-2 text-center text-[10px] text-text-2">
               No image yet

@@ -67,7 +67,7 @@ export function CompareClient() {
                   <div className="flex items-center gap-3">
                     {item.imageUrl && (
                       <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-surface-2">
-                        <Image src={item.imageUrl} alt="" fill className="object-cover" />
+                        <Image src={item.imageUrl} alt="" fill sizes="48px" className="object-cover" />
                       </span>
                     )}
                     <Link href={`/products/${item.slug}`} className="font-medium text-text-1 hover:underline">

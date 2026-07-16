@@ -94,6 +94,7 @@ export function ReferencesExplorer({
                       src={item.imageUrl}
                       alt={`${item.business} — on-site installation`}
                       fill
+                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     />
                   </div>
@@ -110,7 +111,7 @@ export function ReferencesExplorer({
                     </span>
                     {item.logoUrl && (
                       <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-md border border-border bg-surface-0">
-                        <Image src={item.logoUrl} alt={`${item.business} logo`} fill className="object-contain p-1" />
+                        <Image src={item.logoUrl} alt={`${item.business} logo`} fill sizes="36px" className="object-contain p-1" />
                       </span>
                     )}
                   </div>

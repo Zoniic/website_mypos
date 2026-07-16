@@ -6,7 +6,7 @@ export function Invite() {
   const t = useTranslations("home.invite");
 
   return (
-    <section className="relative overflow-hidden bg-surface-2 py-16 text-text-1 sm:py-20">
+    <section className="relative overflow-hidden bg-surface-2 py-20 text-text-1 sm:py-24">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <div
           className="animate-blob-a absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-3xl"

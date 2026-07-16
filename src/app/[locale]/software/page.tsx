@@ -61,9 +61,7 @@ export default async function SoftwarePage({
 
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
         <div>
-          <p className="eyebrow-accent text-sm font-semibold uppercase tracking-wide">
-            {t("hero.eyebrow")}
-          </p>
+          <p className="ticket-tag text-primary-300">{t("hero.eyebrow")}</p>
           <h1 className="mt-4 font-display text-4xl font-bold tracking-tight sm:text-5xl">
             {t("hero.title")}
           </h1>
@@ -74,7 +72,12 @@ export default async function SoftwarePage({
             </Button>
           </div>
         </div>
-        <PlaceholderImage ratio="4/3" label="Software UI photo" src={images["software-hero"]} />
+        <PlaceholderImage
+          ratio="4/3"
+          label="Software UI photo"
+          src={images["software-hero"]}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
       </section>
 
       <section className="border-y border-border bg-surface-0 py-16">

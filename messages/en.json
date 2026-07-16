@@ -9,7 +9,11 @@
       "ticketing": "Ticketing Kiosk"
     },
     "products": "Products",
+    "byUseCase": "By Use Case",
+    "byCategory": "By Category",
+    "viewAllProducts": "View All Products",
     "accessories": "Accessories",
+    "resources": "Resources",
     "references": "Case Studies",
     "software": "Software",
     "knowledgeBase": "Knowledge Base",

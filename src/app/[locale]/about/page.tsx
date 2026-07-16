@@ -92,6 +92,7 @@ export default async function AboutPage({
               label="Factory / team photo"
               src={images["about-team"]}
               className="transition-transform duration-500 ease-out group-hover:scale-105"
+              sizes="(min-width: 1024px) 50vw, 100vw"
             />
           </FadeIn>
           <FadeIn x={24} y={0} delay={0.1}>
@@ -122,6 +123,7 @@ export default async function AboutPage({
                 label="Product assembly photo"
                 src={images["about-assembly"]}
                 className="transition-transform duration-500 ease-out group-hover:scale-105"
+                sizes="(min-width: 1024px) 50vw, 100vw"
               />
             </FadeIn>
           </div>
@@ -130,7 +132,7 @@ export default async function AboutPage({
             <dl className="grid grid-cols-3 gap-6 text-center">
               {stats.map((stat) => (
                 <div key={stat.key} className="rounded-card border border-border-subtle bg-surface-1 px-4 py-6 shadow-card">
-                  <dd className="bg-[image:var(--gradient-primary)] bg-clip-text text-3xl font-bold text-transparent">
+                  <dd className="text-3xl font-bold text-primary-300">
                     <CountUp value={stat.value} />
                   </dd>
                   <dt className="mt-1 text-sm text-text-2">{t(`stats.${stat.key}`)}</dt>

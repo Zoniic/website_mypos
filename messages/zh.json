@@ -9,7 +9,11 @@
       "ticketing": "自助售票机"
     },
     "products": "产品",
+    "byUseCase": "按用途",
+    "byCategory": "按类别",
+    "viewAllProducts": "查看全部产品",
     "accessories": "配件",
+    "resources": "资源",
     "references": "客户案例",
     "software": "软件系统",
     "knowledgeBase": "知识库",

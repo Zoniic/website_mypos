@@ -25,8 +25,7 @@ export async function WhyMypos() {
     <section className="border-y border-border bg-surface-0 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
-          <p className="ticket-tag text-primary-300">{t("eyebrow")}</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {t("title")}
           </h2>
         </div>
@@ -61,7 +60,7 @@ export async function WhyMypos() {
           {stats.map((stat, index) => (
             <FadeIn key={stat.key} delay={index * 0.1}>
               <div>
-                <dd className="bg-[image:var(--gradient-primary)] bg-clip-text text-3xl font-bold text-transparent">
+                <dd className="text-3xl font-bold text-primary-300">
                   <CountUp value={stat.value} />
                 </dd>
                 <dt className="mt-1 text-sm text-text-2">

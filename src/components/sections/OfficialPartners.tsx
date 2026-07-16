@@ -6,7 +6,13 @@ import { FadeIn } from "@/components/ui/FadeIn";
 function PartnerTile({ partner }: { partner: { id: number; name: string; imageUrl: string | null } }) {
   return partner.imageUrl ? (
     <div className="relative flex h-16 items-center justify-center rounded-lg bg-surface-1 px-3">
-      <Image src={partner.imageUrl} alt={partner.name} fill className="object-contain p-3" />
+      <Image
+        src={partner.imageUrl}
+        alt={partner.name}
+        fill
+        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+        className="object-contain p-3"
+      />
     </div>
   ) : (
     <div className="flex h-16 items-center justify-center rounded-lg bg-surface-1 px-3 text-center text-sm font-medium text-text-2">
@@ -24,10 +30,7 @@ export async function OfficialPartners() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
       <div className="max-w-2xl">
-        <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
-          {t("eyebrow")}
-        </p>
-        <h2 className="mt-3 text-3xl font-bold tracking-tight">{t("title")}</h2>
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
       </div>
 
       <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">

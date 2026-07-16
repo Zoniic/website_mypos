@@ -16,10 +16,9 @@ export async function Solutions() {
   const images = await getSiteImages();
 
   return (
-    <section id="solutions" className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <section id="solutions" className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
       <div className="max-w-2xl">
-        <p className="ticket-tag text-primary-300">{t("eyebrow")}</p>
-        <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
+        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
       </div>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-2">

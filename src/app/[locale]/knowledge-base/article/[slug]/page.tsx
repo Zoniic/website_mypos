@@ -82,7 +82,12 @@ export default async function KbArticlePage({
 
         {article.coverImageUrl && (
           <div className="mt-8">
-            <PlaceholderImage ratio="16/9" label={article.title} src={article.coverImageUrl} />
+            <PlaceholderImage
+              ratio="16/9"
+              label={article.title}
+              src={article.coverImageUrl}
+              sizes="(min-width: 768px) 768px, 100vw"
+            />
           </div>
         )}
 

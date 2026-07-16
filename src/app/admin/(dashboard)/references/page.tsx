@@ -38,7 +38,7 @@ export default async function AdminReferencesPage() {
                 <td className="px-4 py-3">
                   <div className="relative h-10 w-14 overflow-hidden rounded-md bg-surface-0">
                     {c.imageUrl && (
-                      <Image src={c.imageUrl} alt="" fill className="object-cover" />
+                      <Image src={c.imageUrl} alt="" fill sizes="56px" className="object-cover" />
                     )}
                   </div>
                 </td>
@@ -48,7 +48,7 @@ export default async function AdminReferencesPage() {
                 <td className="px-4 py-3">
                   <div className="relative h-10 w-10 overflow-hidden rounded-md bg-surface-0">
                     {c.logoUrl && (
-                      <Image src={c.logoUrl} alt="" fill className="object-contain p-1" />
+                      <Image src={c.logoUrl} alt="" fill sizes="40px" className="object-contain p-1" />
                     )}
                   </div>
                 </td>

@@ -9,7 +9,11 @@
       "ticketing": "คีออสก์จำหน่ายตั๋ว"
     },
     "products": "สินค้า",
+    "byUseCase": "ตามการใช้งาน",
+    "byCategory": "ตามหมวดสินค้า",
+    "viewAllProducts": "ดูสินค้าทั้งหมด",
     "accessories": "อุปกรณ์เสริม",
+    "resources": "ข้อมูล/บริการ",
     "references": "ผลงานลูกค้า",
     "software": "ซอฟต์แวร์",
     "knowledgeBase": "คลังความรู้",

@@ -71,7 +71,12 @@ export default async function BlogPostPage({
 
         {post.coverImageUrl && (
           <div className="mt-8">
-            <PlaceholderImage ratio="16/9" label={post.title} src={post.coverImageUrl} />
+            <PlaceholderImage
+              ratio="16/9"
+              label={post.title}
+              src={post.coverImageUrl}
+              sizes="(min-width: 768px) 768px, 100vw"
+            />
           </div>
         )}
 

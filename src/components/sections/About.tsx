@@ -17,11 +17,11 @@ export async function About() {
             label="Team / factory photo"
             src={images["about-team"]}
             className="transition-transform duration-500 ease-out group-hover:scale-105"
+            sizes="(min-width: 1024px) 50vw, 100vw"
           />
         </FadeIn>
         <FadeIn x={24} y={0} delay={0.1}>
-          <p className="ticket-tag text-primary-300">{t("eyebrow")}</p>
-          <h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
             {t("title")}
           </h2>
           <p className="mt-4 text-text-2">{t("description")}</p>

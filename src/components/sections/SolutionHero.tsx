@@ -22,9 +22,7 @@ export function SolutionHero({
   return (
     <section className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-2 lg:items-center lg:py-16 lg:px-8">
       <FadeIn>
-        <p className="eyebrow-accent text-sm font-semibold uppercase tracking-wide">
-          {eyebrow}
-        </p>
+        <p className="ticket-tag text-primary-300">{eyebrow}</p>
         <h1 className="mt-4 font-display text-4xl font-bold tracking-tight sm:text-5xl">
           {title}
         </h1>
@@ -39,7 +37,12 @@ export function SolutionHero({
         </div>
       </FadeIn>
       <FadeIn delay={0.15}>
-        <PlaceholderImage ratio="4/3" label={imageLabel} src={imageUrl} />
+        <PlaceholderImage
+          ratio="4/3"
+          label={imageLabel}
+          src={imageUrl}
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
       </FadeIn>
     </section>
   );

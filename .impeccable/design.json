@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "title": "Design System: MYPOS",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Ember Orange",
+        "canonical": "#e85520",
+        "tonalRamp": ["#5c1c08", "#82280c", "#a83510", "#cc4515", "#e85520", "#f06830", "#f99066", "#ffc4a3", "#ffe4d6", "#fff4ef"]
+      },
+      "accent": {
+        "role": "secondary",
+        "displayName": "Interface Blue",
+        "canonical": "#3b82f6",
+        "tonalRamp": ["#1e3a8a", "#1d4ed8", "#2563eb", "#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#eff6ff"]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Register Black",
+        "canonical": "#07090f",
+        "tonalRamp": ["#07090f", "#0c0f1b", "#111525", "#181d30", "#1f253b", "#475569", "#94a3b8", "#f1f5f9"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display (IBM Plex Sans Thai)", "purpose": "Hero and page h1 only." },
+      "body": { "displayName": "Body (Prompt)", "purpose": "All UI text, paragraphs, nav, buttons." },
+      "label": { "displayName": "Label (Prompt, not mono)", "purpose": "Eyebrows, pills, filter labels — never JetBrains Mono." }
+    },
+    "shadows": [
+      { "name": "card", "value": "0 4px 16px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.08)", "purpose": "Default resting card elevation." },
+      { "name": "card-hover", "value": "0 8px 32px rgba(0,0,0,0.55), 0 0 32px rgba(232,85,32,0.12), inset 0 0 0 1px rgba(255,255,255,0.08)", "purpose": "Card hover — heavier shadow plus ember glow bleed." },
+      { "name": "glow-primary", "value": "0 0 24px rgba(232,85,32,0.4), 0 0 8px rgba(232,85,32,0.25)", "purpose": "Primary button resting glow, the 'active register' signature." }
+    ],
+    "motion": [
+      { "name": "fade-in", "value": "opacity/translateY(16px), 0.5s ease-out, viewport margin -80px", "purpose": "Standard scroll-reveal for section content (FadeIn component)." },
+      { "name": "blob-drift", "value": "14-17s ease-in-out infinite, translate + scale 4-10%", "purpose": "Ambient hero background glow blobs; disabled under prefers-reduced-motion." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "lg", "value": "1024px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Main CTA — gradient ember fill with resting glow shadow, lifts on hover.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">ขอคำปรึกษาฟรี</a>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 8px; font-weight: 600; background: linear-gradient(135deg, #cc4515, #f06830); color: #f1f5f9; box-shadow: 0 0 24px rgba(232,85,32,0.4), 0 0 8px rgba(232,85,32,0.25); transition: filter 0.2s, transform 0.2s; } .ds-btn-primary:hover { filter: brightness(1.1); transform: translateY(-2px); } .ds-btn-primary:focus-visible { outline: 2px solid #e85520; outline-offset: 2px; } .ds-btn-primary:active { transform: translateY(0) scale(0.95); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Secondary action — transparent with hairline border.",
+      "html": "<a href=\"#\" class=\"ds-btn-ghost\">ดูโซลูชันทั้งหมด</a>",
+      "css": ".ds-btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 10px 24px; border-radius: 8px; font-weight: 600; background: transparent; color: #f1f5f9; border: 1px solid rgba(255,255,255,0.16); transition: background 0.2s, transform 0.2s; } .ds-btn-ghost:hover { background: #181d30; transform: translateY(-2px); }"
+    },
+    {
+      "name": "Eyebrow Pill",
+      "kind": "chip",
+      "refersTo": "ticket-tag",
+      "description": "Tinted label pill used above section headings. Sans font only, never mono.",
+      "html": "<span class=\"ds-eyebrow\">ผู้ผลิตระบบ POS สัญชาติไทย</span>",
+      "css": ".ds-eyebrow { display: inline-flex; align-items: center; font-family: 'Prompt', system-ui, sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.04em; padding: 0.35em 0.9em; color: #f99066; background-color: rgba(249,144,102,0.12); border-radius: 9999px; }"
+    },
+    {
+      "name": "Hover Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Standard content card — hairline border, glows and lifts on hover.",
+      "html": "<a href=\"#\" class=\"ds-card\"><h3 class=\"ds-card-title\">POS หน้าร้าน</h3><p class=\"ds-card-body\">ระบบขายหน้าร้านครบวงจร</p></a>",
+      "css": ".ds-card { display: block; padding: 24px; border-radius: 16px; background: rgba(17,21,37,0.4); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 4px 16px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.08); transition: all 0.3s; } .ds-card:hover { transform: translateY(-4px); border-color: rgba(240,104,48,0.4); box-shadow: 0 8px 32px rgba(0,0,0,0.55), 0 0 32px rgba(232,85,32,0.12), inset 0 0 0 1px rgba(255,255,255,0.08); } .ds-card-title { font-weight: 600; font-size: 1.125rem; color: #f1f5f9; margin: 0 0 8px; } .ds-card-body { color: #94a3b8; margin: 0; font-size: 0.9375rem; }"
+    },
+    {
+      "name": "Nav Dropdown Trigger",
+      "kind": "nav",
+      "refersTo": "nav-dropdown",
+      "description": "Header dropdown trigger — underline-on-hover link with rotating chevron.",
+      "html": "<button class=\"ds-nav-trigger\">สินค้า <svg width=\"10\" height=\"10\" viewBox=\"0 0 10 10\"><path d=\"M1 3l4 4 4-4\" stroke=\"currentColor\" fill=\"none\" stroke-width=\"1.5\"/></svg></button>",
+      "css": ".ds-nav-trigger { position: relative; display: inline-flex; align-items: center; gap: 4px; padding: 8px 0; font-size: 0.875rem; font-weight: 500; color: #94a3b8; background: none; border: none; cursor: pointer; } .ds-nav-trigger:hover { color: #f1f5f9; } .ds-nav-trigger::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(135deg, #cc4515, #f06830); transform: scaleX(0); transform-origin: left; transition: transform 0.3s; } .ds-nav-trigger:hover::after { transform: scaleX(1); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Register",
+    "overview": "MYPOS builds and sells the physical POS terminals, self-order kiosks, and weigh-and-pay stations that Thai shops run every night after the lights go down and the till is still glowing. The visual system takes that literally: a near-black interface that reads like a terminal screen left on after close, with the brand's ember orange doing the work a receipt printer's LED or an active register display would. This is a manufacturer's site, not a reseller's storefront: every visual choice should read as 'we built this and stand behind it.'",
+    "keyCharacteristics": [
+      "Near-black base surfaces with layered depth (four surface steps, not one flat panel)",
+      "Ember orange used deliberately — gradient fills and glow accents, never wallpaper",
+      "Motion is ambient and slow — never bouncy or attention-grabbing for its own sake",
+      "Every decorative element must be grounded in something real — no floating icon-soup badges with no label"
+    ],
+    "rules": [
+      { "name": "The One Register Rule", "body": "Ember orange is the only color allowed on a primary call-to-action. Interface Blue, success green, and warning amber are supporting cast.", "section": "colors" },
+      { "name": "The No-Monospace-For-Language Rule", "body": "JetBrains Mono is for genuinely monospaced content only. Default every UI label to Prompt — Thai/Chinese metrics clip in monospace fonts.", "section": "typography" },
+      { "name": "The Glow-On-Response Rule", "body": "Ambient orange glow only appears on the primary CTA at rest and on any card the instant it's hovered/focused. It never sits on static, non-interactive content.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Ember Orange (#e85520) as the only color on primary CTAs.",
+      "Do ground every decorative or motion element in something real — an actual customer photo and logo, an actual number, an actual product photo.",
+      "Do set eyebrow/label text in the Prompt sans stack, never JetBrains Mono.",
+      "Do group navigation by what the visitor is trying to do, folding low-traffic pages into a shared 'Resources' menu.",
+      "Do use the orange glow only on interactive elements at rest or on hover."
+    ],
+    "donts": [
+      "Don't ship a floating decorative badge (icon + pattern, no text) with a bob/float animation.",
+      "Don't design this as a boring corporate/factory site — no navy-and-gray B2B palette, no stock handshake photography, no dense text walls.",
+      "Don't tip into discount-marketplace energy — no red sale badges, no countdown timers, no Shopee/Lazada-style promotional grids.",
+      "Don't apply monospace fonts to any UI label, eyebrow, or Thai/Chinese body text.",
+      "Don't let the top nav sprawl past roughly 4-5 top-level items."
+    ]
+  }
+}

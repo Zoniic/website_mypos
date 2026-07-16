@@ -37,7 +37,7 @@ export default async function AdminBlogPage() {
                 <td className="px-4 py-3">
                   <div className="relative h-10 w-16 overflow-hidden rounded-md bg-surface-0">
                     {post.coverImageUrl && (
-                      <Image src={post.coverImageUrl} alt="" fill className="object-cover" />
+                      <Image src={post.coverImageUrl} alt="" fill sizes="64px" className="object-cover" />
                     )}
                   </div>
                 </td>

@@ -68,6 +68,7 @@ export default async function ReferenceCaseDetailPage({
               src={referenceCase.imageUrl}
               alt={`${referenceCase.business} — on-site installation`}
               fill
+              sizes="(min-width: 768px) 768px, 100vw"
               className="object-cover"
               priority
             />
@@ -77,7 +78,7 @@ export default async function ReferenceCaseDetailPage({
         <div className="mt-6 flex items-center gap-3">
           {referenceCase.logoUrl && (
             <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md border border-border bg-surface-0">
-              <Image src={referenceCase.logoUrl} alt={`${referenceCase.business} logo`} fill className="object-contain p-1" />
+              <Image src={referenceCase.logoUrl} alt={`${referenceCase.business} logo`} fill sizes="48px" className="object-contain p-1" />
             </span>
           )}
           <div>
