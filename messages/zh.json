@@ -980,5 +980,39 @@
     "eyebrow": "客户之声",
     "title": "与 MYPOS 一同成长的企业",
     "items": []
+  },
+  "integrations": {
+    "eyebrow": "全面互联",
+    "title": "与您现有的系统无缝协作",
+    "lede": "一台设备即可收款并连接外卖与财务——无需改变原有工作方式。",
+    "groups": [
+      {
+        "label": "收款",
+        "items": [
+          "PromptPay（二维码）",
+          "信用卡 / 借记卡（EDC）",
+          "TrueMoney 钱包",
+          "支付宝 / 微信支付"
+        ]
+      },
+      {
+        "label": "外卖",
+        "items": [
+          "LINE MAN",
+          "GrabFood",
+          "foodpanda",
+          "Robinhood"
+        ]
+      },
+      {
+        "label": "财务与后台",
+        "items": [
+          "FlowAccount",
+          "PEAK",
+          "会员 / CRM",
+          "电子税务发票"
+        ]
+      }
+    ]
   }
 }

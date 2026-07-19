@@ -980,5 +980,39 @@
     "eyebrow": "Customer stories",
     "title": "Businesses growing with MYPOS",
     "items": []
+  },
+  "integrations": {
+    "eyebrow": "Fully connected",
+    "title": "Works with the tools you already use",
+    "lede": "Take payments and connect delivery and accounting from one device — no change to how you work.",
+    "groups": [
+      {
+        "label": "Payments",
+        "items": [
+          "PromptPay (QR)",
+          "Credit / debit card (EDC)",
+          "TrueMoney Wallet",
+          "AliPay / WeChat Pay"
+        ]
+      },
+      {
+        "label": "Delivery",
+        "items": [
+          "LINE MAN",
+          "GrabFood",
+          "foodpanda",
+          "Robinhood"
+        ]
+      },
+      {
+        "label": "Accounting & back office",
+        "items": [
+          "FlowAccount",
+          "PEAK",
+          "Membership / CRM",
+          "e-Tax invoice"
+        ]
+      }
+    ]
   }
 }
