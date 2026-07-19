@@ -5,6 +5,7 @@ import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { Markdown } from "@/components/ui/Markdown";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getBlogPostBySlug } from "@/lib/blog";
 
@@ -80,7 +81,11 @@ export default async function BlogPostPage({
           </div>
         )}
 
-        {post.body && <div className="mt-8 whitespace-pre-wrap text-text-1">{post.body}</div>}
+        {post.body && (
+          <div className="mt-8">
+            <Markdown body={post.body} locale={locale} />
+          </div>
+        )}
       </article>
     </>
   );
