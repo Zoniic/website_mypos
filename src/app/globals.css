@@ -215,3 +215,16 @@ body {
   -webkit-background-clip: text;
   color: transparent;
 }
+
+/* Touch targets: guarantee a 44px minimum for interactive controls on small
+   (mobile) viewports (WCAG 2.5.5), while keeping compact sizing on larger
+   screens. Text links in flowing copy are intentionally excluded. */
+@media (max-width: 640px) {
+  button,
+  [role="button"],
+  select,
+  textarea,
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="hidden"]) {
+    min-height: 44px;
+  }
+}
