@@ -48,7 +48,7 @@ export function CookieConsent() {
         <button
           type="button"
           onClick={accept}
-          className="w-full shrink-0 rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] hover:brightness-110 sm:w-auto"
+          className="w-full shrink-0 rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] hover:brightness-110 sm:w-auto"
         >
           {t("accept")}
         </button>

@@ -39,7 +39,7 @@ export function FaqAccordion({
                   <span>{item.question}</span>
                   <span
                     className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full transition-colors ${
-                      isOpen ? "bg-[image:var(--gradient-primary)] text-text-1" : "bg-surface-2 text-text-2"
+                      isOpen ? "bg-[image:var(--gradient-primary)] text-white" : "bg-surface-2 text-text-2"
                     }`}
                   >
                     <svg

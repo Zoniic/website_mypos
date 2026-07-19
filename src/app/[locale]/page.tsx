@@ -103,10 +103,10 @@ export default async function HomePage({
 
       <Hero />
       <TrustLogos />
-      <About />
       <Solutions />
-      <WhyMypos />
       <PopularProducts />
+      <WhyMypos />
+      <About />
       <Faq />
       <Invite />
     </>

@@ -74,7 +74,7 @@ export default async function ContactPage({
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2">
           <div className="space-y-8">
-            <div className="rounded-2xl border border-emerald-700/50 bg-emerald-950/30 p-6">
+            <div className="rounded-2xl border border-emerald-600/30 bg-emerald-50 p-6">
               <h2 className="text-lg font-semibold text-text-1">{t("lineTitle")}</h2>
               <p className="mt-2 text-sm text-text-2">{t("lineDescription")}</p>
               <div className="mt-4 flex items-center gap-6">

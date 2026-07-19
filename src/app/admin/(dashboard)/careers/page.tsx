@@ -13,7 +13,7 @@ export default async function AdminCareersPage() {
         <h1 className="text-2xl font-bold">Careers</h1>
         <Link
           href="/admin/careers/new"
-          className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-text-1 shadow-[var(--shadow-glow-primary)]"
+          className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)]"
         >
           + New Job Posting
         </Link>
@@ -38,7 +38,7 @@ export default async function AdminCareersPage() {
                 <td className="px-4 py-3 text-text-2">{job.location}</td>
                 <td className="px-4 py-3">{job.isOpen ? "Yes" : ""}</td>
                 <td className="px-4 py-3 text-right">
-                  <Link href={`/admin/careers/${job.id}/edit`} className="text-primary-400 hover:underline">
+                  <Link href={`/admin/careers/${job.id}/edit`} className="text-primary-600 hover:underline">
                     Edit
                   </Link>
                 </td>

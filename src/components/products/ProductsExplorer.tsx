@@ -153,7 +153,7 @@ export function ProductsExplorer({
           <button
             type="button"
             onClick={clearFilters}
-            className="text-sm font-medium text-primary-400 hover:underline"
+            className="text-sm font-medium text-primary-600 hover:underline"
           >
             {t("clearFilters")}
           </button>
@@ -212,7 +212,7 @@ export function ProductsExplorer({
           <button
             type="button"
             onClick={clearFilters}
-            className="text-sm font-medium text-primary-400 hover:underline"
+            className="text-sm font-medium text-primary-600 hover:underline"
           >
             {t("clearFilters")}
           </button>
@@ -229,7 +229,7 @@ export function ProductsExplorer({
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-400"
+              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-600"
             >
               {t("clearFilters")}
             </button>

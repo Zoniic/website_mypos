@@ -2,7 +2,7 @@ import type { StockStatus } from "@/lib/products";
 
 const styles: Record<StockStatus, string> = {
   in_stock: "bg-success/10 text-success",
-  preorder: "bg-primary-400/10 text-primary-400",
+  preorder: "bg-primary-400/10 text-primary-600",
   out_of_stock: "bg-surface-2 text-text-2",
 };
 

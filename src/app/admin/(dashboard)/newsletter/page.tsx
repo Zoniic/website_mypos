@@ -23,7 +23,7 @@ export default async function AdminNewsletterPage() {
           <a
             href={csvHref}
             download="newsletter-subscribers.csv"
-            className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-text-1 shadow-[var(--shadow-glow-primary)]"
+            className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)]"
           >
             Export CSV
           </a>

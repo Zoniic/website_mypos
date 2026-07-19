@@ -106,7 +106,7 @@ export default async function ReferenceCaseDetailPage({
             <dt className="text-sm font-semibold uppercase tracking-wide text-text-2">
               {tCommon("resultLabel")}
             </dt>
-            <dd className="mt-2 text-lg font-semibold text-primary-400">{referenceCase.result}</dd>
+            <dd className="mt-2 text-lg font-semibold text-primary-600">{referenceCase.result}</dd>
           </div>
         </dl>
 

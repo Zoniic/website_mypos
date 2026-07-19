@@ -14,7 +14,7 @@ export default async function AdminReferencesPage() {
         <h1 className="text-2xl font-bold">Case Studies</h1>
         <Link
           href="/admin/references/new"
-          className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-text-1 shadow-[var(--shadow-glow-primary)]"
+          className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)]"
         >
           + New Case Study
         </Link>
@@ -55,7 +55,7 @@ export default async function AdminReferencesPage() {
                 <td className="px-4 py-3 text-right">
                   <Link
                     href={`/admin/references/${c.id}/edit`}
-                    className="text-primary-400 hover:underline"
+                    className="text-primary-600 hover:underline"
                   >
                     Edit
                   </Link>

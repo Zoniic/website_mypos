@@ -26,7 +26,7 @@ export function CompareClient() {
         <button
           type="button"
           onClick={clear}
-          className="mt-6 text-sm font-semibold text-primary-400 hover:underline"
+          className="mt-6 text-sm font-semibold text-primary-600 hover:underline"
         >
           {t("backToBrowsing")}
         </button>
@@ -40,7 +40,7 @@ export function CompareClient() {
         <p>{t("empty")}</p>
         <Link
           href="/products"
-          className="mt-4 inline-block rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-400"
+          className="mt-4 inline-block rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-600"
         >
           {t("browseProducts")}
         </Link>
@@ -170,7 +170,7 @@ export function CompareClient() {
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+            className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
           >
             {isPending ? t("formSubmitting") : t("formSubmit")}
           </button>

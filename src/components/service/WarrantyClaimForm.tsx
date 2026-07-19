@@ -92,7 +92,7 @@ export function WarrantyClaimForm({
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+            className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
           >
             {isPending ? labels.submitting : labels.submit}
           </button>

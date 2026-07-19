@@ -1,9 +1,10 @@
 import Image from "next/image";
 
-type Ratio = "16/9" | "1/1" | "4/3" | "3/4" | "21/9";
+type Ratio = "16/9" | "16/10" | "1/1" | "4/3" | "3/4" | "21/9";
 
 const ratioClass: Record<Ratio, string> = {
   "16/9": "aspect-[16/9]",
+  "16/10": "aspect-[16/10]",
   "1/1": "aspect-square",
   "4/3": "aspect-[4/3]",
   "3/4": "aspect-[3/4]",

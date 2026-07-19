@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
         <button
           type="submit"
           disabled={isPending}
-          className="mt-6 w-full rounded-button bg-[image:var(--gradient-primary)] px-4 py-2.5 font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+          className="mt-6 w-full rounded-button bg-[image:var(--gradient-primary)] px-4 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
         >
           {isPending ? "Signing in..." : "Sign In"}
         </button>

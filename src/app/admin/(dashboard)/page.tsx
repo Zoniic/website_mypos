@@ -4,7 +4,7 @@ import { getSessionUser } from "@/lib/adminAuth";
 
 function StatIcon({ path }: { path: string }) {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" className="text-primary-400">
+    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" className="text-primary-600">
       <path d={path} stroke="currentColor" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -82,7 +82,7 @@ export default async function AdminDashboardPage() {
           <Link
             key={action.href}
             href={action.href}
-            className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] transition-transform hover:-translate-y-0.5"
+            className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] transition-transform hover:-translate-y-0.5"
           >
             + {action.label}
           </Link>

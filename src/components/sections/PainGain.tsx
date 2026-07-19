@@ -20,7 +20,7 @@ export function PainGain({
       <div className="mt-10 overflow-hidden rounded-2xl border border-border">
         <div className="grid grid-cols-2 divide-x divide-border bg-surface-0 text-sm font-semibold">
           <p className="px-4 py-3 sm:px-6">{painLabel}</p>
-          <p className="px-4 py-3 sm:px-6 text-primary-400">{gainLabel}</p>
+          <p className="px-4 py-3 sm:px-6 text-primary-600">{gainLabel}</p>
         </div>
         <div className="divide-y divide-border">
           {items.map((item, index) => (

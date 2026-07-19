@@ -24,7 +24,7 @@ export function CompareCartLink({ label, className }: { label: string; className
         <circle cx="14" cy="18" r="1" fill="currentColor" />
       </svg>
       {items.length > 0 && (
-        <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[image:var(--gradient-primary)] text-[10px] font-semibold text-text-1">
+        <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[image:var(--gradient-primary)] text-[10px] font-semibold text-white">
           {items.length}
         </span>
       )}

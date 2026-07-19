@@ -19,8 +19,8 @@ export default function GlobalError({
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#07090f",
-          color: "#f1f5f9",
+          background: "#ffffff",
+          color: "#111318",
           fontFamily: "system-ui, sans-serif",
           padding: "24px",
         }}
@@ -29,7 +29,7 @@ export default function GlobalError({
           <h1 style={{ fontSize: 24, fontWeight: 700, marginBottom: 8 }}>
             Something went wrong / เกิดข้อผิดพลาด
           </h1>
-          <p style={{ color: "#94a3b8", marginBottom: 24 }}>
+          <p style={{ color: "#5c6470", marginBottom: 24 }}>
             The site is temporarily unavailable. Please try again in a moment.
             <br />
             เว็บไซต์ขัดข้องชั่วคราว กรุณาลองใหม่อีกครั้ง
@@ -37,10 +37,10 @@ export default function GlobalError({
           <button
             onClick={() => reset()}
             style={{
-              background: "linear-gradient(135deg, #f06830, #e85520)",
-              color: "#f1f5f9",
+              background: "linear-gradient(135deg, #cc4515, #f06830)",
+              color: "#ffffff",
               border: "none",
-              borderRadius: 8,
+              borderRadius: 10,
               padding: "10px 24px",
               fontSize: 16,
               fontWeight: 600,

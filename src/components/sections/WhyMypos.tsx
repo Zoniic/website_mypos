@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { getSiteSettings } from "@/lib/siteSettings";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { CountUp } from "@/components/ui/CountUp";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 const whyItems = ["manufacture", "support", "software"] as const;
 
@@ -22,19 +23,32 @@ export async function WhyMypos() {
   ] as const;
 
   return (
-    <section className="border-y border-border bg-surface-0 py-16">
+    <section className="border-y border-border bg-surface-0 py-24 sm:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl">
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            {t("title")}
-          </h2>
-        </div>
+        <SectionHeader eyebrow={t("eyebrow")} title={t("title")} />
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-3">
+        {/* Oversized stat band — the numbers are the hero, not a footnote. */}
+        <dl className="mt-16 grid grid-cols-1 gap-y-10 border-y border-border sm:grid-cols-3 sm:divide-x sm:divide-border">
+          {stats.map((stat, index) => (
+            <FadeIn key={stat.key} delay={index * 0.1}>
+              <div className="py-8 sm:px-8 sm:first:pl-0 sm:last:pr-0">
+                <dd className="font-display text-6xl font-bold leading-none tracking-tight text-text-1 lg:text-7xl">
+                  <CountUp value={stat.value} />
+                </dd>
+                <dt className="mt-4 text-sm font-medium uppercase tracking-widest text-text-2">
+                  {t(`stats.${stat.key}`)}
+                </dt>
+              </div>
+            </FadeIn>
+          ))}
+        </dl>
+
+        {/* Borderless feature row — hairline dividers instead of boxed cards. */}
+        <div className="mt-16 grid gap-px overflow-hidden rounded-2xl bg-border sm:grid-cols-3">
           {whyItems.map((key, index) => (
             <FadeIn key={key} delay={index * 0.1}>
-              <div className="h-full rounded-card border border-border-subtle bg-surface-1 p-6 shadow-card transition-all hover:-translate-y-1 hover:border-primary-400/30 hover:shadow-[var(--shadow-card-hover)]">
-                <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-[image:var(--gradient-primary)] text-text-1 shadow-[var(--shadow-glow-primary)]">
+              <div className="flex h-full flex-col bg-surface-0 p-8">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-[image:var(--gradient-primary)] text-white shadow-[var(--shadow-glow-primary)]">
                   <svg aria-hidden viewBox="0 0 20 20" fill="none" className="h-5 w-5">
                     <path
                       d={whyIcons[key]}
@@ -45,31 +59,14 @@ export async function WhyMypos() {
                     />
                   </svg>
                 </span>
-                <h3 className="mt-4 text-lg font-semibold">
+                <h3 className="mt-6 text-xl font-semibold">
                   {t(`items.${key}.title`)}
                 </h3>
-                <p className="mt-2 text-text-2">
-                  {t(`items.${key}.description`)}
-                </p>
+                <p className="mt-3 text-text-2">{t(`items.${key}.description`)}</p>
               </div>
             </FadeIn>
           ))}
         </div>
-
-        <dl className="mt-12 grid grid-cols-3 gap-6 text-center">
-          {stats.map((stat, index) => (
-            <FadeIn key={stat.key} delay={index * 0.1}>
-              <div>
-                <dd className="text-3xl font-bold text-primary-300">
-                  <CountUp value={stat.value} />
-                </dd>
-                <dt className="mt-1 text-sm text-text-2">
-                  {t(`stats.${stat.key}`)}
-                </dt>
-              </div>
-            </FadeIn>
-          ))}
-        </dl>
       </div>
     </section>
   );

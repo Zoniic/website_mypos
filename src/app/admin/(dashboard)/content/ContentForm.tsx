@@ -5,6 +5,7 @@ import { useActionState } from "react";
 import { updateContent } from "./actions";
 import { getPreviewPath } from "./previewPaths";
 import { CharCounter, SeoHint } from "../SeoHint";
+import { ContentGuidePanel, getContentGuide } from "./ContentGuidePanel";
 
 const PREVIEW_LOCALES = ["th", "en", "zh"] as const;
 
@@ -58,6 +59,10 @@ export function ContentForm({
         {keys.map((key) => (
           <fieldset key={key} className="rounded-xl border border-border p-4">
             <legend className="px-1 font-mono text-sm text-text-2">{key}</legend>
+            {(() => {
+              const guide = getContentGuide(namespace, key);
+              return guide ? <ContentGuidePanel entry={guide} /> : null;
+            })()}
             {seoFieldKind(key) && <SeoHint type={seoFieldKind(key)!} />}
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
               {(["th", "en", "zh"] as const).map((locale) => {
@@ -99,7 +104,7 @@ export function ContentForm({
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+          className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
         >
           {isPending ? "Saving..." : "Save All Changes"}
         </button>
@@ -115,7 +120,7 @@ export function ContentForm({
                 onClick={() => setPreviewLocale(locale)}
                 className={`rounded-md px-2.5 py-1 text-xs font-semibold uppercase ${
                   previewLocale === locale
-                    ? "bg-[image:var(--gradient-primary)] text-text-1"
+                    ? "bg-[image:var(--gradient-primary)] text-white"
                     : "text-text-2 hover:text-text-1"
                 }`}
               >

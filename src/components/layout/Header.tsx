@@ -72,7 +72,7 @@ const resourceLinks = [
 const trailingLinks = [{ key: "about", href: "/about" }] as const;
 
 const navLinkClass =
-  "relative rounded-sm py-2 text-sm font-medium text-text-2 outline-offset-4 hover:text-text-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
+  "relative rounded-sm py-2 text-sm font-medium text-text-2 outline-offset-4 hover:text-white after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
 
 type DropdownItem = { key: string; label: string; href: string };
 
@@ -227,7 +227,7 @@ function ProductsMegaMenu({
             ))}
             <Link
               href="/products"
-              className="mt-1 block rounded-md px-3 py-2 text-sm font-semibold text-primary-300 outline-offset-2 transition-all hover:translate-x-1 hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+              className="mt-1 block rounded-md px-3 py-2 text-sm font-semibold text-primary-600 outline-offset-2 transition-all hover:translate-x-1 hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               onClick={onNavigate}
             >
               {viewAllLabel}

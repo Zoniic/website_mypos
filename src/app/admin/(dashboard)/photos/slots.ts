@@ -1,81 +1,142 @@
 export type SiteImageSlot = {
   key: string;
   label: string;
+  /** Technical spec (dimensions / file type). */
   hint: string;
   ratio: "1/1" | "4/3" | "16/9";
+  /** Where this image appears on the live site. */
+  usedOn: string;
+  /** What to photograph — subject & composition direction for the team. */
+  subject: string;
+  /** The look & tone the shot should have. */
+  style: string;
+  /** Common mistakes to avoid. */
+  avoid: string;
 };
 
 export const SITE_IMAGE_SLOTS: SiteImageSlot[] = [
   {
     key: "hero",
-    label: "Homepage hero photo",
-    hint: "Product/self-service photo, landscape. At least 1200×900px.",
-    ratio: "4/3",
+    label: "รูปหลักหน้าแรก (Hero)",
+    hint: "แนวนอน อย่างน้อย 1600×900px.",
+    ratio: "16/9",
+    usedOn: "พื้นหลัง/ภาพเด่นบนสุดของหน้าแรก — ภาพแรกที่ทุกคนเห็น",
+    subject:
+      "เครื่อง/ตู้จริงของ MYPOS ตั้งในหน้างานจริง (ร้านอาหาร ตลาด ร้านค้า) มีลูกค้าหรือพนักงานกำลังใช้งาน มุมกว้างเห็นบรรยากาศร้าน",
+    style: "โทนสว่าง สะอาด ธรรมชาติ แสงจริง เน้นให้เครื่องเป็นพระเอก",
+    avoid: "ภาพสต็อกต่างชาติ, เครื่องแบรนด์อื่น, พื้นหลังรก, ภาพมืดหรือย้อนแสง",
   },
   {
     key: "about-team",
-    label: "Homepage \"Who We Are\" photo",
-    hint: "Team or factory photo, landscape. At least 1200×900px.",
+    label: 'รูป "เราคือใคร" หน้าแรก',
+    hint: "แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "บล็อกแนะนำบริษัทบนหน้าแรก (คู่กับข้อความ about.description)",
+    subject:
+      "ทีมงานจริง หรือสายการประกอบในโรงงานที่ไทย เห็นคนกำลังทำงานกับเครื่องจริง สื่อว่า 'เราผลิตเอง'",
+    style: "โทนสว่างอบอุ่น ดูจริงใจ มืออาชีพแต่ไม่แข็ง",
+    avoid: "ภาพคนใส่สูทยิ้มถ่ายสต็อก, ออฟฟิศที่ไม่เกี่ยวกับการผลิต",
   },
   {
     key: "about-assembly",
-    label: "About page — product assembly photo",
-    hint: "Landscape. At least 1200×900px.",
+    label: "หน้า About — ภาพการประกอบสินค้า",
+    hint: "แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "หน้า About ประกอบเรื่องราวบริษัท",
+    subject: "โคลสอัพมือช่างกำลังประกอบ/ทดสอบเครื่อง เห็นรายละเอียดชิ้นส่วน",
+    style: "โฟกัสชัดที่งานฝีมือ ให้ความรู้สึกพิถีพิถัน",
+    avoid: "ภาพเบลอ, จัดฉากเกินจริง",
   },
   {
     key: "solution-self-order",
-    label: "Solution photo — Self-Order Kiosk",
-    hint: "Used on the homepage and the solution's own page. Landscape, at least 1200×675px.",
+    label: "โซลูชัน — ตู้สั่งอาหารเอง",
+    hint: "แนวนอน อย่างน้อย 1600×900px (ใช้เป็นภาพเด่นขนาดใหญ่).",
     ratio: "16/9",
+    usedOn: "แผงภาพเด่นใหญ่บนหน้าแรก + หน้าโซลูชัน Self-Order",
+    subject:
+      "ตู้ kiosk ตั้งในร้านจริง มีลูกค้ากำลังกดสั่งบนหน้าจอ เห็นเมนูบนจอชัด",
+    style: "โทนสว่าง คนใช้งานดูเป็นธรรมชาติ เห็นบริบทร้าน",
+    avoid: "ตู้เปล่าไม่มีคน, หน้าจอดำ, ภาพเรนเดอร์ 3D",
   },
   {
     key: "solution-weigh-pay",
-    label: "Solution photo — Weigh & Pay",
-    hint: "Landscape, at least 1200×900px.",
+    label: "โซลูชัน — เครื่องชั่งคิดเงิน",
+    hint: "แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "การ์ดโซลูชันบนหน้าแรก + หน้าโซลูชัน Weigh & Pay",
+    subject: "เครื่องชั่งบนเคาน์เตอร์ร้านจริง มีสินค้าจริงบนตาชั่ง เห็นตัวเลขราคา",
+    style: "สว่าง คมชัด เน้นความแม่นยำ",
+    avoid: "เครื่องชั่งในกล่อง/สตูดิโอเปล่าๆ",
   },
   {
     key: "solution-pos",
-    label: "Solution photo — Point of Sale",
-    hint: "Landscape, at least 1200×900px.",
+    label: "โซลูชัน — ระบบ POS ขายหน้าร้าน",
+    hint: "แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "การ์ดโซลูชันบนหน้าแรก + หน้าโซลูชัน POS",
+    subject: "เครื่อง POS บนเคาน์เตอร์ พนักงานกำลังกดขาย/รับเงินจากลูกค้า",
+    style: "โทนสว่าง บรรยากาศร้านคึกคักพอประมาณ",
+    avoid: "เครื่องเปล่าไม่มีคน, จอฟ้าไม่มีข้อมูล",
   },
   {
     key: "solution-ticketing",
-    label: "Solution photo — Ticketing Kiosk",
-    hint: "Landscape, at least 1200×900px.",
+    label: "โซลูชัน — ตู้ออกบัตรคิว/ตั๋ว",
+    hint: "แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "การ์ดโซลูชันบนหน้าแรก + หน้าโซลูชัน Ticketing",
+    subject:
+      "ตู้ตั้งในพื้นที่บริการจริง (โรงพยาบาล ราชการ สวนสนุก) มีคนกำลังรับบัตร",
+    style: "สว่าง เป็นระเบียบ สื่อความน่าเชื่อถือ",
+    avoid: "สถานที่รก, ตู้ที่ไม่ใช่ของ MYPOS",
   },
   {
     key: "software-hero",
-    label: "Software page hero photo",
-    hint: "Screenshot or UI mockup, landscape. At least 1200×900px.",
+    label: "หน้า Software — ภาพหลัก",
+    hint: "แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "ส่วนบนสุดของหน้า Software",
+    subject: "หน้าจอ UI จริงของระบบบนเครื่อง หรือ mockup สะอาดวางบนพื้นเรียบ",
+    style: "มินิมอล สว่าง เน้นหน้าจอให้อ่านออก",
+    avoid: "ภาพหน้าจอเบลอ, UI ภาษาอังกฤษล้วนถ้ากลุ่มเป้าหมายเป็นไทย",
   },
   {
     key: "software-screenshot-dashboard",
-    label: "Software page — dashboard screenshot",
-    hint: "Real UI screenshot, landscape. At least 1200×900px.",
+    label: "Software — ภาพหน้าจอแดชบอร์ด",
+    hint: "ภาพหน้าจอจริง แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "แกลเลอรีภาพหน้าจอในหน้า Software",
+    subject: "หน้าแดชบอร์ดสรุปยอดขาย/กราฟจริงในระบบ (ใส่ข้อมูลตัวอย่างที่ดูสมจริง)",
+    style: "ภาพ capture คมชัด เต็มหน้าจอ ไม่มีแถบเบราว์เซอร์รก",
+    avoid: "ข้อมูลว่างเปล่า, ข้อมูลลูกค้าจริงที่เป็นความลับ",
   },
   {
     key: "software-screenshot-menu",
-    label: "Software page — menu management screenshot",
-    hint: "Real UI screenshot, landscape. At least 1200×900px.",
+    label: "Software — ภาพหน้าจอจัดการเมนู",
+    hint: "ภาพหน้าจอจริง แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "แกลเลอรีภาพหน้าจอในหน้า Software",
+    subject: "หน้าจัดการเมนู/สินค้า เห็นรายการและรูปสินค้า",
+    style: "คมชัด เต็มหน้าจอ",
+    avoid: "รายการว่าง, ข้อมูลทดสอบที่ดูไม่จริง (เช่น 'test123')",
   },
   {
     key: "software-screenshot-sales",
-    label: "Software page — sales report screenshot",
-    hint: "Real UI screenshot, landscape. At least 1200×900px.",
+    label: "Software — ภาพหน้าจอรายงานยอดขาย",
+    hint: "ภาพหน้าจอจริง แนวนอน อย่างน้อย 1600×1000px.",
     ratio: "4/3",
+    usedOn: "แกลเลอรีภาพหน้าจอในหน้า Software",
+    subject: "หน้ารายงานยอดขาย/กราฟ เห็นตัวเลขและช่วงเวลา",
+    style: "คมชัด เต็มหน้าจอ",
+    avoid: "กราฟว่าง, ตัวเลขที่ดูไม่สมจริง",
   },
   {
     key: "line-qr-code",
-    label: "Contact page — LINE QR code",
-    hint: "Square QR code image linking to your LINE Official Account. At least 400×400px.",
+    label: "หน้า Contact — QR code LINE",
+    hint: "รูปสี่เหลี่ยมจัตุรัส อย่างน้อย 600×600px.",
     ratio: "1/1",
+    usedOn: "กล่องช่องทาง LINE ในหน้า Contact",
+    subject: "QR code ของ LINE Official Account ที่สแกนแล้วแอดได้จริง",
+    style: "พื้นขาว ขอบมีระยะ สแกนง่าย ความคมชัดสูง",
+    avoid: "QR เบลอ, QR ส่วนตัวที่ไม่ใช่ OA, มีพื้นหลังสีทำให้สแกนยาก",
   },
 ];

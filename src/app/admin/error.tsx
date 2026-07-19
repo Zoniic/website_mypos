@@ -14,7 +14,7 @@ export default function AdminError({
       <button
         type="button"
         onClick={() => reset()}
-        className="rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-text-1 shadow-[var(--shadow-glow-primary)]"
+        className="rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)]"
       >
         Try again
       </button>

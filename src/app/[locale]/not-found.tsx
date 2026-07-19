@@ -8,7 +8,7 @@ export default async function NotFound() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col items-center px-4 py-24 text-center sm:px-6 lg:px-8">
-      <p className="font-display text-7xl font-bold text-primary-400">404</p>
+      <p className="font-display text-7xl font-bold text-primary-600">404</p>
       <h1 className="mt-4 text-2xl font-bold tracking-tight">{t("title")}</h1>
       <p className="mt-3 text-text-2">{t("message")}</p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">

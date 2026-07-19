@@ -26,7 +26,7 @@ export function HowItWorks({
               transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
               className="h-full rounded-2xl bg-surface-1 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"
             >
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[image:var(--gradient-primary)] text-sm font-bold text-text-1 shadow-[var(--shadow-glow-primary)]">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[image:var(--gradient-primary)] text-sm font-bold text-white shadow-[var(--shadow-glow-primary)]">
                 {index + 1}
               </span>
               <h3 className="mt-4 text-lg font-semibold">{step.title}</h3>

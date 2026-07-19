@@ -17,8 +17,27 @@ export function PhotosForm({ currentUrls }: { currentUrls: Record<string, string
             label={slot.label}
             currentUrl={currentUrls[slot.key]}
             ratio={slot.ratio}
-            specHint={`${slot.hint} JPG, PNG, or WebP, max 5MB.`}
+            specHint={`${slot.hint} รองรับ JPG, PNG, WebP ไม่เกิน 5MB.`}
           />
+
+          <div className="mt-3 rounded-lg border border-primary-200 bg-primary-50 p-3 text-xs leading-relaxed">
+            <p className="text-text-2">
+              <span className="font-semibold text-text-1">📍 ใช้ที่: </span>
+              {slot.usedOn}
+            </p>
+            <p className="mt-1.5 text-text-2">
+              <span className="font-semibold text-text-1">📷 ถ่ายอะไร: </span>
+              {slot.subject}
+            </p>
+            <p className="mt-1.5 text-text-2">
+              <span className="font-semibold text-text-1">🎨 สไตล์: </span>
+              {slot.style}
+            </p>
+            <p className="mt-1.5 text-error">
+              <span className="font-semibold">🚫 เลี่ยง: </span>
+              {slot.avoid}
+            </p>
+          </div>
         </div>
       ))}
 
@@ -27,7 +46,7 @@ export function PhotosForm({ currentUrls }: { currentUrls: Record<string, string
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+        className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
       >
         {isPending ? "Saving..." : "Save Photos"}
       </button>

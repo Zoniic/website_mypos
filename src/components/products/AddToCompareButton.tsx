@@ -27,7 +27,7 @@ export function AddToCompareButton({
       aria-pressed={inCart}
       className={`inline-flex items-center justify-center gap-2 rounded-button border px-6 py-3.5 text-lg font-semibold transition-all hover:-translate-y-0.5 ${
         inCart
-          ? "border-primary-400 bg-primary-400/10 text-primary-400"
+          ? "border-primary-400 bg-primary-400/10 text-primary-600"
           : "border-border-strong text-text-1 hover:bg-surface-2"
       }`}
     >

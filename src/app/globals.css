@@ -1,25 +1,32 @@
 @import "tailwindcss";
 
-/* MYPOS Design System tokens — dark theme, orange primary brand color. */
+/* MYPOS Design System tokens — light premium theme ("Showroom White").
+   Xiaomi/Apple-inspired: white base, near-black ink, soft diffuse shadows,
+   generous radii. Ember Orange stays the exclusive primary-CTA color
+   (The One Register Rule) — it reads hotter and more deliberate against
+   a white gallery than it ever did on the dark theme. */
 @theme {
   --font-sans: var(--font-sans-loaded), "Noto Sans Thai", "PingFang SC", "Microsoft YaHei",
     "Noto Sans SC", system-ui, sans-serif;
   --font-display: var(--font-display-loaded), var(--font-sans);
   --font-mono: var(--font-mono-loaded), "Courier New", monospace;
 
-  /* ─── Backgrounds / surfaces ─────────────────────── */
-  --color-bg: #07090f;
-  --color-surface-0: #0c0f1b;
-  --color-surface-1: #111525;
-  --color-surface-2: #181d30;
-  --color-surface-3: #1f253b;
+  /* ─── Backgrounds / surfaces ─────────────────────────
+     White page; ascending grays for grouped/hover surfaces.
+     Cards are white-on-tint or tint-on-white with hairline borders,
+     never heavy fills. */
+  --color-bg: #ffffff;
+  --color-surface-0: #f7f7f8;
+  --color-surface-1: #fcfcfd;
+  --color-surface-2: #f1f2f4;
+  --color-surface-3: #e9ebee;
 
-  /* ─── Borders ─────────────────────────────────────── */
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-subtle: rgba(255, 255, 255, 0.04);
-  --color-border-strong: rgba(255, 255, 255, 0.16);
+  /* ─── Borders — black-alpha hairlines ─────────────── */
+  --color-border: rgba(17, 19, 24, 0.08);
+  --color-border-subtle: rgba(17, 19, 24, 0.04);
+  --color-border-strong: rgba(17, 19, 24, 0.16);
 
-  /* ─── Primary — MYPOS Orange (brand color) ───────── */
+  /* ─── Primary — MYPOS Ember Orange (brand, CTA-only) ─ */
   --color-primary-50: #fff4ef;
   --color-primary-100: #ffe4d6;
   --color-primary-200: #ffc4a3;
@@ -38,28 +45,28 @@
   --color-accent-400: #60a5fa;
   --color-accent-500: #3b82f6;
   --color-accent-600: #2563eb;
-  --color-accent: var(--color-accent-500);
+  --color-accent: var(--color-accent-600);
 
-  /* ─── Text ────────────────────────────────────────── */
-  --color-text-1: #f1f5f9;
-  --color-text-2: #94a3b8;
-  --color-text-3: #475569;
-  --color-text-4: #1e293b;
-  --color-text-inverse: #07090f;
+  /* ─── Text — ink on white ─────────────────────────── */
+  --color-text-1: #111318;
+  --color-text-2: #5c6470;
+  --color-text-3: #9aa1ac;
+  --color-text-4: #d6dae0;
+  --color-text-inverse: #ffffff;
 
-  /* ─── Semantic ────────────────────────────────────── */
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
+  /* ─── Semantic (600-weight for AA on white) ───────── */
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
 
-  /* ─── Radius ──────────────────────────────────────── */
+  /* ─── Radius — slightly rounder for the premium read ─ */
   --radius-xs: 4px;
   --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 20px;
-  --radius-3xl: 24px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-2xl: 22px;
+  --radius-3xl: 28px;
   --radius-tag: 9999px;
   --radius-button: var(--radius-md);
   --radius-input: var(--radius-md);
@@ -67,24 +74,26 @@
   --radius-modal: var(--radius-2xl);
   --radius-hero-asset: var(--radius-2xl);
 
-  /* ─── Shadows / glow ──────────────────────────────── */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.45);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.55);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.6);
-  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.65);
-  --shadow-glow-primary: 0 0 24px rgba(232, 85, 32, 0.4), 0 0 8px rgba(232, 85, 32, 0.25);
-  --shadow-glow-accent: 0 0 24px rgba(59, 130, 246, 0.4), 0 0 8px rgba(59, 130, 246, 0.25);
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
-  --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 32px rgba(232, 85, 32, 0.12),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  /* ─── Shadows — soft, diffuse, barely-there ───────────
+     Light themes carry depth in tint + hairline, not darkness. */
+  --shadow-xs: 0 1px 2px rgba(17, 19, 24, 0.05);
+  --shadow-sm: 0 2px 8px rgba(17, 19, 24, 0.06);
+  --shadow-md: 0 4px 16px rgba(17, 19, 24, 0.07);
+  --shadow-lg: 0 8px 32px rgba(17, 19, 24, 0.09);
+  --shadow-xl: 0 16px 48px rgba(17, 19, 24, 0.11);
+  --shadow-2xl: 0 24px 64px rgba(17, 19, 24, 0.13);
+  --shadow-glow-primary: 0 8px 24px rgba(232, 85, 32, 0.28), 0 2px 8px rgba(232, 85, 32, 0.18);
+  --shadow-glow-accent: 0 8px 24px rgba(59, 130, 246, 0.25), 0 2px 8px rgba(59, 130, 246, 0.15);
+  --shadow-card: 0 1px 2px rgba(17, 19, 24, 0.04), 0 8px 24px rgba(17, 19, 24, 0.06),
+    inset 0 0 0 1px rgba(17, 19, 24, 0.06);
+  --shadow-card-hover: 0 2px 4px rgba(17, 19, 24, 0.05), 0 16px 40px rgba(17, 19, 24, 0.1),
+    inset 0 0 0 1px rgba(17, 19, 24, 0.08);
 
   /* ─── Gradients ───────────────────────────────────── */
   --gradient-primary: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
   --gradient-hero: radial-gradient(
     ellipse 80% 60% at 50% -10%,
-    rgba(232, 85, 32, 0.2) 0%,
+    rgba(232, 85, 32, 0.08) 0%,
     transparent 70%
   );
 }
@@ -92,6 +101,7 @@
 body {
   background: var(--color-bg);
   color: var(--color-text-1);
+  color-scheme: light;
 }
 
 /* Eyebrow label — tinted pill, no border. Uses the site's sans font so
@@ -104,7 +114,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.04em;
   padding: 0.35em 0.9em;
-  background-color: color-mix(in srgb, currentColor 12%, transparent);
+  background-color: color-mix(in srgb, currentColor 10%, transparent);
   border-radius: var(--radius-tag);
 }
 
@@ -121,7 +131,7 @@ body {
   animation: marquee 28s linear infinite;
 }
 
-/* Ambient hero blobs — slow drifting glow, decorative only. */
+/* Ambient hero blobs — slow drifting tint, decorative only. */
 @keyframes blob-float-a {
   0%,
   100% {
@@ -158,15 +168,14 @@ body {
   }
 }
 
-/* Liquid-glass surface — subtle frosted panel with a soft gradient hairline
-   border. Used for the hero eyebrow pill and other overlays that need to
-   sit on top of imagery/video without a hard-edged card look. */
+/* Liquid-glass surface — frosted overlay panel for content sitting on top
+   of imagery/video. Light theme: milky white glass with a dark-alpha
+   hairline gradient so the edge reads on bright backgrounds. */
 .liquid-glass {
-  background: rgba(255, 255, 255, 0.04);
-  background-blend-mode: luminosity;
+  background: rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(12px);
   border: none;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
   position: relative;
   overflow: hidden;
 }
@@ -179,12 +188,12 @@ body {
   padding: 1.4px;
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.45) 0%,
-    rgba(255, 255, 255, 0.15) 20%,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0) 60%,
-    rgba(255, 255, 255, 0.15) 80%,
-    rgba(255, 255, 255, 0.45) 100%
+    rgba(17, 19, 24, 0.16) 0%,
+    rgba(17, 19, 24, 0.06) 20%,
+    rgba(17, 19, 24, 0) 40%,
+    rgba(17, 19, 24, 0) 60%,
+    rgba(17, 19, 24, 0.06) 80%,
+    rgba(17, 19, 24, 0.16) 100%
   );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,
@@ -194,14 +203,13 @@ body {
   pointer-events: none;
 }
 
-/* Hero headline gradient — brand orange, not the generic indigo/purple/amber
-   AI-template default, since MYPOS's whole identity is the orange mark. */
+/* Hero headline gradient — brand orange into accent blue; sits on white. */
 .text-gradient-hero {
   background-image: linear-gradient(
     90deg,
-    var(--color-primary-300),
-    var(--color-primary-500) 55%,
-    var(--color-accent-400)
+    var(--color-primary-400),
+    var(--color-primary-600) 55%,
+    var(--color-accent-600)
   );
   background-clip: text;
   -webkit-background-clip: text;

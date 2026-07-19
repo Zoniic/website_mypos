@@ -1,0 +1,110 @@
+{
+  "$description": "MYPOS 'Showroom White' design tokens. Source of truth is the Tailwind v4 @theme block in src/app/globals.css — keep this file in sync when tokens change. Single light theme (no dark mode).",
+  "color": {
+    "bg": { "value": "#ffffff" },
+    "surface": {
+      "0": { "value": "#f7f7f8" },
+      "1": { "value": "#fcfcfd" },
+      "2": { "value": "#f1f2f4" },
+      "3": { "value": "#e9ebee" }
+    },
+    "border": {
+      "default": { "value": "rgba(17, 19, 24, 0.08)" },
+      "subtle": { "value": "rgba(17, 19, 24, 0.04)" },
+      "strong": { "value": "rgba(17, 19, 24, 0.16)" }
+    },
+    "primary": {
+      "50": { "value": "#fff4ef" },
+      "100": { "value": "#ffe4d6" },
+      "200": { "value": "#ffc4a3" },
+      "300": { "value": "#f99066" },
+      "400": { "value": "#f06830" },
+      "500": { "value": "#e85520", "description": "Ember Orange — brand; the only color allowed on a primary CTA (The One Register Rule)" },
+      "600": { "value": "#cc4515", "description": "Use for orange text/links on white (AA)" },
+      "700": { "value": "#a83510" },
+      "800": { "value": "#82280c" },
+      "900": { "value": "#5c1c08" }
+    },
+    "accent": {
+      "50": { "value": "#eff6ff" },
+      "300": { "value": "#93c5fd" },
+      "400": { "value": "#60a5fa" },
+      "500": { "value": "#3b82f6" },
+      "600": { "value": "#2563eb", "description": "Cool Blue — secondary interactive accent; never on a primary CTA" }
+    },
+    "text": {
+      "1": { "value": "#111318", "description": "Primary ink" },
+      "2": { "value": "#5c6470", "description": "Secondary / captions" },
+      "3": { "value": "#9aa1ac", "description": "Tertiary / disabled" },
+      "4": { "value": "#d6dae0" },
+      "inverse": { "value": "#ffffff", "description": "Text on orange/emerald/dark fills" }
+    },
+    "semantic": {
+      "success": { "value": "#059669" },
+      "warning": { "value": "#d97706" },
+      "error": { "value": "#dc2626" }
+    }
+  },
+  "font": {
+    "sans": { "value": "Prompt, 'Noto Sans Thai', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', system-ui, sans-serif" },
+    "display": { "value": "'IBM Plex Sans Thai', Prompt, system-ui, sans-serif", "description": "Hero and page-level h1 only" },
+    "mono": { "value": "'JetBrains Mono', 'Courier New', monospace", "description": "Tabular data only — clips Thai/CJK glyphs, never use on UI labels" }
+  },
+  "typography": {
+    "display": { "size": "clamp(2.25rem, 5vw, 3.75rem)", "weight": 700, "lineHeight": 1.1, "letterSpacing": "-0.02em" },
+    "headline": { "size": "1.5rem–1.875rem", "weight": 700 },
+    "title": { "size": "1.125rem–1.25rem", "weight": 600 },
+    "body": { "size": "1rem", "weight": 400, "lineHeight": 1.6 },
+    "label": { "size": "0.75rem", "weight": 600, "letterSpacing": "0.04em" }
+  },
+  "spacing": {
+    "description": "Tailwind default 4pt scale",
+    "scale": [4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96, 128]
+  },
+  "radius": {
+    "xs": { "value": "4px" },
+    "sm": { "value": "6px" },
+    "md": { "value": "10px" },
+    "lg": { "value": "14px" },
+    "xl": { "value": "18px" },
+    "2xl": { "value": "22px" },
+    "3xl": { "value": "28px" },
+    "tag": { "value": "9999px" },
+    "button": { "value": "{radius.md}" },
+    "input": { "value": "{radius.md}" },
+    "card": { "value": "{radius.xl}" },
+    "modal": { "value": "{radius.2xl}" }
+  },
+  "shadow": {
+    "xs": { "value": "0 1px 2px rgba(17, 19, 24, 0.05)" },
+    "sm": { "value": "0 2px 8px rgba(17, 19, 24, 0.06)" },
+    "md": { "value": "0 4px 16px rgba(17, 19, 24, 0.07)" },
+    "lg": { "value": "0 8px 32px rgba(17, 19, 24, 0.09)" },
+    "xl": { "value": "0 16px 48px rgba(17, 19, 24, 0.11)" },
+    "2xl": { "value": "0 24px 64px rgba(17, 19, 24, 0.13)" },
+    "card": { "value": "0 1px 2px rgba(17, 19, 24, 0.04), 0 8px 24px rgba(17, 19, 24, 0.06), inset 0 0 0 1px rgba(17, 19, 24, 0.06)" },
+    "cardHover": { "value": "0 2px 4px rgba(17, 19, 24, 0.05), 0 16px 40px rgba(17, 19, 24, 0.1), inset 0 0 0 1px rgba(17, 19, 24, 0.08)" },
+    "glowPrimary": { "value": "0 8px 24px rgba(232, 85, 32, 0.28), 0 2px 8px rgba(232, 85, 32, 0.18)", "description": "Primary CTA at rest" },
+    "glowAccent": { "value": "0 8px 24px rgba(59, 130, 246, 0.25), 0 2px 8px rgba(59, 130, 246, 0.15)" }
+  },
+  "gradient": {
+    "primary": { "value": "linear-gradient(135deg, #cc4515, #f06830)" },
+    "hero": { "value": "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(232, 85, 32, 0.08) 0%, transparent 70%)" }
+  },
+  "motion": {
+    "routeTransition": { "duration": "0.35s", "movement": "opacity + 8px rise" },
+    "cardHover": { "duration": "0.35s", "easing": "ease-out", "lift": "4px" },
+    "imageZoom": { "duration": "0.5s", "scale": 1.05 },
+    "marquee": { "duration": "28s", "easing": "linear" },
+    "shimmer": { "duration": "3s", "easing": "linear" },
+    "reducedMotion": "All CSS/JS animation disabled under prefers-reduced-motion"
+  },
+  "breakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px",
+    "container": "max-w-7xl (1280px)"
+  }
+}

@@ -18,7 +18,7 @@ export default function LocaleError({ reset }: { error: Error & { digest?: strin
       <button
         type="button"
         onClick={() => reset()}
-        className="mt-6 rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-text-1 shadow-[var(--shadow-glow-primary)] hover:brightness-110"
+        className="mt-6 rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] hover:brightness-110"
       >
         Try again / ลองใหม่
       </button>

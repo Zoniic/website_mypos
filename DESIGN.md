@@ -1,180 +1,181 @@
 ---
 name: MYPOS
-description: Thai-manufactured POS and self-service systems, marketed with a dark register-glow aesthetic
+description: Thai-manufactured POS and self-service systems — light premium "Showroom White" theme
 colors:
   primary: "#e85520"
   primary-deep: "#cc4515"
   primary-bright: "#f06830"
-  accent: "#3b82f6"
-  bg: "#07090f"
-  surface-0: "#0c0f1b"
-  surface-1: "#111525"
-  surface-2: "#181d30"
-  surface-3: "#1f253b"
-  border: "rgba(255,255,255,0.08)"
-  border-strong: "rgba(255,255,255,0.16)"
-  text-primary: "#f1f5f9"
-  text-secondary: "#94a3b8"
-  success: "#10b981"
-  warning: "#f59e0b"
-  error: "#ef4444"
-typography:
-  display:
-    fontFamily: "IBM Plex Sans Thai, Prompt, system-ui, sans-serif"
-    fontSize: "clamp(2.25rem, 5vw, 3.75rem)"
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: "-0.02em"
-  body:
-    fontFamily: "Prompt, Noto Sans Thai, PingFang SC, system-ui, sans-serif"
-    fontSize: "1rem"
-    fontWeight: 400
-    lineHeight: 1.6
-  label:
-    fontFamily: "Prompt, system-ui, sans-serif"
-    fontSize: "0.75rem"
-    fontWeight: 600
-    letterSpacing: "0.04em"
-rounded:
-  sm: "6px"
-  md: "8px"
-  lg: "12px"
-  xl: "16px"
-  card: "16px"
-  tag: "9999px"
-spacing:
-  sm: "8px"
-  md: "16px"
-  lg: "24px"
-  xl: "40px"
-components:
-  button-primary:
-    backgroundColor: "{colors.primary}"
-    textColor: "{colors.text-primary}"
-    rounded: "{rounded.md}"
-    padding: "10px 24px"
-  button-primary-hover:
-    backgroundColor: "{colors.primary-bright}"
-  button-ghost:
-    backgroundColor: "transparent"
-    textColor: "{colors.text-primary}"
-    rounded: "{rounded.md}"
-    padding: "10px 24px"
-  card:
-    backgroundColor: "{colors.surface-1}"
-    rounded: "{rounded.card}"
-    padding: "24px"
+  accent: "#2563eb"
+  bg: "#ffffff"
+  surface-0: "#f7f7f8"
+  surface-1: "#fcfcfd"
+  surface-2: "#f1f2f4"
+  surface-3: "#e9ebee"
+  border: "rgba(17,19,24,0.08)"
+  border-strong: "rgba(17,19,24,0.16)"
+  text-primary: "#111318"
+  text-secondary: "#5c6470"
+  success: "#059669"
+  warning: "#d97706"
+  error: "#dc2626"
 ---
 
-# Design System: MYPOS
+# Design System: MYPOS — "Showroom White"
+
+> Branch `out-rule-design`. This document describes the light premium theme
+> that replaced the original dark "Night Register" system. The visual
+> language is adapted from the consumer-electronics showroom tradition
+> (Xiaomi / Apple / Nothing / Japanese minimalism): white gallery space,
+> ink typography, soft diffuse shadows, generous whitespace — with MYPOS's
+> Ember Orange as the single point of heat.
+>
+> **The only binding rule** carried over from the previous system is The One
+> Register Rule (§2). Everything else here is descriptive documentation of
+> the current implementation, not constraint.
 
 ## 1. Overview
 
-**Creative North Star: "The Night Register"**
+**Creative North Star: "The Showroom"**
 
-MYPOS builds and sells the physical POS terminals, self-order kiosks, and weigh-and-pay stations that Thai shops run every night after the lights go down and the till is still glowing. The visual system takes that literally: a near-black interface (`#07090f`) that reads like a terminal screen left on after close, with the brand's ember orange (`#e85520`) doing the work a receipt printer's LED or an active register display would — warm, specific, alive, never decorative for its own sake. This is a manufacturer's site, not a reseller's storefront: every visual choice should read as "we built this and stand behind it," not "we're dropshipping this."
+The hardware is the hero. A white, evenly-lit space where the products —
+kiosks, POS terminals, weigh stations — read like exhibits, and the brand's
+Ember Orange (`#e85520`) marks exactly one thing: the action we want you to
+take. Depth comes from tint and hairline, not darkness. Motion is calm and
+ambient. Density is low; whitespace is a feature.
 
-The system explicitly rejects the **boring corporate/factory website** anti-reference from PRODUCT.md — no navy-and-gray B2B slabs, no stock photography of people shaking hands, no dense unbroken text walls. It also rejects tipping into **discount marketplace** energy (no red sale badges, no countdown urgency, no cluttered grid-of-everything). The register stays quiet until it has something real to say.
+**Key characteristics**
+- White base (`#ffffff`) with four ascending gray surface steps for grouping/hover
+- Ink text (`#111318`), never pure black; slate secondary text
+- Black-alpha hairline borders (they read correctly on every surface step)
+- Soft, diffuse shadows — elevation whispers, never drops hard black
+- Ember Orange concentrated on primary CTAs; blue for secondary interactive accents
+- Slightly generous radii (buttons 10px, cards 18px) for the premium read
 
-**Key Characteristics:**
-- Near-black base surfaces with layered depth (four surface steps, not one flat panel)
-- Ember orange used deliberately — gradient fills on primary actions and glow accents, never applied as wallpaper
-- Motion is ambient and slow (drifting glow blobs, gentle card lift) — never bouncy, never attention-grabbing for its own sake
-- Every decorative element must be grounded in something real (an actual customer photo, an actual stat) — no floating icon-soup badges with no label
+## 2. Color Tokens
 
-## 2. Colors
+All tokens live in `src/app/globals.css` as Tailwind v4 `@theme` CSS
+variables — that file is the single source of truth; this table documents it.
+Machine-readable copy: `design-tokens.json` (repo root).
 
-Dark and specific, not generic "dark mode." The base is a near-black with a faint blue undertone (not neutral gray), and warmth is carried entirely by the orange, not by the background.
+| Token | HEX | RGB | HSL | Role |
+|---|---|---|---|---|
+| `--color-bg` | `#ffffff` | 255 255 255 | 0 0% 100% | Page background |
+| `--color-surface-0` | `#f7f7f8` | 247 247 248 | 240 7% 97% | Alternate sections, table heads |
+| `--color-surface-1` | `#fcfcfd` | 252 252 253 | 240 25% 99% | Cards |
+| `--color-surface-2` | `#f1f2f4` | 241 242 244 | 220 12% 95% | Hover fills, wells |
+| `--color-surface-3` | `#e9ebee` | 233 235 238 | 216 13% 92% | Pressed / deepest step |
+| `--color-border` | `rgba(17,19,24,.08)` | — | — | Default hairline |
+| `--color-border-subtle` | `rgba(17,19,24,.04)` | — | — | Faint dividers |
+| `--color-border-strong` | `rgba(17,19,24,.16)` | — | — | Inputs, emphasized edges |
+| `--color-primary-500` | `#e85520` | 232 85 32 | 16 81% 52% | **Ember Orange** — brand |
+| `--color-primary-600` | `#cc4515` | 204 69 21 | 16 81% 44% | Orange text/links on white (AA) |
+| `--color-primary-400` | `#f06830` | 240 104 48 | 17 86% 56% | Gradient bright stop |
+| `--color-accent-600` | `#2563eb` | 37 99 235 | 221 83% 53% | Cool Blue — secondary interactive |
+| `--color-text-1` | `#111318` | 17 19 24 | 223 17% 8% | Primary ink |
+| `--color-text-2` | `#5c6470` | 92 100 112 | 216 10% 40% | Secondary / captions |
+| `--color-text-3` | `#9aa1ac` | 154 161 172 | 217 10% 64% | Tertiary / disabled |
+| `--color-text-inverse` | `#ffffff` | 255 255 255 | 0 0% 100% | Text on orange/dark fills |
+| `--color-success` | `#059669` | 5 150 105 | 161 94% 30% | Success (AA on white) |
+| `--color-warning` | `#d97706` | 217 119 6 | 32 95% 44% | Warning |
+| `--color-error` | `#dc2626` | 220 38 38 | 0 72% 51% | Error |
 
-### Primary
-- **Ember Orange** (`#e85520`): The MYPOS brand color. Carries primary CTAs (as a gradient with its brighter neighbor), active nav states, eyebrow labels, and the ambient glow blobs behind hero sections. Used as gradient fill (`linear-gradient(135deg, #cc4515, #f06830)`) on buttons and gradient-clipped text sparingly, and as a low-opacity tint (`color-mix(in srgb, currentColor 12%, transparent)`) behind pill labels.
+Full primary scale 50–900 is defined in `globals.css`. There is **no dark
+mode** — single light theme by product decision; `color-scheme: light` is
+declared on `body`.
 
-### Secondary
-- **Interface Blue** (`#3b82f6`): Reserved for UI/interactive accents that need to read as distinct from the primary brand action — the second ambient glow blob in hero sections, occasional secondary data highlights. Never used on a primary CTA; that role belongs to orange alone.
+### Named Rule (the only one)
 
-### Neutral
-- **Register Black** (`#07090f`): Page background. The base the whole system sits on.
-- **Panel** (`#0c0f1b` / `#111525` / `#181d30` / `#1f253b`): Four ascending surface steps (surface-0 through surface-3) for layered depth — cards sit on surface-1, elevated/hover states step up to surface-2.
-- **Hairline** (`rgba(255,255,255,0.08)` default, `rgba(255,255,255,0.16)` strong): Borders. Never a solid gray; always a white-alpha hairline so it reads correctly against any of the four surface steps.
-- **Signal White** (`#f1f5f9`): Primary text.
-- **Muted Slate** (`#94a3b8`): Secondary text, captions, metadata.
+**The One Register Rule.** Ember Orange is the only color allowed on a
+primary call-to-action. Blue, green, amber are supporting cast — never on
+the button that matters most. (One standing exception: LINE-chat CTAs use
+LINE's own emerald green, because they signal that app's brand, not a MYPOS
+action.)
 
-### Named Rules
-**The One Register Rule.** Ember orange is the only color allowed on a primary call-to-action. Interface Blue, success green, and warning amber are supporting cast — they appear in ambient decoration, status badges, and secondary UI, never on the button that matters most on the page.
+### Contrast conventions
+- Orange **as text** on white uses `primary-600` (`#cc4515`, ≈4.8:1) — never
+  `primary-400/300`, which fail AA on white.
+- Text on orange/gradient or emerald fills is always `text-white`, never
+  `text-text-1` (ink-on-orange fails).
+- `text-2` (`#5c6470`, ≈5.9:1) is the floor for body-size secondary text.
 
 ## 3. Typography
 
-**Display Font:** IBM Plex Sans Thai (with Prompt, system-ui fallback)
-**Body Font:** Prompt (with Noto Sans Thai, PingFang SC, Microsoft YaHei, Noto Sans SC, system-ui fallback)
-**Label/Mono Font:** JetBrains Mono (latin only; reserved for genuinely tabular/code contexts, not for UI labels — Thai/Chinese eyebrow text must stay on the sans stack, since monospace metrics clip CJK/Thai glyphs)
+Google Fonts, loaded via `next/font` in `src/app/[locale]/layout.tsx`:
 
-**Character:** Prompt carries the bulk of the UI — a geometric-humanist Thai/Latin sans that reads clean at both display and body sizes. IBM Plex Sans Thai is reserved for hero/h1-scale headings only, giving them a slightly more technical, engineered edge that suits a hardware manufacturer without breaking from the same visual family as the body face.
+| Role | Font | Weights | Notes |
+|---|---|---|---|
+| Display / h1 | IBM Plex Sans Thai | 600, 700 | `font-display`; hero + page titles only |
+| Body / UI | Prompt | 400, 500, 600, 700 | `font-sans`; Thai+Latin, CJK fallbacks |
+| Mono | JetBrains Mono | 500 | `font-mono`; SKUs, prices, tabular data only — never Thai/Chinese UI labels (glyph clipping) |
 
-### Hierarchy
-- **Display** (700, `clamp(2.25rem, 5vw, 3.75rem)`, 1.1 line-height, -0.02em tracking): Hero and page-level h1 only.
-- **Headline** (700, 1.5–1.875rem): Section h2s.
-- **Title** (600, 1.125–1.25rem): Card titles, h3s.
-- **Body** (400, 1rem, 1.6 line-height): Paragraph copy. Capped near 65–75ch measure on long-form pages (About, Knowledge Base articles).
-- **Label** (600, 0.75rem, 0.04em tracking): Eyebrow pills, badges, filter labels. Always on the sans stack, never mono.
+Scale in use: Display `clamp(2.25rem, 5vw, 3.75rem)` / 700 / 1.1 / -0.02em ·
+Headline 1.5–1.875rem / 700 · Title 1.125–1.25rem / 600 · Body 1rem / 400 /
+1.6 · Label 0.75rem / 600 / +0.04em. Long-form measure capped ~65–75ch.
 
-### Named Rules
-**The No-Monospace-For-Language Rule.** JetBrains Mono is for genuinely monospaced content (SKU codes, technical specs) only. It was previously used for eyebrow labels and visibly clipped Thai text metrics — a mistake, now corrected. Default every UI label to Prompt.
+## 4. Spacing
 
-## 4. Elevation
+Tailwind's default 4pt scale is used as-is (`p-1` = 4px … `py-16` = 64px,
+`py-24` = 96px). Section rhythm: `py-10` compact pages, `py-16` marketing
+sections, `py-24`+ hero. Card padding 24px (`p-6`), compact lists 16px.
 
-Layered, not flat, but restrained: four surface steps (`surface-0` → `surface-3`) provide depth by lightness alone, and a soft ambient shadow (`shadow-card`) plus a 1px inset highlight give panels a faint lift off the register-black background. Depth escalates on interaction — hover states step up a shadow tier and add a low-opacity orange glow — so elevation itself communicates "this responded to you," not just static hierarchy.
+## 5. Radius
 
-### Shadow Vocabulary
-- **card** (`0 4px 16px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(255,255,255,0.08)`): Default resting state for any card/panel.
-- **card-hover** (`0 8px 32px rgba(0,0,0,0.55), 0 0 32px rgba(232,85,32,0.12), inset 0 0 0 1px rgba(255,255,255,0.08)`): Hover/active state — heavier shadow plus a faint ember glow bleeding out from the card edge.
-- **glow-primary** (`0 0 24px rgba(232,85,32,0.4), 0 0 8px rgba(232,85,32,0.25)`): Primary buttons at rest — the "screen glow" signature, not just a drop shadow.
-- **glow-accent** (`0 0 24px rgba(59,130,246,0.4), 0 0 8px rgba(59,130,246,0.25)`): Reserved for blue/secondary emphasis moments.
+`--radius-xs` 4 · `sm` 6 · `md` 10 · `lg` 14 · `xl` 18 · `2xl` 22 · `3xl` 28 ·
+`tag` 9999. Semantic: button/input = md (10px), card = xl (18px),
+modal = 2xl (22px).
 
-### Named Rules
-**The Glow-On-Response Rule.** Ambient orange glow (as opposed to a plain dark shadow) only appears on the primary CTA at rest and on any card the instant it's hovered/focused. It never sits on static, non-interactive content — glow signals "this is live," and using it decoratively cheapens the signal.
+## 6. Shadows
 
-## 5. Components
+Light-theme elevation: tint + hairline first, shadow second. All shadows are
+soft ink-alpha, no hard black.
 
-### Buttons
-- **Shape:** 8px radius (`--radius-button`), never fully rounded except the language-switcher pill.
-- **Primary:** Ember gradient fill (`linear-gradient(135deg, #cc4515, #f06830)`), signal-white text, `glow-primary` shadow at rest, `brightness(1.1)` + 2px lift on hover, scale-down on active press.
-- **Ghost / ambiguous secondary action:** Transparent background, `border-strong` hairline border, fills to `surface-2` on hover.
-- **Line (LINE-chat CTA specifically):** Solid emerald green (`bg-emerald-700`, hover `emerald-600`) — the one deliberate exception to the orange-only CTA rule, because it signals the LINE messaging app by its own established brand green, not a MYPOS action.
+- `xs…2xl` — ascending diffuse shadows, `rgba(17,19,24, .05–.13)`
+- `card` — `0 1px 2px .04, 0 8px 24px .06` + inset 1px hairline (rest state)
+- `card-hover` — deeper spread + stronger hairline; pairs with a 4px lift and
+  an orange-tinted border on interactive cards
+- `glow-primary` — warm orange halo, reserved for the primary CTA at rest
+- `glow-accent` — blue equivalent for rare secondary emphasis
 
-### Chips / Eyebrow Labels
-- **Style (`.ticket-tag`):** Tinted pill — `background-color: color-mix(in srgb, currentColor 12%, transparent)`, fully rounded (`--radius-tag`), no border. Font is always the sans stack (see Typography's No-Monospace Rule), 600 weight, 0.04em tracking, 0.75rem size.
-- **State:** No hover/active state — these are static labels, not controls.
+## 7. Grid & Breakpoints
 
-### Cards / Containers
-- **Corner Style:** 16px (`--radius-card`).
-- **Background:** `surface-1` at ~40% opacity over the page background (`bg-surface-1/40`), or full `surface-1` for denser data cards.
-- **Shadow Strategy:** `card` at rest, `card-hover` plus a 4px upward translate and a subtle orange-tinted border (`border-primary-400/40`) on hover — see Elevation.
-- **Border:** 1px hairline (`--color-border`) at rest, brightens to a faint orange tint on hover.
-- **Internal Padding:** 24px typical (`p-6`), 16px for compact list-style cards.
+Container: `max-w-7xl` (1280px) with `px-4 sm:px-6 lg:px-8`. Content grids
+are contextual (2-col sm / 3–4-col lg product grids). Breakpoints are
+Tailwind defaults: sm 640 · md 768 · lg 1024 · xl 1280 · 2xl 1536. Mobile
+gets the sticky bottom action bar (`StickyMobileBar`) instead of hover nav.
 
-### Inputs / Fields
-- **Style:** `surface-0` background, `border-strong` hairline, 8px radius (`--radius-input`).
-- **Focus:** 2px outline in primary orange, offset 2px — no glow/blur, kept crisp for legibility on form-heavy admin pages.
+## 8. Components (implementation index)
 
-### Navigation
-- **Style:** Sticky header, `bg-bg/90` with backdrop blur, bottom hairline border. Top-level links get an animated gradient underline on hover (scale-x from 0 to 1). Dropdown menus (Products mega-menu, Resources, language switcher) share one interaction pattern: hover/focus opens, outside-click or Escape closes, chevron rotates 180° when open — declared once as a shared `useDropdown()` hook rather than duplicated per menu.
-- **Mobile:** Full-width slide-down panel below the sticky header; dropdown groups become flat labeled sections instead of hover menus (touch has no hover).
+- **Buttons** — `src/components/ui/Button.tsx`: `primary` (orange gradient,
+  white text, glow, lift on hover), `ghost` (hairline, fills surface-2),
+  `line` (LINE emerald, white text). Radius `--radius-button`.
+- **Cards** — hairline border + `bg-surface-1/40`, `shadow-card`; hover:
+  `-translate-y-1`, `shadow-card-hover`, orange-tint border.
+- **Eyebrow pills** — `.ticket-tag` (currentColor tint at 10%).
+- **Frosted overlay** — `.liquid-glass` (milky white glass, dark hairline
+  gradient edge) for content over imagery/video.
+- **Nav** — sticky `bg-bg/90` + blur, hairline bottom border, gradient
+  underline on hover, click-outside/Escape dropdowns.
+- **Forms** — `surface-0` fill, `border-strong`, 2px orange focus outline.
+- **Badges** — `StockBadge` (semantic tint at 10% + 600-weight text).
+- **Marquee** — `.animate-marquee` logo strip, pauses on hover.
 
-### Floating Decorative Badges (signature anti-pattern, documented as a Don't)
-Previously the Hero section carried a floating checkmark-and-barcode-stripe badge with no text label, animated with a gentle bob. It looked like decoration for decoration's sake — nothing it displayed was real (no actual stat, no actual claim) — and was removed. See Do's and Don'ts.
+## 9. Motion
 
-## 6. Do's and Don'ts
+`MotionConfig reducedMotion="user"` wraps the app; CSS animations are
+guarded by `prefers-reduced-motion`.
 
-### Do:
-- **Do** use Ember Orange (`#e85520`) as the only color on primary CTAs; everything else is supporting cast (see The One Register Rule).
-- **Do** ground every decorative or motion element in something real — an actual customer photo and logo (References cards), an actual number from `getSiteSettings()` (stats), an actual product photo. If a badge or icon can't cite a real fact, cut it.
-- **Do** set eyebrow/label text in the Prompt sans stack, never JetBrains Mono — Thai and Chinese glyph metrics clip in monospace fonts (see The No-Monospace-For-Language Rule).
-- **Do** group navigation by what the visitor is trying to do (by use case / by product category), and fold low-traffic pages into a shared "Resources" menu rather than letting every route claim top-level nav space.
-- **Do** use the orange glow (`glow-primary` / `card-hover`) only on interactive elements at rest or on hover — it signals "this responds to you."
+- Route transitions: 0.35s opacity + 8px rise (`template.tsx`)
+- Scroll reveal: `FadeIn` (whileInView, once, -80px margin)
+- Card hover: 4px lift, 0.35s ease-out; images scale 1.05 over 0.5s
+- Ambient: hero blobs drift 14–17s ease-in-out; `ShinyText` ink-and-silver
+  shimmer sweep (3s linear loop)
+- Nothing bounces; nothing loops faster than 3s.
 
-### Don't:
-- **Don't** ship a floating decorative badge (icon + pattern, no text) with a bob/float animation — the barcode-and-checkmark badge removed from the Hero is the canonical example of this failure; it read as AI-generated filler because it said nothing.
-- **Don't** design this as a boring corporate/factory site — no navy-and-gray B2B palette, no stock photography of generic handshakes, no dense text walls (PRODUCT.md anti-reference, verbatim).
-- **Don't** tip into discount-marketplace energy either — no red sale badges, no countdown timers, no Shopee/Lazada-style dense promotional grids.
-- **Don't** apply monospace fonts to any UI label, eyebrow, or Thai/Chinese body text — reserve JetBrains Mono for genuinely tabular data (SKUs, specs).
-- **Don't** let the top nav sprawl past roughly 4-5 top-level items; if a new section is being added, ask whether it belongs inside an existing dropdown (Products, Resources) before giving it its own slot.
+## 10. Accessibility
+
+- WCAG AA contrast per §2 conventions
+- Focus: 2px outline, offset 2, `primary`/`primary-400` per component;
+  `focus-visible` only
+- Keyboard: dropdowns close on Escape, open on focus; skip-to-content link
+  in the header; accordion uses `aria-expanded`/`aria-controls`
+- All decorative layers are `aria-hidden`; images carry real alt text

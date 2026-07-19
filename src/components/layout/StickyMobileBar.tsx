@@ -24,7 +24,7 @@ export function StickyMobileBar({ phone, lineUrl }: { phone: string; lineUrl: st
         href={lineUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-1 flex-col items-center justify-center gap-0.5 border-x border-border bg-emerald-700 py-2.5 text-xs font-medium text-text-1"
+        className="flex flex-1 flex-col items-center justify-center gap-0.5 border-x border-border bg-emerald-700 py-2.5 text-xs font-medium text-white"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
           <path

@@ -40,7 +40,7 @@ export function ProductCard({ product }: { product: Product }) {
         className={`absolute right-6 top-6 z-10 flex h-8 w-8 items-center justify-center rounded-full border transition-colors ${
           inCart
             ? "border-primary-400 bg-primary-400 text-text-1"
-            : "border-border-strong bg-surface-0/90 text-text-2 hover:border-primary-400/40 hover:text-primary-400"
+            : "border-border-strong bg-surface-0/90 text-text-2 hover:border-primary-400/40 hover:text-primary-600"
         }`}
       >
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">

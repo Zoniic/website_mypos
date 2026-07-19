@@ -6,8 +6,8 @@ export type ButtonSize = "sm" | "md" | "lg";
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[image:var(--gradient-primary)] text-text-1 shadow-[var(--shadow-glow-primary)] hover:brightness-110 focus-visible:outline-primary",
-  line: "bg-emerald-700 text-text-1 hover:bg-emerald-600 focus-visible:outline-emerald-700",
+    "bg-[image:var(--gradient-primary)] text-white shadow-[var(--shadow-glow-primary)] hover:brightness-110 focus-visible:outline-primary",
+  line: "bg-emerald-700 text-white hover:bg-emerald-600 focus-visible:outline-emerald-700",
   ghost:
     "bg-transparent text-text-1 border border-border-strong hover:bg-surface-2 focus-visible:outline-primary-400",
 };

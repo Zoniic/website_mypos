@@ -20,7 +20,7 @@ export function PdfUploadField({
           href={currentUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-1 inline-block text-sm text-primary-400 hover:underline"
+          className="mt-1 inline-block text-sm text-primary-600 hover:underline"
         >
           Current PDF ↗
         </a>

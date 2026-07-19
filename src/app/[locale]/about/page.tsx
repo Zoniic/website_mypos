@@ -75,7 +75,7 @@ export default async function AboutPage({
         </div>
         <FadeIn className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
           <div className="flex justify-center">
-            <span className="ticket-tag text-primary-300">{t("hero.eyebrow")}</span>
+            <span className="ticket-tag text-primary-600">{t("hero.eyebrow")}</span>
           </div>
           <h1 className="mt-4 font-display text-4xl font-bold tracking-tight sm:text-5xl">
             {t("hero.title")}
@@ -132,7 +132,7 @@ export default async function AboutPage({
             <dl className="grid grid-cols-3 gap-6 text-center">
               {stats.map((stat) => (
                 <div key={stat.key} className="rounded-card border border-border-subtle bg-surface-1 px-4 py-6 shadow-card">
-                  <dd className="text-3xl font-bold text-primary-300">
+                  <dd className="text-3xl font-bold text-primary-600">
                     <CountUp value={stat.value} />
                   </dd>
                   <dt className="mt-1 text-sm text-text-2">{t(`stats.${stat.key}`)}</dt>

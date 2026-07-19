@@ -72,7 +72,7 @@ export default async function SearchPage({
                   href={result.href}
                   className="block px-5 py-4 transition-colors hover:bg-surface-1"
                 >
-                  <span className="text-xs font-medium uppercase tracking-wide text-primary-400">
+                  <span className="text-xs font-medium uppercase tracking-wide text-primary-600">
                     {t(typeLabelKey[result.type])}
                   </span>
                   <p className="mt-1 font-semibold text-text-1">{result.title}</p>

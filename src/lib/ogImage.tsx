@@ -15,11 +15,11 @@ export function buildOgImage(title: string) {
           flexDirection: "column",
           justifyContent: "center",
           padding: "80px",
-          backgroundColor: "#171717",
-          color: "#ffffff",
+          backgroundColor: "#ffffff",
+          color: "#111318",
         }}
       >
-        <div style={{ fontSize: 40, fontWeight: 700, letterSpacing: -1, color: "#a3a3a3" }}>
+        <div style={{ fontSize: 40, fontWeight: 700, letterSpacing: -1, color: "#e85520" }}>
           {siteConfig.name}
         </div>
         <div
