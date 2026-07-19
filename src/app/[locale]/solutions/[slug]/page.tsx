@@ -14,6 +14,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { SolutionHero } from "@/components/sections/SolutionHero";
 import { PainGain, type PainGainItem } from "@/components/sections/PainGain";
+import { SelfServiceBenefits } from "@/components/sections/SelfServiceBenefits";
 import { HowItWorks, type StepItem } from "@/components/sections/HowItWorks";
 import { References, type CaseItem } from "@/components/sections/References";
 import { CompareTable } from "@/components/sections/CompareTable";
@@ -132,6 +133,7 @@ export default async function SolutionPage({
         gainLabel={tCommon("gainLabel")}
         items={painGainItems}
       />
+      {slug === "self-order" && <SelfServiceBenefits />}
       <HowItWorks title={tCommon("howItWorksTitle")} steps={steps} />
       <References
         title={tCommon("referencesTitle")}
