@@ -13,6 +13,7 @@ import { Solutions } from "@/components/sections/Solutions";
 import { Pricing } from "@/components/sections/Pricing";
 import { Integrations } from "@/components/sections/Integrations";
 import { UseCases } from "@/components/sections/UseCases";
+import { SelfServiceBenefits } from "@/components/sections/SelfServiceBenefits";
 import { WhyMypos } from "@/components/sections/WhyMypos";
 import { PopularProducts } from "@/components/sections/PopularProducts";
 import { Testimonials } from "@/components/sections/Testimonials";
@@ -110,6 +111,7 @@ export default async function HomePage({
       <TrustStrip />
       <TrustLogos />
       <Solutions />
+      <SelfServiceBenefits />
       <UseCases />
       <PopularProducts />
       <Integrations />

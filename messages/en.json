@@ -1066,5 +1066,46 @@
         "blurb": "Staff canteens and points of sale on-site"
       }
     ]
+  },
+  "selfService": {
+    "eyebrow": "Self-service ordering",
+    "title": "Self-order kiosks that fix real front-of-house problems",
+    "lede": "Not just taking orders — solving the problems owners face every day.",
+    "languagesTitle": "10 languages built in",
+    "languagesDesc": "Foreign customers pick their language and order themselves — no reliance on staff who can't communicate, and fewer order mistakes.",
+    "languages": [
+      "ไทย",
+      "English",
+      "中文",
+      "日本語",
+      "한국어",
+      "Français",
+      "Deutsch",
+      "Español",
+      "Русский",
+      "العربية"
+    ],
+    "items": [
+      {
+        "title": "Eliminates staff cash-skimming",
+        "description": "Customers place their own orders, so every order is recorded and the owner sees the true total — no more staff pocketing cash without ringing up the sale.",
+        "featured": true
+      },
+      {
+        "title": "Frees staff for what matters",
+        "description": "No standing at the counter taking orders — staff cook and serve instead, and the whole shop runs smoother.",
+        "featured": false
+      },
+      {
+        "title": "Cuts wait time at peak",
+        "description": "Run several kiosks in parallel — shorter counter queues and more sales during rush hour.",
+        "featured": false
+      },
+      {
+        "title": "Lowers labour cost",
+        "description": "Cope with rising wages and hard-to-fill roles with kiosks that share the load all day.",
+        "featured": false
+      }
+    ]
   }
 }

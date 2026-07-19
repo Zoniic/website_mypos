@@ -1066,5 +1066,46 @@
         "blurb": "厂区员工食堂与销售点"
       }
     ]
+  },
+  "selfService": {
+    "eyebrow": "自助点餐",
+    "title": "真正解决前厅问题的自助点餐机",
+    "lede": "不只是点餐，更解决店主每天面对的问题。",
+    "languagesTitle": "内置 10 种语言",
+    "languagesDesc": "外国顾客选择语言即可自助点餐，无需依赖沟通不便的员工，也减少点错单。",
+    "languages": [
+      "ไทย",
+      "English",
+      "中文",
+      "日本語",
+      "한국어",
+      "Français",
+      "Deutsch",
+      "Español",
+      "Русский",
+      "العربية"
+    ],
+    "items": [
+      {
+        "title": "杜绝员工私吞现金",
+        "description": "顾客自助下单，每一单都被记录，店主看到真实营业额——员工不再能不开单而把现金收进自己口袋。",
+        "featured": true
+      },
+      {
+        "title": "让员工专注重要工作",
+        "description": "无需站在柜台点餐，员工可专注备餐与服务，全店运转更顺畅。",
+        "featured": false
+      },
+      {
+        "title": "高峰期缩短等待",
+        "description": "并行运行多台自助机，柜台排队更短，高峰期销售更多。",
+        "featured": false
+      },
+      {
+        "title": "降低人力成本",
+        "description": "以自助机全天分担工作，应对工资上涨与招工困难。",
+        "featured": false
+      }
+    ]
   }
 }
