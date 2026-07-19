@@ -1014,5 +1014,57 @@
         ]
       }
     ]
+  },
+  "useCases": {
+    "eyebrow": "By industry",
+    "title": "Find the system for your business",
+    "lede": "Every business has different needs — pick yours to see the best-fit models and solutions.",
+    "items": [
+      {
+        "type": "restaurant",
+        "title": "Restaurants",
+        "blurb": "Faster orders, shorter queues, kitchen & delivery linked"
+      },
+      {
+        "type": "retail",
+        "title": "Retail",
+        "blurb": "Accurate sales and stock control, barcode-ready"
+      },
+      {
+        "type": "buffet",
+        "title": "Buffet",
+        "blurb": "Charge per head or by weight, with table timing"
+      },
+      {
+        "type": "convenience",
+        "title": "Convenience stores",
+        "blurb": "Fast scanning, quick checkout, auto stock control"
+      },
+      {
+        "type": "themepark",
+        "title": "Theme parks",
+        "blurb": "Sell passes, issue tickets, manage entry queues"
+      },
+      {
+        "type": "hotel",
+        "title": "Hotels",
+        "blurb": "Rooms and restaurants in one connected system"
+      },
+      {
+        "type": "cafeteria",
+        "title": "Cafeterias",
+        "blurb": "Staff cards / coupons with automatic deduction"
+      },
+      {
+        "type": "bakery",
+        "title": "Bakeries",
+        "blurb": "Weigh, label pricing, and sell at the counter"
+      },
+      {
+        "type": "manufacturing",
+        "title": "Manufacturing",
+        "blurb": "Staff canteens and points of sale on-site"
+      }
+    ]
   }
 }

@@ -328,6 +328,14 @@ export const CONTENT_GUIDE: Record<string, Record<string, ContentGuideEntry>> = 
     },
   },
 
+  useCases: {
+    items: {
+      what: "ทางเข้าตามประเภทธุรกิจ (อาร์เรย์) แต่ละอัน type/title/blurb — type ต้องตรงกับประเภทในระบบสินค้า (restaurant, retail, buffet ฯลฯ) เพราะลิงก์ไปหน้า products ที่ filter ตามนั้น blurb สั้นๆ บอกโจทย์ของธุรกิจนั้น",
+      example:
+        '[{"type":"restaurant","title":"ร้านอาหาร","blurb":"รับออเดอร์ไว ลดคิว เชื่อมครัวและเดลิเวอรี"}]',
+    },
+  },
+
   integrations: {
     groups: {
       what: "กลุ่มการเชื่อมต่อ (อาร์เรย์) เช่น รับชำระเงิน / เดลิเวอรี / บัญชี — ใส่เฉพาะที่เชื่อมต่อได้จริงเท่านั้น อย่าใส่ชื่อแบรนด์ที่ยังไม่รองรับ (เสี่ยงเข้าใจผิด)",

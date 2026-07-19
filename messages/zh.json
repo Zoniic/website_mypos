@@ -1014,5 +1014,57 @@
         ]
       }
     ]
+  },
+  "useCases": {
+    "eyebrow": "按行业",
+    "title": "为您的业务找到合适的系统",
+    "lede": "每个行业需求各异——选择您的类型，查看最合适的机型与方案。",
+    "items": [
+      {
+        "type": "restaurant",
+        "title": "餐厅",
+        "blurb": "下单更快、排队更短，连接后厨与外卖"
+      },
+      {
+        "type": "retail",
+        "title": "零售",
+        "blurb": "精准销售与库存管理，支持条码"
+      },
+      {
+        "type": "buffet",
+        "title": "自助餐",
+        "blurb": "按人或按重量计费，支持餐桌计时"
+      },
+      {
+        "type": "convenience",
+        "title": "便利店",
+        "blurb": "快速扫码、快速结账、自动库存管理"
+      },
+      {
+        "type": "themepark",
+        "title": "主题乐园",
+        "blurb": "售卡、出票、管理入场排队"
+      },
+      {
+        "type": "hotel",
+        "title": "酒店",
+        "blurb": "客房与餐厅统一互联系统"
+      },
+      {
+        "type": "cafeteria",
+        "title": "员工食堂",
+        "blurb": "员工卡/券自动扣减"
+      },
+      {
+        "type": "bakery",
+        "title": "烘焙店",
+        "blurb": "称重、打印价签、门店销售"
+      },
+      {
+        "type": "manufacturing",
+        "title": "制造业",
+        "blurb": "厂区员工食堂与销售点"
+      }
+    ]
   }
 }
