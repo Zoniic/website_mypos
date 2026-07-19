@@ -6,11 +6,14 @@ import { getSiteSettings } from "@/lib/siteSettings";
 import { getFeaturedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
+import { TrustStrip } from "@/components/sections/TrustStrip";
 import { TrustLogos } from "@/components/sections/TrustLogos";
 import { About } from "@/components/sections/About";
 import { Solutions } from "@/components/sections/Solutions";
+import { Pricing } from "@/components/sections/Pricing";
 import { WhyMypos } from "@/components/sections/WhyMypos";
 import { PopularProducts } from "@/components/sections/PopularProducts";
+import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { Invite } from "@/components/sections/Invite";
 
@@ -102,10 +105,13 @@ export default async function HomePage({
       <JsonLd data={productListSchema} />
 
       <Hero />
+      <TrustStrip />
       <TrustLogos />
       <Solutions />
+      <Pricing />
       <PopularProducts />
       <WhyMypos />
+      <Testimonials />
       <About />
       <Faq />
       <Invite />
