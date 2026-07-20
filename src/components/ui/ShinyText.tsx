@@ -4,10 +4,18 @@ import { motion } from "framer-motion";
 import type { ReactNode } from "react";
 
 /**
- * Headline text with a continuously sweeping gradient "shine" — the base
- * color reads normally, the shine color sweeps across on a loop. Not used
- * on interactive controls (buttons/links), only decorative headline text,
- * so it doesn't conflict with the one-color-on-primary-CTA rule.
+ * Headline text with a continuously sweeping gradient "shine".
+ *
+ * The real text is rendered as plain, solid-colored text — never subjected
+ * to `background-clip: text` + `color: transparent`. That combination,
+ * animated continuously, is known to corrupt glyph shaping for scripts with
+ * combining marks (Thai vowels/tone marks) on repaint in Chromium: the base
+ * headline would intermittently lose or misplace marks (e.g. "ที่" reading
+ * as "ทิ"). Instead, the shine is a separate `aria-hidden` decorative copy
+ * absolutely positioned on top, clipped to a mostly-transparent gradient so
+ * it only paints within the ~10% band of the sweep. If *that* layer's shaping
+ * ever glitches, it only reduces the shine — the real text underneath, which
+ * is never touched, stays correct.
  */
 export function ShinyText({
   children,
@@ -29,21 +37,27 @@ export function ShinyText({
   className?: string;
 }) {
   return (
-    <motion.span
+    <span
       className={className}
-      style={{
-        backgroundImage: `linear-gradient(${angle}deg, ${baseColor} 0%, ${baseColor} 40%, ${shineColor} 50%, ${baseColor} 60%, ${baseColor} 100%)`,
-        backgroundSize: "300% 100%",
-        backgroundClip: "text",
-        WebkitBackgroundClip: "text",
-        color: "transparent",
-        WebkitTextFillColor: "transparent",
-        display: "inline-block",
-      }}
-      animate={{ backgroundPositionX: ["150%", "-150%"] }}
-      transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+      style={{ position: "relative", display: "inline-block", color: baseColor }}
     >
       {children}
-    </motion.span>
+      <motion.span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 select-none"
+        style={{
+          backgroundImage: `linear-gradient(${angle}deg, transparent 0%, transparent 40%, ${shineColor} 50%, transparent 60%, transparent 100%)`,
+          backgroundSize: "300% 100%",
+          backgroundClip: "text",
+          WebkitBackgroundClip: "text",
+          color: "transparent",
+          WebkitTextFillColor: "transparent",
+        }}
+        animate={{ backgroundPositionX: ["150%", "-150%"] }}
+        transition={{ duration: speed, repeat: Infinity, ease: "linear" }}
+      >
+        {children}
+      </motion.span>
+    </span>
   );
 }
