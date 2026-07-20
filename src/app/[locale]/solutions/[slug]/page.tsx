@@ -13,6 +13,7 @@ import {
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { SolutionHero } from "@/components/sections/SolutionHero";
+import { SolutionSubNav } from "@/components/solutions/SolutionSubNav";
 import { PainGain, type PainGainItem } from "@/components/sections/PainGain";
 import { SelfServiceBenefits } from "@/components/sections/SelfServiceBenefits";
 import { HowItWorks, type StepItem } from "@/components/sections/HowItWorks";
@@ -127,15 +128,26 @@ export default async function SolutionPage({
         imageLabel={`${navLabel} photo`}
         imageUrl={images[`solution-${slug}`]}
       />
+      <SolutionSubNav
+        items={[
+          { id: "pain-gain", label: tCommon("painGainTitle") },
+          { id: "how-it-works", label: tCommon("howItWorksTitle") },
+          { id: "cases", label: tCommon("referencesTitle") },
+          { id: "compare", label: tCommon("compareTitle") },
+          { id: "faq", label: tCommon("faqTitle") },
+        ]}
+      />
       <PainGain
+        id="pain-gain"
         title={tCommon("painGainTitle")}
         painLabel={tCommon("painLabel")}
         gainLabel={tCommon("gainLabel")}
         items={painGainItems}
       />
       {slug === "self-order" && <SelfServiceBenefits />}
-      <HowItWorks title={tCommon("howItWorksTitle")} steps={steps} />
+      <HowItWorks id="how-it-works" title={tCommon("howItWorksTitle")} steps={steps} />
       <References
+        id="cases"
         title={tCommon("referencesTitle")}
         note={tCommon("referencesNote")}
         problemLabel={tCommon("problemLabel")}
@@ -151,7 +163,7 @@ export default async function SolutionPage({
         priceLabel={tCommon("comparePrice")}
         products={categoryProducts}
       />
-      <FaqAccordion title={tCommon("faqTitle")} items={faqItems} />
+      <FaqAccordion id="faq" title={tCommon("faqTitle")} items={faqItems} />
       <Invite />
     </>
   );

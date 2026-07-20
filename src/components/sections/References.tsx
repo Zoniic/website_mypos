@@ -8,6 +8,7 @@ export type CaseItem = {
 };
 
 export function References({
+  id,
   title,
   note,
   problemLabel,
@@ -15,6 +16,7 @@ export function References({
   resultLabel,
   cases,
 }: {
+  id?: string;
   title: string;
   note: string;
   problemLabel: string;
@@ -23,7 +25,7 @@ export function References({
   cases: CaseItem[];
 }) {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <section id={id} className="mx-auto max-w-7xl scroll-mt-28 px-4 py-16 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
       <p className="mt-2 text-sm text-text-2">{note}</p>
 

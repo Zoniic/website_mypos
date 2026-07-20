@@ -3,18 +3,20 @@ import { FadeIn } from "@/components/ui/FadeIn";
 export type PainGainItem = { pain: string; gain: string };
 
 export function PainGain({
+  id,
   title,
   painLabel,
   gainLabel,
   items,
 }: {
+  id?: string;
   title: string;
   painLabel: string;
   gainLabel: string;
   items: PainGainItem[];
 }) {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+    <section id={id} className="mx-auto max-w-7xl scroll-mt-28 px-4 py-16 sm:px-6 lg:px-8">
       <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
 
       <div className="mt-10 overflow-hidden rounded-2xl border border-border">

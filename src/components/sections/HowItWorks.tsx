@@ -5,14 +5,16 @@ import { motion } from "framer-motion";
 export type StepItem = { title: string; description: string };
 
 export function HowItWorks({
+  id,
   title,
   steps,
 }: {
+  id?: string;
   title: string;
   steps: StepItem[];
 }) {
   return (
-    <section className="border-y border-border bg-surface-0 py-16">
+    <section id={id} className="scroll-mt-28 border-y border-border bg-surface-0 py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
 
