@@ -63,6 +63,75 @@ const resourceLinks = [
 
 const trailingLinks = [{ key: "about", href: "/about" }] as const;
 
+/** Small line-icons for the top-level nav labels — inline so no icon library
+ * or asset files are needed; same stroke convention as the feature icons on
+ * the homepage (currentColor, ~1.4 stroke). */
+function NavIcon({ children }: { children: React.ReactNode }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 18 18"
+      fill="none"
+      aria-hidden="true"
+      className="shrink-0"
+    >
+      {children}
+    </svg>
+  );
+}
+
+const navIcons: Record<"products" | "accessories" | "resources" | "about", React.ReactNode> = {
+  // Shopping bag.
+  products: (
+    <NavIcon>
+      <path
+        d="M5 6h8l-.6 8.4a1 1 0 0 1-1 .9H6.6a1 1 0 0 1-1-.9L5 6Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M6.5 6V5a2.5 2.5 0 0 1 5 0v1" stroke="currentColor" strokeWidth="1.4" />
+    </NavIcon>
+  ),
+  // Plug — accessories connect to the core hardware.
+  accessories: (
+    <NavIcon>
+      <path
+        d="M4.5 6.5h9v2.5a3.5 3.5 0 0 1-3.5 3.5h-2a3.5 3.5 0 0 1-3.5-3.5V6.5Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M6 2.5v4M9 12.5v3M12 2.5v4"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+      />
+    </NavIcon>
+  ),
+  // Document — resources/articles/service info.
+  resources: (
+    <NavIcon>
+      <path
+        d="M6 2.5h4l3 3v9.5a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-11.5a1 1 0 0 1 1-1Z"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinejoin="round"
+      />
+      <path d="M10 2.5v3h3M6.5 9h5M6.5 11.5h5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </NavIcon>
+  ),
+  // Info circle — the company / about us.
+  about: (
+    <NavIcon>
+      <circle cx="9" cy="9" r="6.25" stroke="currentColor" strokeWidth="1.4" />
+      <path d="M9 8.2v4M9 5.6h.01" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+    </NavIcon>
+  ),
+};
+
 const navLinkClass =
   "relative rounded-sm py-2 text-sm font-medium text-text-2 outline-offset-4 hover:text-text-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
 
@@ -70,11 +139,13 @@ type DropdownItem = { key: string; label: string; href: string };
 
 function NavDropdown({
   label,
+  icon,
   mainHref,
   items,
   onNavigate,
 }: {
   label: string;
+  icon?: React.ReactNode;
   /** Omit if there's no standalone index page for this section. */
   mainHref?: string;
   items: DropdownItem[];
@@ -90,11 +161,12 @@ function NavDropdown({
         // shortcuts below without a second tab stop just for the chevron.
         <Link
           href={mainHref}
-          className={`flex items-center gap-1 ${navLinkClass}`}
+          className={`flex items-center gap-1.5 ${navLinkClass}`}
           aria-haspopup="true"
           aria-expanded={open}
           onClick={onNavigate}
         >
+          {icon}
           {label}
           <svg
             width="10"
@@ -109,11 +181,12 @@ function NavDropdown({
       ) : (
         <button
           type="button"
-          className={`flex cursor-pointer items-center gap-1 ${navLinkClass}`}
+          className={`flex cursor-pointer items-center gap-1.5 ${navLinkClass}`}
           aria-expanded={open}
           aria-haspopup="true"
           onClick={() => setOpen((o) => !o)}
         >
+          {icon}
           {label}
           <svg
             width="10"
@@ -191,18 +264,25 @@ export function Header() {
         <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
           <NavDropdown
             label={t("products")}
+            icon={navIcons.products}
             mainHref="/products"
             items={productCategoryItems}
           />
           <NavDropdown
             label={t("accessories")}
+            icon={navIcons.accessories}
             mainHref="/accessories"
             items={accessoryCategoryItems}
           />
-          <NavDropdown label={t("resources")} items={resourceItems} />
+          <NavDropdown label={t("resources")} icon={navIcons.resources} items={resourceItems} />
 
           {trailingLinks.map((link) => (
-            <Link key={link.key} href={link.href} className={navLinkClass}>
+            <Link
+              key={link.key}
+              href={link.href}
+              className={`flex items-center gap-1.5 ${navLinkClass}`}
+            >
+              {navIcons[link.key as keyof typeof navIcons]}
               {t(link.key)}
             </Link>
           ))}
@@ -270,9 +350,10 @@ export function Header() {
 
           <Link
             href="/products"
-            className="block pt-2 text-base font-medium text-text-1"
+            className="flex items-center gap-1.5 pt-2 text-base font-medium text-text-1"
             onClick={() => setMobileOpen(false)}
           >
+            {navIcons.products}
             {t("products")}
           </Link>
           {productCategoryItems.map((item) => (
@@ -288,9 +369,10 @@ export function Header() {
 
           <Link
             href="/accessories"
-            className="block pt-2 text-base font-medium text-text-1"
+            className="flex items-center gap-1.5 pt-2 text-base font-medium text-text-1"
             onClick={() => setMobileOpen(false)}
           >
+            {navIcons.accessories}
             {t("accessories")}
           </Link>
           {accessoryCategoryItems.map((item) => (
@@ -304,7 +386,10 @@ export function Header() {
             </Link>
           ))}
 
-          <p className="pt-2 text-sm font-semibold text-text-2">{t("resources")}</p>
+          <p className="flex items-center gap-1.5 pt-2 text-sm font-semibold text-text-2">
+            {navIcons.resources}
+            {t("resources")}
+          </p>
           {resourceItems.map((item) => (
             <Link
               key={item.key}
@@ -320,9 +405,10 @@ export function Header() {
             <Link
               key={link.key}
               href={link.href}
-              className="block py-2.5 text-base font-medium text-text-1"
+              className="flex items-center gap-1.5 py-2.5 text-base font-medium text-text-1"
               onClick={() => setMobileOpen(false)}
             >
+              {navIcons[link.key as keyof typeof navIcons]}
               {t(link.key)}
             </Link>
           ))}

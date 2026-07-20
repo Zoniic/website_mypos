@@ -4,8 +4,11 @@ import { getTrustLogos } from "@/lib/siteSettings";
 
 function LogoTile({ logo }: { logo: { id: number; name: string; imageUrl: string | null } }) {
   return logo.imageUrl ? (
-    <div className="relative flex h-12 w-32 shrink-0 items-center justify-center rounded-md bg-surface-2 px-2">
-      <Image src={logo.imageUrl} alt={logo.name} fill sizes="128px" className="object-contain p-2" />
+    // Real uploaded logo: no card/background, just the mark itself — logos
+    // are already self-contained graphics and read cleaner floating on the
+    // page than boxed in a tile.
+    <div className="relative h-12 w-32 shrink-0">
+      <Image src={logo.imageUrl} alt={logo.name} fill sizes="128px" className="object-contain" />
     </div>
   ) : (
     <div className="flex h-12 w-32 shrink-0 items-center justify-center rounded-md bg-surface-2 px-2 text-center text-xs font-medium text-text-2">
