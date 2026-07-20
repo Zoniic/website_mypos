@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   // this, opening the dev server from a LAN IP (e.g. testing on another
   // device on the same network) 403s every JS chunk, so the page shell
   // loads but React never hydrates and no content renders.
-  allowedDevOrigins: ["192.168.0.109"],
+  allowedDevOrigins: ["192.168.0.109", "192.168.99.111"],
   images: {
     // Local, self-authored placeholder tiles only (public/images/placeholders/*.svg).
     // Swap for real photography in next/image before launch.
