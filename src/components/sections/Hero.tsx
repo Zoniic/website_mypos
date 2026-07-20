@@ -10,10 +10,6 @@ export async function Hero() {
   const t = await getTranslations("home.hero");
   const settings = await getSiteSettings();
   const images = await getSiteImages();
-  // statsClients is a free-typed admin field that may already include a
-  // trailing "+" (e.g. "100+") — strip it so the "{count}+" template below
-  // never doubles up to "100++".
-  const statsClients = (settings.statsClients || "500").replace(/\+$/, "");
 
   return (
     <section className="relative flex h-screen min-h-[720px] flex-col overflow-hidden bg-bg">
@@ -25,7 +21,7 @@ export async function Hero() {
           <HeroVideoBackground src={settings.heroVideoUrl} />
         ) : (
           images.hero && (
-            <Image src={images.hero} alt="" fill priority className="object-cover opacity-[0.12]" />
+            <Image src={images.hero} alt="" fill priority className="object-cover opacity-40" />
           )
         )}
         <div
@@ -36,10 +32,17 @@ export async function Hero() {
           className="animate-blob-b absolute -right-32 top-1/3 h-[26rem] w-[26rem] rounded-full opacity-20 blur-3xl"
           style={{ background: "radial-gradient(circle, var(--color-accent-500), transparent 70%)" }}
         />
-        {/* Strong, mostly-opaque wash in the page background color so text
-            always has reliable contrast over video/photo/glow. */}
-        <div className="absolute inset-0 bg-bg/80" />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-bg/60" />
+        {/* Readability vignette: solid where the headline/CTAs sit, fully
+            transparent toward the edges — so the video/photo actually reads
+            as an image instead of being smothered under a flat wash. */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 62% 58% at 50% 52%, var(--color-bg) 0%, var(--color-bg) 32%, transparent 78%)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-bg/30" />
       </div>
 
       {/* Centered glow behind the headline — brand orange, kept subtle so it
@@ -51,23 +54,13 @@ export async function Hero() {
       />
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-1 flex-col px-4 sm:px-6 lg:px-8">
-        {/* Top intro row: mission statement (left) + real trust stat (right). */}
-        <div className="flex flex-col gap-3 pt-8 sm:pt-10 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
-          <p className="max-w-md text-sm leading-relaxed text-text-1/80 sm:text-base">
-            {t("missionStatement")}
-          </p>
-          <p className="max-w-xs text-sm leading-relaxed text-text-1/80 sm:text-base lg:text-right">
-            {t("statHeadline", { count: statsClients })}
-          </p>
-        </div>
-
         {/* Center hero content. */}
         <div className="flex flex-1 flex-col items-center justify-center text-center">
           <FadeIn>
             <p className="text-xs uppercase tracking-tight text-text-1/80 sm:text-sm">
               {t("tagline")}
             </p>
-            <h1 className="mt-4 font-display text-5xl font-medium leading-[0.85] tracking-tighter text-text-1 sm:text-7xl xl:text-9xl">
+            <h1 className="mt-4 font-display text-5xl font-medium leading-[1.05] tracking-tighter text-text-1 sm:text-7xl sm:leading-[0.95] xl:text-9xl xl:leading-[0.85]">
               <span className="block">{t("headlineLine1")}</span>
               <ShinyText className="block" speed={3} angle={100}>
                 {t("headlineLine2")}
