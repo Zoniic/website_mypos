@@ -8,14 +8,6 @@ import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CompareCartLink } from "@/components/products/CompareCartLink";
 
-const solutionSlugs = ["selfOrder", "weighPay", "pos", "ticketing"] as const;
-const solutionHrefs: Record<(typeof solutionSlugs)[number], string> = {
-  selfOrder: "/solutions/self-order",
-  weighPay: "/solutions/weigh-pay",
-  pos: "/solutions/pos",
-  ticketing: "/solutions/ticketing",
-};
-
 /** Shared open/close behavior for header dropdowns: hover or focus opens,
  * outside click/blur or Escape closes. */
 function useDropdown() {
@@ -72,7 +64,7 @@ const resourceLinks = [
 const trailingLinks = [{ key: "about", href: "/about" }] as const;
 
 const navLinkClass =
-  "relative rounded-sm py-2 text-sm font-medium text-text-2 outline-offset-4 hover:text-white after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
+  "relative rounded-sm py-2 text-sm font-medium text-text-2 outline-offset-4 hover:text-text-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
 
 type DropdownItem = { key: string; label: string; href: string };
 
@@ -152,104 +144,11 @@ function NavDropdown({
   );
 }
 
-// "Products" absorbs Solutions (use-case bundles) as a second column instead
-// of claiming its own top-level nav slot — they're both entry points into
-// the same product catalog, just sliced two different ways.
-function ProductsMegaMenu({
-  label,
-  useCaseLabel,
-  categoryLabel,
-  viewAllLabel,
-  useCaseItems,
-  categoryItems,
-  onNavigate,
-}: {
-  label: string;
-  useCaseLabel: string;
-  categoryLabel: string;
-  viewAllLabel: string;
-  useCaseItems: DropdownItem[];
-  categoryItems: DropdownItem[];
-  onNavigate?: () => void;
-}) {
-  const { open, rootRef, rootProps } = useDropdown();
-
-  return (
-    <div ref={rootRef} className="relative" {...rootProps}>
-      <Link
-        href="/products"
-        className={`flex items-center gap-1 ${navLinkClass}`}
-        aria-haspopup="true"
-        aria-expanded={open}
-        onClick={onNavigate}
-      >
-        {label}
-        <svg
-          width="10"
-          height="10"
-          viewBox="0 0 10 10"
-          aria-hidden="true"
-          className={`transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          <path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" />
-        </svg>
-      </Link>
-      {open && (
-        <div className="absolute left-0 top-full flex w-[30rem] gap-6 rounded-lg border border-border bg-surface-1 p-4 shadow-lg">
-          <div className="flex-1">
-            <p className="px-3 text-xs font-semibold uppercase tracking-wide text-text-2">
-              {useCaseLabel}
-            </p>
-            {useCaseItems.map((item) => (
-              <Link
-                key={item.key}
-                href={item.href}
-                className="block rounded-md px-3 py-2 text-sm text-text-2 outline-offset-2 transition-all hover:translate-x-1 hover:bg-surface-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-                onClick={onNavigate}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </div>
-          <div className="flex-1 border-l border-border pl-4">
-            <p className="px-3 text-xs font-semibold uppercase tracking-wide text-text-2">
-              {categoryLabel}
-            </p>
-            {categoryItems.map((item) => (
-              <Link
-                key={item.key}
-                href={item.href}
-                className="block rounded-md px-3 py-2 text-sm text-text-2 outline-offset-2 transition-all hover:translate-x-1 hover:bg-surface-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-                onClick={onNavigate}
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link
-              href="/products"
-              className="mt-1 block rounded-md px-3 py-2 text-sm font-semibold text-primary-600 outline-offset-2 transition-all hover:translate-x-1 hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-              onClick={onNavigate}
-            >
-              {viewAllLabel}
-            </Link>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export function Header() {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tProducts = useTranslations("productsCommon");
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const solutionItems: DropdownItem[] = solutionSlugs.map((slug) => ({
-    key: slug,
-    label: t(`solutionsItems.${slug}`),
-    href: solutionHrefs[slug],
-  }));
 
   const productCategoryItems: DropdownItem[] = productCategories.map((category) => ({
     key: category,
@@ -290,13 +189,10 @@ export function Header() {
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
-          <ProductsMegaMenu
+          <NavDropdown
             label={t("products")}
-            useCaseLabel={t("byUseCase")}
-            categoryLabel={t("byCategory")}
-            viewAllLabel={t("viewAllProducts")}
-            useCaseItems={solutionItems}
-            categoryItems={productCategoryItems}
+            mainHref="/products"
+            items={productCategoryItems}
           />
           <NavDropdown
             label={t("accessories")}
@@ -379,22 +275,6 @@ export function Header() {
           >
             {t("products")}
           </Link>
-          <p className="pt-2 pl-3 text-xs font-semibold uppercase tracking-wide text-text-2">
-            {t("byUseCase")}
-          </p>
-          {solutionItems.map((item) => (
-            <Link
-              key={item.key}
-              href={item.href}
-              className="block py-2.5 pl-3 text-sm text-text-2"
-              onClick={() => setMobileOpen(false)}
-            >
-              {item.label}
-            </Link>
-          ))}
-          <p className="pt-2 pl-3 text-xs font-semibold uppercase tracking-wide text-text-2">
-            {t("byCategory")}
-          </p>
           {productCategoryItems.map((item) => (
             <Link
               key={item.key}
