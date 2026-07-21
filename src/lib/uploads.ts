@@ -1,4 +1,4 @@
-import { supabaseAdmin, SUPABASE_STORAGE_BUCKET } from "@/lib/supabase";
+import { getSupabaseAdmin, SUPABASE_STORAGE_BUCKET } from "@/lib/supabase";
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
 export const MAX_PDF_BYTES = 20 * 1024 * 1024; // 20MB
@@ -18,6 +18,7 @@ async function saveUploadedFile(
   const safeBaseName = baseName.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
   const path = `${folder}/${safeBaseName}-${Date.now()}.${extension}`;
 
+  const supabaseAdmin = getSupabaseAdmin();
   const bytes = Buffer.from(await file.arrayBuffer());
   const { error } = await supabaseAdmin.storage
     .from(SUPABASE_STORAGE_BUCKET)
