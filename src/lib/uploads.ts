@@ -1,5 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
+import { supabaseAdmin, SUPABASE_STORAGE_BUCKET } from "@/lib/supabase";
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
 export const MAX_PDF_BYTES = 20 * 1024 * 1024; // 20MB
@@ -10,8 +9,6 @@ const ALLOWED_IMAGE_TYPES: Record<string, string> = {
   "image/webp": "webp",
 };
 
-const uploadsRoot = path.join(process.cwd(), "public", "uploads");
-
 async function saveUploadedFile(
   file: File,
   extension: string,
@@ -19,19 +16,23 @@ async function saveUploadedFile(
   baseName: string
 ): Promise<string> {
   const safeBaseName = baseName.replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-  const filename = `${safeBaseName}-${Date.now()}.${extension}`;
-
-  const dir = path.join(uploadsRoot, folder);
-  await mkdir(dir, { recursive: true });
+  const path = `${folder}/${safeBaseName}-${Date.now()}.${extension}`;
 
   const bytes = Buffer.from(await file.arrayBuffer());
-  await writeFile(path.join(dir, filename), bytes);
+  const { error } = await supabaseAdmin.storage
+    .from(SUPABASE_STORAGE_BUCKET)
+    .upload(path, bytes, { contentType: file.type, upsert: false });
 
-  return `/uploads/${folder}/${filename}`;
+  if (error) {
+    throw new Error(`Upload failed: ${error.message}`);
+  }
+
+  const { data } = supabaseAdmin.storage.from(SUPABASE_STORAGE_BUCKET).getPublicUrl(path);
+  return data.publicUrl;
 }
 
 /**
- * Saves an uploaded image file to public/uploads/{folder}/ and returns its
+ * Uploads an image file to the Supabase Storage bucket and returns its
  * public URL. Returns null if no file was provided (so callers can leave
  * the existing image untouched on edit forms). Throws a user-facing message
  * string on validation failure (caller should surface it as a form error).
@@ -56,8 +57,8 @@ export async function saveUploadedImage(
 }
 
 /**
- * Saves an uploaded PDF to public/uploads/{folder}/ and returns its public
- * URL. Same null/error conventions as saveUploadedImage.
+ * Uploads a PDF to the Supabase Storage bucket and returns its public URL.
+ * Same null/error conventions as saveUploadedImage.
  */
 export async function saveUploadedPdf(
   file: File | null,
@@ -77,7 +78,7 @@ export async function saveUploadedPdf(
   return saveUploadedFile(file, "pdf", folder, baseName);
 }
 
-/** Saves multiple gallery images, skipping empty file inputs. */
+/** Uploads multiple gallery images, skipping empty file inputs. */
 export async function saveUploadedImages(
   files: File[],
   folder: string,

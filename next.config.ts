@@ -13,10 +13,18 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.0.109", "192.168.99.111"],
   images: {
     // Local, self-authored placeholder tiles only (public/images/placeholders/*.svg).
-    // Swap for real photography in next/image before launch.
     dangerouslyAllowSVG: true,
     contentDispositionType: "attachment",
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    // Admin-uploaded photos/PDF covers now live in Supabase Storage
+    // (see src/lib/uploads.ts) — next/image needs the remote host allowlisted.
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "*.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+    ],
   },
   async redirects() {
     return legacyRedirects.map((redirect) => ({
