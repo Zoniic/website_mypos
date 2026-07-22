@@ -2,10 +2,11 @@
 
 import { useActionState } from "react";
 import type { SiteSettings } from "@/lib/siteSettings";
+import { HeroBackgroundUploadField } from "../HeroBackgroundUploadField";
 import { updateSiteSettings } from "./actions";
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1";
+  "mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-sm text-text-1";
 const labelClass = "text-sm font-medium text-text-2";
 
 function Field({
@@ -50,11 +51,11 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
 
       <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Homepage Hero</h3>
-        <Field
-          label="Background video URL (optional, .mp4)"
+        <HeroBackgroundUploadField
           name="heroVideoUrl"
-          defaultValue={settings.heroVideoUrl}
-          hint="Leave blank to use the default animated gradient background. Should be a short, muted, looping clip of the product/hardware in use."
+          label="Background video or image (optional)"
+          currentUrl={settings.heroVideoUrl}
+          specHint="Leave empty to use the default animated gradient background. Upload a short, muted, looping MP4 clip of the product/hardware in use, or a still JPG/PNG/WebP image. MP4 max 50MB, image max 5MB."
         />
       </section>
 
@@ -80,7 +81,7 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+        className="rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
       >
         {isPending ? "Saving..." : "Save Settings"}
       </button>

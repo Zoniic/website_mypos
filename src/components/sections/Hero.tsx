@@ -10,6 +10,8 @@ export async function Hero() {
   const t = await getTranslations("home.hero");
   const settings = await getSiteSettings();
   const images = await getSiteImages();
+  const heroUrl = settings.heroVideoUrl;
+  const heroUrlIsVideo = Boolean(heroUrl) && /\.mp4($|\?)/i.test(heroUrl);
 
   return (
     <section className="relative flex h-screen min-h-[720px] flex-col overflow-hidden bg-bg">
@@ -17,8 +19,10 @@ export async function Hero() {
           admin-uploaded hero photo dimmed behind the gradient, else just
           the animated orange glow — never a stock/unrelated clip. */}
       <div aria-hidden className="absolute inset-0 overflow-hidden">
-        {settings.heroVideoUrl ? (
-          <HeroVideoBackground src={settings.heroVideoUrl} />
+        {heroUrlIsVideo ? (
+          <HeroVideoBackground src={heroUrl} />
+        ) : heroUrl ? (
+          <Image src={heroUrl} alt="" fill priority className="object-cover opacity-40" />
         ) : (
           images.hero && (
             <Image src={images.hero} alt="" fill priority className="object-cover opacity-40" />

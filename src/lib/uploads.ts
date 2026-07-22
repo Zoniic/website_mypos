@@ -2,11 +2,16 @@ import { getSupabaseAdmin, SUPABASE_STORAGE_BUCKET } from "@/lib/supabase";
 
 export const MAX_IMAGE_BYTES = 5 * 1024 * 1024; // 5MB
 export const MAX_PDF_BYTES = 20 * 1024 * 1024; // 20MB
+export const MAX_VIDEO_BYTES = 50 * 1024 * 1024; // 50MB
 
 const ALLOWED_IMAGE_TYPES: Record<string, string> = {
   "image/jpeg": "jpg",
   "image/png": "png",
   "image/webp": "webp",
+};
+
+const ALLOWED_VIDEO_TYPES: Record<string, string> = {
+  "video/mp4": "mp4",
 };
 
 async function saveUploadedFile(
@@ -77,6 +82,45 @@ export async function saveUploadedPdf(
   }
 
   return saveUploadedFile(file, "pdf", folder, baseName);
+}
+
+/**
+ * Uploads a hero background asset (either a short .mp4 clip or a still
+ * image) to the Supabase Storage bucket and returns its public URL. Same
+ * null/error conventions as saveUploadedImage/saveUploadedPdf. Which kind
+ * of file was uploaded is later inferred from the URL's extension by the
+ * caller (Hero.tsx) — no separate "type" field is stored.
+ */
+export async function saveUploadedHeroBackground(
+  file: File | null,
+  folder: string,
+  baseName: string
+): Promise<string | null> {
+  if (!file || file.size === 0) return null;
+
+  if (file.type.startsWith("video/")) {
+    if (file.size > MAX_VIDEO_BYTES) {
+      throw new Error(`Video is too large (max ${MAX_VIDEO_BYTES / (1024 * 1024)}MB).`);
+    }
+
+    const extension = ALLOWED_VIDEO_TYPES[file.type];
+    if (!extension) {
+      throw new Error("Video must be MP4.");
+    }
+
+    return saveUploadedFile(file, extension, folder, baseName);
+  }
+
+  if (file.size > MAX_IMAGE_BYTES) {
+    throw new Error(`Image is too large (max ${MAX_IMAGE_BYTES / (1024 * 1024)}MB).`);
+  }
+
+  const extension = ALLOWED_IMAGE_TYPES[file.type];
+  if (!extension) {
+    throw new Error("File must be MP4, JPG, PNG, or WebP.");
+  }
+
+  return saveUploadedFile(file, extension, folder, baseName);
 }
 
 /** Uploads multiple gallery images, skipping empty file inputs. */
