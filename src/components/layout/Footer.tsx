@@ -49,7 +49,7 @@ export async function Footer() {
               <li key={link.key}>
                 <Link
                   href={link.href}
-                  className="text-sm text-text-2 hover:text-text-1"
+                  className="rounded-sm text-sm text-text-2 outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
                   {tNav(link.key)}
                 </Link>
@@ -65,13 +65,19 @@ export async function Footer() {
           <ul className="mt-3 space-y-2 text-sm text-text-2">
             <li>
               {t("phone")}:{" "}
-              <a href={`tel:${settings.phone}`} className="hover:text-text-1">
+              <a
+                href={`tel:${settings.phone}`}
+                className="rounded-sm outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+              >
                 {settings.phoneDisplay}
               </a>
             </li>
             <li>
               {t("email")}:{" "}
-              <a href={`mailto:${settings.email}`} className="hover:text-text-1">
+              <a
+                href={`mailto:${settings.email}`}
+                className="rounded-sm outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+              >
                 {settings.email}
               </a>
             </li>
@@ -89,7 +95,7 @@ export async function Footer() {
                 href={settings.lineUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-text-1"
+                className="rounded-sm outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               >
                 LINE
               </a>
@@ -99,7 +105,7 @@ export async function Footer() {
                 href={settings.facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-text-1"
+                className="rounded-sm outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               >
                 Facebook
               </a>
@@ -126,10 +132,16 @@ export async function Footer() {
           © {year} MYPOS. {t("rights")}.
         </p>
         <p className="flex gap-4">
-          <Link href="/privacy-policy" className="hover:text-text-1">
+          <Link
+            href="/privacy-policy"
+            className="rounded-sm outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+          >
             {t("privacyPolicy")}
           </Link>
-          <Link href="/terms-of-service" className="hover:text-text-1">
+          <Link
+            href="/terms-of-service"
+            className="rounded-sm outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+          >
             {t("termsOfService")}
           </Link>
         </p>

@@ -25,7 +25,7 @@ export function AddToCompareButton({
       type="button"
       onClick={() => (inCart ? removeItem(slug) : addItem({ slug, name, imageUrl, priceFrom }))}
       aria-pressed={inCart}
-      className={`inline-flex items-center justify-center gap-2 rounded-button border px-6 py-3.5 text-lg font-semibold transition-all hover:-translate-y-0.5 ${
+      className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-button border px-6 py-3.5 text-lg font-semibold outline-offset-2 transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 ${
         inCart
           ? "border-primary-400 bg-primary-400/10 text-primary-600"
           : "border-border-strong text-text-1 hover:bg-surface-2"

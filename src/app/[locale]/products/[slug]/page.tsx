@@ -127,7 +127,7 @@ export default async function ProductDetailPage({
           galleryUrls={product.galleryUrls}
         />
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
+          <h1 className="font-display text-3xl font-bold tracking-tight">{product.name}</h1>
           <p className="mt-3 text-2xl font-semibold text-text-1">
             {tCommon("priceFrom")}{" "}
             {format.number(product.priceFrom, {

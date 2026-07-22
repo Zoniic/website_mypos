@@ -36,7 +36,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <Link
               key={link.href}
               href={link.href}
-              className="rounded-lg px-3 py-2 text-sm font-medium text-text-2 hover:bg-surface-2 hover:text-text-1"
+              className="rounded-lg px-3 py-2 text-sm font-medium text-text-2 outline-offset-2 transition-colors hover:bg-surface-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             >
               {link.label}
             </Link>
@@ -51,7 +51,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           <form action="/admin/logout" method="post" className="mt-3">
             <button
               type="submit"
-              className="w-full rounded-lg border border-border-strong px-3 py-2 text-sm text-text-2 hover:bg-surface-2"
+              className="w-full rounded-lg border border-border-strong px-3 py-2 text-sm text-text-2 outline-offset-2 transition-colors hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             >
               Log out
             </button>

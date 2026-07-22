@@ -25,7 +25,7 @@ export default function AdminLoginPage() {
           required
           autoFocus
           autoComplete="username"
-          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-text-1"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-text-1"
         />
 
         <label htmlFor="password" className="mt-4 block text-sm font-medium text-text-2">
@@ -37,7 +37,7 @@ export default function AdminLoginPage() {
           type="password"
           required
           autoComplete="current-password"
-          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-text-1"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-text-1"
         />
 
         {error && <p className="mt-3 text-sm text-error">{error}</p>}
@@ -45,7 +45,7 @@ export default function AdminLoginPage() {
         <button
           type="submit"
           disabled={isPending}
-          className="mt-6 w-full rounded-button bg-[image:var(--gradient-primary)] px-4 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+          className="mt-6 w-full rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-4 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
         >
           {isPending ? "Signing in..." : "Sign In"}
         </button>

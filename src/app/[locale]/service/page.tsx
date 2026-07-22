@@ -99,7 +99,7 @@ export default async function ServicePage({
           <h2 className="text-3xl font-bold tracking-tight">{t("types.title")}</h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-3">
             {serviceTypes.map((item) => (
-              <div key={item.title} className="rounded-2xl bg-surface-1 p-6 shadow-sm">
+              <div key={item.title} className="rounded-card border border-border bg-surface-1/40 p-6 shadow-[var(--shadow-card)]">
                 <h3 className="text-lg font-semibold">{item.title}</h3>
                 <p className="mt-2 text-text-2">{item.description}</p>
               </div>

@@ -49,7 +49,7 @@ export default async function SearchPage({
             name="q"
             defaultValue={query}
             placeholder={t("placeholder")}
-            className="w-full rounded-lg border border-border-strong px-4 py-3 text-base"
+            className="w-full rounded-lg border border-border-strong bg-surface-0 px-4 py-3 text-base focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
             autoFocus
           />
         </form>
@@ -70,7 +70,7 @@ export default async function SearchPage({
               <li key={`${result.type}-${result.href}-${index}`}>
                 <Link
                   href={result.href}
-                  className="block px-5 py-4 transition-colors hover:bg-surface-1"
+                  className="block px-5 py-4 -outline-offset-2 transition-colors hover:bg-surface-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
                   <span className="text-xs font-medium uppercase tracking-wide text-primary-600">
                     {t(typeLabelKey[result.type])}

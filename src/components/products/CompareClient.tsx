@@ -26,7 +26,7 @@ export function CompareClient() {
         <button
           type="button"
           onClick={clear}
-          className="mt-6 text-sm font-semibold text-primary-600 hover:underline"
+          className="mt-6 cursor-pointer rounded-sm text-sm font-semibold text-primary-600 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
         >
           {t("backToBrowsing")}
         </button>
@@ -40,7 +40,7 @@ export function CompareClient() {
         <p>{t("empty")}</p>
         <Link
           href="/products"
-          className="mt-4 inline-block rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-600"
+          className="mt-4 inline-block rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 outline-offset-2 transition-colors hover:border-primary-400/40 hover:text-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
         >
           {t("browseProducts")}
         </Link>
@@ -70,7 +70,10 @@ export function CompareClient() {
                         <Image src={item.imageUrl} alt="" fill sizes="48px" className="object-cover" />
                       </span>
                     )}
-                    <Link href={`/products/${item.slug}`} className="font-medium text-text-1 hover:underline">
+                    <Link
+                      href={`/products/${item.slug}`}
+                      className="rounded-sm font-medium text-text-1 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                    >
                       {item.name}
                     </Link>
                   </div>
@@ -84,14 +87,14 @@ export function CompareClient() {
                     min={1}
                     value={item.quantity}
                     onChange={(event) => setQuantity(item.slug, Number(event.target.value))}
-                    className="w-16 rounded-lg border border-border-strong px-2 py-1 text-sm"
+                    className="w-16 rounded-lg border border-border-strong bg-surface-0 px-2 py-1 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
                   />
                 </td>
                 <td className="px-4 py-3 text-right">
                   <button
                     type="button"
                     onClick={() => removeItem(item.slug)}
-                    className="text-sm text-text-2 hover:text-error"
+                    className="cursor-pointer rounded-sm text-sm text-text-2 outline-offset-2 transition-colors hover:text-error focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                   >
                     {t("remove")}
                   </button>
@@ -115,7 +118,7 @@ export function CompareClient() {
               id="quote-name"
               name="name"
               required
-              className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+              className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
             />
           </div>
           <div>
@@ -125,7 +128,7 @@ export function CompareClient() {
             <input
               id="quote-company"
               name="company"
-              className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+              className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -137,7 +140,7 @@ export function CompareClient() {
                 id="quote-phone"
                 name="phone"
                 required
-                className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+                className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
               />
             </div>
             <div>
@@ -149,7 +152,7 @@ export function CompareClient() {
                 name="email"
                 type="email"
                 required
-                className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+                className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
               />
             </div>
           </div>
@@ -161,7 +164,7 @@ export function CompareClient() {
               id="quote-message"
               name="message"
               rows={3}
-              className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+              className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
             />
           </div>
 
@@ -170,7 +173,7 @@ export function CompareClient() {
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+            className="cursor-pointer rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
           >
             {isPending ? t("formSubmitting") : t("formSubmit")}
           </button>

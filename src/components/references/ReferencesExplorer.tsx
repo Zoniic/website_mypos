@@ -57,7 +57,7 @@ export function ReferencesExplorer({
         <select
           value={businessType}
           onChange={(event) => setBusinessType(event.target.value)}
-          className="rounded-lg border border-border-strong px-3 py-2 text-sm"
+          className="rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
         >
           <option value="">{allLabel}</option>
           {businessTypes.map((type) => (
@@ -75,7 +75,7 @@ export function ReferencesExplorer({
             <button
               type="button"
               onClick={() => setBusinessType("")}
-              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-600"
+              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 outline-offset-2 transition-colors hover:border-primary-400/40 hover:text-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             >
               {clearFilters}
             </button>
@@ -87,7 +87,7 @@ export function ReferencesExplorer({
             <FadeIn key={item.slug} delay={(index % 6) * 0.06}>
               <Link
                 href={`/references/${item.slug}`}
-                className="group block h-full overflow-hidden rounded-card border border-border bg-surface-1/40 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]">
+                className="group block h-full overflow-hidden rounded-card border border-border bg-surface-1/40 outline-offset-2 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400">
                 {item.imageUrl ? (
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">
                     <Image

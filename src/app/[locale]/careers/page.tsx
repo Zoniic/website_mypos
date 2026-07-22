@@ -58,7 +58,7 @@ export default async function CareersPage({
               <Link
                 key={job.slug}
                 href={`/careers/${job.slug}`}
-                className="block rounded-card border border-border bg-surface-1/40 p-6 transition-all hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]"
+                className="block rounded-card border border-border bg-surface-1/40 p-6 outline-offset-2 transition-all hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               >
                 <h3 className="text-lg font-semibold">{job.title}</h3>
                 <p className="mt-2 text-sm text-text-2">

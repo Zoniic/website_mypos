@@ -33,7 +33,7 @@ export function BusinessTypeCheckboxes({
               name={name}
               value={type}
               defaultChecked={selected.has(type)}
-              className="h-4 w-4"
+              className="h-4 w-4 rounded outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             />
             {type}
           </label>

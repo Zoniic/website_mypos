@@ -10,7 +10,7 @@ export function StickyMobileBar({ phone, lineUrl }: { phone: string; lineUrl: st
     <div className="fixed inset-x-0 bottom-0 z-40 flex border-t border-border bg-surface-1 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] lg:hidden">
       <a
         href={`tel:${phone}`}
-        className="flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium text-text-2"
+        className="flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium text-text-2 outline-offset-[-2px] transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -24,7 +24,7 @@ export function StickyMobileBar({ phone, lineUrl }: { phone: string; lineUrl: st
         href={lineUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex flex-1 flex-col items-center justify-center gap-0.5 border-x border-border bg-emerald-700 py-2.5 text-xs font-medium text-white"
+        className="flex flex-1 flex-col items-center justify-center gap-0.5 border-x border-border bg-emerald-700 py-2.5 text-xs font-medium text-white transition-colors hover:bg-emerald-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-white"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
           <path
@@ -36,7 +36,7 @@ export function StickyMobileBar({ phone, lineUrl }: { phone: string; lineUrl: st
       </a>
       <Link
         href="/contact"
-        className="flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium text-text-2"
+        className="flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium text-text-2 outline-offset-[-2px] transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true">
           <path

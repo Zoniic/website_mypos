@@ -74,7 +74,7 @@ export default async function ContactPage({
 
         <div className="mt-10 grid gap-10 lg:grid-cols-2">
           <div className="space-y-8">
-            <div className="rounded-2xl border border-emerald-600/30 bg-emerald-50 p-6">
+            <div className="rounded-card border border-emerald-600/30 bg-emerald-50 p-6">
               <h2 className="text-lg font-semibold text-text-1">{t("lineTitle")}</h2>
               <p className="mt-2 text-sm text-text-2">{t("lineDescription")}</p>
               <div className="mt-4 flex items-center gap-6">
@@ -92,20 +92,20 @@ export default async function ContactPage({
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-border p-6">
+              <div className="rounded-card border border-border p-6">
                 <h2 className="text-lg font-semibold">{t("callTitle")}</h2>
                 <a
                   href={`tel:${settings.phone}`}
-                  className="mt-2 block text-text-2 hover:text-text-1"
+                  className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
                   {settings.phoneDisplay}
                 </a>
               </div>
-              <div className="rounded-2xl border border-border p-6">
+              <div className="rounded-card border border-border p-6">
                 <h2 className="text-lg font-semibold">{t("emailTitle")}</h2>
                 <a
                   href={`mailto:${settings.email}`}
-                  className="mt-2 block text-text-2 hover:text-text-1"
+                  className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
                   {settings.email}
                 </a>
@@ -118,13 +118,13 @@ export default async function ContactPage({
               <iframe
                 title={t("mapTitle")}
                 src={settings.mapEmbedUrl}
-                className="mt-3 h-64 w-full rounded-2xl border border-border"
+                className="mt-3 h-64 w-full rounded-card border border-border"
                 loading="lazy"
               />
             </div>
           </div>
 
-          <div className="rounded-2xl border border-border p-6">
+          <div className="rounded-card border border-border p-6">
             <h2 className="text-lg font-semibold">{t("formTitle")}</h2>
             <div className="mt-4">
               <Suspense fallback={null}>

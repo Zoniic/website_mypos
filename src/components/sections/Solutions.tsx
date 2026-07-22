@@ -32,7 +32,7 @@ export async function Solutions() {
         <FadeIn className="lg:col-span-3">
           <Link
             href={solutionCards[0].href}
-            className="group relative flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-3xl bg-surface-2 sm:min-h-[30rem]"
+            className="group relative flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-3xl bg-surface-2 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 sm:min-h-[30rem]"
           >
             <PlaceholderImage
               ratio="21/9"
@@ -68,7 +68,7 @@ export async function Solutions() {
           <FadeIn key={card.key} delay={index * 0.08}>
             <Link
               href={card.href}
-              className="group flex h-full flex-col overflow-hidden rounded-3xl bg-surface-1 transition-colors hover:bg-surface-2"
+              className="group flex h-full flex-col overflow-hidden rounded-3xl bg-surface-1 outline-offset-2 transition-colors hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             >
               <div className="overflow-hidden">
                 <PlaceholderImage

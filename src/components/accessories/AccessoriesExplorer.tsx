@@ -44,7 +44,7 @@ export function AccessoriesExplorer({
           <select
             value={category}
             onChange={(event) => setCategory(event.target.value)}
-            className="rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+            className="rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
           >
             <option value="">{allLabel}</option>
             {availableCategories.map((c) => (

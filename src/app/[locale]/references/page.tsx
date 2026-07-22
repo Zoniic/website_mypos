@@ -55,7 +55,7 @@ export default async function ReferencesPage({
       />
 
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+        <h1 className="font-display text-3xl font-bold tracking-tight">{t("title")}</h1>
         <p className="mt-3 max-w-2xl text-text-2">{t("subtitle")}</p>
 
         <div className="mt-8">

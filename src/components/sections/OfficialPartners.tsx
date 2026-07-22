@@ -43,7 +43,7 @@ export async function OfficialPartners() {
                   href={partner.websiteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block transition-transform hover:-translate-y-0.5"
+                  className="block rounded-lg outline-offset-2 transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
                   {tile}
                 </a>

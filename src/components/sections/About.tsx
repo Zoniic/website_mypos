@@ -27,7 +27,7 @@ export async function About() {
           </p>
           <Link
             href="/about"
-            className="group mt-8 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 underline-offset-4 hover:underline"
+            className="group mt-8 inline-flex items-center gap-1.5 rounded-sm text-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 transition-colors hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
           >
             {t("cta")}
             <svg
@@ -52,7 +52,7 @@ export async function About() {
           x={24}
           y={0}
           delay={0.1}
-          className="group overflow-hidden rounded-3xl shadow-lg lg:col-span-7"
+          className="group overflow-hidden rounded-hero-asset shadow-card lg:col-span-7"
         >
           <PlaceholderImage
             ratio="16/10"

@@ -55,7 +55,10 @@ export function CompareTable({
                 className="transition-colors hover:bg-surface-1"
               >
                 <td className="px-4 py-4 font-medium sm:px-6">
-                  <Link href={`/products/${product.slug}`} className="hover:underline">
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="rounded-sm outline-offset-2 transition-colors hover:text-primary-600 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                  >
                     {product.name}
                   </Link>
                 </td>

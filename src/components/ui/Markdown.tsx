@@ -36,7 +36,7 @@ function inline(escaped: string, locale?: string): string {
     (match, text: string, url: string) => {
       const href = safeHref(url, locale);
       if (!href) return text;
-      return `<a href="${href}" class="text-primary-600 underline underline-offset-2 hover:text-primary-700">${text}</a>`;
+      return `<a href="${href}" class="rounded-sm text-primary-600 underline underline-offset-2 outline-offset-2 transition-colors hover:text-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400">${text}</a>`;
     }
   );
   out = out.replace(/\*\*([^*]+)\*\*/g, '<strong class="font-semibold">$1</strong>');

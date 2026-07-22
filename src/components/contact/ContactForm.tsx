@@ -49,7 +49,7 @@ export function ContactForm() {
           name="name"
           type="text"
           required
-          className="mt-1 w-full rounded-lg border border-border-strong px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
         />
       </div>
 
@@ -62,7 +62,7 @@ export function ContactForm() {
           name="phone"
           type="tel"
           required
-          className="mt-1 w-full rounded-lg border border-border-strong px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
         />
       </div>
 
@@ -75,7 +75,7 @@ export function ContactForm() {
           name="product"
           type="text"
           defaultValue={productParam}
-          className="mt-1 w-full rounded-lg border border-border-strong px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
         />
       </div>
 
@@ -88,14 +88,14 @@ export function ContactForm() {
           name="message"
           rows={4}
           defaultValue={messageParam}
-          className="mt-1 w-full rounded-lg border border-border-strong px-3 py-2 text-sm"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
         />
       </div>
 
       <button
         type="submit"
         disabled={status === "submitting"}
-        className="inline-flex items-center justify-center gap-2 rounded-full bg-surface-2 px-6 py-2.5 text-base font-medium text-text-1 transition-colors hover:bg-surface-3 disabled:cursor-not-allowed disabled:opacity-60"
+        className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 text-base font-semibold text-white shadow-[var(--shadow-glow-primary)] transition-all hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:translate-y-0 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:translate-y-0"
       >
         {status === "submitting" && (
           <span

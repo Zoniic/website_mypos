@@ -29,7 +29,7 @@ export function TrustLogoForm({
         <input
           name="name"
           defaultValue={initialValues.name}
-          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-sm text-text-1"
         />
         <SeoHint type="altText" />
       </label>
@@ -47,7 +47,7 @@ export function TrustLogoForm({
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+        className="rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
       >
         {isPending ? "Saving..." : submitLabel}
       </button>

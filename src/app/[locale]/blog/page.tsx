@@ -59,7 +59,7 @@ export default async function BlogPage({
               <Link
                 key={post.slug}
                 href={`/blog/${post.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]"
+                className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 outline-offset-2 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               >
                 <PlaceholderImage ratio="16/9" label={post.title} src={post.coverImageUrl ?? undefined} />
                 <div className="p-6">

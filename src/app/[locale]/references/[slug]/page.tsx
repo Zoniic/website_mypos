@@ -85,7 +85,7 @@ export default async function ReferenceCaseDetailPage({
             <span className="inline-block rounded-full bg-surface-2 px-2.5 py-1 text-xs font-medium text-text-2">
               {businessTypeLabels[referenceCase.businessType] ?? referenceCase.businessType}
             </span>
-            <h1 className="mt-1 text-2xl font-bold tracking-tight sm:text-3xl">{referenceCase.business}</h1>
+            <h1 className="mt-1 font-display text-2xl font-bold tracking-tight sm:text-3xl">{referenceCase.business}</h1>
           </div>
         </div>
 
@@ -111,7 +111,7 @@ export default async function ReferenceCaseDetailPage({
         </dl>
 
         <div className="mt-10 flex flex-wrap gap-3">
-          <Button href="/references" variant="line">
+          <Button href="/references" variant="ghost">
             {t("backToReferences")}
           </Button>
           <Button href="/contact" variant="primary">

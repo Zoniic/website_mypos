@@ -33,7 +33,7 @@ export function RelatedProductsCheckboxes({
               name={name}
               value={option.slug}
               defaultChecked={selected.has(option.slug)}
-              className="h-4 w-4"
+              className="h-4 w-4 rounded outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             />
             {option.name} ({option.slug})
           </label>

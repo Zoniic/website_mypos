@@ -82,7 +82,7 @@ export default async function AdminDashboardPage() {
           <Link
             key={action.href}
             href={action.href}
-            className="rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] transition-transform hover:-translate-y-0.5"
+            className="rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] transition-transform hover:-translate-y-0.5"
           >
             + {action.label}
           </Link>

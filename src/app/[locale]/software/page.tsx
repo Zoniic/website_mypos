@@ -87,7 +87,7 @@ export default async function SoftwarePage({
           </h2>
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {features.map((feature) => (
-              <div key={feature.title} className="rounded-2xl bg-surface-1 p-6 shadow-sm">
+              <div key={feature.title} className="rounded-card border border-border bg-surface-1/40 p-6 shadow-[var(--shadow-card)]">
                 <h3 className="text-lg font-semibold">{feature.title}</h3>
                 <p className="mt-2 text-text-2">{feature.description}</p>
               </div>

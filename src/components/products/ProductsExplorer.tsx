@@ -28,7 +28,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="rounded-lg border border-border-strong px-3 py-2 text-sm"
+        className="rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm outline-none transition-colors focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
       >
         <option value="">{allLabel}</option>
         {options.map((option) => (
@@ -142,7 +142,7 @@ export function ProductsExplorer({
           type="button"
           onClick={() => setFiltersOpen((open) => !open)}
           aria-expanded={filtersOpen}
-          className="flex items-center gap-2 rounded-lg border border-border-strong px-3 py-2 text-sm font-medium text-text-1"
+          className="flex items-center gap-2 rounded-lg border border-border-strong px-3 py-2 text-sm font-medium text-text-1 outline-offset-2 transition-colors hover:border-primary-400/40 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
         >
           {filtersOpen ? t("hideFilters") : t("showFilters")}
           {hasActiveFilters && (
@@ -153,7 +153,7 @@ export function ProductsExplorer({
           <button
             type="button"
             onClick={clearFilters}
-            className="text-sm font-medium text-primary-600 hover:underline"
+            className="rounded-sm text-sm font-medium text-primary-600 outline-offset-2 transition-colors hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
           >
             {t("clearFilters")}
           </button>
@@ -172,7 +172,7 @@ export function ProductsExplorer({
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="rounded-lg border border-border-strong px-3 py-2 text-sm"
+            className="rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm outline-none transition-colors focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
           />
         </label>
 
@@ -212,7 +212,7 @@ export function ProductsExplorer({
           <button
             type="button"
             onClick={clearFilters}
-            className="text-sm font-medium text-primary-600 hover:underline"
+            className="rounded-sm text-sm font-medium text-primary-600 outline-offset-2 transition-colors hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
           >
             {t("clearFilters")}
           </button>
@@ -229,7 +229,7 @@ export function ProductsExplorer({
             <button
               type="button"
               onClick={clearFilters}
-              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 transition-colors hover:border-primary-400/40 hover:text-primary-600"
+              className="mt-4 rounded-button border border-border-strong px-4 py-2 text-sm font-semibold text-text-1 outline-offset-2 transition-colors hover:border-primary-400/40 hover:text-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             >
               {t("clearFilters")}
             </button>

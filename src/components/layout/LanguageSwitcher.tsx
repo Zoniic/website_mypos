@@ -58,7 +58,7 @@ export function LanguageSwitcher() {
         aria-expanded={open}
         aria-label="Language"
         onClick={() => setOpen((o) => !o)}
-        className="flex cursor-pointer items-center gap-1 rounded-full border border-border-strong px-3 py-1.5 text-sm text-text-2 outline-offset-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+        className="flex cursor-pointer items-center gap-1 rounded-full border border-border-strong px-3 py-1.5 text-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
       >
         {localeLabels[activeLocale]}
         <svg

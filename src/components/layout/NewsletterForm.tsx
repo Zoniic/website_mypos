@@ -36,12 +36,12 @@ export function NewsletterForm({
             name="email"
             required
             placeholder={placeholder}
-            className="min-w-0 flex-1 rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1"
+            className="min-w-0 flex-1 rounded-input border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1 outline-none transition-colors focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
           />
           <button
             type="submit"
             disabled={isPending}
-            className="shrink-0 rounded-lg bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white disabled:opacity-50"
+            className="shrink-0 rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white outline-offset-2 transition-all hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 disabled:opacity-50"
           >
             {submitLabel}
           </button>

@@ -23,7 +23,7 @@ const emptyValues: BlogPostFormValues = {
 };
 
 const inputClass =
-  "mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm text-text-1";
+  "mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-sm text-text-1";
 const labelClass = "text-sm font-medium text-text-2";
 
 export function BlogPostForm({
@@ -46,7 +46,7 @@ export function BlogPostForm({
       </label>
 
       <label className="flex items-center gap-2">
-        <input type="checkbox" name="featured" defaultChecked={initialValues.featured} className="h-4 w-4" />
+        <input type="checkbox" name="featured" defaultChecked={initialValues.featured} className="h-4 w-4 rounded outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400" />
         <span className={labelClass}>Featured</span>
       </label>
 
@@ -100,7 +100,7 @@ export function BlogPostForm({
       <button
         type="submit"
         disabled={isPending}
-        className="rounded-button bg-[image:var(--gradient-primary)] px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
+        className="rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-6 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
       >
         {isPending ? "Saving..." : submitLabel}
       </button>
