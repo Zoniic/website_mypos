@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
-function looksLikeVideo(url: string) {
-  return /\.mp4($|\?)/i.test(url);
-}
+import { isVideoUrl } from "@/lib/heroMedia";
 
 export function HeroBackgroundUploadField({
   name,
@@ -32,7 +29,7 @@ export function HeroBackgroundUploadField({
   }
 
   const displayUrl = previewUrl ?? currentUrl;
-  const displayIsVideo = previewUrl ? previewIsVideo : Boolean(currentUrl && looksLikeVideo(currentUrl));
+  const displayIsVideo = previewUrl ? previewIsVideo : Boolean(currentUrl && isVideoUrl(currentUrl));
 
   return (
     <div>

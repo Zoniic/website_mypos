@@ -5,13 +5,14 @@ import { FadeIn } from "@/components/ui/FadeIn";
 import { ShinyText } from "@/components/ui/ShinyText";
 import { HeroVideoBackground } from "@/components/sections/HeroVideoBackground";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
+import { isVideoUrl } from "@/lib/heroMedia";
 
 export async function Hero() {
   const t = await getTranslations("home.hero");
   const settings = await getSiteSettings();
   const images = await getSiteImages();
   const heroUrl = settings.heroVideoUrl;
-  const heroUrlIsVideo = Boolean(heroUrl) && /\.mp4($|\?)/i.test(heroUrl);
+  const heroUrlIsVideo = Boolean(heroUrl) && isVideoUrl(heroUrl);
 
   return (
     <section className="relative flex h-screen min-h-[720px] flex-col overflow-hidden bg-bg">
