@@ -25,7 +25,20 @@ export function getSupabaseAdmin(): SupabaseClient {
     );
   }
 
-  cached = createClient(url, key);
+  cached = createClient(url, key, {
+    // This client only ever uses the static service-role key — it never
+    // signs in as a user, so there's no session to persist or refresh.
+    // Without disabling these, GoTrueClient's background auto-refresh
+    // timer runs anyway in this long-lived server process and can misfire
+    // against the service-role key (which isn't a session JWT), throwing
+    // "Invalid Compact JWS" on an in-flight upload minutes into the
+    // process's life — never reproducible in a short-lived script, only
+    // in a dev server that's been running for a while.
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  });
   return cached;
 }
 
