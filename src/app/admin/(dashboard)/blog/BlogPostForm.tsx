@@ -41,7 +41,7 @@ export function BlogPostForm({
     <form action={formAction} className="max-w-2xl space-y-8">
       <label className="block">
         <span className={labelClass}>Slug (URL, unique)</span>
-        <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+        <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />
         <SeoHint type="slug" />
       </label>
 
@@ -67,6 +67,7 @@ export function BlogPostForm({
               <span className={labelClass}>Title</span>
               <input
                 name={`title_${locale}`}
+                required={locale === "th"}
                 defaultValue={initialValues.translations[locale].title}
                 className={inputClass}
               />

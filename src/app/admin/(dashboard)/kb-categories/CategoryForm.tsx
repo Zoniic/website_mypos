@@ -34,7 +34,7 @@ export function CategoryForm({
     <form action={formAction} className="max-w-xl space-y-6">
       <label className="block">
         <span className={labelClass}>Slug (URL, unique)</span>
-        <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+        <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />
         <SeoHint type="slug" />
       </label>
 
@@ -51,6 +51,7 @@ export function CategoryForm({
           <span className={labelClass}>Name ({locale})</span>
           <input
             name={`name_${locale}`}
+            required={locale === "th"}
             defaultValue={initialValues.translations[locale].name}
             className={inputClass}
           />

@@ -45,12 +45,12 @@ export function JobPostingForm({
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>
-          <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+          <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />
           <SeoHint type="slug" />
         </label>
         <label className="block">
           <span className={labelClass}>Department</span>
-          <input name="department" defaultValue={initialValues.department} className={inputClass} />
+          <input name="department" required defaultValue={initialValues.department} className={inputClass} />
         </label>
         <label className="block">
           <span className={labelClass}>Location</span>
@@ -79,6 +79,7 @@ export function JobPostingForm({
               <span className={labelClass}>Title</span>
               <input
                 name={`title_${locale}`}
+                required={locale === "th"}
                 defaultValue={initialValues.translations[locale].title}
                 className={inputClass}
               />

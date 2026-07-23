@@ -42,7 +42,7 @@ export function AccessoryForm({
     <form action={formAction} className="max-w-2xl space-y-8">
       <label className="block">
         <span className={labelClass}>Slug (unique identifier)</span>
-        <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+        <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />
         <SeoHint type="slug" />
       </label>
 
@@ -69,6 +69,7 @@ export function AccessoryForm({
               <span className={labelClass}>Name</span>
               <input
                 name={`name_${locale}`}
+                required={locale === "th"}
                 defaultValue={initialValues.translations[locale].name}
                 className={inputClass}
               />

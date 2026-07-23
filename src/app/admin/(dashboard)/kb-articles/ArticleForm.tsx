@@ -56,13 +56,13 @@ export function ArticleForm({
       <section className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>
-          <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+          <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />
           <SeoHint type="slug" />
         </label>
 
         <label className="block">
           <span className={labelClass}>Category</span>
-          <select name="categoryId" defaultValue={initialValues.categoryId || ""} className={inputClass}>
+          <select name="categoryId" required defaultValue={initialValues.categoryId || ""} className={inputClass}>
             <option value="" disabled>
               Select a category
             </option>
@@ -142,6 +142,7 @@ export function ArticleForm({
               <span className={labelClass}>Title</span>
               <input
                 name={`title_${locale}`}
+                required={locale === "th"}
                 defaultValue={initialValues.translations[locale].title}
                 className={inputClass}
               />

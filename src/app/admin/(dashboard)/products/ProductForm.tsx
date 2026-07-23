@@ -102,7 +102,7 @@ export function ProductForm({
       <section className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>
-          <input name="slug" defaultValue={initialValues.slug} className={inputClass} />
+          <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />
           <SeoHint type="slug" />
         </label>
         <Field
@@ -240,6 +240,7 @@ export function ProductForm({
               <span className={labelClass}>Name</span>
               <input
                 name={`name_${locale}`}
+                required={locale === "th"}
                 defaultValue={initialValues.translations[locale].name}
                 className={inputClass}
               />
