@@ -31,6 +31,7 @@ function revalidateBlogPaths(slug?: string) {
 export async function createBlogPost(_prevState: string | null, formData: FormData) {
   const fields = readPostFields(formData);
   if (!fields.slug) return "Slug is required.";
+  if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const coverFile = formData.get("coverImage") as File | null;
   let coverImageUrl: string | null;
@@ -70,6 +71,7 @@ export async function createBlogPost(_prevState: string | null, formData: FormDa
 export async function updateBlogPost(postId: number, _prevState: string | null, formData: FormData) {
   const fields = readPostFields(formData);
   if (!fields.slug) return "Slug is required.";
+  if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const existing = await prisma.blogPost.findUnique({ where: { id: postId } });
   if (!existing) return "Post not found.";

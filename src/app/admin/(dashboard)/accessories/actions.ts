@@ -30,6 +30,7 @@ function readCategories(formData: FormData): string[] {
 export async function createAccessory(_prevState: string | null, formData: FormData) {
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
+  if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
   const categories = readCategories(formData);
 
   let imageUrl: string | null;
@@ -38,6 +39,7 @@ export async function createAccessory(_prevState: string | null, formData: FormD
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
+  if (!imageUrl) return "Photo is required.";
 
   const count = await prisma.accessory.count();
   let accessory;
@@ -77,6 +79,7 @@ export async function updateAccessory(
 ) {
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
+  if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
   const categories = readCategories(formData);
 
   const existing = await prisma.accessory.findUnique({ where: { id: accessoryId } });
@@ -93,6 +96,7 @@ export async function updateAccessory(
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
+  if (!imageUrl) return "Photo is required.";
 
   try {
     await prisma.accessory.update({

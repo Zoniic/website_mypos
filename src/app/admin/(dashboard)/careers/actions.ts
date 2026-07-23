@@ -34,6 +34,7 @@ export async function createJobPosting(_prevState: string | null, formData: Form
   const fields = readJobFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (!fields.department) return "Department is required.";
+  if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const count = await prisma.jobPosting.count();
   let job;
@@ -63,6 +64,7 @@ export async function updateJobPosting(jobId: number, _prevState: string | null,
   const fields = readJobFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (!fields.department) return "Department is required.";
+  if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const existing = await prisma.jobPosting.findUnique({ where: { id: jobId } });
   if (!existing) return "Job posting not found.";

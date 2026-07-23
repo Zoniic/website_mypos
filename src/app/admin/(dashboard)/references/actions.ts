@@ -45,6 +45,7 @@ export async function createReference(_prevState: string | null, formData: FormD
   if (!slug) return "Slug is required.";
   const businessType = String(formData.get("businessType") ?? "").trim();
   if (!businessType) return "Business type is required.";
+  if (!String(formData.get("business_th") ?? "").trim()) return "Thai business name is required.";
 
   let images: { imageUrl: string | null; logoUrl: string | null };
   try {
@@ -52,6 +53,7 @@ export async function createReference(_prevState: string | null, formData: FormD
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
+  if (!images.imageUrl) return "Site photo is required.";
 
   const count = await prisma.referenceCase.count();
   let referenceCase;
@@ -90,6 +92,7 @@ export async function updateReference(
   if (!slug) return "Slug is required.";
   const businessType = String(formData.get("businessType") ?? "").trim();
   if (!businessType) return "Business type is required.";
+  if (!String(formData.get("business_th") ?? "").trim()) return "Thai business name is required.";
 
   const existing = await prisma.referenceCase.findUnique({ where: { id: caseId } });
   if (!existing) return "Case study not found.";
@@ -100,6 +103,7 @@ export async function updateReference(
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
+  if (!images.imageUrl) return "Site photo is required.";
 
   try {
     await prisma.referenceCase.update({ where: { id: caseId }, data: { slug, businessType, ...images } });

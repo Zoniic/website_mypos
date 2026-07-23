@@ -55,6 +55,7 @@ export async function createKbArticle(_prevState: string | null, formData: FormD
   const fields = readArticleFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (!fields.categoryId) return "Category is required.";
+  if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   let assets;
   try {
@@ -95,6 +96,7 @@ export async function updateKbArticle(
   const fields = readArticleFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (!fields.categoryId) return "Category is required.";
+  if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const existing = await prisma.kbArticle.findUnique({ where: { id: articleId } });
   if (!existing) return "Article not found.";

@@ -85,6 +85,7 @@ export async function createProduct(_prevState: string | null, formData: FormDat
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (fields.categories.length === 0) return "Select at least one category.";
+  if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
   let images: { imageUrl: string | null; galleryUrls: string };
   try {
@@ -92,6 +93,7 @@ export async function createProduct(_prevState: string | null, formData: FormDat
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
+  if (!images.imageUrl) return "Main photo is required.";
 
   const { categories, businessTypes, relatedSlugs, ...scalarFields } = fields;
 
@@ -135,6 +137,7 @@ export async function updateProduct(
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (fields.categories.length === 0) return "Select at least one category.";
+  if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
   const existing = await prisma.product.findUnique({ where: { id: productId } });
   if (!existing) return "Product not found.";
@@ -150,6 +153,7 @@ export async function updateProduct(
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload image.";
   }
+  if (!images.imageUrl) return "Main photo is required.";
 
   const { categories, businessTypes, relatedSlugs, ...scalarFields } = fields;
 

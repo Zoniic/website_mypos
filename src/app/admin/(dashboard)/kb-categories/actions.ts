@@ -24,6 +24,7 @@ export async function createKbCategory(_prevState: string | null, formData: Form
   const slug = String(formData.get("slug") ?? "").trim();
   const section = String(formData.get("section") ?? "hardware").trim();
   if (!slug) return "Slug is required.";
+  if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
   const count = await prisma.kbCategory.count({ where: { section } });
 
@@ -57,6 +58,7 @@ export async function updateKbCategory(
   const slug = String(formData.get("slug") ?? "").trim();
   const section = String(formData.get("section") ?? "hardware").trim();
   if (!slug) return "Slug is required.";
+  if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
   try {
     await prisma.kbCategory.update({ where: { id: categoryId }, data: { slug, section } });
