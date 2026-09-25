@@ -158,6 +158,23 @@ export async function getProductsByCategory(
   return rows.map(toProduct);
 }
 
+export async function getProductsByBusinessType(
+  businessType: BusinessType,
+  locale: string
+): Promise<Product[]> {
+  const rows = await prisma.product.findMany({
+    where: { businessTypes: { some: { slug: businessType } } },
+    include: {
+      translations: { where: { locale } },
+      categories: true,
+      businessTypes: true,
+      relatedProducts: { select: { slug: true } },
+    },
+    orderBy: { id: "asc" },
+  });
+  return rows.map(toProduct);
+}
+
 export async function getAllProductSlugs(): Promise<string[]> {
   const rows = await prisma.product.findMany({ select: { slug: true } });
   return rows.map((r) => r.slug);

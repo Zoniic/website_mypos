@@ -8,6 +8,8 @@ const menuLinks = [
   { key: "home", href: "/" },
   { key: "products", href: "/products" },
   { key: "accessories", href: "/accessories" },
+  { key: "industries", href: "/industries" },
+  { key: "savingsCalculator", href: "/tools/savings-calculator" },
   { key: "references", href: "/references" },
   { key: "software", href: "/software" },
   { key: "knowledgeBase", href: "/knowledge-base" },

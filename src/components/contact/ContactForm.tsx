@@ -11,6 +11,14 @@ export function ContactForm() {
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product") ?? "";
   const messageParam = searchParams.get("message") ?? "";
+  const industryParam = searchParams.get("industry") ?? "";
+  const topics = t.raw("topics") as Record<string, string>;
+  const topicParam = searchParams.get("topic") ?? "";
+  const defaultTopic = Object.hasOwn(topics, topicParam)
+    ? topicParam
+    : productParam
+      ? "quote"
+      : "general";
   const [state, formAction, isPending] = useActionState<ContactFormState, FormData>(submitContactMessage, {
     status: "idle",
   });
@@ -31,6 +39,25 @@ export function ContactForm() {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
+      <input type="hidden" name="industry" value={industryParam} />
+      <div>
+        <label htmlFor="contact-topic" className="text-sm font-medium text-text-2">
+          {t("formTopic")}
+        </label>
+        <select
+          id="contact-topic"
+          name="topic"
+          defaultValue={defaultTopic}
+          className="mt-1 w-full rounded-lg border border-border-strong bg-surface-0 px-3 py-2 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
+        >
+          {Object.entries(topics).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div>
         <label htmlFor="contact-name" className="text-sm font-medium text-text-2">
           {t("formName")}

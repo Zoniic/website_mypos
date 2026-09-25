@@ -340,6 +340,10 @@ model NewsletterSubscriber {
 /// Message submitted from the public /contact page form.
 model ContactMessage {
   id        Int      @id @default(autoincrement())
+  /// "demo" | "quote" | "general" | "support".
+  topic     String   @default("general")
+  /// Industry landing page the visitor came from (/industries/<slug>), if any.
+  industry  String?
   name      String
   phone     String
   product   String?

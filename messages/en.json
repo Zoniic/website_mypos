@@ -23,7 +23,9 @@
     "about": "About Us",
     "contact": "Contact",
     "search": "Search",
-    "compare": "Compare / Get Quote"
+    "compare": "Compare / Get Quote",
+    "industries": "Industries",
+    "savingsCalculator": "Savings calculator"
   },
   "search": {
     "metaTitle": "Search | MYPOS",
@@ -876,8 +878,15 @@
     "formSuccessTitle": "Message sent",
     "formSuccessBody": "Our team will get back to you as soon as possible.",
     "formError": "Something went wrong. Please try again.",
-    "formNote": "This form is a UI placeholder only — it is not yet connected to a real messaging backend.",
-    "mapTitle": "Company Map"
+    "formNote": "We'll get back to you during business hours. Your details are only used to contact you.",
+    "mapTitle": "Company Map",
+    "formTopic": "What can we help with?",
+    "topics": {
+      "demo": "Book a demo (free)",
+      "quote": "Request a quote",
+      "general": "General question",
+      "support": "Report a problem / after-sales service"
+    }
   },
   "kb": {
     "metaTitle": "Knowledge Base | MYPOS",
@@ -1107,5 +1116,533 @@
         "featured": false
       }
     ]
+  },
+  "industries": {
+    "common": {
+      "breadcrumb": "Industries",
+      "painGainTitle": "Common problems — and what changes with MYPOS",
+      "painLabel": "Before",
+      "gainLabel": "With MYPOS",
+      "stepsTitle": "How it works in your business",
+      "solutionsTitle": "Recommended solutions",
+      "solutionsLede": "Start with only what you need and add more later.",
+      "solutionBlurbs": {
+        "selfOrder": "Customers order and pay at the kiosk; orders go straight to the kitchen.",
+        "weighPay": "Weigh and price automatically; customers pay without waiting for staff.",
+        "pos": "Counter checkout with stock control, receipts and sales reports anywhere.",
+        "ticketing": "Self-service ticket sales that handle large crowds at once."
+      },
+      "viewSolution": "View details",
+      "productsTitle": "Models for this industry",
+      "viewAllProducts": "View all products",
+      "casesTitle": "Customers in this industry",
+      "casesNote": "Real installations by MYPOS customers",
+      "faqTitle": "Frequently asked questions",
+      "calculatorTitle": "Want to know if it pays off?",
+      "calculatorBody": "Enter your own numbers to estimate labour savings and payback time instantly.",
+      "calculatorCta": "Calculate savings",
+      "ctaDemo": "Book a free demo",
+      "ctaQuote": "Request a quote"
+    },
+    "index": {
+      "metaTitle": "POS & Kiosk Systems by Industry | MYPOS",
+      "metaDescription": "POS systems, self-order kiosks and weigh-and-pay scales built for restaurants, cafeterias, buffets, bakeries, retail, hotels and theme parks. Made in Thailand with lifetime local support.",
+      "eyebrow": "By industry",
+      "title": "Systems built for your kind of business",
+      "lede": "Every business sells differently. Pick yours to see how our hardware and software fit."
+    },
+    "restaurant": {
+      "metaTitle": "Restaurant POS & Self-Order Kiosks | MYPOS",
+      "metaDescription": "Restaurant POS with self-order kiosks, orders sent straight to the kitchen, delivery and PromptPay support. Shorter peak-hour queues. Made and supported in Thailand.",
+      "hero": {
+        "eyebrow": "Restaurants",
+        "title": "Take more orders at peak hours without adding staff",
+        "subtitle": "Self-order kiosks and POS that send orders straight to the kitchen, accept every payment method, and report sales to your phone."
+      },
+      "painGain": [
+        {
+          "pain": "Lunch queues outpace staff and customers walk away",
+          "gain": "Customers order at several kiosks at once; staff focus on service"
+        },
+        {
+          "pain": "Handwritten orders get mixed up in the kitchen",
+          "gain": "Orders reach the kitchen exactly as the customer chose them"
+        },
+        {
+          "pain": "Several delivery tablets and orders keyed in twice",
+          "gain": "In-store and delivery orders in one system"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Customer orders and pays",
+          "description": "At the kiosk or with staff — PromptPay QR, card or cash"
+        },
+        {
+          "title": "Order hits the kitchen",
+          "description": "Printed or shown on a kitchen screen, split by station"
+        },
+        {
+          "title": "Owner sees the numbers",
+          "description": "Sales by menu item, hour and branch, on your phone"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Does a small restaurant with 2–3 staff need a kiosk?",
+          "answer": "Not to start. Begin with a counter POS and add kiosks later when queues grow — they share the same menu data."
+        },
+        {
+          "question": "Can it work with LINE MAN or GrabFood?",
+          "answer": "Yes. Our team recommends the right setup for your restaurant during the site survey."
+        },
+        {
+          "question": "How long does installation take? Do we need to close?",
+          "answer": "Our technicians install, set up the menu and train staff on-site at a time that doesn't disrupt service."
+        }
+      ]
+    },
+    "cafeteria": {
+      "metaTitle": "Cafeteria Systems, Kiosks & Staff Card Payment | MYPOS",
+      "metaDescription": "Cafeteria systems for factories, schools, hospitals and office buildings: self-order kiosks, weigh-and-pay scales, automatic staff card or coupon deduction, and per-vendor reports.",
+      "hero": {
+        "eyebrow": "Cafeterias",
+        "title": "Shorter lunch queues and vendor totals without manual counting",
+        "subtitle": "Kiosks, weigh-and-pay scales and staff card or coupon payment for cafeterias with many vendors and large crowds."
+      },
+      "painGain": [
+        {
+          "pain": "Short lunch breaks but long food queues",
+          "gain": "Ordering and payment spread across several points"
+        },
+        {
+          "pain": "Paper coupons make vendor settlement error-prone",
+          "gain": "Automatic card/coupon deduction with per-vendor totals"
+        },
+        {
+          "pain": "Management can't see meal-benefit usage",
+          "gain": "Usage reports per person, department and day"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Staff choose their food",
+          "description": "Order at a kiosk or weigh the tray for self-serve dishes"
+        },
+        {
+          "title": "Pay by card or coupon",
+          "description": "Staff card, coupon or QR at one point"
+        },
+        {
+          "title": "Totals per vendor",
+          "description": "Daily sales per vendor for accurate settlement"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Can we use our existing staff cards?",
+          "answer": "It depends on the card type. We check this during the site survey and propose the best approach."
+        },
+        {
+          "question": "Can sales be split by vendor?",
+          "answer": "Yes. Sales are recorded per vendor with settlement reports."
+        },
+        {
+          "question": "We serve both set dishes and self-serve by weight — one system?",
+          "answer": "Yes. Kiosks for set dishes and scales for self-serve, all totalled in one system."
+        }
+      ]
+    },
+    "buffet": {
+      "metaTitle": "Buffet & Weigh-and-Pay Checkout Systems | MYPOS",
+      "metaDescription": "Systems for buffets and pay-by-weight shops such as mala tang, suki and salad bars. Self-service weigh-and-pay scales price accurately and shorten checkout queues.",
+      "hero": {
+        "eyebrow": "Buffets & self-serve",
+        "title": "Accurate pay-by-weight pricing that customers can pay for themselves",
+        "subtitle": "Self-service weigh-and-pay scales for mala tang, salad bars and self-serve shops, plus POS for per-head buffets."
+      },
+      "painGain": [
+        {
+          "pain": "Staff weigh and charge by hand, so checkout backs up",
+          "gain": "Customers place the bowl, the system prices it, and they pay"
+        },
+        {
+          "pain": "Pricing and container weight vary, customers doubt it",
+          "gain": "Container weight and unit price set in the system — consistent every time"
+        },
+        {
+          "pain": "Per-head buffets rely on remembering seating times",
+          "gain": "Guest count and seating time recorded per table in the POS"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Customer serves themselves",
+          "description": "Choose ingredients or dishes"
+        },
+        {
+          "title": "Place it on the scale",
+          "description": "Container weight is deducted and the price calculated"
+        },
+        {
+          "title": "Pay and get a receipt",
+          "description": "PromptPay QR or card, then the order goes to the kitchen"
+        }
+      ],
+      "faq": [
+        {
+          "question": "How accurate is the scale?",
+          "answer": "We configure container weights and unit prices for your shop and show staff how to check accuracy regularly."
+        },
+        {
+          "question": "Mala tang bowls go to the kitchen — can the system help?",
+          "answer": "Yes. After payment it prints an order number so the kitchen can match bowls to customers."
+        },
+        {
+          "question": "Can it work alongside per-head buffet pricing?",
+          "answer": "Yes. Shops using both share one POS and scale system."
+        }
+      ]
+    },
+    "bakery": {
+      "metaTitle": "Bakery POS & Weighing Scales | MYPOS",
+      "metaDescription": "POS for bakeries and cafés: sell by piece or weight, automatic pricing, stock by baking batch, and daily best-seller reports.",
+      "hero": {
+        "eyebrow": "Bakeries & cafés",
+        "title": "Faster counter sales — and knowing what to bake more of",
+        "subtitle": "POS and weighing scales for shops selling by piece and by weight, with best-seller reports to plan production."
+      },
+      "painGain": [
+        {
+          "pain": "Items sold by weight need manual price calculation",
+          "gain": "The scale prices by weight automatically"
+        },
+        {
+          "pain": "Unsure what sells out, so you under- or over-bake",
+          "gain": "Sales by item and time slot to plan baking"
+        },
+        {
+          "pain": "Morning rush creates long counter queues",
+          "gain": "Faster checkout with item buttons and QR payment"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Pick items at the counter",
+          "description": "Sell by piece or by weight on one device"
+        },
+        {
+          "title": "Checkout",
+          "description": "Cash, PromptPay QR or card, with receipts"
+        },
+        {
+          "title": "End-of-day report",
+          "description": "See best sellers and sell-out times to plan tomorrow"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Where should a small bakery start?",
+          "answer": "Start with a counter POS and add a scale when you sell items by weight."
+        },
+        {
+          "question": "Can I see totals across branches?",
+          "answer": "Yes, per branch and combined, from the back office."
+        },
+        {
+          "question": "Can customers pay by QR?",
+          "answer": "Yes — PromptPay QR, credit/debit cards and other methods you need."
+        }
+      ]
+    },
+    "retail": {
+      "metaTitle": "Retail POS with Automatic Stock Control | MYPOS",
+      "metaDescription": "Retail POS with barcode scanning, automatic stock deduction, multi-branch management, tax invoices and sales reports. Made in Thailand with after-sales support.",
+      "hero": {
+        "eyebrow": "Retail",
+        "title": "Fast checkout, accurate stock, and clear reorder decisions",
+        "subtitle": "Counter POS with barcode scanning, stock deducted on every sale, and reports that turn real data into buying decisions."
+      },
+      "painGain": [
+        {
+          "pain": "Manual stock counts never match reality",
+          "gain": "Stock deducted on every sale, with low-stock alerts"
+        },
+        {
+          "pain": "Slow checkout from typing prices by hand",
+          "gain": "Scan a barcode and the price appears — fewer mistakes"
+        },
+        {
+          "pain": "Several branches but slow to consolidate sales",
+          "gain": "Sales and stock for every branch in one place"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Scan items",
+          "description": "Barcode scanner or on-screen search"
+        },
+        {
+          "title": "Take payment",
+          "description": "Cash, PromptPay QR or card, with receipt or tax invoice"
+        },
+        {
+          "title": "Stock and reports update",
+          "description": "Best sellers, slow movers and daily sales"
+        }
+      ],
+      "faq": [
+        {
+          "question": "We have thousands of SKUs — is that supported?",
+          "answer": "Yes. Our team helps import your product list during installation."
+        },
+        {
+          "question": "Can it issue e-Tax invoices?",
+          "answer": "Please ask our team to confirm the right format for your business."
+        },
+        {
+          "question": "Does it work with scanners and cash drawers?",
+          "answer": "Yes. See supported devices on the Accessories page, or let our team put together a complete set."
+        }
+      ]
+    },
+    "convenience": {
+      "metaTitle": "POS for Convenience Stores & Minimarts | MYPOS",
+      "metaDescription": "Convenience store and minimart POS: fast scanning and checkout, automatic stock deduction, PromptPay and card payments, and sales reports on your phone.",
+      "hero": {
+        "eyebrow": "Convenience stores & minimarts",
+        "title": "Quick checkout, no waiting — and every sale visible even when you're away",
+        "subtitle": "POS built for all-day, high-frequency sales, with stock control and reports the owner can check from anywhere."
+      },
+      "painGain": [
+        {
+          "pain": "Rush hours overwhelm the till and customers leave",
+          "gain": "Fast scanning and payment with many methods"
+        },
+        {
+          "pain": "The owner is away and can't see today's sales",
+          "gain": "Real-time sales on your phone"
+        },
+        {
+          "pain": "Shrinkage or stock gaps with no audit trail",
+          "gain": "Every sale and stock adjustment recorded and traceable"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Scan and charge",
+          "description": "Scan a barcode and the price appears"
+        },
+        {
+          "title": "Many payment options",
+          "description": "Cash, PromptPay QR, cards and e-wallets"
+        },
+        {
+          "title": "Sales from anywhere",
+          "description": "Daily totals and low-stock items sent to the owner"
+        }
+      ],
+      "faq": [
+        {
+          "question": "We're open 24 hours — is the hardware durable?",
+          "answer": "We design and build our own hardware for continuous counter use, with Thai support for its whole working life."
+        },
+        {
+          "question": "Do we have to migrate product data ourselves?",
+          "answer": "Our team imports your initial product list during installation."
+        },
+        {
+          "question": "Is repair service available?",
+          "answer": "Yes. See warranty and after-sales details on the Service page."
+        }
+      ]
+    },
+    "hotel": {
+      "metaTitle": "Hotel POS, Restaurant Systems & Kiosks | MYPOS",
+      "metaDescription": "POS for hotel restaurants and bars, self-order kiosks and activity ticket kiosks, with international e-wallet support and every outlet's sales in one place.",
+      "hero": {
+        "eyebrow": "Hotels & resorts",
+        "title": "Every outlet in one system — from restaurant to activities",
+        "subtitle": "POS for restaurants, bars and shops, plus self-order and activity ticket kiosks to serve guests faster in their own language."
+      },
+      "painGain": [
+        {
+          "pain": "Outlets run different systems and totals are hard to combine",
+          "gain": "Restaurant, bar and shop on one system with instant totals"
+        },
+        {
+          "pain": "International guests struggle to communicate with staff",
+          "gain": "Multilingual kiosks let guests choose for themselves"
+        },
+        {
+          "pain": "Activity desks get long queues on holidays",
+          "gain": "Activity ticket kiosks guests use all day"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Guests choose",
+          "description": "Order food or buy activity tickets at a kiosk or with staff"
+        },
+        {
+          "title": "Pay their way",
+          "description": "Cards, PromptPay QR and international e-wallets such as AliPay / WeChat Pay"
+        },
+        {
+          "title": "Managers see every outlet",
+          "description": "Sales reports by department and outlet"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Which languages do the kiosks support?",
+          "answer": "Menus can be set up in several languages; we configure them for your main guest groups."
+        },
+        {
+          "question": "Can it connect to our hotel PMS?",
+          "answer": "Tell our team which system you use and we'll check the integration options."
+        },
+        {
+          "question": "We run several properties — can we see combined data?",
+          "answer": "Yes, per property and combined, from the back office."
+        }
+      ]
+    },
+    "themepark": {
+      "metaTitle": "Ticketing Kiosks for Theme Parks & Attractions | MYPOS",
+      "metaDescription": "Self-service ticketing kiosks and ticket sales for theme parks, water parks, museums and attractions. Shorter gate queues, more add-on sales, and every outlet's totals in one place.",
+      "hero": {
+        "eyebrow": "Theme parks & attractions",
+        "title": "Shorter gate queues and more add-on sales",
+        "subtitle": "Ticketing kiosks guests use at several points at once, plus POS for food and souvenir outlets on site."
+      },
+      "painGain": [
+        {
+          "pain": "Long weekend ticket queues before guests even get in",
+          "gain": "Guests buy tickets at several kiosks at once"
+        },
+        {
+          "pain": "Few add-on sales because staff have no time to upsell",
+          "gain": "Kiosks suggest packages and add-ons on every purchase"
+        },
+        {
+          "pain": "Tickets, food and souvenirs run on separate systems",
+          "gain": "All outlets' totals in one place"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Choose tickets or packages",
+          "description": "Ticket type, quantity and add-ons at the kiosk"
+        },
+        {
+          "title": "Pay and collect",
+          "description": "QR or card, with tickets printed on the spot"
+        },
+        {
+          "title": "Management sees everything",
+          "description": "Central reports for tickets and on-site outlets"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Can kiosks be installed outdoors?",
+          "answer": "Tell our team about the installation area so we can recommend the right model and placement."
+        },
+        {
+          "question": "Can it work with our gate access system?",
+          "answer": "Tell our team which system you use and we'll check the integration options."
+        },
+        {
+          "question": "Can we add kiosks temporarily for high season?",
+          "answer": "Talk to our sales team about an arrangement that fits your season and visitor numbers."
+        }
+      ]
+    },
+    "manufacturing": {
+      "metaTitle": "Factory Canteen Systems & On-Site Points of Sale | MYPOS",
+      "metaDescription": "Canteen and point-of-sale systems for factories and industrial estates: self-order kiosks, staff card deduction, and meal-benefit reports per person and department. Made and supported in Thailand.",
+      "hero": {
+        "eyebrow": "Factories & industrial estates",
+        "title": "A staff canteen that serves hundreds in the same break",
+        "subtitle": "Self-order kiosks, staff card payment and meal-benefit reports for factories that want shorter queues and clear cost tracking."
+      },
+      "painGain": [
+        {
+          "pain": "Staggered breaks, yet queues still eat into meal time",
+          "gain": "More ordering and payment points, less waiting per break"
+        },
+        {
+          "pain": "No way to audit meal benefits per person",
+          "gain": "Usage reports per person and department for HR"
+        },
+        {
+          "pain": "On-site shops take cash that's hard to reconcile",
+          "gain": "Staff card or QR with a full audit trail"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Staff order",
+          "description": "At a kiosk or an on-site shop"
+        },
+        {
+          "title": "Automatic deduction",
+          "description": "From staff cards, meal allowances or QR"
+        },
+        {
+          "title": "Summary for HR",
+          "description": "Per person, department and month for payroll or vendor payment"
+        }
+      ],
+      "faq": [
+        {
+          "question": "We run several shifts — can meal allowances differ?",
+          "answer": "Share your benefit rules and we'll propose settings for each shift."
+        },
+        {
+          "question": "Can data go to HR or payroll?",
+          "answer": "Reports can be exported for payroll; ask our team about integration details."
+        },
+        {
+          "question": "Can you install at estates outside Bangkok?",
+          "answer": "Yes. Our team surveys and installs on site — ask sales about service areas."
+        }
+      ]
+    }
+  },
+  "savingsCalculator": {
+    "metaTitle": "Self-Order Kiosk Savings & Payback Calculator | MYPOS",
+    "metaDescription": "Estimate labour savings, extra revenue and payback time for a self-order kiosk using your own numbers. Free, no sign-up.",
+    "breadcrumb": "Savings calculator",
+    "eyebrow": "Free tool",
+    "title": "How fast would a self-order kiosk pay off for you?",
+    "lede": "Enter your real numbers and see results instantly. Every value is an assumption you control — we don't store anything you type.",
+    "inputsTitle": "Your business",
+    "ordersPerDay": "Orders per day",
+    "openDays": "Open days per month",
+    "avgTicket": "Average spend per order (THB)",
+    "staffSaved": "Order-taking staff you no longer need to hire, or can redeploy",
+    "staffCost": "Monthly cost per staff member (THB)",
+    "staffCostHint": "Including wages, social security and benefits",
+    "upsellPercent": "Increase in spend per order from add-on suggestions (%)",
+    "upsellHint": "An assumption — set to 0 to leave it out",
+    "marginPercent": "Gross margin on the extra sales (%)",
+    "investment": "Kiosk price and installation (THB)",
+    "investmentHint": "Use the price from a real quote",
+    "monthlyFee": "Monthly service fee (THB)",
+    "resultsTitle": "Estimate",
+    "laborSavings": "Labour savings per month",
+    "extraProfit": "Extra profit from higher spend per month",
+    "monthlyBenefit": "Net benefit per month",
+    "payback": "Payback period",
+    "paybackMonths": "{months} months",
+    "paybackNever": "Doesn't pay back with these numbers",
+    "yearOne": "Net return in year one",
+    "disclaimer": "This is a rough estimate based on the numbers you entered, not a guarantee. Real results depend on your site, menu and customer behaviour.",
+    "ctaTitle": "Want a more precise number?",
+    "ctaBody": "Our team will survey your site for free and recommend the right number of kiosks for your real customer volume.",
+    "ctaDemo": "Book a free demo",
+    "ctaQuote": "Request a quote"
   }
 }

@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CompareCartLink } from "@/components/products/CompareCartLink";
+import { industrySlugs } from "@/data/industries";
 
 /** Shared open/close behavior for header dropdowns: hover or focus opens,
  * outside click/blur or Escape closes. */
@@ -59,6 +60,7 @@ const resourceLinks = [
   { key: "knowledgeBase", href: "/knowledge-base" },
   { key: "blog", href: "/blog" },
   { key: "service", href: "/service" },
+  { key: "savingsCalculator", href: "/tools/savings-calculator" },
 ] as const;
 
 const trailingLinks = [{ key: "about", href: "/about" }] as const;
@@ -81,7 +83,10 @@ function NavIcon({ children }: { children: React.ReactNode }) {
   );
 }
 
-const navIcons: Record<"products" | "accessories" | "resources" | "about", React.ReactNode> = {
+const navIcons: Record<
+  "products" | "accessories" | "industries" | "resources" | "about",
+  React.ReactNode
+> = {
   // Shopping bag.
   products: (
     <NavIcon>
@@ -108,6 +113,18 @@ const navIcons: Record<"products" | "accessories" | "resources" | "about", React
         stroke="currentColor"
         strokeWidth="1.4"
         strokeLinecap="round"
+      />
+    </NavIcon>
+  ),
+  // Storefront — business types we build for.
+  industries: (
+    <NavIcon>
+      <path
+        d="M3 7.5 4 3h10l1 4.5M3 7.5v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-7M3 7.5h12M7.5 15.5V11h3v4.5"
+        stroke="currentColor"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </NavIcon>
   ),
@@ -235,6 +252,12 @@ export function Header() {
     href: `/accessories?category=${category}`,
   }));
 
+  const industryItems: DropdownItem[] = industrySlugs.map((type) => ({
+    key: type,
+    label: tProducts(`businessTypes.${type}`),
+    href: `/industries/${type}`,
+  }));
+
   const resourceItems: DropdownItem[] = resourceLinks.map((link) => ({
     key: link.key,
     label: t(link.key),
@@ -273,6 +296,12 @@ export function Header() {
             icon={navIcons.accessories}
             mainHref="/accessories"
             items={accessoryCategoryItems}
+          />
+          <NavDropdown
+            label={t("industries")}
+            icon={navIcons.industries}
+            mainHref="/industries"
+            items={industryItems}
           />
           <NavDropdown label={t("resources")} icon={navIcons.resources} items={resourceItems} />
 
@@ -376,6 +405,25 @@ export function Header() {
             {t("accessories")}
           </Link>
           {accessoryCategoryItems.map((item) => (
+            <Link
+              key={item.key}
+              href={item.href}
+              className="block py-2.5 pl-3 text-sm text-text-2"
+              onClick={() => setMobileOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          <Link
+            href="/industries"
+            className="flex items-center gap-1.5 pt-2 text-base font-medium text-text-1"
+            onClick={() => setMobileOpen(false)}
+          >
+            {navIcons.industries}
+            {t("industries")}
+          </Link>
+          {industryItems.map((item) => (
             <Link
               key={item.key}
               href={item.href}

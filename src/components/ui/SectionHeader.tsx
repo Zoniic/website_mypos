@@ -13,12 +13,15 @@ export function SectionHeader({
   lede,
   align = "left",
   action,
+  as: Heading = "h2",
 }: {
   eyebrow: string;
   title: ReactNode;
   lede?: ReactNode;
   align?: "left" | "center";
   action?: ReactNode;
+  /** Use "h1" when this header is the page's main heading. */
+  as?: "h1" | "h2";
 }) {
   const isCenter = align === "center";
 
@@ -44,9 +47,9 @@ export function SectionHeader({
           isCenter ? "justify-center" : "justify-between"
         }`}
       >
-        <h2 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
+        <Heading className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
           {title}
-        </h2>
+        </Heading>
         {action ? <div className="shrink-0 pb-1.5">{action}</div> : null}
       </div>
 

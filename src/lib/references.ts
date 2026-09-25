@@ -36,6 +36,18 @@ export async function getAllReferenceCases(locale: string): Promise<ReferenceCas
   return rows.map(toReferenceCase);
 }
 
+export async function getReferenceCasesByBusinessType(
+  businessType: string,
+  locale: string
+): Promise<ReferenceCase[]> {
+  const rows = await prisma.referenceCase.findMany({
+    where: { businessType },
+    include: { translations: { where: { locale } } },
+    orderBy: { sortOrder: "asc" },
+  });
+  return rows.map(toReferenceCase);
+}
+
 export async function getReferenceCaseBySlug(
   slug: string,
   locale: string

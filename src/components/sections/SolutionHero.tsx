@@ -8,6 +8,8 @@ export function SolutionHero({
   subtitle,
   ctaPrimary,
   ctaSecondary,
+  ctaPrimaryHref = "/contact",
+  ctaSecondaryHref = "#compare",
   imageLabel,
   imageUrl,
 }: {
@@ -16,6 +18,8 @@ export function SolutionHero({
   subtitle: string;
   ctaPrimary: string;
   ctaSecondary: string;
+  ctaPrimaryHref?: string;
+  ctaSecondaryHref?: string;
   imageLabel: string;
   imageUrl?: string;
 }) {
@@ -28,10 +32,10 @@ export function SolutionHero({
         </h1>
         <p className="mt-6 text-lg text-text-2">{subtitle}</p>
         <div className="mt-8 flex flex-wrap gap-4">
-          <Button href="/contact" variant="primary" size="lg">
+          <Button href={ctaPrimaryHref} variant="primary" size="lg">
             {ctaPrimary}
           </Button>
-          <Button href="#compare" variant="ghost" size="lg">
+          <Button href={ctaSecondaryHref} variant="ghost" size="lg">
             {ctaSecondary}
           </Button>
         </div>
