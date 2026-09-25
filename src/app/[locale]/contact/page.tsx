@@ -85,9 +85,11 @@ export default async function ContactPage({
                   src={images["line-qr-code"]}
                   sizes="128px"
                 />
-                <Button href={settings.lineUrl} external variant="line">
-                  {t("lineCta")}
-                </Button>
+                {settings.lineUrl && (
+                  <Button href={settings.lineUrl} external variant="line">
+                    {t("lineCta")}
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -115,12 +117,14 @@ export default async function ContactPage({
             <div>
               <h2 className="text-lg font-semibold">{t("mapTitle")}</h2>
               <p className="mt-1 text-sm text-text-2">{tFooter("address")}</p>
-              <iframe
-                title={t("mapTitle")}
-                src={settings.mapEmbedUrl}
-                className="mt-3 h-64 w-full rounded-card border border-border"
-                loading="lazy"
-              />
+              {settings.mapEmbedUrl && (
+                <iframe
+                  title={t("mapTitle")}
+                  src={settings.mapEmbedUrl}
+                  className="mt-3 h-64 w-full rounded-card border border-border"
+                  loading="lazy"
+                />
+              )}
             </div>
           </div>
 

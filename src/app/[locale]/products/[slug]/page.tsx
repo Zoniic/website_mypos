@@ -154,9 +154,11 @@ export default async function ProductDetailPage({
             <Button href={`/contact?product=${product.slug}`} variant="primary" size="lg">
               {tDetail("requestQuote")}
             </Button>
-            <Button href={settings.lineUrl} external variant="line" size="lg">
-              {tDetail("lineQuote")}
-            </Button>
+            {settings.lineUrl && (
+              <Button href={settings.lineUrl} external variant="line" size="lg">
+                {tDetail("lineQuote")}
+              </Button>
+            )}
             <AddToCompareButton
               slug={product.slug}
               name={product.name}

@@ -1,30 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useActionState } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-
-type SubmitStatus = "idle" | "submitting" | "success" | "error";
+import { submitContactMessage, type ContactFormState } from "@/app/[locale]/contact/actions";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 
 export function ContactForm() {
   const t = useTranslations("contact");
   const searchParams = useSearchParams();
   const productParam = searchParams.get("product") ?? "";
   const messageParam = searchParams.get("message") ?? "";
-  const [status, setStatus] = useState<SubmitStatus>("idle");
-
-  // No backend endpoint exists yet (see README Phase 8) — this only
-  // provides real loading/success UI feedback for the interaction itself.
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("submitting");
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 600));
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    }
-  }
+  const [state, formAction, isPending] = useActionState<ContactFormState, FormData>(submitContactMessage, {
+    status: "idle",
+  });
+  const handleSubmit = submitWithoutReset(formAction);
+  const status = isPending ? "submitting" : state.status;
 
   if (status === "success") {
     return (

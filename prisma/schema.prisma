@@ -337,6 +337,18 @@ model NewsletterSubscriber {
   createdAt DateTime @default(now())
 }
 
+/// Message submitted from the public /contact page form.
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  product   String?
+  message   String?  @db.Text
+  /// "new" | "contacted" | "closed".
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
 /// A multi-item quote request built from the product comparison/quote cart.
 model QuoteRequest {
   id        Int      @id @default(autoincrement())

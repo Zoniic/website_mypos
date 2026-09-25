@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/admin/photos", label: "Site Photos" },
   { href: "/admin/trust-logos", label: "Trust Logos" },
   { href: "/admin/official-partners", label: "Official Partners" },
+  { href: "/admin/contact-messages", label: "Contact Messages" },
   { href: "/admin/quote-requests", label: "Quote Requests" },
   { href: "/admin/warranty-claims", label: "Warranty Claims" },
   { href: "/admin/newsletter", label: "Newsletter Subscribers" },
