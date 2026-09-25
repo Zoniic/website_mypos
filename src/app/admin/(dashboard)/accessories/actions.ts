@@ -20,6 +20,20 @@ function isUniqueConstraintError(error: unknown): boolean {
   );
 }
 
+/** Online price + marketplace links; invalid/empty values become null. */
+function readSalesFields(formData: FormData) {
+  const priceRaw = String(formData.get("onlinePrice") ?? "").trim();
+  const url = (key: string) => {
+    const value = String(formData.get(key) ?? "").trim();
+    return /^https:\/\/\S+$/.test(value) ? value : null;
+  };
+  return {
+    onlinePrice: /^\d+$/.test(priceRaw) && Number(priceRaw) > 0 ? Number(priceRaw) : null,
+    shopeeUrl: url("shopeeUrl"),
+    lazadaUrl: url("lazadaUrl"),
+  };
+}
+
 function readCategories(formData: FormData): string[] {
   return formData
     .getAll("categories")
@@ -49,6 +63,7 @@ export async function createAccessory(_prevState: string | null, formData: FormD
         slug,
         sortOrder: count,
         imageUrl,
+        ...readSalesFields(formData),
         categories: { connect: categories.map((slug) => ({ slug })) },
       },
     });
@@ -104,6 +119,7 @@ export async function updateAccessory(
       data: {
         slug,
         imageUrl,
+        ...readSalesFields(formData),
         categories: { set: categories.map((slug) => ({ slug })) },
       },
     });

@@ -3,16 +3,19 @@
 import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-
-const STORAGE_KEY = "mypos-cookie-consent";
+import { CONSENT_EVENT, readConsent, writeConsent, type ConsentValue } from "@/lib/analytics";
 
 function subscribe(callback: () => void) {
   window.addEventListener("storage", callback);
-  return () => window.removeEventListener("storage", callback);
+  window.addEventListener(CONSENT_EVENT, callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(CONSENT_EVENT, callback);
+  };
 }
 
 function getSnapshot() {
-  return window.localStorage.getItem(STORAGE_KEY) === null;
+  return readConsent() === null;
 }
 
 // Always "not visible yet" on the server — avoids a hydration mismatch;
@@ -21,13 +24,18 @@ function getServerSnapshot() {
   return false;
 }
 
+/**
+ * PDPA cookie banner. "Accept all" turns on analytics and ad pixels;
+ * "Necessary only" keeps them off (Google tags stay in consent-denied mode,
+ * Meta/TikTok/LINE never load). The footer's "Cookie settings" link
+ * reopens it.
+ */
 export function CookieConsent() {
   const t = useTranslations("cookieConsent");
   const visible = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  function accept() {
-    window.localStorage.setItem(STORAGE_KEY, "accepted");
-    window.dispatchEvent(new Event("storage"));
+  function choose(value: ConsentValue) {
+    writeConsent(value);
   }
 
   if (!visible) return null;
@@ -48,14 +56,47 @@ export function CookieConsent() {
             {t("privacyLink")}
           </Link>
         </p>
-        <button
-          type="button"
-          onClick={accept}
-          className="w-full shrink-0 rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] outline-offset-2 transition-all hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 sm:w-auto"
-        >
-          {t("accept")}
-        </button>
+        <div className="flex w-full shrink-0 gap-2 sm:w-auto">
+          <button
+            type="button"
+            onClick={() => choose("necessary")}
+            className="flex-1 rounded-button border border-border-strong bg-white px-4 py-2 text-sm font-semibold text-text-1 outline-offset-2 transition-colors hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 sm:flex-none"
+          >
+            {t("necessaryOnly")}
+          </button>
+          <button
+            type="button"
+            onClick={() => choose("accepted")}
+            className="flex-1 rounded-button bg-primary-600 px-5 py-2 text-sm font-semibold text-white outline-offset-2 transition-colors hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 sm:flex-none"
+          >
+            {t("accept")}
+          </button>
+        </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * Footer link that reopens the banner. Withdrawing consent reloads the
+ * page, because pixels that already loaded can't be unloaded in place.
+ */
+export function CookieSettingsButton({ label, className = "" }: { label: string; className?: string }) {
+  function reopen() {
+    const wasAccepted = readConsent() === "accepted";
+    writeConsent(null);
+    if (wasAccepted) {
+      const onChoice = () => {
+        if (readConsent() === "necessary") window.location.reload();
+        if (readConsent() !== null) window.removeEventListener(CONSENT_EVENT, onChoice);
+      };
+      window.addEventListener(CONSENT_EVENT, onChoice);
+    }
+  }
+
+  return (
+    <button type="button" onClick={reopen} className={className}>
+      {label}
+    </button>
   );
 }

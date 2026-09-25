@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { track } from "@/lib/analytics";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { submitContactMessage, type ContactFormState } from "@/app/[locale]/contact/actions";
@@ -24,6 +25,10 @@ export function ContactForm() {
   });
   const handleSubmit = submitWithoutReset(formAction);
   const status = isPending ? "submitting" : state.status;
+
+  useEffect(() => {
+    if (state.status === "success") track({ name: "generate_lead", topic: state.topic ?? "general" });
+  }, [state]);
 
   if (status === "success") {
     return (

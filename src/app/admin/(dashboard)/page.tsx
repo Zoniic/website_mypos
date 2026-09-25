@@ -33,6 +33,8 @@ export default async function AdminDashboardPage() {
     partnerCount,
     userCount,
     session,
+    pendingOrders,
+    newLeads,
   ] = await Promise.all([
     prisma.product.count(),
     prisma.accessory.count(),
@@ -44,6 +46,8 @@ export default async function AdminDashboardPage() {
     prisma.officialPartner.count(),
     prisma.adminUser.count(),
     getSessionUser(),
+    prisma.order.count({ where: { status: "pending_payment" } }),
+    prisma.contactMessage.count({ where: { status: "new" } }),
   ]);
 
   const cards = [
@@ -77,7 +81,27 @@ export default async function AdminDashboardPage() {
         </p>
       </div>
 
+      {(pendingOrders > 0 || newLeads > 0) && (
+        <div className="mt-6 grid gap-3 sm:grid-cols-2">
+          {pendingOrders > 0 && (
+            <Link href="/admin/orders?status=pending_payment" className="rounded-2xl border border-primary-200 bg-primary-50 p-4 hover:border-primary-400">
+              <p className="text-2xl font-bold text-primary-700">{pendingOrders}</p>
+              <p className="text-sm text-text-2">ออเดอร์รอตรวจยอดชำระ →</p>
+            </Link>
+          )}
+          {newLeads > 0 && (
+            <Link href="/admin/contact-messages" className="rounded-2xl border border-border bg-surface-0 p-4 hover:border-border-strong">
+              <p className="text-2xl font-bold">{newLeads}</p>
+              <p className="text-sm text-text-2">ข้อความใหม่ที่ยังไม่ได้ติดต่อกลับ →</p>
+            </Link>
+          )}
+        </div>
+      )}
+
       <div className="mt-6 flex flex-wrap gap-3">
+        <Link href="/admin/launch" className="rounded-button border border-border-strong px-4 py-2 text-sm font-semibold hover:bg-surface-2">
+          🚀 Launch checklist
+        </Link>
         {quickActions.map((action) => (
           <Link
             key={action.href}

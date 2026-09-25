@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { getSiteSettings } from "@/lib/siteSettings";
+import { organizationSameAs } from "@/lib/structuredData";
 import { getFeaturedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
@@ -63,9 +64,9 @@ export default async function HomePage({
     name: siteConfig.name,
     url: siteConfig.url,
     logo: `${siteConfig.url}/images/brand/logo.png`,
-    telephone: settings.phone,
-    email: settings.email,
-    sameAs: [settings.lineUrl, settings.facebookUrl],
+    telephone: settings.phone || undefined,
+    email: settings.email || undefined,
+    sameAs: organizationSameAs(settings),
   };
 
   const faqSchema = {

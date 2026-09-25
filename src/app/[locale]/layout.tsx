@@ -6,13 +6,15 @@ import { notFound } from "next/navigation";
 import { Anuphan, Chakra_Petch, JetBrains_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
-import { getSiteSettings } from "@/lib/siteSettings";
+import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { CookieConsent } from "@/components/layout/CookieConsent";
-import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
+import { TrackingScripts } from "@/components/analytics/TrackingScripts";
+import { cleanTrackingId, cleanVerificationToken } from "@/lib/trackingIds";
 import { QuoteCartProvider } from "@/lib/quoteCart";
+import { ShopCartProvider } from "@/lib/shopCart";
 import "../globals.css";
 
 // Body/UI: Anuphan (Cadson Demak) — a loopless humanist Thai that stays
@@ -38,14 +40,25 @@ const fontMono = JetBrains_Mono({
   weight: ["500"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: "MYPOS self-service and POS systems",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  const google = cleanVerificationToken(settings.googleSiteVerification);
+  const bing = cleanVerificationToken(settings.bingSiteVerification);
+  const facebook = cleanVerificationToken(settings.facebookDomainVerification);
+  const other: Record<string, string> = {};
+  if (bing) other["msvalidate.01"] = bing;
+  if (facebook) other["facebook-domain-verification"] = facebook;
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: {
+      default: siteConfig.name,
+      template: `%s | ${siteConfig.name}`,
+    },
+    description: "MYPOS self-service and POS systems",
+    verification: { google: google || undefined, other },
+  };
+}
 
 // Content (products, page copy, references, accessories) is admin-editable
 // in MySQL at runtime, so every page under this layout must be rendered
@@ -75,11 +88,24 @@ export default async function LocaleLayout({
       className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-bg text-text-1">
-        <GoogleAnalytics />
+        <TrackingScripts
+          ids={{
+            // NEXT_PUBLIC_GA_ID stays as a fallback for deployments that set GA in env.
+            ga4Id: cleanTrackingId("ga4Id", settings.ga4Id || process.env.NEXT_PUBLIC_GA_ID),
+            gtmId: cleanTrackingId("gtmId", settings.gtmId),
+            metaPixelId: cleanTrackingId("metaPixelId", settings.metaPixelId),
+            tiktokPixelId: cleanTrackingId("tiktokPixelId", settings.tiktokPixelId),
+            lineTagId: cleanTrackingId("lineTagId", settings.lineTagId),
+            googleAdsId: cleanTrackingId("googleAdsId", settings.googleAdsId),
+            googleAdsLeadLabel: cleanTrackingId("googleAdsLeadLabel", settings.googleAdsLeadLabel),
+            googleAdsPurchaseLabel: cleanTrackingId("googleAdsPurchaseLabel", settings.googleAdsPurchaseLabel),
+          }}
+        />
         <NextIntlClientProvider>
           <QuoteCartProvider>
+            <ShopCartProvider>
             <MotionConfig reducedMotion="user">
-              <Header />
+              <Header shopOn={isOnlineOrderingOn(settings)} />
               <main id="main-content" className="flex-1 pb-16 lg:pb-0">
                 {children}
               </main>
@@ -87,6 +113,7 @@ export default async function LocaleLayout({
               <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
               <CookieConsent />
             </MotionConfig>
+            </ShopCartProvider>
           </QuoteCartProvider>
         </NextIntlClientProvider>
       </body>

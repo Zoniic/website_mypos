@@ -7,6 +7,7 @@ import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CompareCartLink } from "@/components/products/CompareCartLink";
+import { ShopCartLink } from "@/components/commerce/ShopCartLink";
 import { industrySlugs } from "@/data/industries";
 
 /** Shared open/close behavior for header dropdowns: hover or focus opens,
@@ -146,7 +147,8 @@ function NavDropdown({
   );
 }
 
-export function Header() {
+/** `shopOn`: online ordering is enabled in Site Settings (shows the cart icon). */
+export function Header({ shopOn = false }: { shopOn?: boolean }) {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tIndustries = useTranslations("industries.common");
@@ -239,12 +241,14 @@ export function Header() {
             </svg>
           </Link>
           <CompareCartLink label={t("compare")} />
+          {shopOn && <ShopCartLink label={t("cart")} />}
           <LanguageSwitcher />
           <Button href="/contact?topic=demo" variant="primary" size="sm">
             {tIndustries("ctaDemo")}
           </Button>
         </div>
 
+        {shopOn && <ShopCartLink label={t("cart")} className="ml-auto mr-1 lg:hidden" />}
         <button
           type="button"
           className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md p-2.5 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 lg:hidden"

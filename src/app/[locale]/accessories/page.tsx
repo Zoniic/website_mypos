@@ -5,6 +5,9 @@ import { siteConfig } from "@/config/site";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { getAllAccessories } from "@/lib/accessories";
+import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { absoluteUrl } from "@/lib/structuredData";
 import { AccessoriesExplorer } from "@/components/accessories/AccessoriesExplorer";
 
 export async function generateMetadata({
@@ -46,9 +49,40 @@ export default async function AccessoriesPage({
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
   const tProducts = await getTranslations({ locale, namespace: "productsCommon" });
   const items = await getAllAccessories(locale);
+  const settings = await getSiteSettings();
+  const shopOn = isOnlineOrderingOn(settings);
+
+  // Priced accessories as Products with offers, so they can show price in search.
+  const pageUrl = `${siteConfig.url}/${locale}/accessories`;
+  const priced = items.filter((item) => shopOn && item.onlinePrice !== undefined);
+  const itemListSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: priced.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "Product",
+        name: item.name,
+        description: item.description,
+        sku: item.slug,
+        brand: { "@type": "Brand", name: "MYPOS" },
+        ...(item.imageUrl ? { image: absoluteUrl(item.imageUrl) } : {}),
+        offers: {
+          "@type": "Offer",
+          url: pageUrl,
+          priceCurrency: "THB",
+          price: item.onlinePrice,
+          availability: "https://schema.org/InStock",
+          itemCondition: "https://schema.org/NewCondition",
+        },
+      },
+    })),
+  };
 
   return (
     <>
+      {priced.length > 0 && <JsonLd data={itemListSchema} />}
       <Breadcrumb
         items={[
           { label: tCommon("breadcrumbHome"), href: "/" },
@@ -67,6 +101,7 @@ export default async function AccessoriesPage({
             filterLabel={tProducts("filterCategory")}
             allLabel={tProducts("allLabel")}
             noResults={tProducts("noResults")}
+            shopOn={shopOn}
           />
         </div>
 

@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
+import { track } from "@/lib/analytics";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import Image from "next/image";
 import { useTranslations, useFormatter } from "next-intl";
@@ -15,6 +16,10 @@ export function CompareClient() {
   const format = useFormatter();
   const { items, removeItem, setQuantity, clear } = useQuoteCart();
   const [state, formAction, isPending] = useActionState(submitQuoteRequest, initialState);
+
+  useEffect(() => {
+    if (state.status === "success") track({ name: "generate_lead", topic: "quote_cart" });
+  }, [state]);
 
   if (state.status === "success") {
     return (

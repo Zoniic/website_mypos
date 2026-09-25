@@ -8,7 +8,14 @@ import { saveUploadedImage } from "@/lib/uploads";
 const locales = ["th", "en", "zh"] as const;
 const GALLERY_SLOTS = 3;
 
+/** Optional https link (marketplace listing); anything else is dropped. */
+function readHttpsUrl(formData: FormData, key: string): string | null {
+  const value = String(formData.get(key) ?? "").trim();
+  return /^https:\/\/\S+$/.test(value) ? value : null;
+}
+
 function readProductFields(formData: FormData) {
+  const onlinePriceRaw = String(formData.get("onlinePrice") ?? "").trim();
   const priceRaw = String(formData.get("priceFrom") ?? "").trim();
   const warrantyRaw = String(formData.get("warrantyMonths") ?? "").trim();
   const leadTimeRaw = String(formData.get("leadTimeDays") ?? "").trim();
@@ -33,6 +40,9 @@ function readProductFields(formData: FormData) {
     stockStatus: String(formData.get("stockStatus") ?? "in_stock"),
     leadTimeDays: leadTimeRaw ? Number(leadTimeRaw) : null,
     featured: formData.get("featured") === "on",
+    onlinePrice: /^\d+$/.test(onlinePriceRaw) && Number(onlinePriceRaw) > 0 ? Number(onlinePriceRaw) : null,
+    shopeeUrl: readHttpsUrl(formData, "shopeeUrl"),
+    lazadaUrl: readHttpsUrl(formData, "lazadaUrl"),
     businessTypes: formData
       .getAll("businessTypes")
       .map((v) => String(v).trim())

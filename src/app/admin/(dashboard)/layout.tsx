@@ -6,7 +6,9 @@ export const dynamic = "force-dynamic";
 
 const navLinks = [
   { href: "/admin", label: "Dashboard" },
+  { href: "/admin/launch", label: "🚀 Launch Checklist" },
   { href: "/admin/playbook", label: "📋 Content Playbook" },
+  { href: "/admin/orders", label: "Orders" },
   { href: "/admin/products", label: "Products" },
   { href: "/admin/accessories", label: "Accessories" },
   { href: "/admin/references", label: "Case Studies" },

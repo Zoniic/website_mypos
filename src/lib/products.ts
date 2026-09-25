@@ -48,6 +48,10 @@ export type Product = {
   imageUrl?: string;
   /** Additional gallery photos (side/back/in-use), uploaded via admin. */
   galleryUrls: string[];
+  /** Fixed online price (THB incl. VAT); undefined = quote only. */
+  onlinePrice?: number;
+  shopeeUrl?: string;
+  lazadaUrl?: string;
 };
 
 type RowWithRelations = ProductRow & {
@@ -84,6 +88,9 @@ function toProduct(row: RowWithRelations): Product {
     featured: row.featured,
     imageUrl: row.imageUrl ?? undefined,
     galleryUrls: row.galleryUrls.split(",").filter(Boolean),
+    onlinePrice: row.onlinePrice ?? undefined,
+    shopeeUrl: row.shopeeUrl ?? undefined,
+    lazadaUrl: row.lazadaUrl ?? undefined,
   };
 }
 

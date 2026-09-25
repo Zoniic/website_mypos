@@ -6,7 +6,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/admin",
+      // Admin, and the private cart/order pages (also noindex'd individually).
+      disallow: ["/admin", "/*/checkout", "/*/order/"],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
   };

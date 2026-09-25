@@ -10,6 +10,9 @@ export type AccessoryFormValues = {
   slug: string;
   categories: string[];
   imageUrl: string | null;
+  onlinePrice: number | null;
+  shopeeUrl: string;
+  lazadaUrl: string;
   translations: Record<"th" | "en" | "zh", { name: string; description: string }>;
 };
 
@@ -17,6 +20,9 @@ const emptyValues: AccessoryFormValues = {
   slug: "",
   categories: [],
   imageUrl: null,
+  onlinePrice: null,
+  shopeeUrl: "",
+  lazadaUrl: "",
   translations: {
     th: { name: "", description: "" },
     en: { name: "", description: "" },
@@ -61,6 +67,28 @@ export function AccessoryForm({
         specHint="Square, at least 800×800px, plain/white background preferred. JPG, PNG, or WebP, max 5MB."
       />
       <SeoHint type="altText" />
+
+      <section className="space-y-3 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Online sales</h3>
+        <p className="text-xs text-text-2">
+          Consumables and add-ons (paper rolls, printers, cash drawers) sell best online. With a price set, the
+          accessories page shows it with &quot;Add to cart&quot; when online ordering is on.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <label className="block">
+            <span className={labelClass}>Online price (THB, incl. VAT)</span>
+            <input name="onlinePrice" type="number" min={1} defaultValue={initialValues.onlinePrice ?? undefined} className={inputClass} />
+          </label>
+          <label className="block">
+            <span className={labelClass}>Shopee listing URL</span>
+            <input name="shopeeUrl" defaultValue={initialValues.shopeeUrl} className={inputClass} />
+          </label>
+          <label className="block">
+            <span className={labelClass}>Lazada listing URL</span>
+            <input name="lazadaUrl" defaultValue={initialValues.lazadaUrl} className={inputClass} />
+          </label>
+        </div>
+      </section>
 
       {(["th", "en", "zh"] as const).map((locale) => (
         <section key={locale} className="rounded-xl border border-border p-4">

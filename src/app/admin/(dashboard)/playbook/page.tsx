@@ -90,6 +90,7 @@ const sectionLinks: Record<SectionGuideKey, string> = {
   settings: "/admin/settings",
   contactMessages: "/admin/contact-messages",
   quoteRequests: "/admin/quote-requests",
+  orders: "/admin/orders",
 };
 
 function Status({ ok, children }: { ok: boolean; children: React.ReactNode }) {

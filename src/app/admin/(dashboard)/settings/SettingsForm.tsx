@@ -48,6 +48,102 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
           hint="Full URL, e.g. https://line.me/R/ti/p/@mypos"
         />
         <Field label="Facebook page URL" name="facebookUrl" defaultValue={settings.facebookUrl} />
+        <Field label="YouTube channel URL" name="youtubeUrl" defaultValue={settings.youtubeUrl} />
+        <Field label="TikTok profile URL" name="tiktokUrl" defaultValue={settings.tiktokUrl} />
+        <Field label="Instagram profile URL" name="instagramUrl" defaultValue={settings.instagramUrl} />
+        <p className="text-xs text-text-2">
+          Social links are shown in the footer and told to Google as the company&apos;s official profiles
+          (Organization &quot;sameAs&quot;), which helps the brand panel in search results.
+        </p>
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Sales channels &amp; online ordering</h3>
+        <Field
+          label="Shopee shop URL"
+          name="shopeeShopUrl"
+          defaultValue={settings.shopeeShopUrl}
+          hint="e.g. https://shopee.co.th/mypos — per-product Shopee links are set on each product."
+        />
+        <Field label="Lazada shop URL" name="lazadaShopUrl" defaultValue={settings.lazadaShopUrl} />
+        <Field label="TikTok Shop URL (optional)" name="tiktokShopUrl" defaultValue={settings.tiktokShopUrl} />
+        <label className="flex items-start gap-2 rounded-lg bg-surface-0 p-3">
+          <input
+            type="checkbox"
+            name="onlineOrdering"
+            defaultChecked={settings.onlineOrdering === "on"}
+            className="mt-0.5 h-4 w-4 rounded"
+          />
+          <span className="text-sm">
+            <span className="font-medium text-text-1">Accept orders on the website</span>
+            <span className="block text-xs text-text-2">
+              Shows &quot;Add to cart&quot; on products and accessories that have an online price. Customers pay by
+              PromptPay QR or bank transfer; you confirm payment under Orders.
+            </span>
+          </span>
+        </label>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="Delivery fee (THB)" name="shippingFee" defaultValue={settings.shippingFee} hint="0 or empty = free" />
+          <Field
+            label="Free delivery from (THB)"
+            name="freeShippingMin"
+            defaultValue={settings.freeShippingMin}
+            hint="Order total that gets free delivery; empty = none"
+          />
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field
+            label="PromptPay ID"
+            name="promptpayId"
+            defaultValue={settings.promptpayId}
+            hint="Mobile number or 13-digit tax ID registered with PromptPay"
+          />
+          <Field label="PromptPay account name" name="promptpayName" defaultValue={settings.promptpayName} />
+          <Field label="Bank" name="bankName" defaultValue={settings.bankName} hint="e.g. ธนาคารกสิกรไทย" />
+          <Field label="Account name" name="bankAccountName" defaultValue={settings.bankAccountName} />
+          <Field label="Account number" name="bankAccountNumber" defaultValue={settings.bankAccountNumber} />
+        </div>
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Tracking &amp; ad pixels</h3>
+        <p className="text-xs text-text-2">
+          Paste only the ID. Google tags start in &quot;consent denied&quot; mode; Meta, TikTok and LINE pixels load only
+          after the visitor accepts cookies (PDPA). Events sent automatically: product view, add to cart, checkout,
+          purchase, lead (contact / quote / demo forms), LINE and phone clicks, Shopee/Lazada clicks.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-2">
+          <Field label="GA4 Measurement ID" name="ga4Id" defaultValue={settings.ga4Id} hint="G-XXXXXXXXXX" />
+          <Field label="Google Tag Manager ID (optional)" name="gtmId" defaultValue={settings.gtmId} hint="GTM-XXXXXXX" />
+          <Field label="Meta (Facebook) Pixel ID" name="metaPixelId" defaultValue={settings.metaPixelId} hint="15–16 digits" />
+          <Field label="TikTok Pixel ID" name="tiktokPixelId" defaultValue={settings.tiktokPixelId} />
+          <Field label="LINE Tag ID" name="lineTagId" defaultValue={settings.lineTagId} hint="From LINE Ads Manager → Tracking (LINE Tag)" />
+          <Field label="Google Ads ID" name="googleAdsId" defaultValue={settings.googleAdsId} hint="AW-XXXXXXXXX" />
+          <Field label="Google Ads lead conversion label" name="googleAdsLeadLabel" defaultValue={settings.googleAdsLeadLabel} />
+          <Field
+            label="Google Ads purchase conversion label"
+            name="googleAdsPurchaseLabel"
+            defaultValue={settings.googleAdsPurchaseLabel}
+          />
+        </div>
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Search engine verification</h3>
+        <p className="text-xs text-text-2">
+          Paste only the content=&quot;…&quot; value of each verification meta tag.
+        </p>
+        <Field
+          label="Google Search Console"
+          name="googleSiteVerification"
+          defaultValue={settings.googleSiteVerification}
+        />
+        <Field label="Bing Webmaster Tools" name="bingSiteVerification" defaultValue={settings.bingSiteVerification} />
+        <Field
+          label="Facebook domain verification"
+          name="facebookDomainVerification"
+          defaultValue={settings.facebookDomainVerification}
+        />
       </section>
 
       <section className="space-y-4 rounded-xl border border-border p-4">
@@ -78,6 +174,11 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
       </section>
 
       {status === "saved" && <p className="text-sm text-success">Saved.</p>}
+      {status && status !== "saved" && (
+        <p role="alert" className="whitespace-pre-line rounded-lg bg-error/10 p-3 text-sm text-error">
+          {status}
+        </p>
+      )}
 
       <button
         type="submit"

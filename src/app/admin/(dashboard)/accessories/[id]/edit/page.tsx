@@ -25,6 +25,9 @@ export default async function EditAccessoryPage({
     slug: accessory.slug,
     categories: accessory.categories.map((c) => c.slug),
     imageUrl: accessory.imageUrl,
+    onlinePrice: accessory.onlinePrice,
+    shopeeUrl: accessory.shopeeUrl ?? "",
+    lazadaUrl: accessory.lazadaUrl ?? "",
     translations: {
       th: findTranslation("th"),
       en: findTranslation("en"),

@@ -3,7 +3,7 @@ import { getFormatter, getTranslations, setRequestLocale } from "next-intl/serve
 import { notFound } from "next/navigation";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
-import { getSiteSettings } from "@/lib/siteSettings";
+import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { getProductBySlug, getRelatedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -16,6 +16,10 @@ import { StockBadge } from "@/components/products/StockBadge";
 import { AddToCompareButton } from "@/components/products/AddToCompareButton";
 import { toEmbedUrl } from "@/lib/kb";
 import { solutionMachine } from "@/data/solutions";
+import { AddToCartButton } from "@/components/commerce/AddToCartButton";
+import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
+import { TrackView } from "@/components/analytics/TrackView";
+import { absoluteUrl, schemaAvailability } from "@/lib/structuredData";
 
 export async function generateMetadata({
   params,
@@ -30,6 +34,7 @@ export async function generateMetadata({
   const alternates = buildAlternates(locale, `/products/${slug}`);
   const title = `${product.name} | MYPOS`;
   const description = t("highlight");
+  const images = [product.imageUrl, ...product.galleryUrls].filter(Boolean).map((url) => absoluteUrl(url!));
 
   return {
     title: { absolute: title },
@@ -42,6 +47,8 @@ export async function generateMetadata({
       siteName: siteConfig.name,
       locale,
       type: "website",
+      // Uploaded product photos beat the generated OG card when shared.
+      ...(images.length ? { images } : {}),
     },
   };
 }
@@ -64,6 +71,7 @@ export default async function ProductDetailPage({
   const tDetail = await getTranslations({ locale, namespace: "productDetail" });
   const tCommon = await getTranslations({ locale, namespace: "productsCommon" });
   const tSolutionsCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
+  const tShop = await getTranslations({ locale, namespace: "shop" });
   const format = await getFormatter({ locale });
   const settings = await getSiteSettings();
 
@@ -100,17 +108,29 @@ export default async function ProductDetailPage({
     ],
   };
 
+  const sellsOnline = isOnlineOrderingOn(settings) && product.onlinePrice !== undefined;
+  const productUrl = `${siteConfig.url}/${locale}/products/${product.slug}`;
+  const productImages = [product.imageUrl, ...product.galleryUrls].filter(Boolean).map((url) => absoluteUrl(url!));
+
+  // Google shows price, stock and brand in results from this.
   const productSchema = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.name,
     description: t("highlight"),
-    url: `${siteConfig.url}/${locale}/products/${product.slug}`,
+    url: productUrl,
+    sku: product.slug,
+    brand: { "@type": "Brand", name: "MYPOS" },
+    manufacturer: { "@type": "Organization", name: "MYPOS" },
+    ...(productImages.length ? { image: productImages } : {}),
     offers: {
       "@type": "Offer",
+      url: productUrl,
       priceCurrency: "THB",
-      price: product.priceFrom,
-      availability: "https://schema.org/InStock",
+      price: product.onlinePrice ?? product.priceFrom,
+      availability: schemaAvailability(product.stockStatus),
+      itemCondition: "https://schema.org/NewCondition",
+      seller: { "@type": "Organization", name: "MYPOS" },
     },
   };
 
@@ -118,6 +138,14 @@ export default async function ProductDetailPage({
     <>
       <JsonLd data={breadcrumbSchema} />
       <JsonLd data={productSchema} />
+      <TrackView
+        item={{
+          id: product.slug,
+          name: product.name,
+          price: product.onlinePrice ?? product.priceFrom,
+          category: product.categories[0],
+        }}
+      />
 
       <Breadcrumb items={breadcrumbItems} />
 
@@ -130,14 +158,23 @@ export default async function ProductDetailPage({
         />
         <div>
           <h1 className="font-display text-3xl font-bold tracking-tight">{product.name}</h1>
-          <p className="mt-3 text-2xl font-semibold text-text-1">
-            {tCommon("priceFrom")}{" "}
-            {format.number(product.priceFrom, {
-              style: "currency",
-              currency: "THB",
-              maximumFractionDigits: 0,
-            })}
-          </p>
+          {sellsOnline ? (
+            <p className="mt-3 flex items-baseline gap-2">
+              <span className="font-display text-3xl font-semibold text-text-1">
+                {format.number(product.onlinePrice!, { style: "currency", currency: "THB", maximumFractionDigits: 0 })}
+              </span>
+              <span className="text-sm text-text-2">{tShop("priceInclVat")}</span>
+            </p>
+          ) : (
+            <p className="mt-3 text-2xl font-semibold text-text-1">
+              {tCommon("priceFrom")}{" "}
+              {format.number(product.priceFrom, {
+                style: "currency",
+                currency: "THB",
+                maximumFractionDigits: 0,
+              })}
+            </p>
+          )}
           <div className="mt-2">
             <StockBadge
               status={product.stockStatus}
@@ -153,7 +190,18 @@ export default async function ProductDetailPage({
           <p className="mt-4 text-text-2">{t("highlight")}</p>
 
           <div className="mt-8 flex flex-wrap gap-4">
-            <Button href={`/contact?product=${product.slug}`} variant="primary" size="lg">
+            {sellsOnline && (
+              <AddToCartButton
+                kind="product"
+                slug={product.slug}
+                name={product.name}
+                imageUrl={product.imageUrl}
+                unitPrice={product.onlinePrice!}
+                category={product.categories[0]}
+                labels={{ add: tShop("addToCart"), added: tShop("added"), viewCart: tShop("viewCart") }}
+              />
+            )}
+            <Button href={`/contact?product=${product.slug}`} variant={sellsOnline ? "ghost" : "primary"} size="lg">
               {tDetail("requestQuote")}
             </Button>
             {settings.lineUrl && (
@@ -170,6 +218,14 @@ export default async function ProductDetailPage({
               removeLabel={tCommon("removeFromCompare")}
             />
           </div>
+          <MarketplaceLinks
+            className="mt-8 border-t border-border pt-6"
+            size="lg"
+            label={tShop("buyOn")}
+            itemName={product.name}
+            shopee={product.shopeeUrl}
+            lazada={product.lazadaUrl}
+          />
         </div>
       </section>
 

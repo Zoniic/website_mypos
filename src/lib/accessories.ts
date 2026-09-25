@@ -8,6 +8,10 @@ export type Accessory = {
   description: string;
   categories: ProductCategory[];
   imageUrl?: string;
+  /** Online price (THB incl. VAT); undefined = not sold online. */
+  onlinePrice?: number;
+  shopeeUrl?: string;
+  lazadaUrl?: string;
 };
 
 type RowWithTranslations = AccessoryRow & {
@@ -23,6 +27,9 @@ function toAccessory(row: RowWithTranslations): Accessory {
     description: translation?.description ?? "",
     categories: row.categories.map((c) => c.slug) as ProductCategory[],
     imageUrl: row.imageUrl ?? undefined,
+    onlinePrice: row.onlinePrice ?? undefined,
+    shopeeUrl: row.shopeeUrl ?? undefined,
+    lazadaUrl: row.lazadaUrl ?? undefined,
   };
 }
 

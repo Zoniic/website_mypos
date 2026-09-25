@@ -3,6 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSettings } from "@/lib/siteSettings";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
+import { CookieSettingsButton } from "@/components/layout/CookieConsent";
+import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
 
 // Grouped by what the visitor is looking for, headed by the same labels as
 // the main navigation.
@@ -52,6 +54,13 @@ export async function Footer() {
         <div className="lg:col-span-4">
           <Image src="/images/brand/logo.png" alt="MYPOS" width={130} height={27} className="h-7 w-auto" />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-text-2">{t("companyDesc")}</p>
+          <MarketplaceLinks
+            className="mt-6"
+            label={t("shopOn")}
+            shopee={settings.shopeeShopUrl}
+            lazada={settings.lazadaShopUrl}
+            tiktok={settings.tiktokShopUrl}
+          />
           <div className="mt-8 max-w-sm">
             <NewsletterForm
               title={t("newsletterTitle")}
@@ -105,12 +114,22 @@ export async function Footer() {
                   </a>
                 </li>
               )}
-              {settings.facebookUrl && (
-                <li>
-                  <a href={settings.facebookUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                    Facebook
-                  </a>
-                </li>
+              {(
+                [
+                  ["Facebook", settings.facebookUrl],
+                  ["YouTube", settings.youtubeUrl],
+                  ["TikTok", settings.tiktokUrl],
+                  ["Instagram", settings.instagramUrl],
+                ] as const
+              ).map(
+                ([name, url]) =>
+                  url && (
+                    <li key={name}>
+                      <a href={url} target="_blank" rel="noopener noreferrer me" className={linkClass}>
+                        {name}
+                      </a>
+                    </li>
+                  )
               )}
             </ul>
           </div>
@@ -129,6 +148,7 @@ export async function Footer() {
             <Link href="/terms-of-service" className={linkClass.replace("text-sm", "text-xs")}>
               {t("termsOfService")}
             </Link>
+            <CookieSettingsButton label={t("cookieSettings")} className={linkClass.replace("text-sm", "text-xs")} />
           </p>
         </div>
       </div>

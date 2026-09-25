@@ -3,7 +3,8 @@
 import { prisma } from "@/lib/prisma";
 import { isIndustrySlug } from "@/data/industries";
 
-export type ContactFormState = { status: "idle" | "error" | "success" };
+/** `topic` is echoed back on success so the page can report a typed lead to analytics. */
+export type ContactFormState = { status: "idle" | "error" | "success"; topic?: string };
 
 const TOPICS = ["demo", "quote", "general", "support"] as const;
 
@@ -30,5 +31,5 @@ export async function submitContactMessage(
     return { status: "error" };
   }
 
-  return { status: "success" };
+  return { status: "success", topic };
 }

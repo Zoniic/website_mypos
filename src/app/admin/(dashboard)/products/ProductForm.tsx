@@ -26,6 +26,9 @@ export type ProductFormValues = {
   stockStatus: string;
   leadTimeDays: number | null;
   featured: boolean;
+  onlinePrice: number | null;
+  shopeeUrl: string;
+  lazadaUrl: string;
   businessTypes: string[];
   relatedSlugs: string[];
   imageUrl: string | null;
@@ -51,6 +54,9 @@ const emptyValues: ProductFormValues = {
   stockStatus: "in_stock",
   leadTimeDays: null,
   featured: false,
+  onlinePrice: null,
+  shopeeUrl: "",
+  lazadaUrl: "",
   businessTypes: [],
   relatedSlugs: [],
   imageUrl: null,
@@ -198,6 +204,25 @@ export function ProductForm({
           />
           <span className={labelClass}>Featured on homepage</span>
         </label>
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Online sales</h3>
+        <p className="text-xs text-text-2">
+          Set an online price only for a standard, fixed configuration that can ship without a site survey. The product
+          page then shows the price and &quot;Add to cart&quot; (when online ordering is on in Site Settings), and the
+          item is listed in the Google Shopping / Facebook catalog feed. Leave empty for quote-only systems.
+        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Field
+            label="Online price (THB, incl. VAT)"
+            name="onlinePrice"
+            type="number"
+            defaultValue={initialValues.onlinePrice ?? undefined}
+          />
+          <Field label="Shopee listing URL" name="shopeeUrl" defaultValue={initialValues.shopeeUrl} />
+          <Field label="Lazada listing URL" name="lazadaUrl" defaultValue={initialValues.lazadaUrl} />
+        </div>
       </section>
 
       <section className="space-y-4 rounded-xl border border-border p-4">

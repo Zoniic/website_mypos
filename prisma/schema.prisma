@@ -50,6 +50,13 @@ model Product {
   /// Estimated lead time in days when not in stock. Null when in_stock.
   leadTimeDays   Int?
 
+  /// Fixed price (THB, VAT included) for buying the standard configuration
+  /// online through the site's own cart. Null = quote only, no "Add to cart".
+  onlinePrice    Int?
+  /// Product listing on the MYPOS Shopee / Lazada shop, if any.
+  shopeeUrl      String?
+  lazadaUrl      String?
+
   translations  ProductTranslation[]
   categories    Category[]
   businessTypes BusinessType[]
@@ -95,6 +102,11 @@ model Accessory {
   sortOrder Int      @default(0)
   /// Product photo (square). Public URL under /uploads/accessories/.
   imageUrl  String?
+  /// Price (THB, VAT included) for buying online through the site's cart.
+  /// Null = not sold online.
+  onlinePrice Int?
+  shopeeUrl   String?
+  lazadaUrl   String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -395,4 +407,65 @@ model WarrantyClaim {
   status       String   @default("open")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
+}
+
+/// An order placed through the site's own cart and checkout. Prices are
+/// recomputed on the server from Product/Accessory.onlinePrice at the time
+/// of ordering and snapshotted into OrderItem, so later price edits never
+/// change an existing order. Payment is PromptPay QR or bank transfer,
+/// confirmed by an admin (no card gateway yet).
+model Order {
+  id            Int      @id @default(autoincrement())
+  /// Human-facing order number, e.g. "MP2609-48213".
+  number        String   @unique
+  /// Random secret in the customer's order-status link, so order pages
+  /// can't be enumerated by guessing numbers.
+  accessToken   String
+  /// "pending_payment" | "paid" | "preparing" | "shipped" | "completed" | "cancelled".
+  status        String   @default("pending_payment")
+  /// "promptpay" | "bank_transfer".
+  paymentMethod String
+  locale        String   @default("th")
+
+  customerName  String
+  phone         String
+  email         String
+  address       String   @db.Text
+  postcode      String
+
+  /// Tax invoice (ใบกำกับภาษีเต็มรูป) details, when requested.
+  wantsTaxInvoice Boolean @default(false)
+  taxName       String?
+  taxId         String?
+  taxBranch     String?
+  taxAddress    String?  @db.Text
+
+  note          String?  @db.Text
+  adminNote     String?  @db.Text
+
+  subtotal      Int
+  shippingFee   Int      @default(0)
+  total         Int
+
+  paidAt        DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  items OrderItem[]
+
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id        Int    @id @default(autoincrement())
+  orderId   Int
+  /// "product" | "accessory".
+  kind      String
+  slug      String
+  /// Snapshots at order time.
+  name      String
+  unitPrice Int
+  quantity  Int
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
