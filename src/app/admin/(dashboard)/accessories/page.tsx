@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AdminGuide } from "../AdminGuide";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminAccessoriesPage() {
@@ -18,6 +19,7 @@ export default async function AdminAccessoriesPage() {
           + New Accessory
         </Link>
       </div>
+      <AdminGuide section="accessories" />
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-border">
         <table className="w-full text-left text-sm">

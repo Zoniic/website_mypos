@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AdminGuide } from "../AdminGuide";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 
@@ -19,6 +20,7 @@ export default async function AdminBlogPage() {
           + New Post
         </Link>
       </div>
+      <AdminGuide section="blog" />
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-border">
         <table className="w-full text-left text-sm">

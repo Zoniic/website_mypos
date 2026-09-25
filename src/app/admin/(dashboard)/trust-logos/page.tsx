@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AdminGuide } from "../AdminGuide";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminTrustLogosPage() {
@@ -15,6 +16,7 @@ export default async function AdminTrustLogosPage() {
           + New Logo
         </Link>
       </div>
+      <AdminGuide section="trustLogos" />
       <p className="mt-1 text-text-2">Shown in the &quot;Trusted by&quot; strip on the homepage.</p>
 
       <div className="mt-6 overflow-x-auto rounded-xl border border-border">

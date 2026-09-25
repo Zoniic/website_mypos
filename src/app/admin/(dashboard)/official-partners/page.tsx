@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AdminGuide } from "../AdminGuide";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminOfficialPartnersPage() {
@@ -15,6 +16,7 @@ export default async function AdminOfficialPartnersPage() {
           + New Partner
         </Link>
       </div>
+      <AdminGuide section="officialPartners" />
       <p className="mt-1 text-text-2">
         Companies MYPOS is an authorized/official partner of (payment gateways, banks, hardware
         manufacturers) — shown on the About page.

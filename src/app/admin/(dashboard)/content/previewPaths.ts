@@ -19,6 +19,8 @@ export const NAMESPACE_PREVIEW_PATHS: Record<string, string> = {
   solutionsCommon: "/solutions/self-order",
   kb: "/knowledge-base",
   legal: "/privacy-policy",
+  industries: "/industries/restaurant",
+  savingsCalculator: "/tools/savings-calculator",
 };
 
 export function getPreviewPath(namespace: string): string {

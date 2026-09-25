@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AdminGuide } from "../AdminGuide";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminContentPage() {
@@ -15,6 +16,7 @@ export default async function AdminContentPage() {
         Marketing copy for every page, grouped by section. Pick a section to edit its text
         across all three languages.
       </p>
+      <AdminGuide section="content" />
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((row) => (

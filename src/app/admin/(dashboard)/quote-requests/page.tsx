@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { AdminGuide } from "../AdminGuide";
 import { updateQuoteRequestStatus } from "./actions";
 import { StatusSelect } from "../StatusSelect";
 
@@ -16,6 +17,7 @@ export default async function AdminQuoteRequestsPage() {
       <p className="mt-1 text-sm text-text-2">
         Submitted from the product compare/quote cart on the public site.
       </p>
+      <AdminGuide section="quoteRequests" />
 
       <div className="mt-6 space-y-4">
         {requests.length === 0 && <p className="text-text-2">No quote requests yet.</p>}

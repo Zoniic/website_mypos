@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { AdminGuide } from "../AdminGuide";
 import { prisma } from "@/lib/prisma";
 
 export default async function AdminKbCategoriesPage() {
@@ -18,6 +19,7 @@ export default async function AdminKbCategoriesPage() {
           + New Category
         </Link>
       </div>
+      <AdminGuide section="kbCategories" />
       <p className="mt-1 text-text-2">
         Hardware / Software sections shown on the public /knowledge-base pages.
       </p>
