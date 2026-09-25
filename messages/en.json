@@ -983,7 +983,8 @@
         ],
         "featured": false
       }
-    ]
+    ],
+    "recommended": "Recommended"
   },
   "testimonials": {
     "eyebrow": "Customer stories",

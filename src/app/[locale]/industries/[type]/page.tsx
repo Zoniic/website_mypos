@@ -7,7 +7,7 @@ import { getProductsByBusinessType } from "@/lib/products";
 import { getReferenceCasesByBusinessType } from "@/lib/references";
 import { getSiteImages } from "@/lib/siteSettings";
 import { industrySolutions, isIndustrySlug } from "@/data/industries";
-import { solutionMessageKey } from "@/data/solutions";
+import { solutionMachine, solutionMessageKey } from "@/data/solutions";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
@@ -75,7 +75,12 @@ export default async function IndustryPage({
 
   const solutions = industrySolutions[type].map((slug) => {
     const key = solutionMessageKey[slug];
-    return { slug, label: tNav(`solutionsItems.${key}`), blurb: blurbs[key] ?? "" };
+    return {
+      slug,
+      label: tNav(`solutionsItems.${key}`),
+      blurb: blurbs[key] ?? "",
+      machine: solutionMachine[slug],
+    };
   });
 
   const pageUrl = `${siteConfig.url}/${locale}/industries/${type}`;
@@ -120,6 +125,7 @@ export default async function IndustryPage({
         ctaSecondaryHref="#solutions"
         imageLabel={`${typeLabel} photo`}
         imageUrl={images[`industry-${type}`]}
+        machine={solutionMachine[industrySolutions[type][0]]}
       />
       <PainGain
         id="pain-gain"
@@ -130,7 +136,6 @@ export default async function IndustryPage({
       />
       <RecommendedSolutions
         id="solutions"
-        eyebrow={typeLabel}
         title={tc("solutionsTitle")}
         lede={tc("solutionsLede")}
         viewLabel={tc("viewSolution")}

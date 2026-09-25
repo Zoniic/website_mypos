@@ -8,6 +8,7 @@ import { getSiteImages } from "@/lib/siteSettings";
 import {
   isSolutionSlug,
   solutionCategory,
+  solutionMachine,
   solutionMessageKey,
 } from "@/data/solutions";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -127,6 +128,7 @@ export default async function SolutionPage({
         ctaSecondary={tCommon("compareCta")}
         imageLabel={`${navLabel} photo`}
         imageUrl={images[`solution-${slug}`]}
+        machine={solutionMachine[slug]}
       />
       <SolutionSubNav
         items={[

@@ -8,7 +8,13 @@ function LogoTile({ logo }: { logo: { id: number; name: string; imageUrl: string
     // are already self-contained graphics and read cleaner floating on the
     // page than boxed in a tile.
     <div className="relative h-12 w-32 shrink-0">
-      <Image src={logo.imageUrl} alt={logo.name} fill sizes="128px" className="object-contain" />
+      <Image
+        src={logo.imageUrl}
+        alt={logo.name}
+        fill
+        sizes="128px"
+        className="object-contain opacity-70 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0"
+      />
     </div>
   ) : (
     <div className="flex h-12 w-32 shrink-0 items-center justify-center rounded-md bg-surface-2 px-2 text-center text-xs font-medium text-text-2">
@@ -29,9 +35,7 @@ export async function TrustLogos() {
   return (
     <section className="border-b border-border bg-bg py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <p className="text-center text-sm font-medium text-text-2">
-          {t("title")}
-        </p>
+        <p className="text-sm font-medium text-text-2">{t("title")}</p>
         <div className="group mt-6 overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
           <div className="flex w-max animate-marquee gap-6 group-hover:[animation-play-state:paused]">
             {track.map((logo, index) => (

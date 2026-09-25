@@ -1,27 +1,44 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { getSiteSettings } from "@/lib/siteSettings";
 
-export function Invite() {
-  const t = useTranslations("home.invite");
+/** Closing call to action: book a demo, or open a LINE chat if configured. */
+export async function Invite() {
+  const t = await getTranslations("home.invite");
+  const tIndustries = await getTranslations("industries.common");
+  const tContact = await getTranslations("contact");
+  const settings = await getSiteSettings();
 
   return (
-    <section className="relative overflow-hidden bg-surface-2 py-20 text-text-1 sm:py-24">
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div
-          className="animate-blob-a absolute left-1/2 top-1/2 h-[30rem] w-[30rem] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-3xl"
-          style={{ background: "radial-gradient(circle, var(--color-primary-500), transparent 70%)" }}
-        />
+    <section className="bg-ink text-white">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+        <FadeIn className="max-w-3xl">
+          <h2 className="font-display text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl">
+            {t("title")}
+          </h2>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-white/75">{t("description")}</p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button href="/contact?topic=demo" variant="primary" size="lg">
+              {tIndustries("ctaDemo")}
+            </Button>
+            {settings.lineUrl ? (
+              <Button href={settings.lineUrl} external variant="line" size="lg">
+                {tContact("lineCta")}
+              </Button>
+            ) : (
+              <Button
+                href="/contact"
+                variant="ghost"
+                size="lg"
+                className="border-white/30 text-white hover:bg-white/10"
+              >
+                {t("cta")}
+              </Button>
+            )}
+          </div>
+        </FadeIn>
       </div>
-      <FadeIn scale={0.96} className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">{t("title")}</h2>
-        <p className="mt-4 text-text-2">{t("description")}</p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
-          <Button href="/contact" variant="line" size="lg">
-            {t("cta")}
-          </Button>
-        </div>
-      </FadeIn>
     </section>
   );
 }

@@ -1,4 +1,5 @@
 import type { ProductCategory } from "@/lib/products";
+import type { MachineKind } from "@/components/ui/MachineArt";
 
 export const solutionSlugs = [
   "self-order",
@@ -23,6 +24,14 @@ export const solutionCategory: Record<SolutionSlug, ProductCategory> = {
   "weigh-pay": "weigh-pay",
   pos: "pos",
   ticketing: "ticketing",
+};
+
+/** The machine drawn for a solution / product category until a photo is uploaded. */
+export const solutionMachine: Record<SolutionSlug, MachineKind> = {
+  "self-order": "kiosk",
+  "weigh-pay": "scale",
+  pos: "pos",
+  ticketing: "ticket",
 };
 
 export function isSolutionSlug(value: string): value is SolutionSlug {

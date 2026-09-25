@@ -1,19 +1,25 @@
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { MachineArt, type MachineKind } from "@/components/ui/MachineArt";
 
-export type RecommendedSolution = { slug: string; label: string; blurb: string };
+export type RecommendedSolution = { slug: string; label: string; blurb: string; machine: MachineKind };
+
+const artHeight: Record<MachineKind, string> = {
+  kiosk: "h-[80%]",
+  ticket: "h-[76%]",
+  pos: "h-[42%]",
+  scale: "h-[40%]",
+};
 
 export function RecommendedSolutions({
   id,
-  eyebrow,
   title,
   lede,
   viewLabel,
   items,
 }: {
   id?: string;
-  eyebrow: string;
   title: string;
   lede: string;
   viewLabel: string;
@@ -21,26 +27,32 @@ export function RecommendedSolutions({
 }) {
   return (
     <section id={id} className="mx-auto max-w-7xl scroll-mt-24 px-4 py-20 sm:px-6 lg:px-8">
-      <SectionHeader eyebrow={eyebrow} title={title} lede={lede} />
-      <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <SectionHeader title={title} lede={lede} />
+      <ul className="mt-12 grid gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item, index) => (
-          <FadeIn key={item.slug} delay={index * 0.06}>
-            <Link
-              href={`/solutions/${item.slug}`}
-              className="group flex h-full flex-col rounded-card border border-border bg-surface-1/40 p-6 outline-offset-2 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-            >
-              <span className="text-xs font-semibold tabular-nums text-primary-600">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="mt-2 text-lg font-semibold">{item.label}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-text-2">{item.blurb}</p>
-              <span className="mt-4 text-sm font-semibold text-primary-600 underline-offset-4 group-hover:underline">
-                {viewLabel} →
-              </span>
-            </Link>
-          </FadeIn>
+          <li key={item.slug}>
+            <FadeIn delay={index * 0.06} className="h-full">
+              <Link
+                href={`/solutions/${item.slug}`}
+                className="group flex h-full flex-col rounded-[22px] outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+              >
+                <div className="stage-grid-ink relative flex aspect-[4/3] items-end justify-center overflow-hidden rounded-[22px] bg-surface-2 transition-colors duration-300 group-hover:bg-primary-50">
+                  <span aria-hidden className="absolute inset-x-6 bottom-[11%] h-px bg-text-1/15" />
+                  <MachineArt
+                    kind={item.machine}
+                    className={`relative mb-[11%] ${artHeight[item.machine]} transition-transform duration-500 ease-out group-hover:-translate-y-1.5`}
+                  />
+                </div>
+                <h3 className="mt-5 px-1 font-display text-xl font-semibold">{item.label}</h3>
+                <p className="mt-2 flex-1 px-1 text-sm leading-relaxed text-text-2">{item.blurb}</p>
+                <span className="mt-4 px-1 text-sm font-semibold text-primary-600 underline-offset-4 group-hover:underline">
+                  {viewLabel} →
+                </span>
+              </Link>
+            </FadeIn>
+          </li>
         ))}
-      </div>
+      </ul>
     </section>
   );
 }

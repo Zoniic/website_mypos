@@ -2,20 +2,17 @@ import type { ReactNode } from "react";
 import { FadeIn } from "@/components/ui/FadeIn";
 
 /**
- * Editorial section header: a short eyebrow label + hairline rule sits above an
- * oversized display heading. The eyebrow is real, translatable copy (e.g.
- * "โซลูชันของเรา") — it names the section, unlike a decorative index number,
- * which would falsely imply the home sections are an ordered sequence.
+ * Section heading. On wide screens the heading and its lede sit side by side
+ * (heading left, lede bottom-aligned right) instead of stacking under a
+ * repeated eyebrow label, so sections don't all share one template.
  */
 export function SectionHeader({
-  eyebrow,
   title,
   lede,
   align = "left",
   action,
   as: Heading = "h2",
 }: {
-  eyebrow: string;
   title: ReactNode;
   lede?: ReactNode;
   align?: "left" | "center";
@@ -23,44 +20,30 @@ export function SectionHeader({
   /** Use "h1" when this header is the page's main heading. */
   as?: "h1" | "h2";
 }) {
-  const isCenter = align === "center";
+  const heading = (
+    <Heading className="font-display text-3xl font-semibold leading-[1.1] tracking-tight sm:text-4xl lg:text-5xl">
+      {title}
+    </Heading>
+  );
+
+  if (align === "center") {
+    return (
+      <FadeIn className="mx-auto flex max-w-2xl flex-col items-center text-center">
+        {heading}
+        {lede ? <p className="mt-5 max-w-xl text-lg leading-relaxed text-text-2">{lede}</p> : null}
+        {action ? <div className="mt-6">{action}</div> : null}
+      </FadeIn>
+    );
+  }
 
   return (
-    <FadeIn
-      className={
-        isCenter
-          ? "mx-auto flex max-w-2xl flex-col items-center text-center"
-          : "flex flex-col"
-      }
-    >
-      <div
-        className={`flex items-center gap-3 ${isCenter ? "justify-center" : ""}`}
-      >
-        <span className="text-sm font-semibold uppercase tracking-wider text-primary-600">
-          {eyebrow}
-        </span>
-        <span aria-hidden className="h-px w-10 bg-border-strong" />
-      </div>
-
-      <div
-        className={`mt-4 flex w-full flex-wrap items-end gap-x-8 gap-y-4 ${
-          isCenter ? "justify-center" : "justify-between"
-        }`}
-      >
-        <Heading className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-5xl lg:text-6xl">
-          {title}
-        </Heading>
-        {action ? <div className="shrink-0 pb-1.5">{action}</div> : null}
-      </div>
-
-      {lede ? (
-        <p
-          className={`mt-5 text-lg leading-relaxed text-text-2 ${
-            isCenter ? "max-w-xl" : "max-w-2xl"
-          }`}
-        >
-          {lede}
-        </p>
+    <FadeIn className="grid gap-5 lg:grid-cols-12 lg:items-end lg:gap-10">
+      <div className="lg:col-span-7">{heading}</div>
+      {lede || action ? (
+        <div className="flex flex-col gap-5 lg:col-span-5 lg:items-start lg:pb-1.5">
+          {lede ? <p className="max-w-prose text-lg leading-relaxed text-text-2">{lede}</p> : null}
+          {action}
+        </div>
       ) : null}
     </FadeIn>
   );

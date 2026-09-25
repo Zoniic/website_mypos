@@ -11,27 +11,20 @@ export async function Integrations() {
   if (!groups.length) return null;
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8">
-      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} lede={t("lede")} />
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <SectionHeader title={t("title")} lede={t("lede")} />
 
-      <div className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-border bg-border md:grid-cols-3">
+      <div className="mt-12 grid gap-10 md:grid-cols-3 md:gap-8">
         {groups.map((group, index) => (
-          <FadeIn key={group.label} delay={index * 0.08}>
-            <div className="flex h-full flex-col bg-surface-1 p-8">
-              <h3 className="text-sm font-semibold uppercase tracking-wider text-text-2">
-                {group.label}
-              </h3>
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="rounded-full border border-border bg-surface-0 px-3.5 py-1.5 text-sm font-medium text-text-1"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
+          <FadeIn key={group.label} delay={index * 0.06} className="border-t-2 border-text-1 pt-5">
+            <h3 className="font-display text-lg font-semibold">{group.label}</h3>
+            <ul className="mt-3 divide-y divide-border">
+              {group.items.map((item) => (
+                <li key={item} className="py-2.5 text-text-1">
+                  {item}
+                </li>
+              ))}
+            </ul>
           </FadeIn>
         ))}
       </div>

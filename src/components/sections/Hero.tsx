@@ -1,104 +1,102 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { ShinyText } from "@/components/ui/ShinyText";
+import { MachineLineup } from "@/components/ui/MachineArt";
 import { HeroVideoBackground } from "@/components/sections/HeroVideoBackground";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { isVideoUrl } from "@/lib/heroMedia";
 
+// Where each machine sits in the 640×360 lineup drawing, as % of the stage,
+// so its label can point at it.
+const callouts = [
+  { key: "selfOrder", href: "/solutions/self-order", left: "15%", top: "14%" },
+  { key: "pos", href: "/solutions/pos", left: "46%", top: "30%" },
+  { key: "weighPay", href: "/solutions/weigh-pay", left: "64%", top: "36%" },
+  { key: "ticketing", href: "/solutions/ticketing", left: "88%", top: "12%" },
+] as const;
+
 export async function Hero() {
   const t = await getTranslations("home.hero");
+  const tNav = await getTranslations("nav");
+  const tTrust = await getTranslations("trust");
   const settings = await getSiteSettings();
   const images = await getSiteImages();
   const heroUrl = settings.heroVideoUrl;
   const heroUrlIsVideo = Boolean(heroUrl) && isVideoUrl(heroUrl);
+  const heroPhoto = heroUrl && !heroUrlIsVideo ? heroUrl : images.hero;
+  const trustPoints = (tTrust.raw("points") as string[]) ?? [];
 
   return (
-    <section className="relative flex h-screen min-h-[720px] flex-col overflow-hidden bg-bg">
-      {/* Background: an admin-uploaded product video if set, else the
-          admin-uploaded hero photo dimmed behind the gradient, else just
-          the animated orange glow — never a stock/unrelated clip. */}
-      <div aria-hidden className="absolute inset-0 overflow-hidden">
-        {heroUrlIsVideo ? (
-          <HeroVideoBackground src={heroUrl} />
-        ) : heroUrl ? (
-          <Image src={heroUrl} alt="" fill priority className="object-cover opacity-40" />
-        ) : (
-          images.hero && (
-            <Image src={images.hero} alt="" fill priority className="object-cover opacity-40" />
-          )
-        )}
-        <div
-          className="animate-blob-a absolute -left-24 -top-24 h-[32rem] w-[32rem] rounded-full opacity-25 blur-3xl"
-          style={{ background: "radial-gradient(circle, var(--color-primary-500), transparent 70%)" }}
-        />
-        <div
-          className="animate-blob-b absolute -right-32 top-1/3 h-[26rem] w-[26rem] rounded-full opacity-20 blur-3xl"
-          style={{ background: "radial-gradient(circle, var(--color-accent-500), transparent 70%)" }}
-        />
-        {/* Readability vignette: solid where the headline/CTAs sit, fully
-            transparent toward the edges — so the video/photo actually reads
-            as an image instead of being smothered under a flat wash. */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 62% 58% at 50% 52%, var(--color-bg) 0%, var(--color-bg) 32%, transparent 78%)",
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-bg/40 via-transparent to-bg/30" />
+    <section className="relative overflow-hidden border-b border-border">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 pb-12 pt-10 sm:px-6 lg:grid-cols-12 lg:items-center lg:gap-8 lg:px-8 lg:pb-16 lg:pt-14">
+        <FadeIn className="lg:col-span-5">
+          <p className="text-sm font-medium text-text-2">{t("tagline")}</p>
+          <h1 className="mt-4 font-display text-4xl font-semibold leading-[1.08] tracking-tight sm:text-5xl xl:text-[3.5rem]">
+            <span className="block">{t("headlineLine1")}</span>
+            <span className="block text-primary-600">{t("headlineLine2")}</span>
+          </h1>
+          <p className="mt-6 max-w-lg text-lg leading-relaxed text-text-2">{t("subtitle")}</p>
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Button href="/contact?topic=demo" variant="primary" size="lg">
+              {t("ctaPrimary")}
+            </Button>
+            <Button href="#solutions" variant="ghost" size="lg">
+              {t("ctaSecondary")}
+            </Button>
+          </div>
+        </FadeIn>
+
+        <FadeIn delay={0.1} className="lg:col-span-7">
+          <div className="stage-grid relative aspect-[16/10] overflow-hidden rounded-[28px] bg-primary-500">
+            {heroUrlIsVideo ? (
+              <HeroVideoBackground src={heroUrl} />
+            ) : heroPhoto ? (
+              <Image
+                src={heroPhoto}
+                alt=""
+                fill
+                priority
+                sizes="(min-width: 1024px) 58vw, 100vw"
+                className="object-cover"
+              />
+            ) : (
+              <>
+                <MachineLineup className="absolute inset-x-[4%] bottom-[6%] h-[82%] w-[92%]" />
+                <ul className="absolute inset-0 hidden sm:block">
+                  {callouts.map((item) => (
+                    <li
+                      key={item.key}
+                      className="absolute -translate-x-1/2"
+                      style={{ left: item.left, top: item.top }}
+                    >
+                      <Link
+                        href={item.href}
+                        className="group flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-text-1 shadow-[0_2px_8px_rgba(17,19,24,0.18)] outline-offset-2 transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
+                      >
+                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary-600" />
+                        {tNav(`solutionsItems.${item.key}`)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </div>
+        </FadeIn>
       </div>
 
-      {/* Centered glow behind the headline — brand orange, kept subtle so it
-          reads as ambient light rather than washing out the text above it. */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[820px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-20 blur-[110px]"
-        style={{ background: "var(--color-primary-600)" }}
-      />
-
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-1 flex-col px-4 sm:px-6 lg:px-8">
-        {/* Center hero content. */}
-        <div className="flex flex-1 flex-col items-center justify-center text-center">
-          <FadeIn>
-            <p className="text-xs uppercase tracking-tight text-text-1/80 sm:text-sm">
-              {t("tagline")}
-            </p>
-            <h1 className="mt-4 font-display text-5xl font-medium leading-[1.05] tracking-tighter text-text-1 sm:text-7xl sm:leading-[0.95] xl:text-9xl xl:leading-[0.85]">
-              <span className="block">{t("headlineLine1")}</span>
-              <ShinyText className="block" speed={3} angle={100}>
-                {t("headlineLine2")}
-              </ShinyText>
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-text-2 opacity-90 sm:text-lg">
-              {t("subtitle")}
-            </p>
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-              <Button href="/contact" variant="primary" size="lg" className="group rounded-full px-6 py-3 md:px-8 md:py-4">
-                {t("ctaPrimary")}
-                <svg
-                  aria-hidden
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                >
-                  <path
-                    d="M4 10h12m0 0-5-5m5 5-5 5"
-                    stroke="currentColor"
-                    strokeWidth="1.75"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Button>
-              <Button href="#solutions" variant="ghost" size="lg" className="rounded-full">
-                {t("ctaSecondary")}
-              </Button>
-            </div>
-          </FadeIn>
-        </div>
-      </div>
+      {trustPoints.length > 0 && (
+        <ul className="mx-auto grid max-w-7xl grid-cols-2 gap-x-6 gap-y-3 px-4 pb-10 sm:px-6 lg:grid-cols-4 lg:px-8">
+          {trustPoints.map((point) => (
+            <li key={point} className="flex items-start gap-2.5 border-t border-border-strong pt-3 text-sm font-medium text-text-1">
+              <span aria-hidden className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-primary-600" />
+              {point}
+            </li>
+          ))}
+        </ul>
+      )}
     </section>
   );
 }

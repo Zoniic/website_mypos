@@ -3,7 +3,7 @@ import { MotionConfig } from "framer-motion";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Prompt, IBM_Plex_Sans_Thai, JetBrains_Mono } from "next/font/google";
+import { Anuphan, Chakra_Petch, JetBrains_Mono } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
 import { getSiteSettings } from "@/lib/siteSettings";
@@ -15,19 +15,21 @@ import { GoogleAnalytics } from "@/components/analytics/GoogleAnalytics";
 import { QuoteCartProvider } from "@/lib/quoteCart";
 import "../globals.css";
 
-const fontSans = Prompt({
+// Body/UI: Anuphan (Cadson Demak) — a loopless humanist Thai that stays
+// readable at small sizes and doesn't look like every other Prompt/Kanit
+// POS site.
+const fontSans = Anuphan({
   variable: "--font-sans-loaded",
   subsets: ["thai", "latin"],
-  // Only the weights actually used in the UI (font-medium/semibold/bold + default 400).
   weight: ["400", "500", "600", "700"],
 });
 
-// Display face for h1/hero headings only — gives headings a distinct character
-// from body copy instead of reusing Prompt at every weight.
-const fontDisplay = IBM_Plex_Sans_Thai({
+// Display: Chakra Petch — squared, machined terminals that echo the hardware
+// MYPOS builds (and its receipt/price digits). Headings and prices only.
+const fontDisplay = Chakra_Petch({
   variable: "--font-display-loaded",
   subsets: ["thai", "latin"],
-  weight: ["600", "700"],
+  weight: ["500", "600", "700"],
 });
 
 const fontMono = JetBrains_Mono({

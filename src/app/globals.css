@@ -82,7 +82,9 @@
   --shadow-lg: 0 8px 32px rgba(17, 19, 24, 0.09);
   --shadow-xl: 0 16px 48px rgba(17, 19, 24, 0.11);
   --shadow-2xl: 0 24px 64px rgba(17, 19, 24, 0.13);
-  --shadow-glow-primary: 0 8px 24px rgba(232, 85, 32, 0.28), 0 2px 8px rgba(232, 85, 32, 0.18);
+  /* Kept as a token name for existing call sites; now a quiet pressed-key
+     shadow rather than an orange glow halo. */
+  --shadow-glow-primary: 0 1px 0 rgba(17, 19, 24, 0.18), 0 2px 6px rgba(17, 19, 24, 0.1);
   --shadow-glow-accent: 0 8px 24px rgba(59, 130, 246, 0.25), 0 2px 8px rgba(59, 130, 246, 0.15);
   --shadow-card: 0 1px 2px rgba(17, 19, 24, 0.04), 0 8px 24px rgba(17, 19, 24, 0.06),
     inset 0 0 0 1px rgba(17, 19, 24, 0.06);
@@ -90,7 +92,13 @@
     inset 0 0 0 1px rgba(17, 19, 24, 0.08);
 
   /* ─── Gradients ───────────────────────────────────── */
-  --gradient-primary: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-400));
+  /* Solid, not a gradient: white text needs the 600 shade for AA contrast
+     across the whole button, and a flat fill reads as a physical key. */
+  --gradient-primary: linear-gradient(var(--color-primary-600), var(--color-primary-600));
+
+  /* Ink band — the "factory floor" sections. */
+  --color-ink: #111318;
+  --color-ink-2: #1b1e24;
   --gradient-hero: radial-gradient(
     ellipse 80% 60% at 50% -10%,
     rgba(232, 85, 32, 0.08) 0%,
@@ -104,18 +112,28 @@ body {
   color-scheme: light;
 }
 
-/* Eyebrow label — tinted pill, no border. Uses the site's sans font so
-   Thai/Chinese glyphs render with correct metrics (monospace clipped them). */
-.ticket-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 0.35em 0.9em;
-  background-color: color-mix(in srgb, currentColor 10%, transparent);
-  border-radius: var(--radius-tag);
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Faint technical-drawing grid behind machine illustrations — the stage a
+   manufacturer would draw its products on. */
+.stage-grid {
+  background-image:
+    linear-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(255 255 255 / 0.09) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: -1px -1px;
+}
+
+.stage-grid-ink {
+  background-image:
+    linear-gradient(rgb(17 19 24 / 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(17 19 24 / 0.05) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: -1px -1px;
 }
 
 @keyframes marquee {
@@ -131,89 +149,10 @@ body {
   animation: marquee 28s linear infinite;
 }
 
-/* Ambient hero blobs — slow drifting tint, decorative only. */
-@keyframes blob-float-a {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(4%, 6%) scale(1.08);
-  }
-}
-
-@keyframes blob-float-b {
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-  50% {
-    transform: translate(-5%, -4%) scale(1.1);
-  }
-}
-
-.animate-blob-a {
-  animation: blob-float-a 14s ease-in-out infinite;
-}
-
-.animate-blob-b {
-  animation: blob-float-b 17s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-marquee,
-  .animate-blob-a,
-  .animate-blob-b {
+  .animate-marquee {
     animation: none;
   }
-}
-
-/* Liquid-glass surface — frosted overlay panel for content sitting on top
-   of imagery/video. Light theme: milky white glass with a dark-alpha
-   hairline gradient so the edge reads on bright backgrounds. */
-.liquid-glass {
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px);
-  border: none;
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6);
-  position: relative;
-  overflow: hidden;
-}
-
-.liquid-glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1.4px;
-  background: linear-gradient(
-    180deg,
-    rgba(17, 19, 24, 0.16) 0%,
-    rgba(17, 19, 24, 0.06) 20%,
-    rgba(17, 19, 24, 0) 40%,
-    rgba(17, 19, 24, 0) 60%,
-    rgba(17, 19, 24, 0.06) 80%,
-    rgba(17, 19, 24, 0.16) 100%
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-}
-
-/* Hero headline gradient — brand orange into accent blue; sits on white. */
-.text-gradient-hero {
-  background-image: linear-gradient(
-    90deg,
-    var(--color-primary-400),
-    var(--color-primary-600) 55%,
-    var(--color-accent-600)
-  );
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
 }
 
 /* Touch targets: guarantee a 44px minimum for interactive controls on small

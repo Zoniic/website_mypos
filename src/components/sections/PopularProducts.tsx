@@ -9,10 +9,12 @@ export async function PopularProducts() {
   const t = await getTranslations({ locale, namespace: "home.products" });
   const featured = await getFeaturedProducts(locale);
 
+  // Nothing featured yet: render nothing rather than a heading over a void.
+  if (featured.length === 0) return null;
+
   return (
-    <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8">
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
       <SectionHeader
-        eyebrow={t("eyebrow")}
         title={t("title")}
         action={
           <Button href="/products" variant="ghost">

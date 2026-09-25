@@ -983,7 +983,8 @@
         ],
         "featured": false
       }
-    ]
+    ],
+    "recommended": "推荐"
   },
   "testimonials": {
     "eyebrow": "客户之声",

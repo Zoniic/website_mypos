@@ -6,7 +6,6 @@ import { getSiteSettings } from "@/lib/siteSettings";
 import { getFeaturedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Hero } from "@/components/sections/Hero";
-import { TrustStrip } from "@/components/sections/TrustStrip";
 import { TrustLogos } from "@/components/sections/TrustLogos";
 import { About } from "@/components/sections/About";
 import { Solutions } from "@/components/sections/Solutions";
@@ -108,7 +107,6 @@ export default async function HomePage({
       <JsonLd data={productListSchema} />
 
       <Hero />
-      <TrustStrip />
       <TrustLogos />
       <Solutions />
       <SelfServiceBenefits />

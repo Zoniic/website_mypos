@@ -12,6 +12,7 @@ type PricingItem = {
   featured: boolean;
 };
 
+/** Packages as one ruled comparison sheet rather than three floating cards. */
 export async function Pricing() {
   const t = await getTranslations("pricing");
   const items = t.raw("items") as PricingItem[];
@@ -19,96 +20,61 @@ export async function Pricing() {
   if (!items?.length) return null;
 
   return (
-    <section className="border-y border-border bg-surface-0 py-24 sm:py-28">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader eyebrow={t("eyebrow")} title={t("title")} lede={t("lede")} />
+    <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <SectionHeader title={t("title")} lede={t("lede")} />
 
-        <div className="mt-14 grid gap-6 lg:grid-cols-3">
+      <FadeIn className="mt-12">
+        <div className="grid border-y-2 border-text-1 lg:grid-cols-3">
           {items.map((item, index) => (
-            <FadeIn key={item.name} delay={index * 0.08}>
-              <div
-                className={`flex h-full flex-col rounded-3xl p-8 ${
-                  item.featured
-                    ? "bg-text-1 text-white shadow-[var(--shadow-xl)] ring-1 ring-text-1"
-                    : "border border-border bg-surface-1"
-                }`}
-              >
-                {item.featured ? (
-                  <span className="mb-4 inline-flex w-fit items-center rounded-full bg-[image:var(--gradient-primary)] px-3 py-1 text-xs font-semibold text-white">
-                    แนะนำ
-                  </span>
-                ) : null}
+            <div
+              key={item.name}
+              className={`flex flex-col px-6 py-8 sm:px-8 ${
+                index > 0 ? "border-t border-border-strong lg:border-l lg:border-t-0" : ""
+              } ${item.featured ? "bg-primary-50" : ""}`}
+            >
+              <p className={`h-5 text-sm font-semibold ${item.featured ? "text-primary-600" : "text-transparent"}`}>
+                {item.featured ? t("recommended") : ""}
+              </p>
+              <h3 className="mt-2 font-display text-2xl font-semibold">{item.name}</h3>
+              <p className="mt-1 text-sm text-text-2">{item.audience}</p>
 
-                <h3 className="text-xl font-semibold">{item.name}</h3>
-                <p
-                  className={`mt-1 text-sm ${
-                    item.featured ? "text-white/70" : "text-text-2"
-                  }`}
-                >
-                  {item.audience}
-                </p>
-
-                <div className="mt-6 flex items-baseline gap-1.5">
-                  {item.price ? (
-                    <>
-                      <span
-                        className={`text-sm ${item.featured ? "text-white/70" : "text-text-2"}`}
-                      >
-                        {t("priceFrom")}
-                      </span>
-                      <span className="font-display text-4xl font-bold tracking-tight">
-                        ฿{item.price}
-                      </span>
-                    </>
-                  ) : (
-                    <span className="font-display text-3xl font-bold tracking-tight">
-                      {item.priceNote}
+              <p className="mt-6 flex items-baseline gap-2">
+                {item.price ? (
+                  <>
+                    <span className="text-sm text-text-2">{t("priceFrom")}</span>
+                    <span className="font-display text-4xl font-semibold tabular-nums tracking-tight">
+                      ฿{item.price}
                     </span>
-                  )}
-                </div>
+                  </>
+                ) : (
+                  <span className="font-display text-3xl font-semibold tracking-tight">{item.priceNote}</span>
+                )}
+              </p>
 
-                <ul className="mt-6 flex-1 space-y-3">
-                  {item.features.map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm">
-                      <svg
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        aria-hidden
-                        className={`mt-0.5 h-4 w-4 shrink-0 ${
-                          item.featured ? "text-primary-400" : "text-primary-600"
-                        }`}
-                      >
-                        <path
-                          d="M4 10.5l3.5 3.5L16 6"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      <span className={item.featured ? "text-white/90" : "text-text-2"}>
-                        {feature}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+              <ul className="mt-6 flex-1 space-y-2.5 border-t border-border-strong pt-5">
+                {item.features.map((feature) => (
+                  <li key={feature} className="flex items-start gap-2.5 text-sm leading-relaxed text-text-1">
+                    <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary-600" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
 
-                <div className="mt-8">
-                  <Button
-                    href="/contact"
-                    variant={item.featured ? "primary" : "ghost"}
-                    className="w-full justify-center"
-                  >
-                    {t("ctaLabel")}
-                  </Button>
-                </div>
+              <div className="mt-8">
+                <Button
+                  href="/contact?topic=quote"
+                  variant={item.featured ? "primary" : "ghost"}
+                  className="w-full justify-center"
+                >
+                  {t("ctaLabel")}
+                </Button>
               </div>
-            </FadeIn>
+            </div>
           ))}
         </div>
+      </FadeIn>
 
-        <p className="mt-8 text-center text-sm text-text-2">{t("note")}</p>
-      </div>
+      <p className="mt-6 text-sm text-text-2">{t("note")}</p>
     </section>
   );
 }

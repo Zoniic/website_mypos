@@ -64,7 +64,7 @@ export default async function SavingsCalculatorPage({
         ]}
       />
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
-        <SectionHeader eyebrow={t("eyebrow")} title={t("title")} lede={t("lede")} as="h1" />
+        <SectionHeader title={t("title")} lede={t("lede")} as="h1" />
         <div className="mt-12">
           <SavingsCalculator />
         </div>

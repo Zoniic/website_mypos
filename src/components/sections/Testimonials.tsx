@@ -20,7 +20,7 @@ export async function Testimonials() {
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8">
-      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} />
+      <SectionHeader title={t("title")} />
 
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {items.map((item, index) => (

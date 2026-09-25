@@ -1,103 +1,82 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { MachineArt, type MachineKind } from "@/components/ui/MachineArt";
 import { getSiteImages } from "@/lib/siteSettings";
 
-const solutionCards = [
-  { key: "selfOrder", imageKey: "solution-self-order", href: "/solutions/self-order", featured: true },
-  { key: "weighPay", imageKey: "solution-weigh-pay", href: "/solutions/weigh-pay", featured: false },
-  { key: "pos", imageKey: "solution-pos", href: "/solutions/pos", featured: false },
-  { key: "ticketing", imageKey: "solution-ticketing", href: "/solutions/ticketing", featured: false },
-] as const;
+// Heights are in proportion to the real machines, so the four read as one
+// product family standing on the same floor.
+const family: {
+  key: string;
+  imageKey: string;
+  href: string;
+  machine: MachineKind;
+  artHeight: string;
+}[] = [
+  { key: "selfOrder", imageKey: "solution-self-order", href: "/solutions/self-order", machine: "kiosk", artHeight: "h-[88%]" },
+  { key: "pos", imageKey: "solution-pos", href: "/solutions/pos", machine: "pos", artHeight: "h-[34%]" },
+  { key: "weighPay", imageKey: "solution-weigh-pay", href: "/solutions/weigh-pay", machine: "scale", artHeight: "h-[32%]" },
+  { key: "ticketing", imageKey: "solution-ticketing", href: "/solutions/ticketing", machine: "ticket", artHeight: "h-[82%]" },
+];
 
 export async function Solutions() {
   const t = await getTranslations("home.solutions");
   const images = await getSiteImages();
 
   return (
-    <section
-      id="solutions"
-      className="mx-auto max-w-7xl px-4 py-24 sm:px-6 sm:py-28 lg:px-8"
-    >
-      <SectionHeader eyebrow={t("eyebrow")} title={t("title")} />
+    <section id="solutions" className="mx-auto max-w-7xl scroll-mt-20 px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <SectionHeader title={t("title")} />
 
-      {/*
-        Asymmetric editorial grid: the featured solution is a full-bleed image
-        panel spanning the top; the other three sit below as borderless tinted
-        tiles with a running index. No more four identical hairline cards.
-      */}
-      <div className="mt-14 grid gap-4 lg:grid-cols-3">
-        <FadeIn className="lg:col-span-3">
-          <Link
-            href={solutionCards[0].href}
-            className="group relative flex min-h-[26rem] flex-col justify-end overflow-hidden rounded-3xl bg-surface-2 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 sm:min-h-[30rem]"
-          >
-            <PlaceholderImage
-              ratio="21/9"
-              label={`${t(`items.${solutionCards[0].key}.title`)} photo`}
-              src={images[solutionCards[0].imageKey]}
-              sizes="(min-width: 1024px) 1152px, 100vw"
-              className="!absolute !inset-0 !h-full !w-full !rounded-3xl [&_img]:transition-transform [&_img]:duration-700 [&_img]:ease-out group-hover:[&_img]:scale-105"
-            />
-            <span
-              aria-hidden
-              className="absolute inset-0 rounded-3xl bg-gradient-to-t from-text-1/90 via-text-1/35 to-transparent"
-            />
-            <div className="relative flex flex-col justify-end p-8 sm:p-12">
-              <span className="text-sm font-semibold uppercase tracking-wider text-white/80">
-                {t("eyebrow")}
-              </span>
-              <h3 className="mt-3 max-w-xl font-display text-3xl font-bold leading-tight text-white sm:text-4xl">
-                {t(`items.${solutionCards[0].key}.title`)}
-              </h3>
-              <p className="mt-3 max-w-lg text-white/80">
-                {t(`items.${solutionCards[0].key}.description`)}
-              </p>
-              <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white">
-                <span className="transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-              </span>
-            </div>
-          </Link>
-        </FadeIn>
-
-        {solutionCards.slice(1).map((card, index) => (
-          <FadeIn key={card.key} delay={index * 0.08}>
-            <Link
-              href={card.href}
-              className="group flex h-full flex-col overflow-hidden rounded-3xl bg-surface-1 outline-offset-2 transition-colors hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-            >
-              <div className="overflow-hidden">
-                <PlaceholderImage
-                  ratio="16/10"
-                  label={`${t(`items.${card.key}.title`)} photo`}
-                  src={images[card.imageKey]}
-                  className="transition-transform duration-500 ease-out group-hover:scale-105"
-                />
-              </div>
-              <div className="flex flex-1 flex-col p-6">
-                <div className="flex items-center justify-between gap-2">
-                  <h3 className="text-lg font-semibold">
-                    {t(`items.${card.key}.title`)}
-                  </h3>
-                  <span
-                    aria-hidden
-                    className="text-primary-600 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100"
-                  >
-                    →
-                  </span>
-                </div>
-                <p className="mt-2 text-sm text-text-2">
-                  {t(`items.${card.key}.description`)}
-                </p>
-              </div>
-            </Link>
-          </FadeIn>
-        ))}
-      </div>
+      <ul className="mt-12 grid grid-cols-2 gap-x-3 gap-y-8 sm:gap-x-4 sm:gap-y-10 lg:mt-14 lg:grid-cols-4">
+        {family.map((item, index) => {
+          const photo = images[item.imageKey];
+          return (
+            <li key={item.key} className="h-full">
+              <FadeIn delay={index * 0.06} className="h-full">
+                <Link
+                  href={item.href}
+                  className="group flex h-full flex-col rounded-[22px] outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                >
+                  <div className="stage-grid-ink relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-[22px] bg-surface-2 transition-colors duration-300 group-hover:bg-primary-50">
+                    {photo ? (
+                      <Image
+                        src={photo}
+                        alt=""
+                        fill
+                        sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                      />
+                    ) : (
+                      <>
+                        <span aria-hidden className="absolute inset-x-6 bottom-[10%] h-px bg-text-1/15" />
+                        <MachineArt
+                          kind={item.machine}
+                          className={`relative mb-[10%] ${item.artHeight} transition-transform duration-500 ease-out group-hover:-translate-y-1.5`}
+                        />
+                      </>
+                    )}
+                  </div>
+                  <div className="mt-4 flex items-baseline justify-between gap-3 px-1 sm:mt-5">
+                    <h3 className="font-display text-lg font-semibold leading-snug sm:text-xl">
+                      {t(`items.${item.key}.title`)}
+                    </h3>
+                    <span
+                      aria-hidden
+                      className="text-primary-600 transition-transform duration-300 group-hover:translate-x-1"
+                    >
+                      →
+                    </span>
+                  </div>
+                  <p className="mt-2 px-1 text-sm leading-relaxed text-text-2">
+                    {t(`items.${item.key}.description`)}
+                  </p>                </Link>
+              </FadeIn>
+            </li>
+          );
+        })}
+      </ul>
     </section>
   );
 }
