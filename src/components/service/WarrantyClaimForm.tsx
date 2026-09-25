@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { submitWarrantyClaim, type WarrantyClaimState } from "@/app/[locale]/service/warrantyActions";
 
 const initialState: WarrantyClaimState = { status: "idle" };
@@ -41,7 +42,7 @@ export function WarrantyClaimForm({
     <div className="rounded-card border border-border bg-surface-1 p-6 sm:p-8">
       <h3 className="text-xl font-bold tracking-tight">{labels.title}</h3>
       <p className="mt-2 text-text-2">{labels.subtitle}</p>
-      <form action={formAction} className="mt-6 grid gap-4 sm:grid-cols-2">
+      <form onSubmit={submitWithoutReset(formAction)} className="mt-6 grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className="text-sm font-medium text-text-2">{labels.name}</span>
           <input

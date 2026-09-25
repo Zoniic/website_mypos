@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import { SITE_IMAGE_SLOTS } from "./slots";
 import { updateSitePhotos } from "./actions";
@@ -9,7 +10,7 @@ export function PhotosForm({ currentUrls }: { currentUrls: Record<string, string
   const [status, formAction, isPending] = useActionState(updateSitePhotos, null);
 
   return (
-    <form action={formAction} className="max-w-2xl space-y-6">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-6">
       {SITE_IMAGE_SLOTS.map((slot) => (
         <div key={slot.key} className="rounded-xl border border-border p-4">
           <ImageUploadField

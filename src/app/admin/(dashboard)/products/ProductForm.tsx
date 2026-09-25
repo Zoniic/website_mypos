@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import { SeoHint } from "../SeoHint";
 import { CategoryCheckboxes } from "../CategoryCheckboxes";
@@ -98,7 +99,7 @@ export function ProductForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-3xl space-y-8">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-3xl space-y-8">
       <section className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>

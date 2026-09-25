@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { useActionState } from "react";
 import { updateContent } from "./actions";
 import { getPreviewPath } from "./previewPaths";
@@ -55,7 +56,7 @@ export function ContentForm({
 
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
-      <form action={formAction} className="max-w-4xl space-y-6">
+      <form onSubmit={submitWithoutReset(formAction)} className="max-w-4xl space-y-6">
         {keys.map((key) => (
           <fieldset key={key} className="rounded-xl border border-border p-4">
             <legend className="px-1 font-mono text-sm text-text-2">{key}</legend>

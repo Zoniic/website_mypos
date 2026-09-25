@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { SeoHint } from "../SeoHint";
 
 export type JobPostingFormValues = {
@@ -41,7 +42,7 @@ export function JobPostingForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-2xl space-y-8">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-8">
       <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>

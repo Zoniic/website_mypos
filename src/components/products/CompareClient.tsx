@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import Image from "next/image";
 import { useTranslations, useFormatter } from "next-intl";
 import { Link } from "@/i18n/navigation";
@@ -108,7 +109,7 @@ export function CompareClient() {
       <div className="max-w-xl">
         <h2 className="text-xl font-bold tracking-tight">{t("formTitle")}</h2>
         <p className="mt-1 text-sm text-text-2">{t("formSubtitle")}</p>
-        <form action={formAction} className="mt-6 space-y-4">
+        <form onSubmit={submitWithoutReset(formAction)} className="mt-6 space-y-4">
           <input type="hidden" name="items" value={JSON.stringify(items)} />
           <div>
             <label htmlFor="quote-name" className="text-sm font-medium text-text-2">

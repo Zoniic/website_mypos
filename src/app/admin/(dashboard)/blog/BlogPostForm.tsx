@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import { SeoHint } from "../SeoHint";
 
@@ -38,7 +39,7 @@ export function BlogPostForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-2xl space-y-8">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-8">
       <label className="block">
         <span className={labelClass}>Slug (URL, unique)</span>
         <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />

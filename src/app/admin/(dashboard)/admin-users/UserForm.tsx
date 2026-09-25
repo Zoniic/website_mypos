@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 
 export type UserFormValues = { email: string; name: string };
 
@@ -24,7 +25,7 @@ export function UserForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-xl space-y-6">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-xl space-y-6">
       <label className="block">
         <span className={labelClass}>Email</span>
         <input

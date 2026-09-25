@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { SeoHint } from "../SeoHint";
 
 export type CategoryFormValues = {
@@ -31,7 +32,7 @@ export function CategoryForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-xl space-y-6">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-xl space-y-6">
       <label className="block">
         <span className={labelClass}>Slug (URL, unique)</span>
         <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />

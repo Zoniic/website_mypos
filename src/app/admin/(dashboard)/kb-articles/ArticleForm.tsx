@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState, useState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import { PdfUploadField } from "../PdfUploadField";
 import { CharCounter, SeoHint } from "../SeoHint";
@@ -52,7 +53,7 @@ export function ArticleForm({
   const [summaryLength, setSummaryLength] = useState(initialValues.translations.en.summary.length);
 
   return (
-    <form action={formAction} className="max-w-3xl space-y-8">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-3xl space-y-8">
       <section className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Slug (URL, unique)</span>

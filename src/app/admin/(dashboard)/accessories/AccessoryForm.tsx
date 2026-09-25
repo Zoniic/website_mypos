@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import { SeoHint } from "../SeoHint";
 import { CategoryCheckboxes } from "../CategoryCheckboxes";
@@ -39,7 +40,7 @@ export function AccessoryForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-2xl space-y-8">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-8">
       <label className="block">
         <span className={labelClass}>Slug (unique identifier)</span>
         <input name="slug" required defaultValue={initialValues.slug} className={inputClass} />

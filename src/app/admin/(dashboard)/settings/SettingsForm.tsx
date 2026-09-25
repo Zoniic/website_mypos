@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import type { SiteSettings } from "@/lib/siteSettings";
 import { HeroBackgroundUploadField } from "../HeroBackgroundUploadField";
 import { updateSiteSettings } from "./actions";
@@ -33,7 +34,7 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
   const [status, formAction, isPending] = useActionState(updateSiteSettings, null);
 
   return (
-    <form action={formAction} className="max-w-2xl space-y-8">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-8">
       <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Contact</h3>
         <Field label="Phone (tel: link, e.g. +66-2-123-4567)" name="phone" defaultValue={settings.phone} />

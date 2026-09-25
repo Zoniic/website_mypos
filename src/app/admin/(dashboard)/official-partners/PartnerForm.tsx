@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import { SeoHint } from "../SeoHint";
 
@@ -24,7 +25,7 @@ export function PartnerForm({
   const [error, formAction, isPending] = useActionState(action, null);
 
   return (
-    <form action={formAction} className="max-w-xl space-y-6">
+    <form onSubmit={submitWithoutReset(formAction)} className="max-w-xl space-y-6">
       <label className="block">
         <span className="text-sm font-medium text-text-2">Partner / company name</span>
         <input
