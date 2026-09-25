@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/FadeIn";
-import { MachineLineup } from "@/components/ui/MachineArt";
+import { Magnet } from "@/components/reactbits/Magnet";
+import { HeroStage } from "@/components/sections/HeroStage";
 import { HeroVideoBackground } from "@/components/sections/HeroVideoBackground";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { isVideoUrl } from "@/lib/heroMedia";
@@ -39,9 +39,11 @@ export async function Hero() {
           </h1>
           <p className="mt-6 max-w-lg text-lg leading-relaxed text-text-2">{t("subtitle")}</p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <Button href="/contact?topic=demo" variant="primary" size="lg">
-              {t("ctaPrimary")}
-            </Button>
+            <Magnet>
+              <Button href="/contact?topic=demo" variant="primary" size="lg">
+                {t("ctaPrimary")}
+              </Button>
+            </Magnet>
             <Button href="#solutions" variant="ghost" size="lg">
               {t("ctaSecondary")}
             </Button>
@@ -57,31 +59,19 @@ export async function Hero() {
                 src={heroPhoto}
                 alt=""
                 fill
-                priority
+                preload
                 sizes="(min-width: 1024px) 58vw, 100vw"
                 className="object-cover"
               />
             ) : (
-              <>
-                <MachineLineup className="absolute inset-x-[4%] bottom-[6%] h-[82%] w-[92%]" />
-                <ul className="absolute inset-0 hidden sm:block">
-                  {callouts.map((item) => (
-                    <li
-                      key={item.key}
-                      className="absolute -translate-x-1/2"
-                      style={{ left: item.left, top: item.top }}
-                    >
-                      <Link
-                        href={item.href}
-                        className="group flex items-center gap-1.5 whitespace-nowrap rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-text-1 shadow-[0_2px_8px_rgba(17,19,24,0.18)] outline-offset-2 transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
-                      >
-                        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-primary-600" />
-                        {tNav(`solutionsItems.${item.key}`)}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </>
+              <HeroStage
+                callouts={callouts.map((item) => ({
+                  href: item.href,
+                  label: tNav(`solutionsItems.${item.key}`),
+                  left: item.left,
+                  top: item.top,
+                }))}
+              />
             )}
           </div>
         </FadeIn>

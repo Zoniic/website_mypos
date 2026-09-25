@@ -144,32 +144,3 @@ export function MachineArt({ kind, className = "" }: { kind: MachineKind; classN
     </span>
   );
 }
-
-/**
- * The full lineup on one floor: floor-standing kiosk, a counter carrying the
- * POS and the weigh-and-pay scale, and the ticketing kiosk. Proportions match
- * the real machines' relative sizes.
- */
-export function MachineLineup({ className = "" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 640 360" aria-hidden="true" className={className} preserveAspectRatio="xMidYMax meet">
-      <line x1="0" y1="340.5" x2="640" y2="340.5" stroke={INK} strokeOpacity="0.22" />
-      <svg x="36" y="40" width="120" height="300" viewBox="0 0 120 300" overflow="visible">
-        <Kiosk />
-      </svg>
-      {/* Counter */}
-      <rect x="214" y="236" width="264" height="10" rx="2" fill={INK} />
-      <rect x="224" y="246" width="244" height="94" fill={INK} opacity="0.14" />
-      <rect x="224" y="246" width="244" height="3" fill={INK} opacity="0.12" />
-      <svg x="226" y="126" width="140" height="110" viewBox="0 0 140 110" overflow="visible">
-        <Pos />
-      </svg>
-      <svg x="364" y="140" width="104" height="96" viewBox="0 0 120 110" overflow="visible">
-        <Scale />
-      </svg>
-      <svg x="508" y="60" width="110" height="280" viewBox="0 0 110 280" overflow="visible">
-        <Ticket />
-      </svg>
-    </svg>
-  );
-}

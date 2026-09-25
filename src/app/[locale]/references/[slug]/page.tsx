@@ -70,7 +70,7 @@ export default async function ReferenceCaseDetailPage({
               fill
               sizes="(min-width: 768px) 768px, 100vw"
               className="object-cover"
-              priority
+              preload
             />
           </div>
         )}

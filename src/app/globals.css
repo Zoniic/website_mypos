@@ -128,6 +128,33 @@ h3 {
   background-position: -1px -1px;
 }
 
+/* Torn receipt-paper edges (sawtooth top and bottom). */
+.receipt-paper {
+  --tooth: 12px;
+  position: relative;
+}
+
+.receipt-paper::before,
+.receipt-paper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: calc(var(--tooth) / 2);
+  background:
+    linear-gradient(135deg, #fff 33.33%, transparent 33.33%) 0 0 / var(--tooth) var(--tooth),
+    linear-gradient(225deg, #fff 33.33%, transparent 33.33%) 0 0 / var(--tooth) var(--tooth);
+}
+
+.receipt-paper::before {
+  top: calc(var(--tooth) / -2);
+  transform: scaleY(-1);
+}
+
+.receipt-paper::after {
+  bottom: calc(var(--tooth) / -2);
+}
+
 .stage-grid-ink {
   background-image:
     linear-gradient(rgb(17 19 24 / 0.05) 1px, transparent 1px),

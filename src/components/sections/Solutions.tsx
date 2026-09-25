@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { MachineArt, type MachineKind } from "@/components/ui/MachineArt";
+import { TiltedCard } from "@/components/reactbits/TiltedCard";
 import { getSiteImages } from "@/lib/siteSettings";
 
 // Heights are in proportion to the real machines, so the four read as one
@@ -39,6 +40,7 @@ export async function Solutions() {
                   href={item.href}
                   className="group flex h-full flex-col rounded-[22px] outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
+                  <TiltedCard>
                   <div className="stage-grid-ink relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-[22px] bg-surface-2 transition-colors duration-300 group-hover:bg-primary-50">
                     {photo ? (
                       <Image
@@ -58,6 +60,7 @@ export async function Solutions() {
                       </>
                     )}
                   </div>
+                  </TiltedCard>
                   <div className="mt-4 flex items-baseline justify-between gap-3 px-1 sm:mt-5">
                     <h3 className="font-display text-lg font-semibold leading-snug sm:text-xl">
                       {t(`items.${item.key}.title`)}
@@ -71,7 +74,8 @@ export async function Solutions() {
                   </div>
                   <p className="mt-2 px-1 text-sm leading-relaxed text-text-2">
                     {t(`items.${item.key}.description`)}
-                  </p>                </Link>
+                  </p>
+                </Link>
               </FadeIn>
             </li>
           );

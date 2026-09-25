@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { useFormatter, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
+import { Counter } from "@/components/reactbits/Counter";
 
 type Inputs = {
   ordersPerDay: number;
@@ -90,6 +91,9 @@ export function SavingsCalculator() {
   const set = (key: keyof Inputs) => (value: number) => setInput((prev) => ({ ...prev, [key]: value }));
   const baht = (value: number) =>
     format.number(value, { style: "currency", currency: "THB", maximumFractionDigits: 0 });
+  // The payback figure rolls like a register display, so split the
+  // translated sentence around the number and put the counter in between.
+  const [paybackBefore = "", paybackAfter = ""] = t("paybackMonths", { months: "\u0000" }).split("\u0000");
 
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr] lg:items-start">
@@ -168,11 +172,15 @@ export function SavingsCalculator() {
         <div className="mt-6 rounded-lg bg-surface-0 p-5">
           <p className="text-sm text-text-2">{t("payback")}</p>
           <p className="mt-1 font-display text-4xl font-bold tracking-tight text-primary-600 tabular-nums">
-            {result.paybackMonths === null
-              ? t("paybackNever")
-              : t("paybackMonths", {
-                  months: format.number(result.paybackMonths, { maximumFractionDigits: 1 }),
-                })}
+            {result.paybackMonths === null ? (
+              t("paybackNever")
+            ) : (
+              <>
+                {paybackBefore}
+                <Counter value={result.paybackMonths} decimals={1} />
+                {paybackAfter}
+              </>
+            )}
           </p>
           <p className="mt-4 text-sm text-text-2">{t("yearOne")}</p>
           <p className="mt-1 text-xl font-semibold tabular-nums">{baht(result.yearOne)}</p>

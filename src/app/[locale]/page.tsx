@@ -9,6 +9,7 @@ import { Hero } from "@/components/sections/Hero";
 import { TrustLogos } from "@/components/sections/TrustLogos";
 import { About } from "@/components/sections/About";
 import { Solutions } from "@/components/sections/Solutions";
+import { ReceiptTape } from "@/components/sections/ReceiptTape";
 import { Pricing } from "@/components/sections/Pricing";
 import { Integrations } from "@/components/sections/Integrations";
 import { UseCases } from "@/components/sections/UseCases";
@@ -109,6 +110,7 @@ export default async function HomePage({
       <Hero />
       <TrustLogos />
       <Solutions />
+      <ReceiptTape />
       <SelfServiceBenefits />
       <UseCases />
       <PopularProducts />
