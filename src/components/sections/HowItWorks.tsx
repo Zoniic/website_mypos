@@ -22,8 +22,8 @@ export function HowItWorks({
           {steps.map((step, index) => (
             <motion.li
               key={step.title}
-              initial={{ opacity: 0, y: 16, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              initial={{ y: 16, scale: 0.97 }}
+              whileInView={{ y: 0, scale: 1 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
               className="h-full rounded-2xl bg-surface-1 p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-card-hover)]"

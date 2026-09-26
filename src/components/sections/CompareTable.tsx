@@ -48,8 +48,8 @@ export function CompareTable({
             {products.map((product, index) => (
               <motion.tr
                 key={product.slug}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ y: 12 }}
+                whileInView={{ y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: index * 0.06, ease: "easeOut" }}
                 className="transition-colors hover:bg-surface-1"

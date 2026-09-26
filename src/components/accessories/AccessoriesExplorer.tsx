@@ -79,7 +79,7 @@ export function AccessoriesExplorer({
                     className="transition-transform duration-500 ease-out group-hover:scale-105"
                   />
                 </div>
-                <h3 className="mt-4 font-semibold">{item.name}</h3>
+                <h2 className="mt-4 text-base font-semibold">{item.name}</h2>
                 <p className="mt-1 text-sm text-text-2">{item.description}</p>
                 {((shopOn && item.onlinePrice !== undefined) || item.shopeeUrl || item.lazadaUrl) && (
                   <div className="mt-auto pt-4">

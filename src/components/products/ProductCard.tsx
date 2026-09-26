@@ -17,8 +17,8 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ y: 16 }}
+      whileInView={{ y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       whileHover={{ y: -4 }}
       transition={{ duration: 0.35, ease: "easeOut" }}

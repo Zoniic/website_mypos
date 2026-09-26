@@ -9,6 +9,10 @@ import { getAllReferenceCaseSlugs } from "@/lib/references";
 import { getAllBlogPosts } from "@/lib/blog";
 import { getOpenJobPostings } from "@/lib/careers";
 
+// Products, articles and case studies are added in the admin at runtime:
+// rebuild the sitemap hourly instead of freezing it at deploy time.
+export const revalidate = 3600;
+
 const staticPaths = [
   "",
   "/products",
@@ -19,7 +23,6 @@ const staticPaths = [
   "/service",
   "/about",
   "/contact",
-  "/compare",
   "/blog",
   "/careers",
   "/tools/savings-calculator",

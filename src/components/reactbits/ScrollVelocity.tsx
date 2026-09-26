@@ -3,12 +3,14 @@
 // Adapted from React Bits "ScrollVelocity" (https://reactbits.dev) —
 // Copyright (c) 2026 David Haz, MIT + Commons Clause, see ./LICENSE.md.
 // Changes: framer-motion import, single row, reduced-motion support,
-// row component hoisted out of the parent render.
+// row component hoisted out of the parent render, and the frame loop only
+// runs while the row is on screen (it used to tick every frame, all page long).
 
 import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import {
   motion,
   useAnimationFrame,
+  useInView,
   useMotionValue,
   useReducedMotion,
   useScroll,
@@ -60,9 +62,12 @@ export function ScrollVelocity({
   const copyWidth = useElementWidth(copyRef);
   const x = useTransform(baseX, (v) => (copyWidth === 0 ? "0px" : `${wrap(-copyWidth, 0, v)}px`));
 
+  const rootRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(rootRef, { margin: "100px" });
+
   const direction = useRef(1);
   useAnimationFrame((_, delta) => {
-    if (reduceMotion) return;
+    if (reduceMotion || !inView) return;
     let moveBy = direction.current * baseVelocity * (delta / 1000);
     const factor = velocityFactor.get();
     if (factor < 0) direction.current = -1;
@@ -72,7 +77,7 @@ export function ScrollVelocity({
   });
 
   return (
-    <div className="relative overflow-hidden">
+    <div ref={rootRef} className="relative overflow-hidden">
       <motion.div className="flex whitespace-nowrap" style={{ x }}>
         {Array.from({ length: copies }, (_, i) => (
           <div

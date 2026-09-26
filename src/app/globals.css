@@ -33,7 +33,9 @@
   --color-primary-300: #f99066;
   --color-primary-400: #f06830;
   --color-primary-500: #e85520;
-  --color-primary-600: #cc4515;
+  /* 600 is the text/button shade: ≥4.5:1 on white and on every tinted
+     surface it sits on (surface-0/2, primary-50). */
+  --color-primary-600: #c2410c;
   --color-primary-700: #a83510;
   --color-primary-800: #82280c;
   --color-primary-900: #5c1c08;
@@ -56,6 +58,8 @@
 
   /* ─── Semantic (600-weight for AA on white) ───────── */
   --color-success: #059669;
+  /* Success text on success-tinted pills (the base shade is only 3.3:1 there). */
+  --color-success-strong: #047857;
   --color-warning: #d97706;
   --color-error: #dc2626;
 

@@ -31,13 +31,17 @@ const fontSans = Anuphan({
 const fontDisplay = Chakra_Petch({
   variable: "--font-display-loaded",
   subsets: ["thai", "latin"],
-  weight: ["500", "600", "700"],
+  // Headings use 600/700 only; every extra weight is two more preloaded
+  // files competing with the page on slow mobile connections.
+  weight: ["600", "700"],
 });
 
 const fontMono = JetBrains_Mono({
   variable: "--font-mono-loaded",
   subsets: ["latin"],
   weight: ["500"],
+  // Only spec values use it, below the fold: don't preload.
+  preload: false,
 });
 
 export async function generateMetadata(): Promise<Metadata> {
