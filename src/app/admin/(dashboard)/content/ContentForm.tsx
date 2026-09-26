@@ -7,8 +7,24 @@ import { updateContent } from "./actions";
 import { getPreviewPath } from "./previewPaths";
 import { CharCounter, SeoHint } from "../SeoHint";
 import { ContentGuidePanel, getContentGuide } from "./ContentGuidePanel";
+import { ListField, parseList } from "./ListField";
 
 const PREVIEW_LOCALES = ["th", "en", "zh"] as const;
+
+/** The field's lists per language, when every filled-in language holds a JSON list. */
+function listValues(key: string, values: Record<string, string>) {
+  const out = { th: [], en: [], zh: [] } as Record<(typeof PREVIEW_LOCALES)[number], NonNullable<ReturnType<typeof parseList>>>;
+  let found = false;
+  for (const locale of PREVIEW_LOCALES) {
+    const raw = values[`${key}__${locale}`] ?? "";
+    if (!raw.trim()) continue;
+    const list = parseList(raw);
+    if (!list) return null;
+    out[locale] = list;
+    found = true;
+  }
+  return found ? out : null;
+}
 
 function seoFieldKind(key: string): "metaTitle" | "metaDescription" | null {
   if (key.endsWith("metaTitle")) return "metaTitle";
@@ -57,7 +73,10 @@ export function ContentForm({
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
       <form onSubmit={submitWithoutReset(formAction)} className="max-w-4xl space-y-6">
-        {keys.map((key) => (
+        {keys.map((key) => {
+          // JSON lists get the form editor; everything else stays a textarea per language.
+          const lists = listValues(key, values);
+          return (
           <fieldset key={key} className="rounded-xl border border-border p-4">
             <legend className="px-1 font-mono text-sm text-text-2">{key}</legend>
             {(() => {
@@ -65,6 +84,9 @@ export function ContentForm({
               return guide ? <ContentGuidePanel entry={guide} /> : null;
             })()}
             {seoFieldKind(key) && <SeoHint type={seoFieldKind(key)!} />}
+            {lists ? (
+              <ListField fieldKey={key} values={lists} />
+            ) : (
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
               {(["th", "en", "zh"] as const).map((locale) => {
                 const fieldKey = `${key}__${locale}`;
@@ -96,8 +118,10 @@ export function ContentForm({
                 );
               })}
             </div>
+            )}
           </fieldset>
-        ))}
+          );
+        })}
 
         {status === "saved" && <p className="text-sm text-success">Saved. Preview refreshed →</p>}
         {isError && <p className="text-sm text-error">{status}</p>}
