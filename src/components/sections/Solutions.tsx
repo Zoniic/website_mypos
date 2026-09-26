@@ -88,7 +88,7 @@ export async function Solutions() {
       </ul>
 
       <h3 className="mt-20 font-display text-xl font-semibold sm:text-2xl">{t("moreTitle")}</h3>
-      <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-6 grid gap-3 md:grid-cols-2">
         {secondary.map((item) => (
           <li key={item.key}>
             <Link

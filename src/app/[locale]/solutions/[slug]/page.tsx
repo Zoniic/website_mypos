@@ -78,14 +78,19 @@ export default async function SolutionPage({
   const tNav = await getTranslations({ locale, namespace: "nav" });
   const tCommonUi = await getTranslations({ locale, namespace: "common" });
 
-  const painGainItems = t.raw("painGain") as PainGainItem[];
-  const steps = t.raw("steps") as StepItem[];
-  const cases = t.raw("cases") as CaseItem[];
-  const faqItems = t.raw("faq") as FaqItem[];
-  // Optional per line: features + spec table (newer lines), case studies
-  // only where real ones exist.
-  const features = (t.has("features") ? t.raw("features") : []) as FeatureItem[];
-  const specs = (t.has("specs") ? t.raw("specs") : []) as SpecRow[];
+  // Lists are admin-editable copy: a missing or malformed one renders as
+  // empty instead of crashing the page. Features/specs exist only on the
+  // newer lines; case studies only where real ones exist.
+  const list = <T,>(key: string): T[] => {
+    const value: unknown = t.has(key) ? t.raw(key) : [];
+    return Array.isArray(value) ? (value as T[]) : [];
+  };
+  const painGainItems = list<PainGainItem>("painGain");
+  const steps = list<StepItem>("steps");
+  const cases = list<CaseItem>("cases");
+  const faqItems = list<FaqItem>("faq");
+  const features = list<FeatureItem>("features");
+  const specs = list<SpecRow>("specs");
   const navLabel = tNav(`solutionsItems.${key}`);
   const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
   const images = await getSiteImages();
@@ -138,7 +143,10 @@ export default async function SolutionPage({
         title={t("hero.title")}
         subtitle={t("hero.subtitle")}
         ctaPrimary={tCommonUi("requestQuote")}
-        ctaSecondary={tCommon("compareCta")}
+        // Point at the model comparison when there are products to compare,
+        // otherwise at the features/specs.
+        ctaSecondary={categoryProducts.length ? tCommon("compareCta") : tCommon("featuresTitle")}
+        ctaSecondaryHref={categoryProducts.length ? "#compare" : features.length || specs.length ? "#details" : "#how-it-works"}
         imageLabel={`${navLabel} photo`}
         imageUrl={images[`solution-${slug}`]}
         machine={solutionMachine[slug]}

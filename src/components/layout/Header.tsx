@@ -175,7 +175,7 @@ function SolutionsMenu({ label, groups }: { label: string; groups: SolutionGroup
         </svg>
       </button>
       {open && (
-        <div className="absolute left-0 top-full grid w-[760px] grid-cols-4 gap-6 rounded-lg border border-border bg-surface-1 p-5 shadow-lg">
+        <div className="absolute left-0 top-full grid w-[860px] grid-cols-[1.35fr_1.1fr_1fr_0.9fr] gap-6 rounded-lg border border-border bg-surface-1 p-5 shadow-lg">
           {groups.map((group) => (
             <div key={group.key}>
               <p className="border-b border-border pb-2 text-xs font-semibold text-text-2">{group.label}</p>
