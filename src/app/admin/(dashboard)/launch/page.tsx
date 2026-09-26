@@ -5,6 +5,7 @@ import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { availablePaymentMethods } from "@/lib/orders";
 import { organizationSameAs } from "@/lib/structuredData";
 import { cleanTrackingId, cleanVerificationToken } from "@/lib/trackingIds";
+import { notificationStatus } from "@/lib/notify";
 
 type Check = {
   label: string;
@@ -51,6 +52,7 @@ export default async function LaunchChecklistPage() {
     products.filter((p) => p.shopeeUrl || p.lazadaUrl).length + accessories.filter((a) => a.shopeeUrl || a.lazadaUrl).length;
   const payments = availablePaymentMethods(settings);
   const sameAs = organizationSameAs(settings).length;
+  const notify = notificationStatus();
   const has = (key: Parameters<typeof cleanTrackingId>[0]) => Boolean(cleanTrackingId(key, settings[key]));
 
   const groups: Group[] = [
@@ -96,6 +98,15 @@ export default async function LaunchChecklistPage() {
       title: "ช่องทางขาย",
       why: "ให้ลูกค้าซื้อในที่ที่เขาสะดวก: เว็บเราเอง (ไม่เสียค่าธรรมเนียม) + Shopee/Lazada (คนค้นหาสินค้าในแอปโดยตรง)",
       checks: [
+        {
+          label: "แจ้งเตือนทีมขายทันที (LINE / อีเมล)",
+          state: notify.line || notify.email ? "ok" : "todo",
+          detail:
+            notify.line || notify.email
+              ? `เปิดอยู่: ${[notify.line && "LINE", notify.email && "อีเมล"].filter(Boolean).join(" + ")}`
+              : "ยังไม่ตั้งค่า — ออเดอร์/ลีดใหม่จะเห็นเฉพาะในหน้า Admin. ตั้งค่า LINE_* หรือ RESEND_* ใน environment ของเซิร์ฟเวอร์ (ดู .env.example)",
+          href: "/admin/launch",
+        },
         { label: "ร้าน Shopee", state: settings.shopeeShopUrl ? "ok" : "todo", detail: settings.shopeeShopUrl || "ยังไม่ได้ใส่", href: "/admin/settings" },
         { label: "ร้าน Lazada", state: settings.lazadaShopUrl ? "ok" : "todo", detail: settings.lazadaShopUrl || "ยังไม่ได้ใส่", href: "/admin/settings" },
         { label: "เปิดรับออเดอร์บนเว็บ", state: isOnlineOrderingOn(settings) ? "ok" : "todo", detail: isOnlineOrderingOn(settings) ? `เปิดอยู่ · ชำระได้: ${payments.join(", ") || "—"}` : "ปิดอยู่ — ต้องมี PromptPay หรือบัญชีธนาคารก่อน", href: "/admin/settings" },

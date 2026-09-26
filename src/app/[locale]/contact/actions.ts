@@ -1,6 +1,8 @@
 "use server";
 
+import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { contactAlert, notifyTeam } from "@/lib/notify";
 import { isIndustrySlug } from "@/data/industries";
 
 /** `topic` is echoed back on success so the page can report a typed lead to analytics. */
@@ -27,6 +29,7 @@ export async function submitContactMessage(
     await prisma.contactMessage.create({
       data: { topic, industry, name, phone, product, message },
     });
+    after(() => notifyTeam(contactAlert({ topic, industry, name, phone, product, message })));
   } catch {
     return { status: "error" };
   }

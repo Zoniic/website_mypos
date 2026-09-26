@@ -1,6 +1,8 @@
 "use server";
 
+import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { notifyTeam, warrantyAlert } from "@/lib/notify";
 
 export type WarrantyClaimState = { status: "idle" | "error" | "success"; message?: string };
 
@@ -23,6 +25,7 @@ export async function submitWarrantyClaim(
   await prisma.warrantyClaim.create({
     data: { name, phone, email, productSlug, serialNumber, issue },
   });
+  after(() => notifyTeam(warrantyAlert({ name, phone, productSlug, issue })));
 
   return { status: "success" };
 }

@@ -1,6 +1,8 @@
 "use server";
 
+import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { notifyTeam, quoteAlert } from "@/lib/notify";
 
 export type QuoteCartItemInput = { slug: string; name: string; quantity: number };
 
@@ -31,7 +33,7 @@ export async function submitQuoteRequest(
     return { status: "error", message: "Add at least one product first." };
   }
 
-  await prisma.quoteRequest.create({
+  const quote = await prisma.quoteRequest.create({
     data: {
       name,
       company,
@@ -46,7 +48,9 @@ export async function submitQuoteRequest(
         })),
       },
     },
+    include: { items: true },
   });
+  after(() => notifyTeam(quoteAlert(quote)));
 
   return { status: "success" };
 }

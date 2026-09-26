@@ -1,6 +1,8 @@
 "use server";
 
 import { headers } from "next/headers";
+import { after } from "next/server";
+import { notifyTeam, orderAlert } from "@/lib/notify";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings, isOnlineOrderingOn, shippingFeeFor } from "@/lib/siteSettings";
@@ -116,7 +118,7 @@ export async function placeOrder(_prev: CheckoutState, formData: FormData): Prom
     const number = newOrderNumber();
     const accessToken = newAccessToken();
     try {
-      await prisma.order.create({
+      const order = await prisma.order.create({
         data: {
           number,
           accessToken,
@@ -138,7 +140,9 @@ export async function placeOrder(_prev: CheckoutState, formData: FormData): Prom
           total,
           items: { create: items },
         },
+        include: { items: true },
       });
+      after(() => notifyTeam(orderAlert(order)));
       revalidatePath("/admin/orders");
       return { status: "success", number, token: accessToken };
     } catch (error) {
