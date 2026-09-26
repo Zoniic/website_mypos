@@ -6,13 +6,16 @@ import { MachineArt, type MachineKind } from "@/components/ui/MachineArt";
 
 export type HeroCallout = { href: string; label: string; left: string; top: string };
 
-// Positions as % of a 640×360 floor plan: kiosk, a counter carrying the POS
-// and the scale, and the ticketing kiosk, in their real relative sizes.
+// Positions as % of a 640×360 floor plan, machines in their real relative
+// sizes, laid out as the path an order takes: self-order kiosk, a counter
+// with the POS and the kitchen screen (KDS), the queue display on the wall
+// above it, and a vending machine selling round the clock.
 const machines: { kind: MachineKind; left: string; top: string; width: string; height: string }[] = [
-  { kind: "kiosk", left: "5.63%", top: "11.11%", width: "18.75%", height: "83.33%" },
-  { kind: "pos", left: "35.31%", top: "35%", width: "21.88%", height: "30.56%" },
-  { kind: "scale", left: "56.88%", top: "39.08%", width: "16.25%", height: "26.47%" },
-  { kind: "ticket", left: "79.38%", top: "16.67%", width: "17.19%", height: "77.78%" },
+  { kind: "kiosk", left: "3.75%", top: "11.11%", width: "18.75%", height: "83.33%" },
+  { kind: "queue", left: "36.72%", top: "2.22%", width: "25.23%", height: "29.03%" },
+  { kind: "pos", left: "30.63%", top: "35%", width: "21.88%", height: "30.56%" },
+  { kind: "kds", left: "53.13%", top: "40.56%", width: "16.88%", height: "25%" },
+  { kind: "vending", left: "74.69%", top: "11.11%", width: "24.22%", height: "83.33%" },
 ];
 
 const ease = [0.25, 1, 0.5, 1] as const;
@@ -51,11 +54,11 @@ export function HeroStage({ callouts }: { callouts: HeroCallout[] }) {
         style={{ x: machinesX, y: machinesY }}
       >
         <span aria-hidden className="absolute inset-x-0 top-[94.58%] h-px bg-text-1/20" />
-        {/* Counter carrying the POS and the scale. */}
+        {/* Counter carrying the POS and the kitchen screen. */}
         <motion.div
           aria-hidden
           className="absolute"
-          style={{ left: "33.44%", top: "65.56%", width: "41.25%", height: "34.44%" }}
+          style={{ left: "27.5%", top: "65.56%", width: "43.75%", height: "34.44%" }}
           initial={{ y: 30 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease }}

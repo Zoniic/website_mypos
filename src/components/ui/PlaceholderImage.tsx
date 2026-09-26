@@ -18,6 +18,9 @@ const machineHeight: Record<MachineKind, string> = {
   ticket: "h-[74%]",
   pos: "h-[46%]",
   scale: "h-[44%]",
+  kds: "h-[46%]",
+  queue: "h-[40%]",
+  vending: "h-[80%]",
 };
 
 const DEFAULT_SIZES = "(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw";

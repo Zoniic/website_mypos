@@ -9,6 +9,7 @@ import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CompareCartLink } from "@/components/products/CompareCartLink";
 import { ShopCartLink } from "@/components/commerce/ShopCartLink";
 import { industrySlugs } from "@/data/industries";
+import { solutionGroups } from "@/data/solutions";
 
 /** Shared open/close behavior for header dropdowns: hover or focus opens,
  * outside click/blur or Escape closes. */
@@ -147,6 +148,58 @@ function NavDropdown({
   );
 }
 
+type SolutionGroupView = { key: string; label: string; items: DropdownItem[] };
+
+/** Wide panel: the four product-line groups side by side. */
+function SolutionsMenu({ label, groups }: { label: string; groups: SolutionGroupView[] }) {
+  const { open, setOpen, rootRef, rootProps } = useDropdown();
+
+  return (
+    <div ref={rootRef} className="relative" {...rootProps}>
+      <button
+        type="button"
+        className={`flex cursor-pointer items-center gap-1.5 ${navLinkClass}`}
+        aria-expanded={open}
+        aria-haspopup="true"
+        onClick={() => setOpen((o) => !o)}
+      >
+        {label}
+        <svg
+          width="10"
+          height="10"
+          viewBox="0 0 10 10"
+          aria-hidden="true"
+          className={`transition-transform ${open ? "rotate-180" : ""}`}
+        >
+          <path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" />
+        </svg>
+      </button>
+      {open && (
+        <div className="absolute left-0 top-full grid w-[760px] grid-cols-4 gap-6 rounded-lg border border-border bg-surface-1 p-5 shadow-lg">
+          {groups.map((group) => (
+            <div key={group.key}>
+              <p className="border-b border-border pb-2 text-xs font-semibold text-text-2">{group.label}</p>
+              <ul className="mt-2">
+                {group.items.map((item) => (
+                  <li key={item.key}>
+                    <Link
+                      href={item.href}
+                      className="block rounded-md px-2 py-1.5 text-sm text-text-1 outline-offset-2 transition-colors hover:bg-surface-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 /** `shopOn`: online ordering is enabled in Site Settings (shows the cart icon). */
 export function Header({ shopOn = false }: { shopOn?: boolean }) {
   const t = useTranslations("nav");
@@ -171,6 +224,12 @@ export function Header({ shopOn = false }: { shopOn?: boolean }) {
     key: type,
     label: tProducts(`businessTypes.${type}`),
     href: `/industries/${type}`,
+  }));
+
+  const solutionMenuGroups: SolutionGroupView[] = solutionGroups.map((group) => ({
+    key: group.key,
+    label: t(`solutionsGroups.${group.key}`),
+    items: group.items.map((item) => ({ key: item.key, label: t(`solutionsItems.${item.key}`), href: item.href })),
   }));
 
   const resourceItems: DropdownItem[] = resourceLinks.map((link) => ({
@@ -201,6 +260,7 @@ export function Header({ shopOn = false }: { shopOn?: boolean }) {
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex" aria-label="Primary">
+          <SolutionsMenu label={t("solutions")} groups={solutionMenuGroups} />
           <NavDropdown
             label={t("products")}
             mainHref="/products"
@@ -291,9 +351,26 @@ export function Header({ shopOn = false }: { shopOn?: boolean }) {
             {t("home")}
           </Link>
 
+          <p className="pt-2 text-base font-medium text-text-1">{t("solutions")}</p>
+          {solutionMenuGroups.map((group) => (
+            <div key={group.key} className="pl-3">
+              <p className="pt-2 text-xs font-semibold text-text-2">{group.label}</p>
+              {group.items.map((item) => (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  className="block py-2 pl-3 text-sm text-text-2"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          ))}
+
           <Link
             href="/products"
-            className="flex items-center gap-1.5 pt-2 text-base font-medium text-text-1"
+            className="flex items-center gap-1.5 pt-4 text-base font-medium text-text-1"
             onClick={() => setMobileOpen(false)}
           >
             {t("products")}

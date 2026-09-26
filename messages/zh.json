@@ -4,9 +4,15 @@
     "solutions": "解决方案",
     "solutionsItems": {
       "selfOrder": "自助点餐机",
-      "weighPay": "自助称重收银",
-      "pos": "门店收银系统",
-      "ticketing": "自助售票机"
+      "weighPay": "称重结账 POS / 自助点餐",
+      "pos": "前台 POS",
+      "ticketing": "自助售票机",
+      "kds": "KDS 厨房显示屏",
+      "queueDisplay": "叫号显示屏",
+      "vendingOnline": "Vending Machine Online",
+      "vendingOffline": "Vending Machine Offline",
+      "dashboard": "Dashboard",
+      "coupons": "优惠券/促销"
     },
     "products": "产品",
     "byUseCase": "按用途",
@@ -26,7 +32,13 @@
     "compare": "对比/获取报价",
     "industries": "行业方案",
     "savingsCalculator": "节省计算器",
-    "cart": "购物车"
+    "cart": "购物车",
+    "solutionsGroups": {
+      "restaurant": "餐厅系统",
+      "vending": "24 小时自动售卖",
+      "ticketing": "自动售票系统",
+      "backOffice": "后台系统"
+    }
   },
   "search": {
     "metaTitle": "搜索 | MYPOS",
@@ -153,8 +165,8 @@
           "description": "减少排队、提升客单价，适用于餐厅、快餐及员工食堂。"
         },
         "weighPay": {
-          "title": "自助称重收银",
-          "description": "自动称重与结算系统，适用于麻辣烫、自助餐及烘焙柜台。"
+          "title": "称重结账 POS / 自助点餐",
+          "description": "自动称重计价，适合麻辣烫、自助餐和烘焙店"
         },
         "pos": {
           "title": "门店收银系统",
@@ -162,9 +174,26 @@
         },
         "ticketing": {
           "title": "自助售票机",
-          "description": "自动售票系统，适用于主题乐园、酒店及景区。"
+          "description": "游乐园、酒店和景点的自动售票"
+        },
+        "kds": {
+          "title": "KDS 厨房显示屏",
+          "description": "点餐机和前台订单即时显示在厨房，分站打印并可叫号"
+        },
+        "queueDisplay": {
+          "title": "叫号显示屏",
+          "description": "在店内电视上显示待付款、制作中和可取餐的号码"
+        },
+        "vendingOnline": {
+          "title": "Vending Machine Online",
+          "description": "竖屏触摸屏，现金找零、扫码支付、实时库存"
+        },
+        "vendingOffline": {
+          "title": "Vending Machine Offline",
+          "description": "收硬币和纸币，无需联网"
         }
-      }
+      },
+      "moreTitle": "称重结账、24 小时自动售卖与售票"
     },
     "why": {
       "eyebrow": "为什么选择 MYPOS",
@@ -240,7 +269,12 @@
     "compareScreen": "屏幕尺寸",
     "compareOs": "操作系统",
     "comparePrice": "起价",
-    "faqTitle": "常见问题"
+    "faqTitle": "常见问题",
+    "featuresTitle": "功能",
+    "specsTitle": "规格与选项",
+    "backOfficeTitle": "一个后台管理全部设备",
+    "backOfficeBody": "MYPOS 自助点餐机、POS、KDS、称重结账、叫号显示屏和 Vending Machine Online 共用同一个网页后台，统一管理所有门店的菜单、价格、库存和销售。",
+    "backOfficeCta": "查看后台系统"
   },
   "solutions": {
     "selfOrder": {
@@ -502,6 +536,402 @@
           "answer": "可以，二维码门票可与现场扫码设备对接，用于核验与人数统计。"
         }
       ]
+    },
+    "kds": {
+      "metaTitle": "餐厅 KDS 厨房显示屏 | MYPOS",
+      "metaDescription": "MYPOS KDS：14 和 15.6 英寸横屏触摸屏，即时接收点餐机和 POS 订单，按工作站打印，叫号，并可在柜台收款。",
+      "hero": {
+        "eyebrow": "KDS 厨房显示屏",
+        "title": "点餐机和前台订单即时进入厨房，不再丢单",
+        "subtitle": "14 和 15.6 英寸横屏触摸屏，适用于厨房和柜台：接单、按工作站打印、叫号和收款，一台完成。"
+      },
+      "painGain": [
+        {
+          "pain": "纸质单据丢失、弄湿或看不清",
+          "gain": "订单连同加料选项清晰显示在屏幕上"
+        },
+        {
+          "pain": "厨房不知道哪张单等得最久",
+          "gain": "订单按下单时间排序，急单一目了然"
+        },
+        {
+          "pain": "餐好了要大声喊顾客",
+          "gain": "在屏幕上叫号，号码显示在店内叫号屏"
+        }
+      ],
+      "steps": [
+        {
+          "title": "顾客下单",
+          "description": "在自助点餐机或前台 POS 下单，订单直接进入厨房。"
+        },
+        {
+          "title": "厨房按屏制作",
+          "description": "订单显示在 KDS 上，也可按分类打印到各工作站的打印机。"
+        },
+        {
+          "title": "叫号",
+          "description": "标记为可取餐，号码显示在叫号屏上。"
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "实时接单",
+          "description": "点餐机和 POS 的订单即时显示，含加料和备注。"
+        },
+        {
+          "title": "按工作站打印",
+          "description": "可设置各菜单分类打印到哪台打印机；支持小票和标签打印机，网络或蓝牙连接。"
+        },
+        {
+          "title": "叫号与重复叫号",
+          "description": "将订单设为制作中或可取餐，叫号屏自动更新，也可再次叫号。"
+        },
+        {
+          "title": "柜台收款",
+          "description": "可作为收银点：现金配合钱箱或非现金支付，并可手动录入柜台销售。"
+        },
+        {
+          "title": "优惠券与促销",
+          "description": "账单可使用店铺的折扣优惠券。"
+        },
+        {
+          "title": "增值税与销售汇总",
+          "description": "计算增值税，查看订单记录和每日销售汇总。"
+        },
+        {
+          "title": "自动取消未付款账单",
+          "description": "超时未付款的订单自动取消，厨房无需备餐。"
+        }
+      ],
+      "specs": [
+        {
+          "label": "屏幕",
+          "value": "14 和 15.6 英寸横屏触摸屏"
+        },
+        {
+          "label": "销售形式",
+          "value": "含屏幕的硬件及软件"
+        },
+        {
+          "label": "配合使用",
+          "value": "自助点餐机 · 前台 POS · 称重结账 · 叫号显示屏"
+        },
+        {
+          "label": "打印机",
+          "value": "小票和标签打印机，网络及蓝牙连接"
+        },
+        {
+          "label": "后台",
+          "value": "通过网页管理菜单、门店和报表"
+        }
+      ],
+      "faq": [
+        {
+          "question": "KDS 和打印厨房单有什么不同？",
+          "answer": "屏幕按时间显示所有订单并实时更新状态；如果厨房仍需纸单，也可同时打印到各工作站。"
+        },
+        {
+          "question": "能直接配合 MYPOS 点餐机和 POS 使用吗？",
+          "answer": "可以，MYPOS 点餐机和 POS 的订单直接进入 KDS，我们的团队上门安装配置。"
+        },
+        {
+          "question": "选 14 还是 15.6 英寸？",
+          "answer": "14 英寸适合小厨房或柜台；15.6 英寸远距离更易读，适合多工作站厨房。我们可免费上门评估。"
+        }
+      ]
+    },
+    "queueDisplay": {
+      "metaTitle": "餐厅叫号显示屏（电视）| MYPOS",
+      "metaDescription": "MYPOS 叫号显示屏在店内电视上显示待付款、制作中和可取餐的号码——插上 MYPOS Android 盒子并联网即可，配合 MYPOS 点餐机、POS 和 KDS 使用。",
+      "hero": {
+        "eyebrow": "叫号显示屏",
+        "title": "顾客在电视上看到自己的号码，不再追问“好了吗”",
+        "subtitle": "在店内电视上显示待付款、制作中和可取餐的号码。可用店里现有电视配 MYPOS Android 盒子，也可购买含电视的套装。"
+      },
+      "painGain": [
+        {
+          "pain": "顾客围在柜台前追问餐好了没",
+          "gain": "在屏幕上看到自己的号码状态，安心等待"
+        },
+        {
+          "pain": "员工要大声叫号",
+          "gain": "在厨房屏幕上叫号，号码即刻移到可取餐栏"
+        },
+        {
+          "pain": "不知道有多少单已下未付",
+          "gain": "待付款号码与制作中号码分开显示"
+        }
+      ],
+      "steps": [
+        {
+          "title": "插上 Android 盒子",
+          "description": "将 MYPOS Android 盒子接到电视的 HDMI 接口。"
+        },
+        {
+          "title": "连接网络",
+          "description": "盒子连接店内网络，我们的团队帮您接入系统。"
+        },
+        {
+          "title": "号码自动显示",
+          "description": "有新订单或厨房更新状态时，屏幕随即更新。"
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "一屏三种状态",
+          "description": "待付款 · 制作中 · 可取餐——显示每种状态的数量和号码。"
+        },
+        {
+          "title": "可用现有电视",
+          "description": "只买 MYPOS Android 盒子接到现有电视，或购买含电视的套装。"
+        },
+        {
+          "title": "数据直接来自系统",
+          "description": "号码来自 MYPOS 点餐机、POS 和 KDS，无需重复录入。"
+        },
+        {
+          "title": "重复叫号",
+          "description": "顾客未来取餐，可在厨房屏幕上再次叫号。"
+        },
+        {
+          "title": "后台管理",
+          "description": "在网页后台设置各门店的显示屏。"
+        }
+      ],
+      "specs": [
+        {
+          "label": "设备",
+          "value": "MYPOS Android 盒子——单独购买或含电视套装"
+        },
+        {
+          "label": "屏幕",
+          "value": "带 HDMI 接口的电视"
+        },
+        {
+          "label": "连接",
+          "value": "互联网"
+        },
+        {
+          "label": "显示内容",
+          "value": "待付款 · 制作中 · 可取餐（数量和号码）"
+        },
+        {
+          "label": "配合使用",
+          "value": "自助点餐机 · 前台 POS · KDS"
+        }
+      ],
+      "faq": [
+        {
+          "question": "需要买新电视吗？",
+          "answer": "不需要，任何带 HDMI 的电视配 MYPOS Android 盒子即可，也可购买含电视的套装。"
+        },
+        {
+          "question": "安装难吗？",
+          "answer": "把盒子接到电视并联网，我们的团队帮您接入系统。"
+        },
+        {
+          "question": "叫号数据从哪里来？",
+          "answer": "来自 MYPOS 点餐机、POS 和 KDS，新订单和厨房状态变化会自动更新屏幕。"
+        }
+      ]
+    },
+    "vendingOnline": {
+      "metaTitle": "Vending Machine Online：现金找零、扫码支付 | MYPOS",
+      "metaDescription": "MYPOS Vending Machine Online：10.1 / 15.6 / 21.5 英寸竖屏触摸屏，收硬币和纸币并找零，支持 PromptPay、WeChat Pay、Alipay、TrueMoney、LAO QR 和封闭式储值卡，后台查看库存。",
+      "hero": {
+        "eyebrow": "Vending Machine Online",
+        "title": "24 小时销售，支持所有支付方式，在一处查看每台机器的库存",
+        "subtitle": "10.1 / 15.6 / 21.5 英寸竖屏触摸屏，收硬币和纸币并找零，支持多种扫码支付，商品、价格和库存在后台管理。"
+      },
+      "painGain": [
+        {
+          "pain": "要逐台开机清点库存",
+          "gain": "在后台查看每台机器的库存，实时及离线均可"
+        },
+        {
+          "pain": "顾客没有现金就买不了",
+          "gain": "PromptPay、WeChat Pay、Alipay、TrueMoney、LAO QR 或封闭式储值卡"
+        },
+        {
+          "pain": "外国游客看不懂机器界面",
+          "gain": "屏幕支持 10 种语言，顾客自行选择"
+        }
+      ],
+      "steps": [
+        {
+          "title": "在屏幕上选择",
+          "description": "顾客在竖屏触摸屏上选择商品，附图片和价格。"
+        },
+        {
+          "title": "付款",
+          "description": "现金找零、扫码、封闭式储值卡，并可使用优惠券。"
+        },
+        {
+          "title": "取货",
+          "description": "商品落到取货口，系统自动扣减库存并记录销售。"
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "三种尺寸竖屏",
+          "description": "10.1 / 15.6 / 21.5 英寸，显示商品图片和价格，空闲时播放广告。"
+        },
+        {
+          "title": "现金找零",
+          "description": "硬币 1、2、5、10 泰铢，纸币 20、50、100、500 泰铢，自动找零。"
+        },
+        {
+          "title": "多种扫码支付",
+          "description": "PromptPay · WeChat Pay · Alipay · TrueMoney · LAO QR"
+        },
+        {
+          "title": "封闭式储值卡",
+          "description": "适用于使用自有储值卡的工厂、办公室、学校或食堂。"
+        },
+        {
+          "title": "折扣优惠券",
+          "description": "商家以代码或二维码向顾客发放优惠券，在机器前使用。"
+        },
+        {
+          "title": "10 种语言",
+          "description": "顾客自行选择屏幕语言。"
+        },
+        {
+          "title": "后台管理库存和状态",
+          "description": "查看每台机器的实时及离线库存，设置商品和价格，查看销售和在线状态。"
+        }
+      ],
+      "specs": [
+        {
+          "label": "屏幕",
+          "value": "竖屏触摸屏 10.1 / 15.6 / 21.5 英寸"
+        },
+        {
+          "label": "现金",
+          "value": "硬币 1、2、5、10 泰铢 · 纸币 20、50、100、500 泰铢 · 自动找零"
+        },
+        {
+          "label": "扫码支付",
+          "value": "PromptPay · WeChat Pay · Alipay · TrueMoney · LAO QR"
+        },
+        {
+          "label": "其他",
+          "value": "封闭式储值卡 · 优惠券代码 / 二维码"
+        },
+        {
+          "label": "语言",
+          "value": "10 种"
+        },
+        {
+          "label": "CAN 机柜（日式）",
+          "value": "32 个货道，适合圆形瓶装和罐装饮料 · 带制冷"
+        },
+        {
+          "label": "Spiral 螺旋机柜",
+          "value": "可放瓶装、罐装及袋装零食\n有升降梯款和无升降梯款 · 制冷款和常温款\n30 个以上货道，多种尺寸可选"
+        },
+        {
+          "label": "后台",
+          "value": "销售看板 · 实时及离线库存 · 设备状态"
+        }
+      ],
+      "faq": [
+        {
+          "question": "CAN 机柜和 Spiral 机柜有什么区别？",
+          "answer": "日式 CAN 机柜有 32 个货道，适合圆形瓶罐饮料，带制冷；Spiral 机柜使用螺旋弹簧，可放饮料和袋装零食，有升降梯和无升降梯款，也有制冷和常温款。"
+        },
+        {
+          "question": "Spiral 机柜的升降梯有什么用？",
+          "answer": "升降梯把商品从货架送到取货口，而不是让它直接掉落，适合不宜碰撞的商品。"
+        },
+        {
+          "question": "Online 和 Offline 有什么不同？",
+          "answer": "Online 款有触摸屏、扫码支付、封闭式储值卡、优惠券和后台；Offline 款只收硬币和纸币，没有后台。"
+        },
+        {
+          "question": "LAO QR 有什么用？",
+          "answer": "让老挝顾客用老挝银行 App 扫码付款，适合边境地区和旅游景点。"
+        }
+      ]
+    },
+    "vendingOffline": {
+      "metaTitle": "Vending Machine Offline：收硬币和纸币 | MYPOS",
+      "metaDescription": "MYPOS Vending Machine Offline 收 1、2、5、10 泰铢硬币和 20、50、100、500 泰铢纸币，无需联网，也无需后台。",
+      "hero": {
+        "eyebrow": "Vending Machine Offline",
+        "title": "投币式售货机，放在哪里都能卖，无需联网",
+        "subtitle": "收硬币和纸币，适合只需要简单售货机、不需要后台的场所。"
+      },
+      "painGain": [
+        {
+          "pain": "安装地点没有稳定的网络",
+          "gain": "离线运行，无需联网"
+        },
+        {
+          "pain": "不需要复杂的系统",
+          "gain": "收硬币和纸币，买家和机主都简单易用"
+        }
+      ],
+      "steps": [
+        {
+          "title": "选择商品",
+          "description": "顾客从机器货道中选择商品。"
+        },
+        {
+          "title": "投币或纸币",
+          "description": "硬币 1、2、5、10 泰铢，纸币 20、50、100、500 泰铢。"
+        },
+        {
+          "title": "取货",
+          "description": "商品落到取货口。"
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "收硬币和纸币",
+          "description": "硬币 1、2、5、10 泰铢，纸币 20、50、100、500 泰铢。"
+        },
+        {
+          "title": "无需联网",
+          "description": "独立运行，适合网络不稳定的地点。"
+        },
+        {
+          "title": "按商品选择机柜",
+          "description": "可向我们的团队咨询 Offline 款适用的 CAN 和 Spiral 机柜。"
+        }
+      ],
+      "specs": [
+        {
+          "label": "支付",
+          "value": "硬币 1、2、5、10 泰铢 · 纸币 20、50、100、500 泰铢"
+        },
+        {
+          "label": "连接",
+          "value": "无需联网"
+        },
+        {
+          "label": "后台",
+          "value": "无（独立运行）"
+        },
+        {
+          "label": "机柜",
+          "value": "请向我们的团队咨询支持的型号"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Offline 款能扫码付款吗？",
+          "answer": "不能，Offline 款只收硬币和纸币。如需扫码、封闭式储值卡、优惠券或后台库存，请选择 Online 款。"
+        },
+        {
+          "question": "Offline 款适合哪些地方？",
+          "answer": "只需要简单售货机，或没有稳定网络的地点。"
+        }
+      ]
     }
   },
   "productsCommon": {
@@ -540,9 +970,13 @@
     },
     "categories": {
       "self-order": "自助点餐机",
-      "weigh-pay": "自助称重收银",
+      "weigh-pay": "称重结账 POS / 自助点餐",
       "pos": "门店收银系统",
-      "ticketing": "自助售票机"
+      "ticketing": "自助售票机",
+      "kds": "KDS 厨房显示屏",
+      "queue-display": "叫号显示屏",
+      "vending-online": "Vending Machine Online",
+      "vending-offline": "Vending Machine Offline"
     }
   },
   "productDetail": {
@@ -608,40 +1042,83 @@
       "cta": "预约演示 (Demo)"
     },
     "features": {
-      "title": "核心软件功能",
+      "title": "后台系统：一个网站管理所有设备和门店",
       "items": [
         {
-          "title": "网页版后台管理系统",
-          "description": "任意浏览器即可登录，无需安装应用程序，即可在同一后台管理门店、菜单与报表。"
+          "title": "经营总览 Dashboard",
+          "description": "总览、销售、畅销品和运营分标签展示，老板和店长能快速找到答案。"
         },
         {
-          "title": "自主管理菜单/商品",
-          "description": "可通过后台系统随时新增、修改或下架商品，无需等待 IT 团队处理。"
+          "title": "多公司、多门店",
+          "description": "集中管理所有门店，可按门店和销售渠道分别定价。"
         },
         {
-          "title": "实时销售报表",
-          "description": "随时随地查看各门店的销售额、热销商品及经营状况。"
+          "title": "中央菜单库与 AI 翻译",
+          "description": "菜单和加料选项只需建立一次即可用于所有门店，并可用 AI 将菜名翻译成多种语言。"
         },
         {
-          "title": "支持多门店管理",
-          "description": "通过统一后台管理多家门店，并可对比各门店销售数据。"
+          "title": "分时段菜单",
+          "description": "让菜单分类只在指定时段显示，例如早餐、午餐。"
         },
         {
-          "title": "数据安全，自动云备份",
-          "description": "每一笔销售都会自动记录并备份至云端，即使设备出现问题也不会丢失数据。"
+          "title": "实时库存",
+          "description": "查看每家门店和每台设备的库存，以及库存和价格的变更记录。"
         },
         {
-          "title": "自主设置促销活动",
-          "description": "可通过后台系统自行设置折扣、促销活动与推荐商品。"
+          "title": "设备状态与远程指令",
+          "description": "查看哪些设备在线或离线，并从后台向设备发送指令。"
         },
         {
-          "title": "持续更新功能",
-          "description": "本地研发团队根据客户实际需求持续更新与优化功能。"
+          "title": "报表与导出",
+          "description": "订单与交易报表，可导出 Excel 或 PDF。"
+        },
+        {
+          "title": "税务发票",
+          "description": "可在系统中根据账单开具税务发票。"
+        },
+        {
+          "title": "角色权限与修改记录",
+          "description": "按角色分配权限，并记录谁在何时修改了什么。"
         }
       ]
     },
     "screenshots": {
       "title": "系统界面示例"
+    },
+    "managed": {
+      "title": "由此后台管理的设备",
+      "items": [
+        "自助点餐机",
+        "前台 POS",
+        "KDS 厨房显示屏",
+        "称重结账",
+        "叫号显示屏",
+        "Vending Machine Online"
+      ]
+    },
+    "coupons": {
+      "title": "优惠券与促销",
+      "lede": "商家在后台创建折扣优惠券，以代码或二维码形式发给自己的顾客，顾客在机器前购买商品或服务时即可抵扣。",
+      "worksOnTitle": "适用于",
+      "worksOn": [
+        "自助点餐机",
+        "前台 POS",
+        "Vending Machine Online"
+      ],
+      "steps": [
+        {
+          "title": "在后台创建优惠券",
+          "description": "为每批优惠券设置折扣。"
+        },
+        {
+          "title": "发给店铺的顾客",
+          "description": "通过店铺自己的渠道（如 LINE OA 或社交媒体）以代码或二维码发送。"
+        },
+        {
+          "title": "顾客在机器前使用",
+          "description": "结账时输入代码或扫描二维码，系统自动扣减。"
+        }
+      ]
     }
   },
   "references": {

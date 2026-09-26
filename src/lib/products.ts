@@ -1,7 +1,9 @@
 import type { Product as ProductRow, ProductTranslation } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 
-export type ProductCategory = "self-order" | "weigh-pay" | "pos" | "ticketing";
+import type { ProductCategory } from "@/data/categories";
+
+export type { ProductCategory };
 
 export type BusinessType =
   | "restaurant"

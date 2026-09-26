@@ -44,6 +44,9 @@ export default async function SoftwarePage({
 
   const t = await getTranslations({ locale, namespace: "software" });
   const features = t.raw("features.items") as FeatureItem[];
+  const couponSteps = (t.has("coupons.steps") ? t.raw("coupons.steps") : []) as FeatureItem[];
+  const couponWorksOn = (t.has("coupons.worksOn") ? t.raw("coupons.worksOn") : []) as string[];
+  const managedLines = (t.has("managed.items") ? t.raw("managed.items") : []) as string[];
   const images = await getSiteImages();
 
   const softwareSchema = {
@@ -85,16 +88,62 @@ export default async function SoftwarePage({
           <h2 className="text-3xl font-bold tracking-tight">
             {t("features.title")}
           </h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-10 grid gap-x-12 border-t border-border sm:grid-cols-2">
             {features.map((feature) => (
-              <div key={feature.title} className="rounded-card border border-border bg-surface-1/40 p-6 shadow-[var(--shadow-card)]">
-                <h3 className="text-lg font-semibold">{feature.title}</h3>
-                <p className="mt-2 text-text-2">{feature.description}</p>
-              </div>
+              <li key={feature.title} className="border-b border-border py-6">
+                <h3 className="font-display text-lg font-semibold">{feature.title}</h3>
+                <p className="mt-2 max-w-prose text-sm leading-relaxed text-text-2">{feature.description}</p>
+              </li>
             ))}
-          </div>
+          </ul>
+          {managedLines.length > 0 && (
+            <div className="mt-12">
+              <h3 className="text-sm font-semibold text-text-1">{t("managed.title")}</h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {managedLines.map((line) => (
+                  <li key={line} className="rounded-full border border-border-strong bg-white px-3 py-1.5 text-sm">
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
+
+      {couponSteps.length > 0 && (
+        <section id="coupons" className="scroll-mt-24 bg-ink text-white">
+          <div className="mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-12 lg:px-8">
+            <div className="lg:col-span-5">
+              <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">{t("coupons.title")}</h2>
+              <p className="mt-4 leading-relaxed text-white/75">{t("coupons.lede")}</p>
+              {couponWorksOn.length > 0 && (
+                <>
+                  <p className="mt-8 text-sm font-semibold">{t("coupons.worksOnTitle")}</p>
+                  <ul className="mt-3 flex flex-wrap gap-2">
+                    {couponWorksOn.map((line) => (
+                      <li key={line} className="rounded-full border border-white/25 px-3 py-1.5 text-sm text-white/90">
+                        {line}
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+            <ol className="lg:col-span-7">
+              {couponSteps.map((step, index) => (
+                <li key={step.title} className="flex gap-5 border-t border-white/15 py-6">
+                  <span className="font-display text-2xl font-semibold text-primary-400">{index + 1}</span>
+                  <div>
+                    <h3 className="font-display text-lg font-semibold">{step.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-white/70">{step.description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
 
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
         <h2 className="text-3xl font-bold tracking-tight">

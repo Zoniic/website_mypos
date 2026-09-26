@@ -8,7 +8,7 @@
  * their viewBox, so they can be lined up side by side in proportion.
  */
 
-export type MachineKind = "kiosk" | "pos" | "scale" | "ticket";
+export type MachineKind = "kiosk" | "pos" | "scale" | "ticket" | "kds" | "queue" | "vending";
 
 const INK = "#16181d";
 const INK_SOFT = "#2b2e36";
@@ -128,11 +128,142 @@ function Ticket() {
   );
 }
 
+/** Kitchen display: 15.6" landscape touchscreen on a counter stand. */
+function Kds() {
+  const tickets = [0, 1, 2];
+  return (
+    <svg viewBox="0 0 120 100" aria-hidden="true" className="h-full w-auto overflow-visible">
+      <ellipse cx="60" cy="98" rx="30" ry="2.4" fill={INK} opacity="0.18" />
+      <path d="M40 96h40l-5 -7h-30Z" fill={INK} />
+      <path d="M55 89h10l-2 -24h-6Z" fill={INK} />
+      <rect x="6" y="6" width="108" height="64" rx="5" fill={INK} />
+      <rect x="11" y="10" width="98" height="56" rx="2" fill={SCREEN} />
+      <rect x="11" y="10" width="98" height="7" rx="2" fill={INK_SOFT} />
+      <rect x="15" y="12.5" width="18" height="2" rx="1" fill={PAPER} opacity="0.8" />
+      {tickets.map((i) => {
+        const x = 15 + i * 31.5;
+        return (
+          <g key={i}>
+            <rect x={x} y="21" width="28" height="41" rx="2" fill={PAPER} stroke={INK} strokeOpacity="0.08" />
+            <rect x={x} y="21" width="28" height="7" rx="2" fill={i === 0 ? ACCENT : TILE} />
+            <rect x={x + 3} y="23.5" width="10" height="2.2" rx="1.1" fill={i === 0 ? PAPER : INK} opacity={i === 0 ? 0.95 : 0.45} />
+            <rect x={x + 3} y="32" width="20" height="2" rx="1" fill={INK} opacity="0.4" />
+            <rect x={x + 3} y="37" width="15" height="2" rx="1" fill={INK} opacity="0.25" />
+            <rect x={x + 3} y="42" width="18" height="2" rx="1" fill={INK} opacity="0.25" />
+            <rect x={x + 3} y="54" width="22" height="5" rx="1.5" fill={i === 2 ? ACCENT : TILE} />
+          </g>
+        );
+      })}
+    </svg>
+  );
+}
+
+/** Queue display: wall-mounted TV driven by the MYPOS Android box. */
+function QueueTv() {
+  const columns = [
+    { head: INK_SOFT, numbers: ["A18", "A19"] },
+    { head: TILE, numbers: ["A15", "A16", "A17"] },
+    { head: ACCENT, numbers: ["A12", "A14"] },
+  ];
+  return (
+    <svg viewBox="0 0 170 110" aria-hidden="true" className="h-full w-auto overflow-visible">
+      <rect x="4" y="4" width="162" height="94" rx="4" fill={INK} />
+      <rect x="8" y="8" width="154" height="86" rx="1.5" fill={SCREEN} />
+      {columns.map((col, i) => {
+        const x = 12 + i * 50;
+        return (
+          <g key={i}>
+            <rect x={x} y="12" width="46" height="10" rx="1.5" fill={col.head} />
+            <rect x={x + 4} y="15.8" width="20" height="2.4" rx="1.2" fill={col.head === TILE ? INK : PAPER} opacity={col.head === TILE ? 0.5 : 0.9} />
+            {col.numbers.map((n, j) => (
+              <g key={n}>
+                <rect x={x} y={26 + j * 21} width="46" height="17" rx="2" fill={PAPER} stroke={INK} strokeOpacity="0.06" />
+                <text
+                  x={x + 23}
+                  y={38.5 + j * 21}
+                  textAnchor="middle"
+                  fontSize="11"
+                  fontWeight="700"
+                  fontFamily="inherit"
+                  fill={i === 2 ? ACCENT : INK}
+                >
+                  {n}
+                </text>
+              </g>
+            ))}
+          </g>
+        );
+      })}
+      {/* Android box and its cable, tucked under the TV */}
+      <path d="M130 98v6" stroke={INK} strokeOpacity="0.4" strokeWidth="1.2" />
+      <rect x="118" y="104" width="24" height="5" rx="1.5" fill={INK_SOFT} />
+      <circle cx="138" cy="106.5" r="0.9" fill={ACCENT} />
+    </svg>
+  );
+}
+
+/** Vending machine: spiral product window + vertical touchscreen payment column. */
+function Vending() {
+  const rows = [0, 1, 2, 3, 4];
+  const palette = [ACCENT, "#c3c8d0", TILE, "#ffb48a", "#9aa1ac"];
+  return (
+    <svg viewBox="0 0 160 310" aria-hidden="true" className="h-full w-auto overflow-visible">
+      <ellipse cx="80" cy="307" rx="72" ry="3.5" fill={INK} opacity="0.18" />
+      <rect x="6" y="6" width="148" height="296" rx="8" fill={INK} />
+      <rect x="9" y="9" width="3" height="290" rx="1.5" fill="#ffffff" opacity="0.07" />
+      {/* Product window */}
+      <rect x="14" y="16" width="92" height="206" rx="3" fill="#e9edf2" />
+      <rect x="14" y="16" width="92" height="206" rx="3" fill="#ffffff" opacity="0.35" />
+      {rows.map((r) => (
+        <g key={r}>
+          <rect x="16" y={52 + r * 40} width="88" height="2.5" fill={INK} opacity="0.25" />
+          {[0, 1, 2, 3].map((c) => (
+            <rect
+              key={c}
+              x={21 + c * 21}
+              y={26 + r * 40}
+              width="14"
+              height={r % 2 === 0 ? 25 : 20}
+              rx={r % 2 === 0 ? 5 : 2}
+              fill={palette[(r + c) % palette.length]}
+              opacity="0.9"
+              transform={r % 2 === 0 ? undefined : `translate(0 5)`}
+            />
+          ))}
+        </g>
+      ))}
+      <rect x="14" y="16" width="16" height="206" fill="#ffffff" opacity="0.18" />
+      {/* Payment column */}
+      <rect x="112" y="16" width="36" height="64" rx="2.5" fill={INK_SOFT} />
+      <rect x="115" y="19" width="30" height="58" rx="1.5" fill={SCREEN} />
+      <rect x="115" y="19" width="30" height="6" rx="1.5" fill={ACCENT} />
+      <rect x="118" y="30" width="24" height="10" rx="1" fill={TILE} />
+      <rect x="118" y="43" width="24" height="10" rx="1" fill={TILE} />
+      <rect x="118" y="62" width="24" height="10" rx="1" fill={INK} />
+      <rect x="118" y="65" width="12" height="3" rx="1.5" fill={ACCENT} />
+      <rect x="116" y="92" width="28" height="12" rx="2" fill={INK_SOFT} />
+      <rect x="120" y="97" width="20" height="2.2" rx="1.1" fill="#0a0b0e" />
+      <rect x="124" y="112" width="12" height="14" rx="2" fill={INK_SOFT} />
+      <rect x="128.5" y="115" width="3" height="8" rx="1.5" fill="#0a0b0e" />
+      <rect x="120" y="134" width="20" height="10" rx="2" fill={INK_SOFT} />
+      <rect x="122" y="142" width="16" height="2" fill="#0a0b0e" />
+      {/* Pickup bay */}
+      <rect x="18" y="234" width="84" height="44" rx="3" fill="#0a0b0e" />
+      <rect x="22" y="238" width="76" height="8" rx="2" fill={INK_SOFT} />
+      <rect x="112" y="240" width="36" height="30" rx="2" fill={INK_SOFT} />
+      <rect x="6" y="292" width="148" height="10" rx="3" fill="#0a0b0e" />
+    </svg>
+  );
+}
+
 const components: Record<MachineKind, () => React.ReactElement> = {
   kiosk: Kiosk,
   pos: Pos,
   scale: Scale,
   ticket: Ticket,
+  kds: Kds,
+  queue: QueueTv,
+  vending: Vending,
 };
 
 /** One machine, sized by its container's height. */

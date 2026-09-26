@@ -1,4 +1,4 @@
-const CATEGORIES = ["self-order", "weigh-pay", "pos", "ticketing"] as const;
+import { PRODUCT_CATEGORIES as CATEGORIES } from "@/data/categories";
 
 export function CategoryCheckboxes({
   name,

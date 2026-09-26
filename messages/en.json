@@ -3,10 +3,16 @@
     "home": "Home",
     "solutions": "Solutions",
     "solutionsItems": {
-      "selfOrder": "Self-Order Kiosk",
-      "weighPay": "Self-Service Weigh & Pay",
-      "pos": "Point of Sale",
-      "ticketing": "Ticketing Kiosk"
+      "selfOrder": "Self-order kiosk",
+      "weighPay": "Weigh & pay POS / self-ordering",
+      "pos": "POS terminal",
+      "ticketing": "Ticket kiosk",
+      "kds": "KDS kitchen display",
+      "queueDisplay": "Queue display",
+      "vendingOnline": "Vending Machine Online",
+      "vendingOffline": "Vending Machine Offline",
+      "dashboard": "Dashboard",
+      "coupons": "Coupons & promotions"
     },
     "products": "Products",
     "byUseCase": "By Use Case",
@@ -26,7 +32,13 @@
     "compare": "Compare / Get Quote",
     "industries": "Industries",
     "savingsCalculator": "Savings calculator",
-    "cart": "Cart"
+    "cart": "Cart",
+    "solutionsGroups": {
+      "restaurant": "Restaurant system",
+      "vending": "24-hour vending",
+      "ticketing": "Automated ticketing",
+      "backOffice": "Back office"
+    }
   },
   "search": {
     "metaTitle": "Search | MYPOS",
@@ -153,18 +165,35 @@
           "description": "Cut queues and boost average order value. Ideal for restaurants, fast food, and cafeterias."
         },
         "weighPay": {
-          "title": "Self-Service Weigh & Pay",
-          "description": "Automatic weighing and checkout. Ideal for hot pot, buffet, and bakery counters."
+          "title": "Weigh & pay POS / self-ordering",
+          "description": "Weighs and prices automatically — for mala, buffets and bakeries"
         },
         "pos": {
           "title": "Point of Sale",
           "description": "Full front-of-house POS system for retail, mini-marts, and convenience stores."
         },
         "ticketing": {
-          "title": "Ticketing Kiosk",
-          "description": "Automated ticket sales. Ideal for theme parks, hotels, and attractions."
+          "title": "Ticket kiosk",
+          "description": "Automated ticket sales for theme parks, hotels and attractions"
+        },
+        "kds": {
+          "title": "KDS kitchen display",
+          "description": "Kiosk and counter orders appear in the kitchen instantly; station printing and queue calls"
+        },
+        "queueDisplay": {
+          "title": "Queue display",
+          "description": "Shows awaiting-payment, preparing and ready queues on your shop's TV"
+        },
+        "vendingOnline": {
+          "title": "Vending Machine Online",
+          "description": "Vertical touchscreen, cash with change, QR payments and real-time stock"
+        },
+        "vendingOffline": {
+          "title": "Vending Machine Offline",
+          "description": "Coins and banknotes, no internet needed"
         }
-      }
+      },
+      "moreTitle": "Weigh & pay, 24-hour vending and ticketing"
     },
     "why": {
       "eyebrow": "Why MYPOS",
@@ -240,7 +269,12 @@
     "compareScreen": "Screen Size",
     "compareOs": "OS",
     "comparePrice": "Starting Price",
-    "faqTitle": "Frequently Asked Questions"
+    "faqTitle": "Frequently Asked Questions",
+    "featuresTitle": "What it does",
+    "specsTitle": "Specifications & options",
+    "backOfficeTitle": "Everything managed from one back office",
+    "backOfficeBody": "MYPOS self-order kiosks, POS, KDS, weigh-and-pay, queue displays and Vending Machine Online share one web back office for menus, prices, stock and sales across every branch.",
+    "backOfficeCta": "See the back office"
   },
   "solutions": {
     "selfOrder": {
@@ -502,6 +536,402 @@
           "answer": "Yes — QR code tickets connect to on-site scanners for entry verification and headcounts."
         }
       ]
+    },
+    "kds": {
+      "metaTitle": "KDS Kitchen Display System for restaurants | MYPOS",
+      "metaDescription": "MYPOS KDS: 14\" and 15.6\" landscape touchscreens that receive kiosk and POS orders instantly, print tickets by station, call queue numbers and take payment at the counter.",
+      "hero": {
+        "eyebrow": "KDS kitchen display",
+        "title": "Kiosk and counter orders reach the kitchen instantly — no lost tickets",
+        "subtitle": "14\" and 15.6\" landscape touchscreens for the kitchen and counter: receive orders, print tickets by station, call queue numbers and take payment on one device."
+      },
+      "painGain": [
+        {
+          "pain": "Paper tickets get lost, wet or unreadable",
+          "gain": "Orders appear on screen with every option, clearly readable"
+        },
+        {
+          "pain": "The kitchen can't see which order has waited longest",
+          "gain": "Orders are sorted by time, so urgent ones stand out"
+        },
+        {
+          "pain": "Staff shout for customers when food is ready",
+          "gain": "Call the queue number from the screen; it appears on the queue display"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Customer orders",
+          "description": "At the self-order kiosk or with staff at the POS; the order goes straight to the kitchen."
+        },
+        {
+          "title": "Kitchen cooks from the screen",
+          "description": "Orders show on the KDS, and tickets can print by category to each station's printer."
+        },
+        {
+          "title": "Call the queue",
+          "description": "Mark it ready and the number appears on the queue display for pickup."
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "Real-time orders",
+          "description": "Orders from kiosks and POS arrive instantly, with options and notes."
+        },
+        {
+          "title": "Printing by station",
+          "description": "Choose which menu category prints on which printer; receipt and label printers over network or Bluetooth."
+        },
+        {
+          "title": "Queue calls and recalls",
+          "description": "Set orders to preparing or ready; the queue display updates automatically, and you can call again."
+        },
+        {
+          "title": "Counter payment",
+          "description": "Works as a cashier point: cash with a cash drawer or cashless, plus manual counter sales."
+        },
+        {
+          "title": "Coupons & promotions",
+          "description": "Apply the shop's discount coupons to bills."
+        },
+        {
+          "title": "VAT and sales summary",
+          "description": "VAT calculation, order history and daily sales summary."
+        },
+        {
+          "title": "Auto-cancel unpaid bills",
+          "description": "Orders not paid within the set time are cancelled, so the kitchen doesn't cook them."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Screen",
+          "value": "14\" and 15.6\" landscape touchscreens"
+        },
+        {
+          "label": "Sold as",
+          "value": "Hardware with screen and software"
+        },
+        {
+          "label": "Works with",
+          "value": "Self-order kiosk · POS terminal · Weigh & pay · Queue display"
+        },
+        {
+          "label": "Printers",
+          "value": "Receipt and label printers, network and Bluetooth"
+        },
+        {
+          "label": "Back office",
+          "value": "Menus, branches and reports on the web"
+        }
+      ],
+      "faq": [
+        {
+          "question": "How is a KDS different from printing tickets to the kitchen?",
+          "answer": "The screen shows every order sorted by time with live status, and it can still print tickets to each station's printer if the kitchen wants paper."
+        },
+        {
+          "question": "Does it work with MYPOS kiosks and POS out of the box?",
+          "answer": "Yes — orders from MYPOS kiosks and POS go straight to the KDS, and our team installs and configures it on site."
+        },
+        {
+          "question": "14\" or 15.6\"?",
+          "answer": "14\" suits small kitchens or counter points; 15.6\" is easier to read from a distance for kitchens with several stations. We'll assess your site for free."
+        }
+      ]
+    },
+    "queueDisplay": {
+      "metaTitle": "Restaurant queue display on your TV | MYPOS",
+      "metaDescription": "MYPOS queue display shows awaiting-payment, preparing and ready queue numbers on your shop's TV — plug in the MYPOS Android box and connect to the internet. Works with MYPOS kiosks, POS and KDS.",
+      "hero": {
+        "eyebrow": "Queue display",
+        "title": "Customers see their number on the TV — no more \"is mine ready?\"",
+        "subtitle": "Awaiting payment, preparing and ready queues on the TV in your shop. Use your own TV with the MYPOS Android box, or get it as a set with a TV."
+      },
+      "painGain": [
+        {
+          "pain": "Customers crowd the counter asking if their food is ready",
+          "gain": "They see their queue status on screen and wait calmly"
+        },
+        {
+          "pain": "Staff shout out queue numbers",
+          "gain": "Call from the kitchen screen; the number moves to Ready instantly"
+        },
+        {
+          "pain": "No idea how many orders are placed but unpaid",
+          "gain": "Awaiting-payment queues are shown separately from those in preparation"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Plug in the Android box",
+          "description": "Connect the MYPOS Android box to the TV's HDMI port."
+        },
+        {
+          "title": "Connect to the internet",
+          "description": "Link the box to your shop's internet; our team connects it to your system."
+        },
+        {
+          "title": "Queues appear automatically",
+          "description": "As orders come in and the kitchen updates them, the screen follows."
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "Three statuses on one screen",
+          "description": "Awaiting payment · Preparing · Ready — with the count and the numbers in each."
+        },
+        {
+          "title": "Use your existing TV",
+          "description": "Buy just the MYPOS Android box for your TV, or get a set with a TV."
+        },
+        {
+          "title": "Straight from your system",
+          "description": "Queues come from MYPOS kiosks, POS and KDS — nothing re-keyed."
+        },
+        {
+          "title": "Recall",
+          "description": "Customer hasn't come? Call them again from the kitchen screen."
+        },
+        {
+          "title": "Managed in the back office",
+          "description": "Configure each branch's display from the web back office."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Hardware",
+          "value": "MYPOS Android box — box only, or as a set with a TV"
+        },
+        {
+          "label": "Screen",
+          "value": "Any TV with HDMI"
+        },
+        {
+          "label": "Connectivity",
+          "value": "Internet"
+        },
+        {
+          "label": "On screen",
+          "value": "Awaiting payment · Preparing · Ready (count and numbers)"
+        },
+        {
+          "label": "Works with",
+          "value": "Self-order kiosk · POS terminal · KDS"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Do I need a new TV?",
+          "answer": "No — any TV with HDMI works with the MYPOS Android box, or you can buy it as a set with a TV."
+        },
+        {
+          "question": "Is it hard to set up?",
+          "answer": "Plug the box into the TV and connect it to the internet; our team links it to your system."
+        },
+        {
+          "question": "Where does the queue data come from?",
+          "answer": "From your MYPOS kiosks, POS and KDS. New orders and kitchen status changes update the screen automatically."
+        }
+      ]
+    },
+    "vendingOnline": {
+      "metaTitle": "Vending Machine Online — cash with change, QR payments | MYPOS",
+      "metaDescription": "MYPOS Vending Machine Online: 10.1\" / 15.6\" / 21.5\" vertical touchscreens, coins and banknotes with change, PromptPay, WeChat Pay, Alipay, TrueMoney and LAO QR, closed-loop cash cards, and stock in the back office.",
+      "hero": {
+        "eyebrow": "Vending Machine Online",
+        "title": "Sell around the clock, take every payment, see every machine's stock in one place",
+        "subtitle": "10.1\" / 15.6\" / 21.5\" vertical touchscreens, coins and banknotes with change, multiple QR wallets, and products, prices and stock managed in the back office."
+      },
+      "painGain": [
+        {
+          "pain": "Opening every machine to count stock",
+          "gain": "See each machine's stock in the back office, real-time and offline"
+        },
+        {
+          "pain": "Customers without cash can't buy",
+          "gain": "PromptPay, WeChat Pay, Alipay, TrueMoney, LAO QR or a closed-loop cash card"
+        },
+        {
+          "pain": "Foreign tourists can't read the machine",
+          "gain": "10 on-screen languages, chosen by the customer"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Choose on screen",
+          "description": "Customers pick products on the vertical touchscreen, with photos and prices."
+        },
+        {
+          "title": "Pay",
+          "description": "Cash with change, QR, closed-loop cash card, plus discount coupons."
+        },
+        {
+          "title": "Collect",
+          "description": "The product drops to the pickup bay; stock and sales are recorded automatically."
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "Vertical touchscreen, three sizes",
+          "description": "10.1\" / 15.6\" / 21.5\", showing products with photos and prices, and ads while idle."
+        },
+        {
+          "title": "Cash with change",
+          "description": "Coins 1, 2, 5, 10 THB and banknotes 20, 50, 100, 500 THB, with automatic change."
+        },
+        {
+          "title": "Multiple QR wallets",
+          "description": "PromptPay · WeChat Pay · Alipay · TrueMoney · LAO QR"
+        },
+        {
+          "title": "Closed-loop cash cards",
+          "description": "For factories, offices, schools or cafeterias with their own top-up cards."
+        },
+        {
+          "title": "Discount coupons",
+          "description": "Shops hand coupons to customers as codes or QR codes, redeemed at the machine."
+        },
+        {
+          "title": "10 languages",
+          "description": "Customers choose the screen language."
+        },
+        {
+          "title": "Stock and status in the back office",
+          "description": "Stock per machine, real-time and offline; set products and prices, see sales and which machines are online."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Screen",
+          "value": "Vertical touchscreen 10.1\" / 15.6\" / 21.5\""
+        },
+        {
+          "label": "Cash",
+          "value": "Coins 1, 2, 5, 10 THB · Banknotes 20, 50, 100, 500 THB · Automatic change"
+        },
+        {
+          "label": "QR payments",
+          "value": "PromptPay · WeChat Pay · Alipay · TrueMoney · LAO QR"
+        },
+        {
+          "label": "Other",
+          "value": "Closed-loop cash card · Coupon code / QR code"
+        },
+        {
+          "label": "Languages",
+          "value": "10"
+        },
+        {
+          "label": "CAN cabinet (Japanese)",
+          "value": "32 slots for round bottles and cans · Refrigerated"
+        },
+        {
+          "label": "Spiral cabinet",
+          "value": "Bottles, cans and snack bags\nWith or without lift · Refrigerated or ambient\n30+ slots in several sizes"
+        },
+        {
+          "label": "Back office",
+          "value": "Sales dashboard · Real-time and offline stock · Machine status"
+        }
+      ],
+      "faq": [
+        {
+          "question": "CAN or Spiral cabinet?",
+          "answer": "The Japanese-style CAN cabinet has 32 slots for round bottles and cans and is refrigerated. Spiral cabinets use coils and take drinks and snack bags, with or without a lift, refrigerated or ambient."
+        },
+        {
+          "question": "What does the lift in a Spiral cabinet do?",
+          "answer": "It takes the product from the shelf down to the pickup bay instead of letting it drop — better for items that shouldn't be knocked."
+        },
+        {
+          "question": "Online vs Offline?",
+          "answer": "Online has a touchscreen, QR payments, closed-loop cards, coupons and the back office. Offline takes coins and banknotes only and has no back office."
+        },
+        {
+          "question": "What is LAO QR for?",
+          "answer": "It lets customers from Laos pay with Lao banking apps — useful near borders and in tourist areas."
+        }
+      ]
+    },
+    "vendingOffline": {
+      "metaTitle": "Vending Machine Offline — coins and banknotes | MYPOS",
+      "metaDescription": "MYPOS Vending Machine Offline takes 1, 2, 5, 10 THB coins and 20, 50, 100, 500 THB banknotes and runs without internet or a back office.",
+      "hero": {
+        "eyebrow": "Vending Machine Offline",
+        "title": "A coin-and-note vending machine that sells anywhere, no internet needed",
+        "subtitle": "Coins and banknotes, for places that want a simple machine without a back office."
+      },
+      "painGain": [
+        {
+          "pain": "No reliable internet at the location",
+          "gain": "Runs offline, no internet required"
+        },
+        {
+          "pain": "No need for a complex system",
+          "gain": "Coins and banknotes — simple for buyers and owners"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Choose a product",
+          "description": "Customers pick from the machine's slots."
+        },
+        {
+          "title": "Insert coins or notes",
+          "description": "Coins 1, 2, 5, 10 THB and banknotes 20, 50, 100, 500 THB."
+        },
+        {
+          "title": "Collect",
+          "description": "The product drops to the pickup bay."
+        }
+      ],
+      "cases": [],
+      "features": [
+        {
+          "title": "Coins and banknotes",
+          "description": "Coins 1, 2, 5, 10 THB and banknotes 20, 50, 100, 500 THB."
+        },
+        {
+          "title": "No internet needed",
+          "description": "Runs on its own — suited to places with unreliable internet."
+        },
+        {
+          "title": "Cabinet to suit your products",
+          "description": "Ask our team which CAN and Spiral cabinets are available for the Offline model."
+        }
+      ],
+      "specs": [
+        {
+          "label": "Payment",
+          "value": "Coins 1, 2, 5, 10 THB · Banknotes 20, 50, 100, 500 THB"
+        },
+        {
+          "label": "Connectivity",
+          "value": "No internet required"
+        },
+        {
+          "label": "Back office",
+          "value": "None (standalone)"
+        },
+        {
+          "label": "Cabinets",
+          "value": "Ask our team for supported models"
+        }
+      ],
+      "faq": [
+        {
+          "question": "Can the Offline model take QR payments?",
+          "answer": "No — it takes coins and banknotes only. For QR, closed-loop cards, coupons or back-office stock, choose the Online model."
+        },
+        {
+          "question": "Where does the Offline model fit?",
+          "answer": "Places that want a simple machine, or that lack reliable internet."
+        }
+      ]
     }
   },
   "productsCommon": {
@@ -540,9 +970,13 @@
     },
     "categories": {
       "self-order": "Self-Order Kiosk",
-      "weigh-pay": "Self-Service Weigh & Pay",
+      "weigh-pay": "Weigh & pay POS / self-ordering",
       "pos": "Point of Sale",
-      "ticketing": "Ticketing Kiosk"
+      "ticketing": "Ticket kiosk",
+      "kds": "KDS kitchen display",
+      "queue-display": "Queue display",
+      "vending-online": "Vending Machine Online",
+      "vending-offline": "Vending Machine Offline"
     }
   },
   "productDetail": {
@@ -608,40 +1042,83 @@
       "cta": "Request a Demo"
     },
     "features": {
-      "title": "Key Software Features",
+      "title": "Back office: every machine, every branch, one website",
       "items": [
         {
-          "title": "Web-Based Back Office Dashboard",
-          "description": "Log in from any browser — no app install needed — to manage branches, menus, and reports from one central system."
+          "title": "Business dashboard",
+          "description": "Overview, sales, best sellers and operations on separate tabs, so owners and managers get answers fast."
         },
         {
-          "title": "Manage Your Own Menu/Products",
-          "description": "Add, edit, or disable items instantly from the back office — no need to wait on an IT team."
+          "title": "Multiple companies and branches",
+          "description": "Run every branch from one place, with prices per branch and per sales channel."
         },
         {
-          "title": "Real-Time Sales Reports",
-          "description": "View sales, best sellers, and performance for every branch, anytime, anywhere."
+          "title": "Central menu library with AI translation",
+          "description": "Build menus and option groups once for every branch, and translate menu names into several languages with AI."
         },
         {
-          "title": "Multi-Branch Support",
-          "description": "Manage multiple branches from a single central dashboard and compare performance across locations."
+          "title": "Time-based menus",
+          "description": "Show menu categories only at set times — breakfast, lunch and so on."
         },
         {
-          "title": "Secure, automatic cloud backup",
-          "description": "Every sale is recorded and backed up to the cloud automatically, so you never lose data even if a device fails."
+          "title": "Real-time stock",
+          "description": "Stock for each branch and each machine, with a history of stock and price changes."
         },
         {
-          "title": "Set Your Own Promotions",
-          "description": "Create discounts, promotions, and featured items yourself from the back office."
+          "title": "Machine status and remote commands",
+          "description": "See which machines are online or offline and send commands to them from the back office."
         },
         {
-          "title": "Continuous Feature Updates",
-          "description": "Our local development team ships updates and fixes based on real customer needs on an ongoing basis."
+          "title": "Reports and exports",
+          "description": "Order and transaction reports, exported to Excel or PDF."
+        },
+        {
+          "title": "Tax invoices",
+          "description": "Issue tax invoices from bills in the system."
+        },
+        {
+          "title": "Roles and edit history",
+          "description": "Role-based permissions and a log of who changed what, and when."
         }
       ]
     },
     "screenshots": {
       "title": "System Screenshots"
+    },
+    "managed": {
+      "title": "Machines managed from this back office",
+      "items": [
+        "Self-order kiosk",
+        "POS terminal",
+        "KDS kitchen display",
+        "Weigh & pay",
+        "Queue display",
+        "Vending Machine Online"
+      ]
+    },
+    "coupons": {
+      "title": "Coupons & promotions",
+      "lede": "Shops create discount coupons in the back office and hand them to their own customers as a code or QR code, which customers redeem for a discount at the machine.",
+      "worksOnTitle": "Works with",
+      "worksOn": [
+        "Self-order kiosk",
+        "POS terminal",
+        "Vending Machine Online"
+      ],
+      "steps": [
+        {
+          "title": "Create coupons in the back office",
+          "description": "Set the discount for each coupon batch."
+        },
+        {
+          "title": "Give them to your customers",
+          "description": "Send them as codes or QR codes through your own channels, such as your LINE OA or social media."
+        },
+        {
+          "title": "Customers redeem at the machine",
+          "description": "They enter the code or scan the QR at checkout and the discount is applied automatically."
+        }
+      ]
     }
   },
   "references": {

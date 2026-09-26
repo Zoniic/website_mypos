@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site";
 import { getProductsByCategory } from "@/lib/products";
 import { getSiteImages } from "@/lib/siteSettings";
 import {
+  isOnlineSolution,
   isSolutionSlug,
   solutionCategory,
   solutionMachine,
@@ -22,6 +23,7 @@ import { References, type CaseItem } from "@/components/sections/References";
 import { CompareTable } from "@/components/sections/CompareTable";
 import { FaqAccordion, type FaqItem } from "@/components/sections/FaqAccordion";
 import { Invite } from "@/components/sections/Invite";
+import { BackOfficeBand, SolutionDetails, type FeatureItem, type SpecRow } from "@/components/sections/SolutionDetails";
 
 
 // Empty list = render each page on its first visit, then serve it from
@@ -80,6 +82,10 @@ export default async function SolutionPage({
   const steps = t.raw("steps") as StepItem[];
   const cases = t.raw("cases") as CaseItem[];
   const faqItems = t.raw("faq") as FaqItem[];
+  // Optional per line: features + spec table (newer lines), case studies
+  // only where real ones exist.
+  const features = (t.has("features") ? t.raw("features") : []) as FeatureItem[];
+  const specs = (t.has("specs") ? t.raw("specs") : []) as SpecRow[];
   const navLabel = tNav(`solutionsItems.${key}`);
   const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
   const images = await getSiteImages();
@@ -140,9 +146,10 @@ export default async function SolutionPage({
       <SolutionSubNav
         items={[
           { id: "pain-gain", label: tCommon("painGainTitle") },
+          ...(features.length || specs.length ? [{ id: "details", label: tCommon("featuresTitle") }] : []),
           { id: "how-it-works", label: tCommon("howItWorksTitle") },
-          { id: "cases", label: tCommon("referencesTitle") },
-          { id: "compare", label: tCommon("compareTitle") },
+          ...(cases.length ? [{ id: "cases", label: tCommon("referencesTitle") }] : []),
+          ...(categoryProducts.length ? [{ id: "compare", label: tCommon("compareTitle") }] : []),
           { id: "faq", label: tCommon("faqTitle") },
         ]}
       />
@@ -154,24 +161,42 @@ export default async function SolutionPage({
         items={painGainItems}
       />
       {slug === "self-order" && <SelfServiceBenefits />}
+      <SolutionDetails
+        id="details"
+        featuresTitle={tCommon("featuresTitle")}
+        features={features}
+        specsTitle={tCommon("specsTitle")}
+        specs={specs}
+      />
       <HowItWorks id="how-it-works" title={tCommon("howItWorksTitle")} steps={steps} />
-      <References
-        id="cases"
-        title={tCommon("referencesTitle")}
-        note={tCommon("referencesNote")}
-        problemLabel={tCommon("problemLabel")}
-        installLabel={tCommon("installLabel")}
-        resultLabel={tCommon("resultLabel")}
-        cases={cases}
-      />
-      <CompareTable
-        title={tCommon("compareTitle")}
-        modelLabel={tCommon("compareModel")}
-        screenLabel={tCommon("compareScreen")}
-        osLabel={tCommon("compareOs")}
-        priceLabel={tCommon("comparePrice")}
-        products={categoryProducts}
-      />
+      {cases.length > 0 && (
+        <References
+          id="cases"
+          title={tCommon("referencesTitle")}
+          note={tCommon("referencesNote")}
+          problemLabel={tCommon("problemLabel")}
+          installLabel={tCommon("installLabel")}
+          resultLabel={tCommon("resultLabel")}
+          cases={cases}
+        />
+      )}
+      {categoryProducts.length > 0 && (
+        <CompareTable
+          title={tCommon("compareTitle")}
+          modelLabel={tCommon("compareModel")}
+          screenLabel={tCommon("compareScreen")}
+          osLabel={tCommon("compareOs")}
+          priceLabel={tCommon("comparePrice")}
+          products={categoryProducts}
+        />
+      )}
+      {isOnlineSolution(slug) && (
+        <BackOfficeBand
+          title={tCommon("backOfficeTitle")}
+          body={tCommon("backOfficeBody")}
+          cta={tCommon("backOfficeCta")}
+        />
+      )}
       <FaqAccordion id="faq" title={tCommon("faqTitle")} items={faqItems} />
       <Invite />
     </>

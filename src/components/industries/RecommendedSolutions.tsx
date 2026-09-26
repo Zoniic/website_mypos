@@ -10,6 +10,9 @@ const artHeight: Record<MachineKind, string> = {
   ticket: "h-[76%]",
   pos: "h-[42%]",
   scale: "h-[40%]",
+  kds: "h-[42%]",
+  queue: "h-[36%]",
+  vending: "h-[80%]",
 };
 
 export function RecommendedSolutions({

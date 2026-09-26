@@ -11,10 +11,11 @@ import { isVideoUrl } from "@/lib/heroMedia";
 // Where each machine sits in the 640×360 lineup drawing, as % of the stage,
 // so its label can point at it.
 const callouts = [
-  { key: "selfOrder", href: "/solutions/self-order", left: "15%", top: "14%" },
-  { key: "pos", href: "/solutions/pos", left: "46%", top: "30%" },
-  { key: "weighPay", href: "/solutions/weigh-pay", left: "64%", top: "36%" },
-  { key: "ticketing", href: "/solutions/ticketing", left: "88%", top: "12%" },
+  { key: "selfOrder", href: "/solutions/self-order", left: "16%", top: "12%" },
+  { key: "queueDisplay", href: "/solutions/queue-display", left: "49%", top: "4%" },
+  { key: "pos", href: "/solutions/pos", left: "40%", top: "37%" },
+  { key: "kds", href: "/solutions/kds", left: "63%", top: "43%" },
+  { key: "vendingOnline", href: "/solutions/vending-online", left: "86%", top: "17%" },
 ] as const;
 
 export async function Hero() {

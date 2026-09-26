@@ -10,10 +10,10 @@
  * Run: npx tsx prisma/seed-categories.ts
  */
 import { PrismaClient } from "@prisma/client";
+import { PRODUCT_CATEGORIES as CATEGORIES } from "../src/data/categories";
 
 const prisma = new PrismaClient();
 
-const CATEGORIES = ["self-order", "weigh-pay", "pos", "ticketing"] as const;
 
 const BUSINESS_TYPES = [
   "restaurant",
