@@ -24,6 +24,8 @@ import { CompareTable } from "@/components/sections/CompareTable";
 import { FaqAccordion, type FaqItem } from "@/components/sections/FaqAccordion";
 import { Invite } from "@/components/sections/Invite";
 import { BackOfficeBand, SolutionDetails, type FeatureItem, type SpecRow } from "@/components/sections/SolutionDetails";
+import { PageSections } from "@/components/layout/PageSections";
+import { getPageSections } from "@/lib/pageLayout";
 
 
 // Empty list = render each page on its first visit, then serve it from
@@ -94,6 +96,8 @@ export default async function SolutionPage({
   const navLabel = tNav(`solutionsItems.${key}`);
   const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
   const images = await getSiteImages();
+  const order = await getPageSections("solution");
+  const shown = (id: string) => order.includes(id);
 
   const breadcrumbItems = [
     { label: tCommon("breadcrumbHome"), href: "/" },
@@ -132,10 +136,13 @@ export default async function SolutionPage({
     })),
   };
 
+  const hasCompare = shown("compare") && categoryProducts.length > 0;
+  const hasDetails = shown("details") && (features.length > 0 || specs.length > 0);
+
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
-      <JsonLd data={faqSchema} />
+      {shown("faq") && <JsonLd data={faqSchema} />}
 
       <Breadcrumb items={breadcrumbItems} />
       <SolutionHero
@@ -145,68 +152,79 @@ export default async function SolutionPage({
         ctaPrimary={tCommonUi("requestQuote")}
         // Point at the model comparison when there are products to compare,
         // otherwise at the features/specs.
-        ctaSecondary={categoryProducts.length ? tCommon("compareCta") : tCommon("featuresTitle")}
-        ctaSecondaryHref={categoryProducts.length ? "#compare" : features.length || specs.length ? "#details" : "#how-it-works"}
+        ctaSecondary={hasCompare ? tCommon("compareCta") : tCommon("featuresTitle")}
+        ctaSecondaryHref={hasCompare ? "#compare" : hasDetails ? "#details" : "#how-it-works"}
         imageLabel={`${navLabel} photo`}
         imageUrl={images[`solution-${slug}`]}
         machine={solutionMachine[slug]}
       />
-      <SolutionSubNav
-        items={[
-          { id: "pain-gain", label: tCommon("painGainTitle") },
-          ...(features.length || specs.length ? [{ id: "details", label: tCommon("featuresTitle") }] : []),
-          { id: "how-it-works", label: tCommon("howItWorksTitle") },
-          ...(cases.length ? [{ id: "cases", label: tCommon("referencesTitle") }] : []),
-          ...(categoryProducts.length ? [{ id: "compare", label: tCommon("compareTitle") }] : []),
-          { id: "faq", label: tCommon("faqTitle") },
-        ]}
+      <PageSections
+        order={order}
+        blocks={{
+          subNav: (
+            <SolutionSubNav
+              items={[
+                ...(shown("painGain") ? [{ id: "pain-gain", label: tCommon("painGainTitle") }] : []),
+                ...(hasDetails ? [{ id: "details", label: tCommon("featuresTitle") }] : []),
+                ...(shown("howItWorks") ? [{ id: "how-it-works", label: tCommon("howItWorksTitle") }] : []),
+                ...(shown("cases") && cases.length ? [{ id: "cases", label: tCommon("referencesTitle") }] : []),
+                ...(hasCompare ? [{ id: "compare", label: tCommon("compareTitle") }] : []),
+                ...(shown("faq") ? [{ id: "faq", label: tCommon("faqTitle") }] : []),
+              ]}
+            />
+          ),
+          painGain: (
+            <PainGain
+              id="pain-gain"
+              title={tCommon("painGainTitle")}
+              painLabel={tCommon("painLabel")}
+              gainLabel={tCommon("gainLabel")}
+              items={painGainItems}
+            />
+          ),
+          selfServiceBenefits: slug === "self-order" && <SelfServiceBenefits />,
+          details: (
+            <SolutionDetails
+              id="details"
+              featuresTitle={tCommon("featuresTitle")}
+              features={features}
+              specsTitle={tCommon("specsTitle")}
+              specs={specs}
+            />
+          ),
+          howItWorks: <HowItWorks id="how-it-works" title={tCommon("howItWorksTitle")} steps={steps} />,
+          cases: cases.length > 0 && (
+            <References
+              id="cases"
+              title={tCommon("referencesTitle")}
+              note={tCommon("referencesNote")}
+              problemLabel={tCommon("problemLabel")}
+              installLabel={tCommon("installLabel")}
+              resultLabel={tCommon("resultLabel")}
+              cases={cases}
+            />
+          ),
+          compare: categoryProducts.length > 0 && (
+            <CompareTable
+              title={tCommon("compareTitle")}
+              modelLabel={tCommon("compareModel")}
+              screenLabel={tCommon("compareScreen")}
+              osLabel={tCommon("compareOs")}
+              priceLabel={tCommon("comparePrice")}
+              products={categoryProducts}
+            />
+          ),
+          backOffice: isOnlineSolution(slug) && (
+            <BackOfficeBand
+              title={tCommon("backOfficeTitle")}
+              body={tCommon("backOfficeBody")}
+              cta={tCommon("backOfficeCta")}
+            />
+          ),
+          faq: <FaqAccordion id="faq" title={tCommon("faqTitle")} items={faqItems} />,
+          invite: <Invite />,
+        }}
       />
-      <PainGain
-        id="pain-gain"
-        title={tCommon("painGainTitle")}
-        painLabel={tCommon("painLabel")}
-        gainLabel={tCommon("gainLabel")}
-        items={painGainItems}
-      />
-      {slug === "self-order" && <SelfServiceBenefits />}
-      <SolutionDetails
-        id="details"
-        featuresTitle={tCommon("featuresTitle")}
-        features={features}
-        specsTitle={tCommon("specsTitle")}
-        specs={specs}
-      />
-      <HowItWorks id="how-it-works" title={tCommon("howItWorksTitle")} steps={steps} />
-      {cases.length > 0 && (
-        <References
-          id="cases"
-          title={tCommon("referencesTitle")}
-          note={tCommon("referencesNote")}
-          problemLabel={tCommon("problemLabel")}
-          installLabel={tCommon("installLabel")}
-          resultLabel={tCommon("resultLabel")}
-          cases={cases}
-        />
-      )}
-      {categoryProducts.length > 0 && (
-        <CompareTable
-          title={tCommon("compareTitle")}
-          modelLabel={tCommon("compareModel")}
-          screenLabel={tCommon("compareScreen")}
-          osLabel={tCommon("compareOs")}
-          priceLabel={tCommon("comparePrice")}
-          products={categoryProducts}
-        />
-      )}
-      {isOnlineSolution(slug) && (
-        <BackOfficeBand
-          title={tCommon("backOfficeTitle")}
-          body={tCommon("backOfficeBody")}
-          cta={tCommon("backOfficeCta")}
-        />
-      )}
-      <FaqAccordion id="faq" title={tCommon("faqTitle")} items={faqItems} />
-      <Invite />
     </>
   );
 }

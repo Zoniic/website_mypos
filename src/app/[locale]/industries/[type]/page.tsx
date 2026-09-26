@@ -18,6 +18,8 @@ import { References } from "@/components/sections/References";
 import { CompareTable } from "@/components/sections/CompareTable";
 import { FaqAccordion, type FaqItem } from "@/components/sections/FaqAccordion";
 import { Invite } from "@/components/sections/Invite";
+import { PageSections } from "@/components/layout/PageSections";
+import { getPageSections } from "@/lib/pageLayout";
 import { RecommendedSolutions } from "@/components/industries/RecommendedSolutions";
 
 
@@ -110,10 +112,13 @@ export default async function IndustryPage({
     })),
   };
 
+  const order = await getPageSections("industry");
+  const shown = (id: string) => order.includes(id);
+
   return (
     <>
       <JsonLd data={breadcrumbSchema} />
-      {faq.length > 0 && <JsonLd data={faqSchema} />}
+      {shown("faq") && faq.length > 0 && <JsonLd data={faqSchema} />}
 
       <Breadcrumb
         items={[
@@ -128,72 +133,79 @@ export default async function IndustryPage({
         subtitle={t("hero.subtitle")}
         ctaPrimary={tc("ctaDemo")}
         ctaPrimaryHref={`/contact?topic=demo&industry=${type}`}
-        ctaSecondary={tc("solutionsTitle")}
-        ctaSecondaryHref="#solutions"
+        ctaSecondary={shown("recommended") ? tc("solutionsTitle") : tc("stepsTitle")}
+        ctaSecondaryHref={shown("recommended") ? "#solutions" : "#how-it-works"}
         imageLabel={`${typeLabel} photo`}
         imageUrl={images[`industry-${type}`]}
         machine={solutionMachine[industrySolutions[type][0]]}
       />
-      <PainGain
-        id="pain-gain"
-        title={tc("painGainTitle")}
-        painLabel={tc("painLabel")}
-        gainLabel={tc("gainLabel")}
-        items={painGain}
+      <PageSections
+        order={order}
+        blocks={{
+          painGain: (
+            <PainGain
+              id="pain-gain"
+              title={tc("painGainTitle")}
+              painLabel={tc("painLabel")}
+              gainLabel={tc("gainLabel")}
+              items={painGain}
+            />
+          ),
+          recommended: (
+            <RecommendedSolutions
+              id="solutions"
+              title={tc("solutionsTitle")}
+              lede={tc("solutionsLede")}
+              viewLabel={tc("viewSolution")}
+              items={solutions}
+            />
+          ),
+          howItWorks: <HowItWorks id="how-it-works" title={tc("stepsTitle")} steps={steps} />,
+          products: products.length > 0 && (
+            <>
+              <CompareTable
+                title={tc("productsTitle")}
+                modelLabel={tSolutionsCommon("compareModel")}
+                screenLabel={tSolutionsCommon("compareScreen")}
+                osLabel={tSolutionsCommon("compareOs")}
+                priceLabel={tSolutionsCommon("comparePrice")}
+                products={products}
+              />
+              <div className="mx-auto -mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
+                <Button href={`/products?businessType=${type}`} variant="ghost" size="sm">
+                  {tc("viewAllProducts")}
+                </Button>
+              </div>
+            </>
+          ),
+          cases: cases.length > 0 && (
+            <References
+              id="cases"
+              title={tc("casesTitle")}
+              note={tc("casesNote")}
+              problemLabel={tSolutionsCommon("problemLabel")}
+              installLabel={tSolutionsCommon("installLabel")}
+              resultLabel={tSolutionsCommon("resultLabel")}
+              cases={cases}
+            />
+          ),
+          savings: (
+            <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+              <div className="flex flex-col items-start justify-between gap-6 rounded-card border border-primary-200 bg-primary-50 p-8 sm:flex-row sm:items-center">
+                <div>
+                  <h2 className="text-2xl font-bold tracking-tight">{tc("calculatorTitle")}</h2>
+                  <p className="mt-2 max-w-xl text-text-2">{tc("calculatorBody")}</p>
+                </div>
+                <Button href="/tools/savings-calculator" variant="primary">
+                  {tc("calculatorCta")}
+                </Button>
+              </div>
+            </section>
+          ),
+          faq: faq.length > 0 && <FaqAccordion id="faq" title={tc("faqTitle")} items={faq} />,
+          invite: <Invite />,
+        }}
       />
-      <RecommendedSolutions
-        id="solutions"
-        title={tc("solutionsTitle")}
-        lede={tc("solutionsLede")}
-        viewLabel={tc("viewSolution")}
-        items={solutions}
-      />
-      <HowItWorks id="how-it-works" title={tc("stepsTitle")} steps={steps} />
-
-      {products.length > 0 && (
-        <>
-          <CompareTable
-            title={tc("productsTitle")}
-            modelLabel={tSolutionsCommon("compareModel")}
-            screenLabel={tSolutionsCommon("compareScreen")}
-            osLabel={tSolutionsCommon("compareOs")}
-            priceLabel={tSolutionsCommon("comparePrice")}
-            products={products}
-          />
-          <div className="mx-auto -mt-8 max-w-7xl px-4 sm:px-6 lg:px-8">
-            <Button href={`/products?businessType=${type}`} variant="ghost" size="sm">
-              {tc("viewAllProducts")}
-            </Button>
-          </div>
-        </>
-      )}
-
-      {cases.length > 0 && (
-        <References
-          id="cases"
-          title={tc("casesTitle")}
-          note={tc("casesNote")}
-          problemLabel={tSolutionsCommon("problemLabel")}
-          installLabel={tSolutionsCommon("installLabel")}
-          resultLabel={tSolutionsCommon("resultLabel")}
-          cases={cases}
-        />
-      )}
-
-      <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-start justify-between gap-6 rounded-card border border-primary-200 bg-primary-50 p-8 sm:flex-row sm:items-center">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">{tc("calculatorTitle")}</h2>
-            <p className="mt-2 max-w-xl text-text-2">{tc("calculatorBody")}</p>
-          </div>
-          <Button href="/tools/savings-calculator" variant="primary">
-            {tc("calculatorCta")}
-          </Button>
-        </div>
-      </section>
-
-      {faq.length > 0 && <FaqAccordion id="faq" title={tc("faqTitle")} items={faq} />}
-      <Invite />
     </>
   );
 }

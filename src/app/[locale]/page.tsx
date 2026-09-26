@@ -20,6 +20,8 @@ import { PopularProducts } from "@/components/sections/PopularProducts";
 import { Testimonials } from "@/components/sections/Testimonials";
 import { Faq } from "@/components/sections/Faq";
 import { Invite } from "@/components/sections/Invite";
+import { PageSections } from "@/components/layout/PageSections";
+import { getPageSections } from "@/lib/pageLayout";
 
 export async function generateMetadata({
   params,
@@ -57,6 +59,7 @@ export default async function HomePage({
   const faqItems = t.raw("faq.items") as { question: string; answer: string }[];
   const featuredProducts = await getFeaturedProducts(locale);
   const settings = await getSiteSettings();
+  const order = await getPageSections("home");
 
   const organizationSchema = {
     "@context": "https://schema.org",
@@ -105,23 +108,28 @@ export default async function HomePage({
   return (
     <>
       <JsonLd data={organizationSchema} />
-      <JsonLd data={faqSchema} />
+      {order.includes("faq") && <JsonLd data={faqSchema} />}
       <JsonLd data={productListSchema} />
 
-      <Hero />
-      <TrustLogos />
-      <Solutions />
-      <ReceiptTape />
-      <SelfServiceBenefits />
-      <UseCases />
-      <PopularProducts />
-      <Integrations />
-      <Pricing />
-      <WhyMypos />
-      <Testimonials />
-      <About />
-      <Faq />
-      <Invite />
+      <PageSections
+        order={order}
+        blocks={{
+          hero: <Hero />,
+          trustLogos: <TrustLogos />,
+          solutions: <Solutions />,
+          receiptTape: <ReceiptTape />,
+          selfServiceBenefits: <SelfServiceBenefits />,
+          useCases: <UseCases />,
+          popularProducts: <PopularProducts />,
+          integrations: <Integrations />,
+          pricing: <Pricing />,
+          whyMypos: <WhyMypos />,
+          testimonials: <Testimonials />,
+          about: <About />,
+          faq: <Faq />,
+          invite: <Invite />,
+        }}
+      />
     </>
   );
 }

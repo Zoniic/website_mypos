@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/admin/kb-categories", label: "KB Categories" },
   { href: "/admin/kb-articles", label: "KB Articles" },
   { href: "/admin/content", label: "Page Content" },
+  { href: "/admin/layout-editor", label: "Page Layout" },
   { href: "/admin/photos", label: "Site Photos" },
   { href: "/admin/trust-logos", label: "Trust Logos" },
   { href: "/admin/official-partners", label: "Official Partners" },
