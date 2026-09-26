@@ -14,6 +14,8 @@ const industryLabels: Record<string, string> = {
   hotel: "โรงแรม",
   themepark: "สวนสนุก",
   manufacturing: "โรงงาน",
+  office: "สำนักงานและอาคาร",
+  school: "สถานศึกษา",
 };
 
 const competitors = [

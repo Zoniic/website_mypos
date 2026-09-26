@@ -1,14 +1,4 @@
-const BUSINESS_TYPES = [
-  "restaurant",
-  "retail",
-  "buffet",
-  "convenience",
-  "themepark",
-  "hotel",
-  "cafeteria",
-  "bakery",
-  "manufacturing",
-] as const;
+import { BUSINESS_TYPES } from "@/data/businessTypes";
 
 export function BusinessTypeCheckboxes({
   name,

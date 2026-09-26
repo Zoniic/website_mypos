@@ -69,6 +69,24 @@ const paths: Record<string, React.ReactNode> = {
       strokeLinejoin="round"
     />
   ),
+  office: (
+    <path
+      d="M4 15.5V3.5h7v12M11 7.5h3v8M2.5 15.5h13M6.5 6h2M6.5 9h2M6.5 12h2"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
+  school: (
+    <path
+      d="M9 3.5 2 7l7 3.5L16 7 9 3.5ZM5 8.8v3.7c0 1 1.8 2 4 2s4-1 4-2V8.8M16 7v4"
+      stroke="currentColor"
+      strokeWidth="1.3"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  ),
   manufacturing: (
     <path
       d="M3 15.5V9l3 2.2V9l3 2.2V9l4-3v9.5H3ZM3 15.5h10M13 6.5V4.5h2v2"

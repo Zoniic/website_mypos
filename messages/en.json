@@ -966,7 +966,9 @@
       "hotel": "Hotel",
       "cafeteria": "Cafeteria",
       "bakery": "Bakery",
-      "manufacturing": "Manufacturing"
+      "manufacturing": "Manufacturing",
+      "office": "Offices & buildings",
+      "school": "Schools & universities"
     },
     "categories": {
       "self-order": "Self-Order Kiosk",
@@ -1635,6 +1637,16 @@
         "type": "manufacturing",
         "title": "Manufacturing",
         "blurb": "Staff canteens and points of sale on-site"
+      },
+      {
+        "type": "office",
+        "title": "Offices",
+        "blurb": "24-hour vending with QR or staff cards"
+      },
+      {
+        "type": "school",
+        "title": "Schools",
+        "blurb": "Shorter canteen queues and on-campus vending"
       }
     ]
   },
@@ -1692,7 +1704,11 @@
         "selfOrder": "Customers order and pay at the kiosk; orders go straight to the kitchen.",
         "weighPay": "Weigh and price automatically; customers pay without waiting for staff.",
         "pos": "Counter checkout with stock control, receipts and sales reports anywhere.",
-        "ticketing": "Self-service ticket sales that handle large crowds at once."
+        "ticketing": "Self-service ticket sales that handle large crowds at once.",
+        "kds": "Kiosk and counter orders reach the kitchen screen instantly, with station printing and queue calls.",
+        "queueDisplay": "Awaiting-payment, preparing and ready queues on your shop's TV.",
+        "vendingOnline": "Sells 24 hours: cash with change, QR and closed-loop cards, stock in the back office.",
+        "vendingOffline": "Coins and banknotes, works without internet."
       },
       "viewSolution": "View details",
       "productsTitle": "Models for this industry",
@@ -2169,6 +2185,108 @@
         {
           "question": "Can you install at estates outside Bangkok?",
           "answer": "Yes. Our team surveys and installs on site — ask sales about service areas."
+        }
+      ]
+    },
+    "office": {
+      "metaTitle": "Vending machines for offices and buildings | MYPOS",
+      "metaDescription": "Vending machines for offices, buildings and condominiums: selling 24 hours, cash with change, QR payments and closed-loop staff cards, with every machine's stock in the back office.",
+      "hero": {
+        "eyebrow": "Offices & buildings",
+        "title": "Snacks and essentials for staff, on sale all day with no one on duty",
+        "subtitle": "Vending machines that take cash, QR payments and closed-loop staff cards, with every machine's stock in the back office."
+      },
+      "painGain": [
+        {
+          "pain": "The building shop closes after hours; night-shift staff can't buy anything",
+          "gain": "Machines sell 24 hours, no staff needed"
+        },
+        {
+          "pain": "Someone has to check and restock every machine",
+          "gain": "See each machine's stock in the back office and restock only what's low"
+        },
+        {
+          "pain": "Staff don't carry cash",
+          "gain": "QR payments or closed-loop staff cards"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Choose",
+          "description": "Staff pick products on the machine's touchscreen."
+        },
+        {
+          "title": "Pay",
+          "description": "Cash with change, QR, or a closed-loop staff card."
+        },
+        {
+          "title": "Track sales and stock",
+          "description": "Facility managers see every machine's sales and stock in the back office."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Can staff pay with their staff cards?",
+          "answer": "Vending Machine Online supports closed-loop cash cards; our team will assess it with the card system you use."
+        },
+        {
+          "question": "What if there's no internet at the location?",
+          "answer": "The Offline model takes coins and banknotes, but has no QR payments and no back-office stock."
+        },
+        {
+          "question": "What can the machines sell?",
+          "answer": "CAN cabinets suit bottled and canned drinks and are refrigerated; Spiral cabinets take both drinks and snack bags."
+        }
+      ]
+    },
+    "school": {
+      "metaTitle": "Vending machines and self-order kiosks for schools and universities | MYPOS",
+      "metaDescription": "Self-order kiosks to shorten canteen queues and vending machines that take cash, QR payments and closed-loop student cards, with sales and stock in the back office.",
+      "hero": {
+        "eyebrow": "Schools & universities",
+        "title": "Shorter queues at break time, and sales all day on campus",
+        "subtitle": "Self-order kiosks for the canteen, and vending machines that take cash, QR payments or closed-loop student cards."
+      },
+      "painGain": [
+        {
+          "pain": "Long canteen queues and not enough break time",
+          "gain": "Several self-order kiosks take orders and payments in parallel"
+        },
+        {
+          "pain": "Students carry cash; change is slow and cash gets lost",
+          "gain": "At the vending machine, pay with a closed-loop card or QR"
+        },
+        {
+          "pain": "Staff don't know which machine is running low",
+          "gain": "Every machine's stock in the back office"
+        }
+      ],
+      "steps": [
+        {
+          "title": "Order or choose",
+          "description": "Order food at the kiosk or pick a product at the vending machine."
+        },
+        {
+          "title": "Pay",
+          "description": "Cash, QR, or a closed-loop card at the vending machine."
+        },
+        {
+          "title": "Collect",
+          "description": "The kitchen calls the number when food is ready; vending products drop to the pickup bay."
+        }
+      ],
+      "faq": [
+        {
+          "question": "Can students pay with student cards?",
+          "answer": "Vending Machine Online supports closed-loop cash cards; our team will assess it with your institution's card system."
+        },
+        {
+          "question": "Is there a machine that works without internet?",
+          "answer": "Yes, the Offline model takes coins and banknotes, but has no QR payments or back-office stock."
+        },
+        {
+          "question": "How are they installed and supported?",
+          "answer": "Our technicians survey the site, install and train your staff on location."
         }
       ]
     }

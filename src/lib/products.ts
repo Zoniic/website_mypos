@@ -5,16 +5,9 @@ import type { ProductCategory } from "@/data/categories";
 
 export type { ProductCategory };
 
-export type BusinessType =
-  | "restaurant"
-  | "retail"
-  | "buffet"
-  | "convenience"
-  | "themepark"
-  | "hotel"
-  | "cafeteria"
-  | "bakery"
-  | "manufacturing";
+import type { BusinessType } from "@/data/businessTypes";
+
+export type { BusinessType };
 
 export type ProductSpecs = {
   screenSize: string;

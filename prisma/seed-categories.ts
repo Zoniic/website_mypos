@@ -11,21 +11,11 @@
  */
 import { PrismaClient } from "@prisma/client";
 import { PRODUCT_CATEGORIES as CATEGORIES } from "../src/data/categories";
+import { BUSINESS_TYPES } from "../src/data/businessTypes";
 
 const prisma = new PrismaClient();
 
 
-const BUSINESS_TYPES = [
-  "restaurant",
-  "retail",
-  "buffet",
-  "convenience",
-  "themepark",
-  "hotel",
-  "cafeteria",
-  "bakery",
-  "manufacturing",
-] as const;
 
 async function main() {
   for (const slug of CATEGORIES) {

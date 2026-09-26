@@ -1,4 +1,4 @@
-import type { BusinessType } from "@/lib/products";
+import { BUSINESS_TYPES } from "@/data/businessTypes";
 import type { SolutionSlug } from "@/data/solutions";
 
 /**
@@ -6,17 +6,7 @@ import type { SolutionSlug } from "@/data/solutions";
  * BusinessType lookup table, so products and case studies tagged with a type
  * in the admin show up on its page automatically.
  */
-export const industrySlugs = [
-  "restaurant",
-  "cafeteria",
-  "buffet",
-  "bakery",
-  "retail",
-  "convenience",
-  "hotel",
-  "themepark",
-  "manufacturing",
-] as const satisfies readonly BusinessType[];
+export const industrySlugs = BUSINESS_TYPES;
 
 export type IndustrySlug = (typeof industrySlugs)[number];
 
@@ -31,6 +21,8 @@ export const industrySolutions: Record<IndustrySlug, SolutionSlug[]> = {
   hotel: ["vending-online", "ticketing", "self-order", "pos"],
   themepark: ["ticketing", "vending-online", "pos"],
   manufacturing: ["vending-online", "self-order", "pos"],
+  office: ["vending-online", "vending-offline", "self-order"],
+  school: ["vending-online", "self-order", "vending-offline"],
 };
 
 export function isIndustrySlug(value: string): value is IndustrySlug {

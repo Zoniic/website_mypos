@@ -1,5 +1,7 @@
 "use client";
 
+import { BUSINESS_TYPES } from "@/data/businessTypes";
+
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
@@ -28,17 +30,7 @@ const emptyValues: ReferenceFormValues = {
   },
 };
 
-const businessTypes = [
-  "restaurant",
-  "retail",
-  "buffet",
-  "convenience",
-  "themepark",
-  "hotel",
-  "cafeteria",
-  "bakery",
-  "manufacturing",
-];
+const businessTypes = BUSINESS_TYPES;
 
 const inputClass =
   "mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-sm text-text-1";

@@ -424,6 +424,8 @@ function industryFieldGuides(): Record<string, ContentGuideEntry> {
     hotel: "โรงแรม",
     themepark: "สวนสนุก",
     manufacturing: "โรงงาน",
+    office: "สำนักงานและอาคาร",
+    school: "สถานศึกษา",
   };
   const entries: Record<string, ContentGuideEntry> = {};
   for (const [type, label] of Object.entries(types)) {
