@@ -13,13 +13,19 @@ export function ImageUploadField({
   name: string;
   label: string;
   currentUrl?: string | null;
-  ratio?: "1/1" | "4/3" | "16/9";
+  ratio?: "1/1" | "4/3" | "16/9" | "5/1";
   specHint: string;
 }) {
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
   const ratioClass =
-    ratio === "1/1" ? "aspect-square" : ratio === "4/3" ? "aspect-[4/3]" : "aspect-[16/9]";
+    ratio === "1/1"
+      ? "aspect-square"
+      : ratio === "4/3"
+        ? "aspect-[4/3]"
+        : ratio === "5/1"
+          ? "aspect-[5/1] max-w-sm"
+          : "aspect-[16/9]";
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const file = event.target.files?.[0];

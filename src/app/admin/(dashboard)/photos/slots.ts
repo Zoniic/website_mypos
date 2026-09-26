@@ -3,7 +3,7 @@ export type SiteImageSlot = {
   label: string;
   /** Technical spec (dimensions / file type). */
   hint: string;
-  ratio: "1/1" | "4/3" | "16/9";
+  ratio: "1/1" | "4/3" | "16/9" | "5/1";
   /** Where this image appears on the live site. */
   usedOn: string;
   /** What to photograph — subject & composition direction for the team. */
@@ -15,6 +15,16 @@ export type SiteImageSlot = {
 };
 
 export const SITE_IMAGE_SLOTS: SiteImageSlot[] = [
+  {
+    key: "logo",
+    label: "โลโก้ (Header / Footer)",
+    hint: "PNG พื้นหลังโปร่งใส แนวนอน กว้างอย่างน้อย 520px.",
+    ratio: "5/1",
+    usedOn: "มุมซ้ายบนของทุกหน้า ท้ายเว็บ และข้อมูลบริษัทที่ส่งให้ Google — ถ้าไม่อัปโหลด จะใช้โลโก้เดิม",
+    subject: "โลโก้ตัวอักษร MYPOS แบบเต็ม ตัดขอบให้ชิดตัวอักษร (ไม่เว้นที่ว่างรอบ ๆ)",
+    style: "สีตามแบรนด์ บนพื้นโปร่งใส ให้อ่านชัดบนพื้นขาว",
+    avoid: "ภาพที่มีพื้นหลังสี, โลโก้เล็กแล้วขยาย (ภาพแตก), ใส่ข้อความอื่นเพิ่มในไฟล์",
+  },
   {
     key: "hero",
     label: "รูปหลักหน้าแรก (Hero)",

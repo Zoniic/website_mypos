@@ -112,6 +112,13 @@ export const getSiteSettings = unstable_cache(loadSiteSettings, ["site-settings"
 
 export const getSiteImages = unstable_cache(loadSiteImages, ["site-images"], cacheOptions);
 
+/** The bundled logo, used until one is uploaded in Site Photos ("logo"). */
+export const DEFAULT_LOGO = "/images/brand/logo.png";
+
+export async function getLogoUrl(): Promise<string> {
+  return (await getSiteImages()).logo ?? DEFAULT_LOGO;
+}
+
 async function loadSiteSettings(): Promise<SiteSettings> {
   const rows = await prisma.siteSetting.findMany();
   const map = Object.fromEntries(rows.map((r) => [r.key, r.value]));

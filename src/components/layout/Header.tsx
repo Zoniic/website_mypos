@@ -193,7 +193,7 @@ function SolutionsMenu({ label, groups }: { label: string; groups: SolutionGroup
 }
 
 /** `shopOn`: online ordering is enabled in Site Settings (shows the cart icon). */
-export function Header({ shopOn = false, nav }: { shopOn?: boolean; nav: HeaderNav }) {
+export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav: HeaderNav; logoUrl: string }) {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tIndustries = useTranslations("industries.common");
@@ -223,7 +223,7 @@ export function Header({ shopOn = false, nav }: { shopOn?: boolean; nav: HeaderN
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center transition-transform hover:scale-105">
           <Image
-            src="/images/brand/logo.png"
+            src={logoUrl}
             alt="MYPOS"
             width={130}
             height={27}

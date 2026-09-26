@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { Anuphan, Chakra_Petch } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
-import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
+import { getLogoUrl, getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
@@ -155,7 +155,7 @@ export default async function LocaleLayout({
           <QuoteCartProvider>
             <ShopCartProvider>
             <MotionConfig reducedMotion="user">
-              <Header shopOn={isOnlineOrderingOn(settings)} nav={await getHeaderNav(locale)} />
+              <Header shopOn={isOnlineOrderingOn(settings)} nav={await getHeaderNav(locale)} logoUrl={await getLogoUrl()} />
               <main id="main-content" className="flex-1 pb-16 lg:pb-0">
                 {children}
               </main>

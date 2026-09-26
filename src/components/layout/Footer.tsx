@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getSiteSettings } from "@/lib/siteSettings";
+import { getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { CookieSettingsButton } from "@/components/layout/CookieConsent";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
@@ -21,7 +21,7 @@ export async function Footer() {
     <footer className="border-t border-border bg-surface-0">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-14 sm:px-6 lg:grid-cols-12 lg:gap-8 lg:px-8">
         <div className="lg:col-span-4">
-          <Image src="/images/brand/logo.png" alt="MYPOS" width={130} height={27} className="h-7 w-auto" />
+          <Image src={await getLogoUrl()} alt="MYPOS" width={130} height={27} className="h-7 w-auto" />
           <p className="mt-4 max-w-sm text-sm leading-relaxed text-text-2">{t("companyDesc")}</p>
           <MarketplaceLinks
             className="mt-6"

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
-import { getSiteSettings } from "@/lib/siteSettings";
+import { getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
 import { organizationSameAs } from "@/lib/structuredData";
 import { getFeaturedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -66,7 +66,7 @@ export default async function HomePage({
     "@type": "Organization",
     name: siteConfig.name,
     url: siteConfig.url,
-    logo: `${siteConfig.url}/images/brand/logo.png`,
+    logo: new URL(await getLogoUrl(), siteConfig.url).toString(),
     telephone: settings.phone || undefined,
     email: settings.email || undefined,
     sameAs: organizationSameAs(settings),
