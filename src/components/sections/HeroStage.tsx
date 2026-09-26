@@ -56,7 +56,7 @@ export function HeroStage({ callouts }: { callouts: HeroCallout[] }) {
           aria-hidden
           className="absolute"
           style={{ left: "33.44%", top: "65.56%", width: "41.25%", height: "34.44%" }}
-          initial={reduceMotion ? false : { y: 30 }}
+          initial={{ y: 30 }}
           animate={{ y: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease }}
         >
@@ -69,7 +69,7 @@ export function HeroStage({ callouts }: { callouts: HeroCallout[] }) {
             aria-hidden
             className="absolute flex items-end justify-center"
             style={{ left: machine.left, top: machine.top, width: machine.width, height: machine.height }}
-            initial={reduceMotion ? false : { y: 36 }}
+            initial={{ y: 36 }}
             animate={{ y: 0 }}
             transition={{ duration: 0.8, delay: 0.15 + index * 0.09, ease }}
           >
@@ -84,7 +84,7 @@ export function HeroStage({ callouts }: { callouts: HeroCallout[] }) {
             key={item.href}
             className="absolute -translate-x-1/2"
             style={{ left: item.left, top: item.top }}
-            initial={reduceMotion ? false : { y: 10, scale: 0.92 }}
+            initial={{ y: 10, scale: 0.92 }}
             animate={{ y: 0, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.6 + index * 0.08, ease }}
           >
