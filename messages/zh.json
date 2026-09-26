@@ -21,7 +21,7 @@
     "accessories": "配件",
     "resources": "资源",
     "references": "客户案例",
-    "software": "软件系统",
+    "software": "后台系统",
     "knowledgeBase": "知识库",
     "blog": "博客",
     "careers": "加入我们",
@@ -1033,13 +1033,13 @@
     }
   },
   "software": {
-    "metaTitle": "MYPOS 软件系统 | 自主研发，非 POSPOS",
-    "metaDescription": "MYPOS 软件系统完全由自有团队研发，并非 POSPOS。支持自助点餐、自助称重、收银及自助售票机，持续更新功能。",
+    "metaTitle": "MYPOS 后台系统 | 一个看板管理所有设备和门店",
+    "metaDescription": "MYPOS 后台系统在一个网站上管理自助点餐机、POS、KDS、称重结账、叫号屏和 Vending Machine Online 的菜单、价格、库存、优惠券和销售。",
     "hero": {
-      "eyebrow": "100% 自主研发软件",
-      "title": "MYPOS 软件系统自主研发，并非 POSPOS",
-      "subtitle": "我们的软件团队专为泰国商家设计系统，持续推出新功能，无需依赖任何第三方平台。",
-      "cta": "预约演示 (Demo)"
+      "eyebrow": "MYPOS 后台系统",
+      "title": "一个后台，管理所有设备和所有门店",
+      "subtitle": "在一个网站上管理自助点餐机、POS、KDS、称重结账、叫号屏和 Vending Machine Online 的菜单、价格、库存、优惠券和销售——全部由 MYPOS 团队自主开发。",
+      "cta": "预约系统演示"
     },
     "features": {
       "title": "后台系统：一个网站管理所有设备和门店",
@@ -1117,6 +1117,86 @@
         {
           "title": "顾客在机器前使用",
           "description": "结账时输入代码或扫描二维码，系统自动扣减。"
+        }
+      ]
+    },
+    "apps": {
+      "title": "各应用的主要功能",
+      "lede": "MYPOS 所有设备都运行我们自主开发的软件，并通过同一个后台协同工作。",
+      "more": "了解详情",
+      "items": [
+        {
+          "name": "自助点餐机",
+          "summary": "顾客在机器上自助点餐付款，订单直达厨房。",
+          "href": "/solutions/self-order",
+          "points": [
+            "带加料选项的菜单，以及分步选择的菜单（如火锅）",
+            "堂食或外带，可填写桌号或排队号",
+            "扫码、信用卡（EDC）付款，或选择到收银台付款",
+            "多语言界面并有语音引导",
+            "空闲时屏幕播放广告",
+            "支持扫描商品条码"
+          ]
+        },
+        {
+          "name": "前台 POS",
+          "summary": "供店员使用的柜台收银机。",
+          "href": "/solutions/pos",
+          "points": [
+            "收银员模式，店员用 PIN 码登录",
+            "外卖平台订单录入同一系统",
+            "打印小票和标签，可选择是否打印小票",
+            "自动扣减库存、低库存提醒和报损记录",
+            "计算增值税（VAT）"
+          ]
+        },
+        {
+          "name": "称重结账 POS / 自助点餐",
+          "summary": "称重和结账在一台设备上完成。",
+          "href": "/solutions/weigh-pay",
+          "points": [
+            "连接电子秤，按重量即时计价",
+            "可作为顾客自助称重付款点，也可作为柜台 POS",
+            "扫码、刷卡或到收银台付现金",
+            "在后台管理商品和价格"
+          ]
+        },
+        {
+          "name": "KDS 厨房显示屏",
+          "summary": "厨房接单、打印和叫号的屏幕。",
+          "href": "/solutions/kds",
+          "points": [
+            "点餐机和 POS 的订单即时显示，含加料选项",
+            "按分类打印到各工作站的打印机，支持网络和蓝牙",
+            "叫号与重复叫号，自动显示在叫号屏",
+            "可作为收款点并连接钱箱",
+            "优惠券、增值税和每日销售汇总",
+            "超时未付款的账单自动取消"
+          ]
+        },
+        {
+          "name": "叫号显示屏",
+          "summary": "在店内电视上显示排队状态。",
+          "href": "/solutions/queue-display",
+          "points": [
+            "三种状态：待付款 · 制作中 · 可取餐",
+            "显示每种状态的数量和号码",
+            "店内现有电视配 MYPOS Android 盒子，或购买含电视套装",
+            "数据直接来自点餐机、POS 和 KDS"
+          ]
+        },
+        {
+          "name": "Vending Machine Online",
+          "summary": "可远程管理的自动售货机。",
+          "href": "/solutions/vending-online",
+          "points": [
+            "竖屏触摸屏 10.1 / 15.6 / 21.5 英寸",
+            "收硬币和纸币并找零",
+            "PromptPay、WeChat Pay、Alipay、TrueMoney、LAO QR 及封闭式储值卡",
+            "代码或二维码形式的折扣优惠券",
+            "10 种语言，空闲时播放广告",
+            "在后台查看库存和设备状态"
+          ]
         }
       ]
     }

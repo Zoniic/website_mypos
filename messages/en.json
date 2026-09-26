@@ -21,7 +21,7 @@
     "accessories": "Accessories",
     "resources": "Resources",
     "references": "Case Studies",
-    "software": "Software",
+    "software": "Back office",
     "knowledgeBase": "Knowledge Base",
     "blog": "Blog",
     "careers": "Careers",
@@ -1033,13 +1033,13 @@
     }
   },
   "software": {
-    "metaTitle": "MYPOS Software | Built In-House, Not POSPOS",
-    "metaDescription": "MYPOS software is developed entirely in-house by our own team — not POSPOS. Powers self-order kiosks, weigh & pay, POS, and ticketing kiosks, with continuous feature updates.",
+    "metaTitle": "MYPOS back office | One dashboard for every machine and branch",
+    "metaDescription": "The MYPOS back office manages menus, prices, stock, coupons and sales for self-order kiosks, POS, KDS, weigh-and-pay, queue displays and Vending Machine Online from one website.",
     "hero": {
-      "eyebrow": "100% Our Own Software",
-      "title": "MYPOS Software Is Built In-House — Every Feature, Not POSPOS",
-      "subtitle": "Our software team designs the system specifically for Thai businesses, continuously shipping new features without relying on any third-party platform.",
-      "cta": "Request a Demo"
+      "eyebrow": "MYPOS back office",
+      "title": "One back office for every machine and every branch",
+      "subtitle": "Manage menus, prices, stock, coupons and sales for self-order kiosks, POS, KDS, weigh-and-pay, queue displays and Vending Machine Online from one website — built entirely in-house by MYPOS.",
+      "cta": "Book a system demo"
     },
     "features": {
       "title": "Back office: every machine, every branch, one website",
@@ -1117,6 +1117,86 @@
         {
           "title": "Customers redeem at the machine",
           "description": "They enter the code or scan the QR at checkout and the discount is applied automatically."
+        }
+      ]
+    },
+    "apps": {
+      "title": "Key features of each app",
+      "lede": "Every MYPOS machine runs software we build ourselves, and they all work together through one back office.",
+      "more": "Learn more",
+      "items": [
+        {
+          "name": "Self-order kiosk",
+          "summary": "Customers order and pay at the kiosk; orders go straight to the kitchen.",
+          "href": "/solutions/self-order",
+          "points": [
+            "Menus with add-on options, plus step-by-step menus such as hotpot",
+            "Dine-in or takeaway, with table or queue number",
+            "Pay by QR, credit card (EDC), or choose to pay at the cashier",
+            "Multiple languages with voice guidance",
+            "Ads on screen while idle",
+            "Product barcode scanning"
+          ]
+        },
+        {
+          "name": "POS terminal",
+          "summary": "The counter till for staff.",
+          "href": "/solutions/pos",
+          "points": [
+            "Cashier mode with staff PIN login",
+            "Record delivery-app orders in the same system",
+            "Receipt and label printing, with receipt printing optional",
+            "Automatic stock deduction, low-stock alerts and write-offs",
+            "VAT calculation"
+          ]
+        },
+        {
+          "name": "Weigh & pay POS / self-ordering",
+          "summary": "Weighing and checkout on one device.",
+          "href": "/solutions/weigh-pay",
+          "points": [
+            "Connects to the scale and prices by weight instantly",
+            "Use as a self-serve weigh-and-pay point or as a counter POS",
+            "Pay by QR, card, or cash at the cashier",
+            "Products and prices managed in the back office"
+          ]
+        },
+        {
+          "name": "KDS kitchen display",
+          "summary": "Kitchen screen for orders, tickets and queue calls.",
+          "href": "/solutions/kds",
+          "points": [
+            "Kiosk and POS orders appear instantly, with options",
+            "Tickets printed by category to each station's printer, network or Bluetooth",
+            "Queue calls and recalls, shown on the queue display automatically",
+            "Doubles as a payment point with a cash drawer",
+            "Discount coupons, VAT and a daily sales summary",
+            "Unpaid bills cancelled automatically after a set time"
+          ]
+        },
+        {
+          "name": "Queue display",
+          "summary": "Queue status on the TV in your shop.",
+          "href": "/solutions/queue-display",
+          "points": [
+            "Three statuses: Awaiting payment · Preparing · Ready",
+            "The count and queue numbers for each status",
+            "Your own TV with the MYPOS Android box, or a set with a TV",
+            "Fed directly by kiosks, POS and KDS"
+          ]
+        },
+        {
+          "name": "Vending Machine Online",
+          "summary": "A vending machine you manage remotely.",
+          "href": "/solutions/vending-online",
+          "points": [
+            "Vertical touchscreen, 10.1\" / 15.6\" / 21.5\"",
+            "Coins and banknotes with change",
+            "PromptPay, WeChat Pay, Alipay, TrueMoney, LAO QR and closed-loop cash cards",
+            "Discount coupons as codes or QR codes",
+            "10 languages and ads while idle",
+            "Stock and machine status in the back office"
+          ]
         }
       ]
     }

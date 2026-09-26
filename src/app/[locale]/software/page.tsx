@@ -6,6 +6,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Invite } from "@/components/sections/Invite";
+import { Link } from "@/i18n/navigation";
 import { getSiteImages } from "@/lib/siteSettings";
 
 export async function generateMetadata({
@@ -33,6 +34,8 @@ export async function generateMetadata({
 }
 
 type FeatureItem = { title: string; description: string };
+/** One app in the "features by app" list — admin-editable JSON (Page Content → software → apps.items). */
+type AppItem = { name: string; summary?: string; href?: string; points?: string[] };
 
 export default async function SoftwarePage({
   params,
@@ -47,6 +50,10 @@ export default async function SoftwarePage({
   const couponSteps = (t.has("coupons.steps") ? t.raw("coupons.steps") : []) as FeatureItem[];
   const couponWorksOn = (t.has("coupons.worksOn") ? t.raw("coupons.worksOn") : []) as string[];
   const managedLines = (t.has("managed.items") ? t.raw("managed.items") : []) as string[];
+  const appsRaw: unknown = t.has("apps.items") ? t.raw("apps.items") : [];
+  const apps = (Array.isArray(appsRaw) ? appsRaw : []).filter(
+    (app): app is AppItem => typeof app === "object" && app !== null && typeof (app as AppItem).name === "string"
+  );
   const images = await getSiteImages();
 
   const softwareSchema = {
@@ -110,6 +117,39 @@ export default async function SoftwarePage({
           )}
         </div>
       </section>
+
+      {apps.length > 0 && (
+        <section id="apps" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-20 sm:px-6 lg:px-8">
+          <h2 className="font-display text-3xl font-semibold tracking-tight sm:text-4xl">{t("apps.title")}</h2>
+          {t.has("apps.lede") && <p className="mt-4 max-w-2xl leading-relaxed text-text-2">{t("apps.lede")}</p>}
+          <div className="mt-12 border-t-2 border-text-1">
+            {apps.map((app) => (
+              <article key={app.name} className="grid gap-6 border-b border-border py-8 lg:grid-cols-12">
+                <div className="lg:col-span-4">
+                  <h3 className="font-display text-xl font-semibold">{app.name}</h3>
+                  {app.summary && <p className="mt-2 text-sm leading-relaxed text-text-2">{app.summary}</p>}
+                  {app.href && app.href.startsWith("/") && (
+                    <Link
+                      href={app.href}
+                      className="mt-3 inline-block rounded-sm text-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                    >
+                      {t("apps.more")} →
+                    </Link>
+                  )}
+                </div>
+                <ul className="grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:col-span-8">
+                  {(Array.isArray(app.points) ? app.points : []).map((point) => (
+                    <li key={point} className="flex gap-3 text-sm leading-relaxed">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 bg-primary-600" />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {couponSteps.length > 0 && (
         <section id="coupons" className="scroll-mt-24 bg-ink text-white">
