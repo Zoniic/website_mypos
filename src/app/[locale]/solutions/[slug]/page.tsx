@@ -6,7 +6,6 @@ import { siteConfig } from "@/config/site";
 import { getProductsByCategory } from "@/lib/products";
 import { getSiteImages } from "@/lib/siteSettings";
 import {
-  isOnlineSolution,
   isSolutionSlug,
   solutionCategory,
   solutionMachine,
@@ -26,6 +25,7 @@ import { Invite } from "@/components/sections/Invite";
 import { BackOfficeBand, SolutionDetails, type FeatureItem, type SpecRow } from "@/components/sections/SolutionDetails";
 import { PageSections } from "@/components/layout/PageSections";
 import { getPageSections } from "@/lib/pageLayout";
+import { getSiteStructure } from "@/lib/siteStructure";
 
 
 // Empty list = render each page on its first visit, then serve it from
@@ -97,6 +97,7 @@ export default async function SolutionPage({
   const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
   const images = await getSiteImages();
   const order = await getPageSections("solution");
+  const { onlineSolutions } = await getSiteStructure();
   const shown = (id: string) => order.includes(id);
 
   const breadcrumbItems = [
@@ -214,7 +215,7 @@ export default async function SolutionPage({
               products={categoryProducts}
             />
           ),
-          backOffice: isOnlineSolution(slug) && (
+          backOffice: onlineSolutions.includes(slug) && (
             <BackOfficeBand
               title={tCommon("backOfficeTitle")}
               body={tCommon("backOfficeBody")}

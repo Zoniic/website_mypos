@@ -86,8 +86,8 @@ export const solutionGroups: {
   },
 ];
 
-/** Lines managed from the MYPOS back office website. */
-const ONLINE_SOLUTIONS: readonly SolutionSlug[] = [
+/** Default lines managed from the MYPOS back office (admin: Navigation → back office band). */
+export const ONLINE_SOLUTIONS: readonly SolutionSlug[] = [
   "self-order",
   "pos",
   "kds",
@@ -96,9 +96,6 @@ const ONLINE_SOLUTIONS: readonly SolutionSlug[] = [
   "vending-online",
 ];
 
-export function isOnlineSolution(slug: SolutionSlug): boolean {
-  return ONLINE_SOLUTIONS.includes(slug);
-}
 
 export function isSolutionSlug(value: string): value is SolutionSlug {
   return (solutionSlugs as readonly string[]).includes(value);

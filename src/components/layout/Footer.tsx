@@ -1,51 +1,20 @@
 import Image from "next/image";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSettings } from "@/lib/siteSettings";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { CookieSettingsButton } from "@/components/layout/CookieConsent";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
-
-// Grouped by what the visitor is looking for, headed by the same labels as
-// the main navigation.
-const linkGroups = [
-  {
-    heading: "products",
-    links: [
-      { key: "products", href: "/products" },
-      { key: "accessories", href: "/accessories" },
-      { key: "industries", href: "/industries" },
-      { key: "savingsCalculator", href: "/tools/savings-calculator" },
-      { key: "compare", href: "/compare" },
-    ],
-  },
-  {
-    heading: "resources",
-    links: [
-      { key: "references", href: "/references" },
-      { key: "software", href: "/software" },
-      { key: "knowledgeBase", href: "/knowledge-base" },
-      { key: "blog", href: "/blog" },
-      { key: "service", href: "/service" },
-    ],
-  },
-  {
-    heading: "about",
-    links: [
-      { key: "about", href: "/about" },
-      { key: "careers", href: "/careers" },
-      { key: "contact", href: "/contact" },
-    ],
-  },
-] as const;
+import { getFooterNav } from "@/lib/navView";
 
 const linkClass =
   "rounded-sm text-sm text-text-2 outline-offset-4 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
 
 export async function Footer() {
   const t = await getTranslations("footer");
-  const tNav = await getTranslations("nav");
   const settings = await getSiteSettings();
+  // Link groups as arranged in the admin (Navigation → Footer).
+  const linkGroups = await getFooterNav(await getLocale());
   const year = new Date().getFullYear();
 
   return (
@@ -75,13 +44,13 @@ export async function Footer() {
 
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4 lg:col-span-8">
           {linkGroups.map((group) => (
-            <nav key={group.heading} aria-label={tNav(group.heading)}>
-              <h3 className="text-sm font-semibold text-text-1">{tNav(group.heading)}</h3>
+            <nav key={group.key} aria-label={group.label}>
+              <h3 className="text-sm font-semibold text-text-1">{group.label}</h3>
               <ul className="mt-4 space-y-2.5">
-                {group.links.map((link) => (
+                {group.items.map((link) => (
                   <li key={link.key}>
                     <Link href={link.href} className={linkClass}>
-                      {tNav(link.key)}
+                      {link.label}
                     </Link>
                   </li>
                 ))}

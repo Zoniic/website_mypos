@@ -16,6 +16,7 @@ import { CONSENT_KEY } from "@/lib/analytics";
 import { cleanTrackingId, cleanVerificationToken } from "@/lib/trackingIds";
 import { QuoteCartProvider } from "@/lib/quoteCart";
 import { ShopCartProvider } from "@/lib/shopCart";
+import { getHeaderNav } from "@/lib/navView";
 import "../globals.css";
 
 // Body/UI: Anuphan (Cadson Demak) — a loopless humanist Thai that stays
@@ -154,7 +155,7 @@ export default async function LocaleLayout({
           <QuoteCartProvider>
             <ShopCartProvider>
             <MotionConfig reducedMotion="user">
-              <Header shopOn={isOnlineOrderingOn(settings)} />
+              <Header shopOn={isOnlineOrderingOn(settings)} nav={await getHeaderNav(locale)} />
               <main id="main-content" className="flex-1 pb-16 lg:pb-0">
                 {children}
               </main>

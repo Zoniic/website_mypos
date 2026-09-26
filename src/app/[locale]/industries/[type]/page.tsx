@@ -6,7 +6,8 @@ import { siteConfig } from "@/config/site";
 import { getProductsByBusinessType } from "@/lib/products";
 import { getReferenceCasesByBusinessType } from "@/lib/references";
 import { getSiteImages } from "@/lib/siteSettings";
-import { industrySolutions, isIndustrySlug } from "@/data/industries";
+import { isIndustrySlug } from "@/data/industries";
+import { getSiteStructure } from "@/lib/siteStructure";
 import { solutionMachine, solutionMessageKey } from "@/data/solutions";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -82,7 +83,9 @@ export default async function IndustryPage({
   const blurbs = tc.raw("solutionBlurbs") as Record<string, string>;
   const typeLabel = tProducts(`businessTypes.${type}`);
 
-  const solutions = industrySolutions[type].map((slug) => {
+  // Recommended lines, as arranged in the admin (Navigation → industries).
+  const recommendedSlugs = (await getSiteStructure()).industrySolutions[type];
+  const solutions = recommendedSlugs.map((slug) => {
     const key = solutionMessageKey[slug];
     return {
       slug,
@@ -133,11 +136,11 @@ export default async function IndustryPage({
         subtitle={t("hero.subtitle")}
         ctaPrimary={tc("ctaDemo")}
         ctaPrimaryHref={`/contact?topic=demo&industry=${type}`}
-        ctaSecondary={shown("recommended") ? tc("solutionsTitle") : tc("stepsTitle")}
-        ctaSecondaryHref={shown("recommended") ? "#solutions" : "#how-it-works"}
+        ctaSecondary={shown("recommended") && solutions.length ? tc("solutionsTitle") : tc("stepsTitle")}
+        ctaSecondaryHref={shown("recommended") && solutions.length ? "#solutions" : "#how-it-works"}
         imageLabel={`${typeLabel} photo`}
         imageUrl={images[`industry-${type}`]}
-        machine={solutionMachine[industrySolutions[type][0]]}
+        machine={solutionMachine[recommendedSlugs[0] ?? "self-order"]}
       />
       <PageSections
         order={order}
@@ -151,7 +154,7 @@ export default async function IndustryPage({
               items={painGain}
             />
           ),
-          recommended: (
+          recommended: solutions.length > 0 && (
             <RecommendedSolutions
               id="solutions"
               title={tc("solutionsTitle")}

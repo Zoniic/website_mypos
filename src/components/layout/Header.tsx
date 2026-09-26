@@ -8,8 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { CompareCartLink } from "@/components/products/CompareCartLink";
 import { ShopCartLink } from "@/components/commerce/ShopCartLink";
-import { industrySlugs } from "@/data/industries";
-import { solutionGroups } from "@/data/solutions";
+import type { HeaderNav } from "@/lib/navView";
 
 /** Shared open/close behavior for header dropdowns: hover or focus opens,
  * outside click/blur or Escape closes. */
@@ -52,19 +51,8 @@ function useDropdown() {
   };
 }
 
-const productCategories = ["self-order", "weigh-pay", "pos", "ticketing"] as const;
-
 // Lower-traffic content pages, grouped under one "Resources" menu instead of
 // each claiming a top-level nav slot.
-const resourceLinks = [
-  { key: "references", href: "/references" },
-  { key: "software", href: "/software" },
-  { key: "knowledgeBase", href: "/knowledge-base" },
-  { key: "blog", href: "/blog" },
-  { key: "service", href: "/service" },
-  { key: "savingsCalculator", href: "/tools/savings-calculator" },
-] as const;
-
 const trailingLinks = [{ key: "about", href: "/about" }] as const;
 
 const navLinkClass =
@@ -175,7 +163,11 @@ function SolutionsMenu({ label, groups }: { label: string; groups: SolutionGroup
         </svg>
       </button>
       {open && (
-        <div className="absolute left-0 top-full grid w-[860px] grid-cols-[1.35fr_1.1fr_1fr_0.9fr] gap-6 rounded-lg border border-border bg-surface-1 p-5 shadow-lg">
+        <div
+          className="absolute left-0 top-full grid w-[860px] gap-6 rounded-lg border border-border bg-surface-1 p-5 shadow-lg"
+          // The first group holds the longest labels; the admin may hide or add groups.
+          style={{ gridTemplateColumns: groups.length === 4 ? "1.35fr 1.1fr 1fr 0.9fr" : `repeat(${Math.max(groups.length, 1)}, minmax(0, 1fr))` }}
+        >
           {groups.map((group) => (
             <div key={group.key}>
               <p className="border-b border-border pb-2 text-xs font-semibold text-text-2">{group.label}</p>
@@ -201,42 +193,24 @@ function SolutionsMenu({ label, groups }: { label: string; groups: SolutionGroup
 }
 
 /** `shopOn`: online ordering is enabled in Site Settings (shows the cart icon). */
-export function Header({ shopOn = false }: { shopOn?: boolean }) {
+export function Header({ shopOn = false, nav }: { shopOn?: boolean; nav: HeaderNav }) {
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tIndustries = useTranslations("industries.common");
-  const tProducts = useTranslations("productsCommon");
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const productCategoryItems: DropdownItem[] = productCategories.map((category) => ({
-    key: category,
-    label: tProducts(`categories.${category}`),
-    href: `/products?category=${category}`,
+  // Menus come from the admin (Navigation); see lib/navView.ts.
+  const productCategoryItems: DropdownItem[] = nav.categories.map((category) => ({
+    ...category,
+    href: `/products?category=${category.key}`,
   }));
-
-  const accessoryCategoryItems: DropdownItem[] = productCategories.map((category) => ({
-    key: category,
-    label: tProducts(`categories.${category}`),
-    href: `/accessories?category=${category}`,
+  const accessoryCategoryItems: DropdownItem[] = nav.categories.map((category) => ({
+    ...category,
+    href: `/accessories?category=${category.key}`,
   }));
-
-  const industryItems: DropdownItem[] = industrySlugs.map((type) => ({
-    key: type,
-    label: tProducts(`businessTypes.${type}`),
-    href: `/industries/${type}`,
-  }));
-
-  const solutionMenuGroups: SolutionGroupView[] = solutionGroups.map((group) => ({
-    key: group.key,
-    label: t(`solutionsGroups.${group.key}`),
-    items: group.items.map((item) => ({ key: item.key, label: t(`solutionsItems.${item.key}`), href: item.href })),
-  }));
-
-  const resourceItems: DropdownItem[] = resourceLinks.map((link) => ({
-    key: link.key,
-    label: t(link.key),
-    href: link.href,
-  }));
+  const industryItems: DropdownItem[] = nav.industries;
+  const solutionMenuGroups: SolutionGroupView[] = nav.solutions;
+  const resourceItems: DropdownItem[] = nav.resources;
 
   return (
     <header className="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur">
