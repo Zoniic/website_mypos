@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { MotionConfig } from "framer-motion";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Anuphan, Chakra_Petch, JetBrains_Mono } from "next/font/google";
+import { Anuphan, Chakra_Petch } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
 import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
@@ -12,6 +12,7 @@ import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
 import { CookieConsent } from "@/components/layout/CookieConsent";
 import { TrackingScripts } from "@/components/analytics/TrackingScripts";
+import { CONSENT_KEY } from "@/lib/analytics";
 import { cleanTrackingId, cleanVerificationToken } from "@/lib/trackingIds";
 import { QuoteCartProvider } from "@/lib/quoteCart";
 import { ShopCartProvider } from "@/lib/shopCart";
@@ -23,7 +24,10 @@ import "../globals.css";
 const fontSans = Anuphan({
   variable: "--font-sans-loaded",
   subsets: ["thai", "latin"],
-  weight: ["400", "500", "600", "700"],
+  // Variable font: one file per subset covers every weight (was 4 weights ×
+  // 2 subsets = 8 files). Body text is the LCP element on most pages, and it
+  // repaints when this font arrives, so fewer files = earlier LCP.
+  weight: "variable",
 });
 
 // Display: Chakra Petch — squared, machined terminals that echo the hardware
@@ -36,13 +40,13 @@ const fontDisplay = Chakra_Petch({
   weight: ["600", "700"],
 });
 
-const fontMono = JetBrains_Mono({
-  variable: "--font-mono-loaded",
-  subsets: ["latin"],
-  weight: ["500"],
-  // Only spec values use it, below the fold: don't preload.
-  preload: false,
-});
+
+
+// Empty list = render each page on its first visit, then serve it from
+// the cache (ISR). Without this export the route renders on every request.
+export function generateStaticParams() {
+  return [];
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
@@ -64,10 +68,40 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-// Content (products, page copy, references, accessories) is admin-editable
-// in MySQL at runtime, so every page under this layout must be rendered
-// dynamically per-request rather than prerendered at build time.
-export const dynamic = "force-dynamic";
+// Pages are cached (ISR) and refreshed in the background at most every 5
+// minutes; admin saves purge them immediately (lib/siteCache). Pages that
+// read searchParams (product filters, search, order status) stay dynamic.
+export const revalidate = 300;
+
+/**
+ * Namespaces used by client components ("use client" + useTranslations).
+ * Only these are sent to the browser — shipping every namespace made each
+ * page carry the whole site's copy in its HTML. Add a namespace here when a
+ * client component starts using it (a missing one logs MISSING_MESSAGE).
+ */
+const CLIENT_NAMESPACES = [
+  "checkout",
+  "common",
+  "compare",
+  "contact",
+  "cookieConsent",
+  "nav",
+  "productsCommon",
+  "savingsCalculator",
+  "shop",
+  "stickyBar",
+] as const;
+
+function pickClientMessages(messages: Record<string, unknown>) {
+  const picked: Record<string, unknown> = {};
+  for (const ns of CLIENT_NAMESPACES) if (ns in messages) picked[ns] = messages[ns];
+  // Sub-trees used by client components inside larger namespaces.
+  const home = messages.home as Record<string, unknown> | undefined;
+  if (home?.faq) picked.home = { faq: home.faq };
+  const industries = messages.industries as Record<string, unknown> | undefined;
+  if (industries?.common) picked.industries = { common: industries.common };
+  return picked;
+}
 
 export default async function LocaleLayout({
   children,
@@ -89,8 +123,19 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${fontSans.variable} ${fontDisplay.variable} ${fontMono.variable} h-full antialiased`}
+      className={`${fontSans.variable} ${fontDisplay.variable} h-full antialiased`}
+      // The consent script below sets data-consent before React hydrates.
+      suppressHydrationWarning
     >
+      <head>
+        {/* Runs before first paint: returning visitors who already chose never
+            see the server-rendered cookie banner (CookieConsent.tsx). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if(localStorage.getItem(${JSON.stringify(CONSENT_KEY)}))document.documentElement.dataset.consent="1"}catch(e){}`,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-bg text-text-1">
         <TrackingScripts
           ids={{
@@ -105,7 +150,7 @@ export default async function LocaleLayout({
             googleAdsPurchaseLabel: cleanTrackingId("googleAdsPurchaseLabel", settings.googleAdsPurchaseLabel),
           }}
         />
-        <NextIntlClientProvider>
+        <NextIntlClientProvider messages={pickClientMessages((await getMessages()) as Record<string, unknown>)}>
           <QuoteCartProvider>
             <ShopCartProvider>
             <MotionConfig reducedMotion="user">

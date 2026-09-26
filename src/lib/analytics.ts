@@ -27,6 +27,10 @@ export function writeConsent(value: ConsentValue | null) {
   } catch {
     // Storage blocked: the choice lasts for this page view only.
   }
+  // Mirrors the pre-paint script in app/[locale]/layout.tsx; CSS hides the
+  // banner while this attribute is present.
+  if (value) document.documentElement.dataset.consent = "1";
+  else delete document.documentElement.dataset.consent;
   window.dispatchEvent(new Event(CONSENT_EVENT));
 }
 

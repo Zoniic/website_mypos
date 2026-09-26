@@ -1,4 +1,6 @@
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { SITE_CONTENT_TAG, SITE_CONTENT_TTL_SECONDS } from "@/lib/siteCache";
 
 // Namespaces where the DB's "items" list is merged back in as a structured
 // array/object matching the original messages/*.json shape, so every
@@ -37,7 +39,7 @@ function ensureNamespace(messages: Messages, namespace: string): Record<string, 
   return messages[namespace] as Record<string, unknown>;
 }
 
-export async function getMessages(locale: string): Promise<Messages> {
+async function loadMessages(locale: string): Promise<Messages> {
   const rows = await prisma.pageContent.findMany({ where: { locale } });
 
   const messages: Messages = {};
@@ -83,3 +85,12 @@ export async function getMessages(locale: string): Promise<Messages> {
 
   return messages;
 }
+
+/**
+ * All copy for one locale. Several queries per call, needed by every page,
+ * so it's cached across requests and purged by admin saves (lib/siteCache).
+ */
+export const getMessages = unstable_cache(loadMessages, ["messages"], {
+  tags: [SITE_CONTENT_TAG],
+  revalidate: SITE_CONTENT_TTL_SECONDS,
+});

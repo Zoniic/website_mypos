@@ -1,6 +1,7 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+// Purges the public site cache as well as the given path (see lib/siteCache).
+import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 
 const locales = ["th", "en", "zh"] as const;

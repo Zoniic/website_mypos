@@ -10,6 +10,11 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl } from "@/lib/structuredData";
 import { AccessoriesExplorer } from "@/components/accessories/AccessoriesExplorer";
 
+
+// Reads searchParams (filters / query), so it renders per request; its
+// data still comes from the shared cache (lib/siteCache).
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

@@ -9,6 +9,13 @@ import { Markdown } from "@/components/ui/Markdown";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getBlogPostBySlug } from "@/lib/blog";
 
+
+// Empty list = render each page on its first visit, then serve it from
+// the cache (ISR). Without this export the route renders on every request.
+export function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({
   params,
 }: {

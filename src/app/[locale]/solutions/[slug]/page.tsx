@@ -23,6 +23,13 @@ import { CompareTable } from "@/components/sections/CompareTable";
 import { FaqAccordion, type FaqItem } from "@/components/sections/FaqAccordion";
 import { Invite } from "@/components/sections/Invite";
 
+
+// Empty list = render each page on its first visit, then serve it from
+// the cache (ISR). Without this export the route renders on every request.
+export function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({
   params,
 }: {

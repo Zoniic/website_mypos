@@ -1,50 +1,32 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { CONSENT_EVENT, readConsent, writeConsent, type ConsentValue } from "@/lib/analytics";
-
-function subscribe(callback: () => void) {
-  window.addEventListener("storage", callback);
-  window.addEventListener(CONSENT_EVENT, callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(CONSENT_EVENT, callback);
-  };
-}
-
-function getSnapshot() {
-  return readConsent() === null;
-}
-
-// Always "not visible yet" on the server — avoids a hydration mismatch;
-// useSyncExternalStore re-syncs to the real client value right after mount.
-function getServerSnapshot() {
-  return false;
-}
 
 /**
  * PDPA cookie banner. "Accept all" turns on analytics and ad pixels;
  * "Necessary only" keeps them off (Google tags stay in consent-denied mode,
  * Meta/TikTok/LINE never load). The footer's "Cookie settings" link
  * reopens it.
+ *
+ * Always rendered on the server so first-time visitors see it with the rest
+ * of the page (it used to pop in after hydration and became the page's late
+ * Largest Contentful Paint). Returning visitors never see it: a pre-paint
+ * script sets html[data-consent] and CSS hides .consent-banner.
  */
 export function CookieConsent() {
   const t = useTranslations("cookieConsent");
-  const visible = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   function choose(value: ConsentValue) {
     writeConsent(value);
   }
 
-  if (!visible) return null;
-
   return (
     <div
       role="dialog"
       aria-label={t("title")}
-      className="fixed inset-x-0 bottom-14 z-50 border-t border-border bg-surface-1 px-4 py-4 shadow-[var(--shadow-xl)] sm:px-6 lg:bottom-0 lg:px-8"
+      className="consent-banner fixed inset-x-0 bottom-14 z-50 border-t border-border bg-surface-1 px-4 py-4 shadow-[var(--shadow-xl)] sm:px-6 lg:bottom-0 lg:px-8"
     >
       <div className="mx-auto flex max-w-7xl flex-col items-start gap-3 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-text-2">

@@ -1,4 +1,8 @@
+import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
+import { SITE_CONTENT_TAG, SITE_CONTENT_TTL_SECONDS } from "@/lib/siteCache";
+
+const cacheOptions = { tags: [SITE_CONTENT_TAG], revalidate: SITE_CONTENT_TTL_SECONDS };
 
 export type SiteSettings = {
   phone: string;
@@ -103,13 +107,18 @@ export function isOnlineOrderingOn(settings: SiteSettings): boolean {
   return settings.onlineOrdering === "on";
 }
 
-export async function getSiteSettings(): Promise<SiteSettings> {
+// Read on every page (layout, metadata, header, footer): cached across requests.
+export const getSiteSettings = unstable_cache(loadSiteSettings, ["site-settings"], cacheOptions);
+
+export const getSiteImages = unstable_cache(loadSiteImages, ["site-images"], cacheOptions);
+
+async function loadSiteSettings(): Promise<SiteSettings> {
   const rows = await prisma.siteSetting.findMany();
   const map = Object.fromEntries(rows.map((r) => [r.key, r.value]));
   return { ...defaults, ...map } as SiteSettings;
 }
 
-export async function getSiteImages(): Promise<Record<string, string | undefined>> {
+async function loadSiteImages(): Promise<Record<string, string | undefined>> {
   const rows = await prisma.siteImage.findMany();
   return Object.fromEntries(rows.map((r) => [r.key, r.url ?? undefined]));
 }

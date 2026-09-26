@@ -10,6 +10,8 @@ export function ShopCartLink({ label, className = "" }: { label: string; classNa
   return (
     <Link
       href="/checkout"
+      // The cart reads browser storage; prefetching its server shell buys nothing.
+      prefetch={false}
       aria-label={hydrated && count > 0 ? `${label} (${count})` : label}
       className={`relative rounded-sm p-1.5 text-text-2 outline-offset-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 ${className}`}
     >

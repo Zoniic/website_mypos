@@ -9,7 +9,8 @@
   --font-sans: var(--font-sans-loaded), "Noto Sans Thai", "PingFang SC", "Microsoft YaHei",
     "Noto Sans SC", system-ui, sans-serif;
   --font-display: var(--font-display-loaded), var(--font-sans);
-  --font-mono: var(--font-mono-loaded), "Courier New", monospace;
+  /* System monospace: spec values don't justify another web-font download. */
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, "Courier New", monospace;
 
   /* ─── Backgrounds / surfaces ─────────────────────────
      White page; ascending grays for grouped/hover surfaces.
@@ -184,6 +185,12 @@ h3 {
   .animate-marquee {
     animation: none;
   }
+}
+
+/* Cookie banner: server-rendered for everyone (so it paints with the page
+   instead of popping in after JavaScript), hidden once a choice exists. */
+html[data-consent] .consent-banner {
+  display: none;
 }
 
 /* Touch targets: guarantee a 44px minimum for interactive controls on small

@@ -8,6 +8,13 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { getReferenceCaseBySlug } from "@/lib/references";
 
+
+// Empty list = render each page on its first visit, then serve it from
+// the cache (ISR). Without this export the route renders on every request.
+export function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({
   params,
 }: {

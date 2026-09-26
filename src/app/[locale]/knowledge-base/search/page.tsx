@@ -5,6 +5,11 @@ import { Link } from "@/i18n/navigation";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { searchKbArticles, type KbSection } from "@/lib/kb";
 
+
+// Reads searchParams (filters / query), so it renders per request; its
+// data still comes from the shared cache (lib/siteCache).
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

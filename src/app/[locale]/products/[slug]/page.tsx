@@ -21,6 +21,13 @@ import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
 import { TrackView } from "@/components/analytics/TrackView";
 import { absoluteUrl, schemaAvailability } from "@/lib/structuredData";
 
+
+// Empty list = render each page on its first visit, then serve it from
+// the cache (ISR). Without this export the route renders on every request.
+export function generateStaticParams() {
+  return [];
+}
+
 export async function generateMetadata({
   params,
 }: {
