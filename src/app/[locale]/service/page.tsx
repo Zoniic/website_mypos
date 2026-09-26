@@ -9,6 +9,8 @@ import { HowItWorks, type StepItem } from "@/components/sections/HowItWorks";
 import { FaqAccordion, type FaqItem } from "@/components/sections/FaqAccordion";
 import { Invite } from "@/components/sections/Invite";
 import { WarrantyClaimForm } from "@/components/service/WarrantyClaimForm";
+import { PageSections } from "@/components/layout/PageSections";
+import { getPageSections } from "@/lib/pageLayout";
 
 export async function generateMetadata({
   params,
@@ -69,9 +71,11 @@ export default async function ServicePage({
     ],
   };
 
+  const order = await getPageSections("service");
+
   return (
     <>
-      <JsonLd data={faqSchema} />
+      {order.includes("faq") && <JsonLd data={faqSchema} />}
       <JsonLd data={breadcrumbSchema} />
 
       <Breadcrumb
@@ -94,43 +98,55 @@ export default async function ServicePage({
         </div>
       </section>
 
-      <section className="border-y border-border bg-surface-0 py-16">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold tracking-tight">{t("types.title")}</h2>
-          <div className="mt-10 grid gap-6 sm:grid-cols-3">
-            {serviceTypes.map((item) => (
-              <div key={item.title} className="rounded-card border border-border bg-surface-1/40 p-6 shadow-[var(--shadow-card)]">
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="mt-2 text-text-2">{item.description}</p>
+      <PageSections
+        order={order}
+        blocks={{
+          types: (
+            <section className="border-y border-border bg-surface-0 py-16">
+              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <h2 className="text-3xl font-bold tracking-tight">{t("types.title")}</h2>
+                <div className="mt-10 grid gap-6 sm:grid-cols-3">
+                  {serviceTypes.map((item) => (
+                    <div key={item.title} className="rounded-card border border-border bg-surface-1/40 p-6 shadow-[var(--shadow-card)]">
+                      <h3 className="text-lg font-semibold">{item.title}</h3>
+                      <p className="mt-2 text-text-2">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <HowItWorks title={t("process.title")} steps={steps} />
-
-      <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
-        <WarrantyClaimForm
-          labels={{
-            title: t("warranty.title"),
-            subtitle: t("warranty.subtitle"),
-            name: t("warranty.name"),
-            phone: t("warranty.phone"),
-            email: t("warranty.email"),
-            serialNumber: t("warranty.serialNumber"),
-            issue: t("warranty.issue"),
-            submit: t("warranty.submit"),
-            submitting: t("warranty.submitting"),
-            successTitle: t("warranty.successTitle"),
-            successBody: t("warranty.successBody"),
-            required: t("warranty.required"),
-          }}
-        />
-      </section>
-
-      <FaqAccordion title={t("faq.title")} items={faqItems} />
-      <Invite />
+            </section>
+          ),
+          process: (
+            <HowItWorks title={t("process.title")} steps={steps} />
+          ),
+          warranty: (
+            <section className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+              <WarrantyClaimForm
+                labels={{
+                  title: t("warranty.title"),
+                  subtitle: t("warranty.subtitle"),
+                  name: t("warranty.name"),
+                  phone: t("warranty.phone"),
+                  email: t("warranty.email"),
+                  serialNumber: t("warranty.serialNumber"),
+                  issue: t("warranty.issue"),
+                  submit: t("warranty.submit"),
+                  submitting: t("warranty.submitting"),
+                  successTitle: t("warranty.successTitle"),
+                  successBody: t("warranty.successBody"),
+                  required: t("warranty.required"),
+                }}
+              />
+            </section>
+          ),
+          faq: (
+            <FaqAccordion title={t("faq.title")} items={faqItems} />
+          ),
+          invite: (
+            <Invite />
+          ),
+        }}
+      />
     </>
   );
 }

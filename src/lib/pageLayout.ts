@@ -84,6 +84,29 @@ export const PAGE_LAYOUTS = {
       { id: "invite", label: "ชวนติดต่อ (ท้ายหน้า)" },
     ],
   },
+  about: {
+    label: "หน้าเกี่ยวกับเรา (/about)",
+    path: "/about",
+    sections: [
+      { id: "hero", label: "หัวข้อหลัก", locked: true },
+      { id: "story", label: "เรื่องราวของเรา + รูปทีม" },
+      { id: "why", label: "ทำไมต้องเรา + ตัวเลขสถิติ" },
+      { id: "partners", label: "พาร์ทเนอร์อย่างเป็นทางการ", note: "ซ่อนเองถ้ายังไม่มีพาร์ทเนอร์" },
+      { id: "cta", label: "ชวนนัดสาธิต (ท้ายหน้า)" },
+    ],
+  },
+  service: {
+    label: "หน้าบริการ (/service)",
+    path: "/service",
+    sections: [
+      { id: "hero", label: "หัวข้อหลัก", locked: true },
+      { id: "types", label: "ประเภทบริการ" },
+      { id: "process", label: "ขั้นตอนบริการ" },
+      { id: "warranty", label: "ฟอร์มแจ้งเคลม/ซ่อม" },
+      { id: "faq", label: "คำถามที่พบบ่อย" },
+      { id: "invite", label: "ชวนติดต่อ (ท้ายหน้า)" },
+    ],
+  },
 } satisfies Record<string, { label: string; path: string; sections: LayoutSection[] }>;
 
 export type PageKey = keyof typeof PAGE_LAYOUTS;
