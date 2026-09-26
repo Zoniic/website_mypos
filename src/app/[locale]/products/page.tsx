@@ -6,6 +6,7 @@ import { getAllProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ProductsExplorer } from "@/components/products/ProductsExplorer";
+import { getCatalog, publishedCategories } from "@/lib/catalog";
 
 
 // Reads searchParams (filters / query), so it renders per request; its
@@ -93,6 +94,7 @@ export default async function ProductsPage({
         <div className="mt-8">
           <ProductsExplorer
             products={products}
+            categories={publishedCategories(await getCatalog())}
             initialSearch={q ?? ""}
             initialCategory={category ?? ""}
             initialBusinessType={businessType ?? ""}

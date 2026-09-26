@@ -30,7 +30,6 @@ const emptyValues: ReferenceFormValues = {
   },
 };
 
-const businessTypes = BUSINESS_TYPES;
 
 const inputClass =
   "mt-1 w-full rounded-lg border border-border-strong bg-surface-0 focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40 px-3 py-2 text-sm text-text-1";
@@ -39,10 +38,13 @@ const labelClass = "text-sm font-medium text-text-2";
 export function ReferenceForm({
   action,
   initialValues = emptyValues,
+  businessTypes = BUSINESS_TYPES,
   submitLabel,
 }: {
   action: (prevState: string | null, formData: FormData) => Promise<string | null>;
   initialValues?: ReferenceFormValues;
+  /** Every business type incl. ones added in /admin/catalog. */
+  businessTypes?: readonly string[];
   submitLabel: string;
 }) {
   const [error, formAction, isPending] = useActionState(action, null);

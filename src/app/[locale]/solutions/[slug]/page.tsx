@@ -5,12 +5,7 @@ import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { getProductsByCategory } from "@/lib/products";
 import { getSiteImages } from "@/lib/siteSettings";
-import {
-  isSolutionSlug,
-  solutionCategory,
-  solutionMachine,
-  solutionMessageKey,
-} from "@/data/solutions";
+import { findSolution, getCatalog } from "@/lib/catalog";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { SolutionHero } from "@/components/sections/SolutionHero";
@@ -27,7 +22,6 @@ import { PageSections } from "@/components/layout/PageSections";
 import { getPageSections } from "@/lib/pageLayout";
 import { getSiteStructure } from "@/lib/siteStructure";
 
-
 // Empty list = render each page on its first visit, then serve it from
 // the cache (ISR). Without this export the route renders on every request.
 export function generateStaticParams() {
@@ -40,14 +34,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  if (!isSolutionSlug(slug)) return {};
+  const line = findSolution(await getCatalog(), slug);
+  if (!line) return {};
 
-  const key = solutionMessageKey[slug];
-  const t = await getTranslations({ locale, namespace: `solutions.${key}` });
+  const t = await getTranslations({ locale, namespace: `solutions.${line.key}` });
   const alternates = buildAlternates(locale, `/solutions/${slug}`);
 
   return {
     title: { absolute: t("metaTitle") },
+    // Lines added in the admin stay out of search until published.
+    ...(!line.published && { robots: { index: false, follow: false } }),
     description: t("metaDescription"),
     alternates,
     openGraph: {
@@ -67,14 +63,12 @@ export default async function SolutionPage({
   params: Promise<{ locale: string; slug: string }>;
 }) {
   const { locale, slug } = await params;
-
-  if (!isSolutionSlug(slug)) {
-    notFound();
-  }
+  const line = findSolution(await getCatalog(), slug);
+  if (!line) notFound();
 
   setRequestLocale(locale);
 
-  const key = solutionMessageKey[slug];
+  const key = line.key;
   const t = await getTranslations({ locale, namespace: `solutions.${key}` });
   const tCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
   const tNav = await getTranslations({ locale, namespace: "nav" });
@@ -94,7 +88,7 @@ export default async function SolutionPage({
   const features = list<FeatureItem>("features");
   const specs = list<SpecRow>("specs");
   const navLabel = tNav(`solutionsItems.${key}`);
-  const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
+  const categoryProducts = await getProductsByCategory(line.category, locale);
   const images = await getSiteImages();
   const order = await getPageSections("solution", slug);
   const { onlineSolutions } = await getSiteStructure();
@@ -157,7 +151,7 @@ export default async function SolutionPage({
         ctaSecondaryHref={hasCompare ? "#compare" : hasDetails ? "#details" : "#how-it-works"}
         imageLabel={`${navLabel} photo`}
         imageUrl={images[`solution-${slug}`]}
-        machine={solutionMachine[slug]}
+        machine={line.machine}
       />
       <PageSections
         order={order}

@@ -1,11 +1,7 @@
 /**
- * Category and BusinessType are fixed lookup tables — the admin Product
- * form's checkboxes (CategoryCheckboxes.tsx, BusinessTypeCheckboxes.tsx)
- * hardcode these slug lists and expect matching rows to already exist so
- * `prisma.product.create({ data: { categories: { connect: ... } } } })`
- * can resolve them. There's no admin CRUD for these two tables (they're
- * a closed taxonomy, not editable content), so they must be seeded here
- * instead. Idempotent — safe to re-run.
+ * Seeds the built-in Category and BusinessType lookup rows, which product
+ * saves connect to by slug. Lines and business types added later in the
+ * admin (/admin/catalog) create their own rows. Idempotent — safe to re-run.
  *
  * Run: npx tsx prisma/seed-categories.ts
  */

@@ -15,7 +15,6 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { StockBadge } from "@/components/products/StockBadge";
 import { AddToCompareButton } from "@/components/products/AddToCompareButton";
 import { toEmbedUrl } from "@/lib/kb";
-import { solutionMachine } from "@/data/solutions";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
 import { TrackView } from "@/components/analytics/TrackView";
@@ -161,7 +160,7 @@ export default async function ProductDetailPage({
           name={product.name}
           imageUrl={product.imageUrl}
           galleryUrls={product.galleryUrls}
-          machine={product.categories[0] ? solutionMachine[product.categories[0]] : undefined}
+          machine={product.machine}
         />
         <div>
           <h1 className="font-display text-3xl font-bold tracking-tight">{product.name}</h1>

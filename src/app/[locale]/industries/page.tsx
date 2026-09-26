@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { Link } from "@/i18n/navigation";
-import { industrySlugs } from "@/data/industries";
+import { getCatalog, publishedBusinessTypes } from "@/lib/catalog";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -47,8 +47,9 @@ export default async function IndustriesPage({
   const tProducts = await getTranslations({ locale, namespace: "productsCommon" });
   const tSolutionsCommon = await getTranslations({ locale, namespace: "solutionsCommon" });
 
-  const items = industrySlugs.map((type) => ({
+  const items = publishedBusinessTypes(await getCatalog()).map(({ slug: type, icon }) => ({
     type,
+    icon,
     label: tProducts(`businessTypes.${type}`),
     title: t(`${type}.hero.title`),
   }));
@@ -87,7 +88,7 @@ export default async function IndustriesPage({
                 className="group flex h-full flex-col rounded-card border border-border bg-surface-1/40 p-6 outline-offset-2 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               >
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-50 text-primary-600">
-                  <BusinessTypeIcon type={item.type} size={20} />
+                  <BusinessTypeIcon type={item.icon} size={20} />
                 </span>
                 <h2 className="mt-4 text-lg font-semibold">{item.label}</h2>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-text-2">{item.title}</p>

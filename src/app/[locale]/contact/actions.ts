@@ -3,7 +3,7 @@
 import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { contactAlert, notifyTeam } from "@/lib/notify";
-import { isIndustrySlug } from "@/data/industries";
+import { findBusinessType, getCatalog } from "@/lib/catalog";
 
 /** `topic` is echoed back on success so the page can report a typed lead to analytics. */
 export type ContactFormState = { status: "idle" | "error" | "success"; topic?: string };
@@ -21,7 +21,7 @@ export async function submitContactMessage(
   const rawTopic = String(formData.get("topic") ?? "");
   const topic = (TOPICS as readonly string[]).includes(rawTopic) ? rawTopic : "general";
   const rawIndustry = String(formData.get("industry") ?? "");
-  const industry = isIndustrySlug(rawIndustry) ? rawIndustry : null;
+  const industry = findBusinessType(await getCatalog(), rawIndustry) ? rawIndustry : null;
 
   if (!name || !phone) return { status: "error" };
 

@@ -1,5 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { isSolutionSlug, solutionMessageKey } from "@/data/solutions";
+import { findSolution, getCatalog } from "@/lib/catalog";
 import { buildOgImage, ogImageContentType, ogImageSize } from "@/lib/ogImage";
 
 export const size = ogImageSize;
@@ -12,12 +12,12 @@ export default async function OgImage({
 }) {
   const { locale, slug } = await params;
 
-  if (!isSolutionSlug(slug)) {
+  const line = findSolution(await getCatalog(), slug);
+  if (!line) {
     return buildOgImage("MYPOS");
   }
 
-  const key = solutionMessageKey[slug];
-  const t = await getTranslations({ locale, namespace: `solutions.${key}` });
+  const t = await getTranslations({ locale, namespace: `solutions.${line.key}` });
 
   return buildOgImage(t("hero.title"));
 }

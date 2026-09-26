@@ -2,12 +2,14 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { AccessoryForm, type AccessoryFormValues } from "../../AccessoryForm";
 import { deleteAccessory, updateAccessory } from "../../actions";
+import { getCatalog } from "@/lib/catalog";
 
 export default async function EditAccessoryPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const catalog = await getCatalog();
   const { id } = await params;
   const accessoryId = Number(id);
 
@@ -42,7 +44,12 @@ export default async function EditAccessoryPage({
     <div>
       <h1 className="text-2xl font-bold">Edit Accessory</h1>
       <div className="mt-6">
-        <AccessoryForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <AccessoryForm
+          categoryOptions={catalog.categories}
+          action={boundUpdate}
+          initialValues={initialValues}
+          submitLabel="Save Changes"
+        />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

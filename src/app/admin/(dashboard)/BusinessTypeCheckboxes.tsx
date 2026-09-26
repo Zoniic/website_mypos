@@ -4,11 +4,14 @@ export function BusinessTypeCheckboxes({
   name,
   label,
   defaultValue,
+  options = BUSINESS_TYPES,
 }: {
   name: string;
   label: string;
   /** Business types currently selected. */
   defaultValue: string[];
+  /** Every business type incl. ones added in /admin/catalog (defaults to the built-in list). */
+  options?: readonly string[];
 }) {
   const selected = new Set(defaultValue);
 
@@ -16,7 +19,7 @@ export function BusinessTypeCheckboxes({
     <div>
       <span className="text-sm font-medium text-text-2">{label}</span>
       <div className="mt-2 flex flex-wrap gap-4">
-        {BUSINESS_TYPES.map((type) => (
+        {options.map((type) => (
           <label key={type} className="flex items-center gap-2 text-sm text-text-1">
             <input
               type="checkbox"

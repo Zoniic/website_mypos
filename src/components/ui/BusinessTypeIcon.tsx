@@ -98,10 +98,22 @@ const paths: Record<string, React.ReactNode> = {
   ),
 };
 
+/** Storefront outline for business types without their own icon. */
+const genericIcon = (
+  <path
+    d="M2.5 7 4 3.5h10L15.5 7M2.5 7v7.5h13V7M2.5 7c0 1.2 1 2 2.2 2s2.1-.8 2.1-2c0 1.2 1 2 2.2 2s2.2-.8 2.2-2c0 1.2 1 2 2.1 2s2.2-.8 2.2-2M7 14.5v-3.5h4v3.5"
+    stroke="currentColor"
+    strokeWidth="1.3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  />
+);
+
+/** `type`: a business type slug, or an icon key chosen for a type added in the admin. */
 export function BusinessTypeIcon({ type, size = 18 }: { type: string; size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 18 18" fill="none" aria-hidden="true">
-      {paths[type]}
+      {paths[type] ?? genericIcon}
     </svg>
   );
 }

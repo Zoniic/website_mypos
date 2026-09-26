@@ -96,7 +96,3 @@ export const ONLINE_SOLUTIONS: readonly SolutionSlug[] = [
   "vending-online",
 ];
 
-
-export function isSolutionSlug(value: string): value is SolutionSlug {
-  return (solutionSlugs as readonly string[]).includes(value);
-}

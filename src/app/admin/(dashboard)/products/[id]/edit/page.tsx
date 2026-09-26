@@ -2,12 +2,14 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ProductForm, type ProductFormValues } from "../../ProductForm";
 import { deleteProduct, updateProduct } from "../../actions";
+import { getCatalog } from "@/lib/catalog";
 
 export default async function EditProductPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const catalog = await getCatalog();
   const { id } = await params;
   const productId = Number(id);
 
@@ -78,6 +80,8 @@ export default async function EditProductPage({
       <h1 className="text-2xl font-bold">Edit Product</h1>
       <div className="mt-6">
         <ProductForm
+          categoryOptions={catalog.categories}
+          businessTypeOptions={catalog.businessTypes.map((b) => b.slug)}
           action={boundUpdate}
           initialValues={initialValues}
           relatedProductOptions={relatedProductOptions}

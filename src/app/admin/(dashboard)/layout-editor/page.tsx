@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
-import { industrySlugs } from "@/data/industries";
-import { solutionMessageKey, solutionSlugs } from "@/data/solutions";
+import { getCatalog } from "@/lib/catalog";
 import { PAGE_LAYOUTS, PAGES_WITH_VARIANTS, getLayoutVariants, getStoredLayout, type PageKey } from "@/lib/pageLayout";
 import { LayoutEditor } from "./LayoutEditor";
 
@@ -10,20 +9,21 @@ export default async function AdminLayoutPage() {
     Promise.all(pages.map((page) => getStoredLayout(page))),
     Promise.all(pages.map((page) => (PAGES_WITH_VARIANTS.includes(page) ? getLayoutVariants(page) : {}))),
   ]);
+  const catalog = await getCatalog();
   const tNav = await getTranslations({ locale: "th", namespace: "nav" });
   const tProducts = await getTranslations({ locale: "th", namespace: "productsCommon" });
 
   // Individual pages that can override their template's layout.
   const variants: Partial<Record<PageKey, { key: string; label: string; path: string }[]>> = {
-    solution: solutionSlugs.map((slug) => ({
-      key: slug,
-      label: tNav(`solutionsItems.${solutionMessageKey[slug]}`),
-      path: `/solutions/${slug}`,
+    solution: catalog.solutions.map((s) => ({
+      key: s.slug,
+      label: tNav(`solutionsItems.${s.key}`),
+      path: `/solutions/${s.slug}`,
     })),
-    industry: industrySlugs.map((slug) => ({
-      key: slug,
-      label: tProducts(`businessTypes.${slug}`),
-      path: `/industries/${slug}`,
+    industry: catalog.businessTypes.map((b) => ({
+      key: b.slug,
+      label: tProducts(`businessTypes.${b.slug}`),
+      path: `/industries/${b.slug}`,
     })),
   };
 

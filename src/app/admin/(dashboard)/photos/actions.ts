@@ -4,10 +4,10 @@
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
-import { SITE_IMAGE_SLOTS } from "./slots";
+import { getAllImageSlots } from "./allSlots";
 
 export async function updateSitePhotos(_prevState: string | null, formData: FormData) {
-  for (const slot of SITE_IMAGE_SLOTS) {
+  for (const slot of await getAllImageSlots()) {
     let newUrl: string | null;
     try {
       newUrl = await saveUploadedImage(formData.get(slot.key) as File | null, "site", slot.key);

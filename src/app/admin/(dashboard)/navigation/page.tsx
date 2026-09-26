@@ -1,11 +1,12 @@
 import { getTranslations } from "next-intl/server";
-import { industrySlugs, industrySolutions as defaultIndustrySolutions } from "@/data/industries";
-import { ONLINE_SOLUTIONS, solutionMessageKey, solutionSlugs } from "@/data/solutions";
+import { ONLINE_SOLUTIONS } from "@/data/solutions";
+import { getCatalog } from "@/lib/catalog";
 import {
   MENU_ALLOWS_CUSTOM,
-  MENU_DEFAULTS,
   MENU_KEYS,
   getSiteStructure,
+  menuDefaults,
+  resolveIndustrySolutions,
   type MenuKey,
   type NavGroup,
 } from "@/lib/siteStructure";
@@ -36,7 +37,8 @@ const MENU_INFO: Record<MenuKey, { title: string; help: string }> = {
 };
 
 export default async function AdminNavigationPage() {
-  const structure = await getSiteStructure();
+  const [structure, catalog] = await Promise.all([getSiteStructure(), getCatalog()]);
+  const defaults = menuDefaults(catalog);
   const t = await getTranslations({ locale: "th", namespace: "nav" });
   const tp = await getTranslations({ locale: "th", namespace: "productsCommon" });
 
@@ -62,8 +64,15 @@ export default async function AdminNavigationPage() {
       items: g.items.map((i) => ({ ...i, display: i.label?.th ?? itemLabel(menu, i.key) })),
     }));
 
-  const solutionOptions = solutionSlugs.map((slug) => ({ key: slug, label: t(`solutionsItems.${solutionMessageKey[slug]}`) }));
-  const industryOptions = industrySlugs.map((slug) => ({ key: slug, label: tp(`businessTypes.${slug}`) }));
+  const draft = " (ยังไม่เผยแพร่)";
+  const solutionOptions = catalog.solutions.map((s) => ({
+    key: s.slug,
+    label: t(`solutionsItems.${s.key}`) + (s.published ? "" : draft),
+  }));
+  const industryOptions = catalog.businessTypes.map((b) => ({
+    key: b.slug,
+    label: tp(`businessTypes.${b.slug}`) + (b.published ? "" : draft),
+  }));
 
   return (
     <div className="max-w-5xl">
@@ -81,14 +90,14 @@ export default async function AdminNavigationPage() {
             help={MENU_INFO[menu].help}
             allowCustom={MENU_ALLOWS_CUSTOM[menu]}
             initial={toEditor(menu, structure.menus[menu])}
-            defaults={toEditor(menu, MENU_DEFAULTS[menu])}
+            defaults={toEditor(menu, defaults[menu])}
           />
         ))}
         <IndustrySolutionsEditor
           industries={industryOptions}
           solutions={solutionOptions}
           initial={structure.industrySolutions}
-          defaults={defaultIndustrySolutions}
+          defaults={resolveIndustrySolutions(undefined, catalog)}
         />
         <OnlineSolutionsEditor solutions={solutionOptions} initial={structure.onlineSolutions} defaults={[...ONLINE_SOLUTIONS]} />
       </div>

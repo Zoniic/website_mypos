@@ -1,8 +1,7 @@
 import type { MetadataRoute } from "next";
 import { siteConfig } from "@/config/site";
 import { routing } from "@/i18n/routing";
-import { solutionSlugs } from "@/data/solutions";
-import { industrySlugs } from "@/data/industries";
+import { getCatalog, publishedBusinessTypes, publishedSolutions } from "@/lib/catalog";
 import { getAllProductSlugs } from "@/lib/products";
 import { getAllKbArticleSlugs } from "@/lib/kb";
 import { getAllReferenceCaseSlugs } from "@/lib/references";
@@ -33,11 +32,9 @@ const staticPaths = [
   "/terms-of-service",
 ];
 
-const solutionPaths = solutionSlugs.map((slug) => `/solutions/${slug}`);
-const industryPaths = industrySlugs.map((slug) => `/industries/${slug}`);
-
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [productSlugs, kbArticleSlugs, referenceSlugs, blogPosts, jobs] = await Promise.all([
+  const [catalog, productSlugs, kbArticleSlugs, referenceSlugs, blogPosts, jobs] = await Promise.all([
+    getCatalog(),
     getAllProductSlugs(),
     getAllKbArticleSlugs(),
     getAllReferenceCaseSlugs(),
@@ -47,8 +44,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const allPaths = [
     ...staticPaths,
-    ...solutionPaths,
-    ...industryPaths,
+    // Only published lines/types; drafts added in the admin stay out.
+    ...publishedSolutions(catalog).map((s) => `/solutions/${s.slug}`),
+    ...publishedBusinessTypes(catalog).map((t) => `/industries/${t.slug}`),
     ...productSlugs.map((slug) => `/products/${slug}`),
     ...kbArticleSlugs.map((slug) => `/knowledge-base/article/${slug}`),
     ...referenceSlugs.map((slug) => `/references/${slug}`),

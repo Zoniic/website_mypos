@@ -3,15 +3,22 @@
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
-import { SITE_IMAGE_SLOTS } from "./slots";
+import type { SiteImageSlot } from "./slots";
 import { updateSitePhotos } from "./actions";
 
-export function PhotosForm({ currentUrls }: { currentUrls: Record<string, string | undefined> }) {
+export function PhotosForm({
+  currentUrls,
+  slots,
+}: {
+  currentUrls: Record<string, string | undefined>;
+  /** Built-in slots plus those of lines/types added in the catalog. */
+  slots: SiteImageSlot[];
+}) {
   const [status, formAction, isPending] = useActionState(updateSitePhotos, null);
 
   return (
     <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-6">
-      {SITE_IMAGE_SLOTS.map((slot) => (
+      {slots.map((slot) => (
         <div key={slot.key} className="rounded-xl border border-border p-4">
           <ImageUploadField
             name={slot.key}

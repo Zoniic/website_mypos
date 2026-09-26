@@ -6,7 +6,6 @@ import { useRouter, usePathname } from "@/i18n/navigation";
 import { ProductCard } from "@/components/products/ProductCard";
 import type { BusinessType, Product, ProductCategory } from "@/lib/products";
 
-const categories: ProductCategory[] = ["self-order", "weigh-pay", "pos", "ticketing"];
 const osOptions = ["Android", "Windows"] as const;
 
 function FilterSelect({
@@ -48,8 +47,11 @@ export function ProductsExplorer({
   initialBusinessType = "",
   initialOs = "",
   initialScreenSize = "",
+  categories,
 }: {
   products: Product[];
+  /** Filter options, in menu order (built-in + published catalog lines). */
+  categories: ProductCategory[];
   initialSearch?: string;
   initialCategory?: string;
   initialBusinessType?: string;

@@ -218,3 +218,32 @@ function industryImageSlots(): SiteImageSlot[] {
     avoid: "ภาพสต็อกต่างชาติ, เครื่องแบรนด์อื่น, ร้านที่ไม่ได้ใช้ MYPOS จริง",
   }));
 }
+
+/** Slots for product lines and business types added in /admin/catalog. */
+export function catalogImageSlots(
+  added: { kind: "solution" | "industry"; slug: string; label: string }[],
+): SiteImageSlot[] {
+  return added.map(({ kind, slug, label }) =>
+    kind === "solution"
+      ? {
+          key: `solution-${slug}`,
+          label: `โซลูชัน — ${label}`,
+          hint: "แนวนอน อย่างน้อย 1600×1000px.",
+          ratio: "4/3",
+          usedOn: `ภาพหลักของหน้า /solutions/${slug} และการ์ดในหน้าประเภทธุรกิจ`,
+          subject: "เครื่องจริงของสายสินค้านี้ในหน้างานจริง มีคนกำลังใช้งาน",
+          style: "สว่าง คมชัด เห็นหน้าจอ/ตัวเครื่องชัด",
+          avoid: "ภาพสต็อก, เครื่องแบรนด์อื่น, ภาพเรนเดอร์ 3D",
+        }
+      : {
+          key: `industry-${slug}`,
+          label: `ประเภทธุรกิจ — ${label}`,
+          hint: "แนวนอน อย่างน้อย 1600×1200px.",
+          ratio: "4/3",
+          usedOn: `ภาพหลักด้านขวาของหน้า /industries/${slug} (ข้างพาดหัว)`,
+          subject: "เครื่อง MYPOS ในหน้างานจริงของธุรกิจประเภทนี้ มีลูกค้าหรือพนักงานกำลังใช้งาน",
+          style: "ภาพจริงจากหน้างานลูกค้า (ขออนุญาตร้านก่อน) สว่าง เห็นเครื่อง MYPOS ชัด",
+          avoid: "ภาพสต็อกต่างชาติ, เครื่องแบรนด์อื่น, ร้านที่ไม่ได้ใช้ MYPOS จริง",
+        },
+  );
+}

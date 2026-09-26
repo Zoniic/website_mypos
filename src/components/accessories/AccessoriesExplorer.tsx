@@ -8,7 +8,6 @@ import type { Accessory } from "@/lib/accessories";
 import type { ProductCategory } from "@/lib/products";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 
-const categoryOrder: ProductCategory[] = ["self-order", "weigh-pay", "pos", "ticketing"];
 
 export function AccessoriesExplorer({
   items,
@@ -17,8 +16,11 @@ export function AccessoriesExplorer({
   allLabel,
   noResults,
   shopOn = false,
+  categoryOrder,
 }: {
   items: Accessory[];
+  /** Category order for the filter (built-in + published catalog lines). */
+  categoryOrder: ProductCategory[];
   initialCategory?: string;
   filterLabel: string;
   allLabel: string;
@@ -35,7 +37,7 @@ export function AccessoriesExplorer({
     const set = new Set<ProductCategory>();
     items.forEach((item) => item.categories.forEach((c) => set.add(c)));
     return categoryOrder.filter((c) => set.has(c));
-  }, [items]);
+  }, [items, categoryOrder]);
 
   const filtered = useMemo(() => {
     if (!category) return items;

@@ -2,7 +2,8 @@ import { BUSINESS_TYPES } from "@/data/businessTypes";
 import type { SolutionSlug } from "@/data/solutions";
 
 /**
- * One landing page per business type (/industries/<slug>). Slugs match the
+ * Built-in landing pages per business type (/industries/<slug>); more can be
+ * added in the admin (src/lib/catalog.ts). Slugs match the
  * BusinessType lookup table, so products and case studies tagged with a type
  * in the admin show up on its page automatically.
  */
@@ -24,7 +25,3 @@ export const industrySolutions: Record<IndustrySlug, SolutionSlug[]> = {
   office: ["vending-online", "vending-offline", "self-order"],
   school: ["vending-online", "self-order", "vending-offline"],
 };
-
-export function isIndustrySlug(value: string): value is IndustrySlug {
-  return (industrySlugs as readonly string[]).includes(value);
-}

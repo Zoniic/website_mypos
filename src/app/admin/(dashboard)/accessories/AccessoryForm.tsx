@@ -37,10 +37,12 @@ const labelClass = "text-sm font-medium text-text-2";
 export function AccessoryForm({
   action,
   initialValues = emptyValues,
+  categoryOptions,
   submitLabel,
 }: {
   action: (prevState: string | null, formData: FormData) => Promise<string | null>;
   initialValues?: AccessoryFormValues;
+  categoryOptions?: string[];
   submitLabel: string;
 }) {
   const [error, formAction, isPending] = useActionState(action, null);
@@ -56,6 +58,7 @@ export function AccessoryForm({
       <CategoryCheckboxes
         name="categories"
         label="Applies to categories (which POS types this accessory suits)"
+        options={categoryOptions}
         defaultValue={initialValues.categories}
       />
 

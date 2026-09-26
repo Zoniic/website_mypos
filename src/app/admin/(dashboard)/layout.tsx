@@ -19,6 +19,7 @@ const navLinks = [
   { href: "/admin/content", label: "Page Content" },
   { href: "/admin/layout-editor", label: "Page Layout" },
   { href: "/admin/navigation", label: "Navigation" },
+  { href: "/admin/catalog", label: "Catalog (สายสินค้า/ธุรกิจ)" },
   { href: "/admin/photos", label: "Site Photos" },
   { href: "/admin/trust-logos", label: "Trust Logos" },
   { href: "/admin/official-partners", label: "Official Partners" },

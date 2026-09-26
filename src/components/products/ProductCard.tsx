@@ -7,7 +7,6 @@ import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { StockBadge } from "@/components/products/StockBadge";
 import { useQuoteCart } from "@/lib/quoteCart";
 import type { Product } from "@/lib/products";
-import { solutionMachine } from "@/data/solutions";
 
 export function ProductCard({ product }: { product: Product }) {
   const t = useTranslations("productsCommon");
@@ -62,7 +61,7 @@ export function ProductCard({ product }: { product: Product }) {
             ratio="1/1"
             label={`${product.name} photo`}
             src={product.imageUrl}
-            machine={product.categories[0] ? solutionMachine[product.categories[0]] : undefined}
+            machine={product.machine}
             className="transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </div>

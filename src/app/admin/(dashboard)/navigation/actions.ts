@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
+import { getCatalog } from "@/lib/catalog";
 import {
   CUSTOM_PREFIX,
   MENU_ALLOWS_CUSTOM,
@@ -47,21 +48,21 @@ export async function saveMenu(menu: string, json: string): Promise<string> {
   }
   if (errors.length) return [...new Set(errors)].join("\n");
 
-  await store(menu, resolveMenu(menu as MenuKey, data));
+  await store(menu, resolveMenu(menu as MenuKey, data, await getCatalog()));
   return "saved";
 }
 
 export async function saveIndustrySolutions(json: string): Promise<string> {
   const data = parse(json);
   if (typeof data !== "object" || data === null) return "Data is invalid.";
-  await store("map.industrySolutions", resolveIndustrySolutions(data));
+  await store("map.industrySolutions", resolveIndustrySolutions(data, await getCatalog()));
   return "saved";
 }
 
 export async function saveOnlineSolutions(json: string): Promise<string> {
   const data = parse(json);
   if (!Array.isArray(data)) return "Data is invalid.";
-  await store("map.onlineSolutions", resolveOnlineSolutions(data));
+  await store("map.onlineSolutions", resolveOnlineSolutions(data, await getCatalog()));
   return "saved";
 }
 

@@ -1,13 +1,13 @@
 import type { Product as ProductRow, ProductTranslation } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { getCatalog, machineForCategory } from "@/lib/catalog";
+import type { MachineKind } from "@/components/ui/MachineArt";
 
-import type { ProductCategory } from "@/data/categories";
+/** Category slug — built-in (src/data/categories) or added in the admin catalog. */
+export type ProductCategory = string;
 
-export type { ProductCategory };
-
-import type { BusinessType } from "@/data/businessTypes";
-
-export type { BusinessType };
+/** Business type slug — built-in (src/data/businessTypes) or added in the admin catalog. */
+export type BusinessType = string;
 
 export type ProductSpecs = {
   screenSize: string;
@@ -47,6 +47,8 @@ export type Product = {
   onlinePrice?: number;
   shopeeUrl?: string;
   lazadaUrl?: string;
+  /** Drawing shown until a photo is uploaded, from the first category's line. */
+  machine?: MachineKind;
 };
 
 type RowWithRelations = ProductRow & {
@@ -55,6 +57,15 @@ type RowWithRelations = ProductRow & {
   businessTypes: { slug: string }[];
   relatedProducts: { slug: string }[];
 };
+
+/** Rows → products, with each one's fallback drawing from the catalog. */
+async function toProducts(rows: RowWithRelations[]): Promise<Product[]> {
+  const catalog = await getCatalog();
+  return rows.map((row) => {
+    const product = toProduct(row);
+    return { ...product, machine: machineForCategory(catalog, product.categories[0]) };
+  });
+}
 
 function toProduct(row: RowWithRelations): Product {
   const translation = row.translations[0];
@@ -99,7 +110,7 @@ export async function getAllProducts(locale: string): Promise<Product[]> {
     },
     orderBy: { id: "asc" },
   });
-  return rows.map(toProduct);
+  return toProducts(rows);
 }
 
 export async function getFeaturedProducts(locale: string): Promise<Product[]> {
@@ -113,7 +124,7 @@ export async function getFeaturedProducts(locale: string): Promise<Product[]> {
     },
     orderBy: { id: "asc" },
   });
-  return rows.map(toProduct);
+  return toProducts(rows);
 }
 
 export async function getProductBySlug(slug: string, locale: string): Promise<Product | null> {
@@ -126,7 +137,7 @@ export async function getProductBySlug(slug: string, locale: string): Promise<Pr
       relatedProducts: { select: { slug: true } },
     },
   });
-  return row ? toProduct(row) : null;
+  return row ? (await toProducts([row]))[0] : null;
 }
 
 export async function getRelatedProducts(product: Product, locale: string): Promise<Product[]> {
@@ -140,7 +151,7 @@ export async function getRelatedProducts(product: Product, locale: string): Prom
       relatedProducts: { select: { slug: true } },
     },
   });
-  return rows.map(toProduct);
+  return toProducts(rows);
 }
 
 export async function getProductsByCategory(
@@ -157,7 +168,7 @@ export async function getProductsByCategory(
     },
     orderBy: { id: "asc" },
   });
-  return rows.map(toProduct);
+  return toProducts(rows);
 }
 
 export async function getProductsByBusinessType(
@@ -174,7 +185,7 @@ export async function getProductsByBusinessType(
     },
     orderBy: { id: "asc" },
   });
-  return rows.map(toProduct);
+  return toProducts(rows);
 }
 
 export async function getAllProductSlugs(): Promise<string[]> {

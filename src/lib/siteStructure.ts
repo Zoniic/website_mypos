@@ -1,10 +1,10 @@
 import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { SITE_CONTENT_TAG, SITE_CONTENT_TTL_SECONDS } from "@/lib/siteCache";
-import { PRODUCT_CATEGORIES } from "@/data/categories";
-import { industrySlugs, industrySolutions as defaultIndustrySolutions, type IndustrySlug } from "@/data/industries";
+import { industrySolutions as defaultIndustrySolutions } from "@/data/industries";
 import { defaultFooterGroups, defaultResourceLinks } from "@/data/navigation";
-import { ONLINE_SOLUTIONS, isSolutionSlug, solutionGroups, type SolutionSlug } from "@/data/solutions";
+import { ONLINE_SOLUTIONS, solutionGroups } from "@/data/solutions";
+import { getCatalog, publishedBusinessTypes, publishedCategories, publishedSolutions, type Catalog } from "@/lib/catalog";
 
 /**
  * Admin-editable site structure: menus, the solutions recommended on each
@@ -22,13 +22,23 @@ export type MenuKey = (typeof MENU_KEYS)[number];
 
 const single = (items: NavItem[]): NavGroup[] => [{ key: "main", items }];
 
-export const MENU_DEFAULTS: Record<MenuKey, NavGroup[]> = {
-  "nav.solutions": solutionGroups.map((g) => ({ key: g.key, items: g.items.map((i) => ({ ...i })) })),
-  "nav.categories": single(PRODUCT_CATEGORIES.map((c) => ({ key: c, href: c }))),
-  "nav.industries": single(industrySlugs.map((s) => ({ key: s, href: `/industries/${s}` }))),
-  "nav.resources": single(defaultResourceLinks.map((l) => ({ ...l }))),
-  "nav.footer": defaultFooterGroups.map((g) => ({ key: g.key, items: g.items.map((i) => ({ ...i })) })),
-};
+/** Default menus: the code's lists plus published catalog lines and business types. */
+export function menuDefaults(catalog: Catalog): Record<MenuKey, NavGroup[]> {
+  const addedLines = publishedSolutions(catalog).filter((s) => !s.builtIn);
+  return {
+    "nav.solutions": solutionGroups.map((g) => ({
+      key: g.key,
+      items: [
+        ...g.items.map((i) => ({ ...i })),
+        ...addedLines.filter((s) => s.group === g.key).map((s) => ({ key: s.key, href: `/solutions/${s.slug}` })),
+      ],
+    })),
+    "nav.categories": single(publishedCategories(catalog).map((c) => ({ key: c, href: c }))),
+    "nav.industries": single(publishedBusinessTypes(catalog).map((t) => ({ key: t.slug, href: `/industries/${t.slug}` }))),
+    "nav.resources": single(defaultResourceLinks.map((l) => ({ ...l }))),
+    "nav.footer": defaultFooterGroups.map((g) => ({ key: g.key, items: g.items.map((i) => ({ ...i })) })),
+  };
+}
 
 /** Menus whose items are a fixed catalogue (the admin can hide/reorder but not add). */
 export const MENU_ALLOWS_CUSTOM: Record<MenuKey, boolean> = {
@@ -56,8 +66,8 @@ function cleanLabel(value: unknown): NavLabel | undefined {
 }
 
 /** Stored menu merged with the defaults. Built-in links keep their code href. */
-export function resolveMenu(menu: MenuKey, stored: unknown): NavGroup[] {
-  const defaults = MENU_DEFAULTS[menu];
+export function resolveMenu(menu: MenuKey, stored: unknown, catalog: Catalog): NavGroup[] {
+  const defaults = menuDefaults(catalog)[menu];
   const builtIn = new Map<string, { href: string; group: string }>();
   for (const g of defaults) for (const i of g.items) builtIn.set(i.key, { href: i.href, group: g.key });
   const groupKeys = defaults.map((g) => g.key);
@@ -99,20 +109,22 @@ export function resolveMenu(menu: MenuKey, stored: unknown): NavGroup[] {
   return order.map((key) => ({ key, items: groups.get(key)! }));
 }
 
-export function resolveIndustrySolutions(stored: unknown): Record<IndustrySlug, SolutionSlug[]> {
-  const out = { ...defaultIndustrySolutions };
-  if (typeof stored !== "object" || stored === null) return out;
-  for (const type of industrySlugs) {
-    const list = (stored as Record<string, unknown>)[type];
-    if (!Array.isArray(list)) continue;
-    out[type] = [...new Set(list.map(String).filter(isSolutionSlug))];
+/** Recommended lines per business type (every type, published or not; added types start empty). */
+export function resolveIndustrySolutions(stored: unknown, catalog: Catalog): Record<string, string[]> {
+  const known = new Set(catalog.solutions.map((s) => s.slug));
+  const defaults: Record<string, readonly string[]> = defaultIndustrySolutions;
+  const out: Record<string, string[]> = {};
+  for (const { slug } of catalog.businessTypes) {
+    const list = typeof stored === "object" && stored !== null ? (stored as Record<string, unknown>)[slug] : undefined;
+    out[slug] = Array.isArray(list) ? [...new Set(list.map(String).filter((s) => known.has(s)))] : [...(defaults[slug] ?? [])];
   }
   return out;
 }
 
-export function resolveOnlineSolutions(stored: unknown): SolutionSlug[] {
+export function resolveOnlineSolutions(stored: unknown, catalog: Catalog): string[] {
   if (!Array.isArray(stored)) return [...ONLINE_SOLUTIONS];
-  return [...new Set(stored.map(String).filter(isSolutionSlug))];
+  const known = new Set(catalog.solutions.map((s) => s.slug));
+  return [...new Set(stored.map(String).filter((s) => known.has(s)))];
 }
 
 export const STRUCTURE_KEYS = [...MENU_KEYS, "map.industrySolutions", "map.onlineSolutions"] as const;
@@ -120,8 +132,9 @@ export type StructureKey = (typeof STRUCTURE_KEYS)[number];
 
 export type SiteStructure = {
   menus: Record<MenuKey, NavGroup[]>;
-  industrySolutions: Record<IndustrySlug, SolutionSlug[]>;
-  onlineSolutions: SolutionSlug[];
+  /** Business type slug → recommended solution slugs (may include unpublished lines; filter when rendering). */
+  industrySolutions: Record<string, string[]>;
+  onlineSolutions: string[];
 };
 
 function parse(raw: string | undefined): unknown {
@@ -133,18 +146,21 @@ function parse(raw: string | undefined): unknown {
   }
 }
 
-export function buildStructure(rows: Record<string, string>): SiteStructure {
+export function buildStructure(rows: Record<string, string>, catalog: Catalog): SiteStructure {
   return {
-    menus: Object.fromEntries(MENU_KEYS.map((k) => [k, resolveMenu(k, parse(rows[k]))])) as Record<MenuKey, NavGroup[]>,
-    industrySolutions: resolveIndustrySolutions(parse(rows["map.industrySolutions"])),
-    onlineSolutions: resolveOnlineSolutions(parse(rows["map.onlineSolutions"])),
+    menus: Object.fromEntries(MENU_KEYS.map((k) => [k, resolveMenu(k, parse(rows[k]), catalog)])) as Record<MenuKey, NavGroup[]>,
+    industrySolutions: resolveIndustrySolutions(parse(rows["map.industrySolutions"]), catalog),
+    onlineSolutions: resolveOnlineSolutions(parse(rows["map.onlineSolutions"]), catalog),
   };
 }
 
 export const getSiteStructure = unstable_cache(
   async (): Promise<SiteStructure> => {
-    const rows = await prisma.siteSetting.findMany({ where: { key: { in: [...STRUCTURE_KEYS] } } });
-    return buildStructure(Object.fromEntries(rows.map((r) => [r.key, r.value])));
+    const [rows, catalog] = await Promise.all([
+      prisma.siteSetting.findMany({ where: { key: { in: [...STRUCTURE_KEYS] } } }),
+      getCatalog(),
+    ]);
+    return buildStructure(Object.fromEntries(rows.map((r) => [r.key, r.value])), catalog);
   },
   ["site-structure"],
   { tags: [SITE_CONTENT_TAG], revalidate: SITE_CONTENT_TTL_SECONDS },

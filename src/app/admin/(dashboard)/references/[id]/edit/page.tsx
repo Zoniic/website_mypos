@@ -2,12 +2,14 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ReferenceForm, type ReferenceFormValues } from "../../ReferenceForm";
 import { deleteReference, updateReference } from "../../actions";
+import { getCatalog } from "@/lib/catalog";
 
 export default async function EditReferencePage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const catalog = await getCatalog();
   const { id } = await params;
   const caseId = Number(id);
 
@@ -45,7 +47,12 @@ export default async function EditReferencePage({
     <div>
       <h1 className="text-2xl font-bold">Edit Case Study</h1>
       <div className="mt-6">
-        <ReferenceForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <ReferenceForm
+          businessTypes={catalog.businessTypes.map((b) => b.slug)}
+          action={boundUpdate}
+          initialValues={initialValues}
+          submitLabel="Save Changes"
+        />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { BusinessTypeIcon } from "@/components/ui/BusinessTypeIcon";
-import { isIndustrySlug } from "@/data/industries";
+import { getCatalog } from "@/lib/catalog";
 
 type UseCaseItem = { type: string; title: string; blurb: string };
 
@@ -13,6 +13,9 @@ export async function UseCases() {
   const items = (t.raw("items") as UseCaseItem[]) ?? [];
 
   if (!items.length) return null;
+  const catalog = await getCatalog();
+  // Published business types link to their page and use their chosen icon.
+  const typeOf = (slug: string) => catalog.businessTypes.find((b) => b.slug === slug && b.published);
 
   return (
     <section className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
@@ -24,14 +27,14 @@ export async function UseCases() {
             <FadeIn delay={(index % 2) * 0.04}>
               <Link
                 href={
-                  isIndustrySlug(item.type)
+                  typeOf(item.type)
                     ? `/industries/${item.type}`
                     : { pathname: "/products", query: { businessType: item.type } }
                 }
                 className="group -mx-3 flex items-center gap-5 rounded-lg px-3 py-5 outline-offset-2 transition-colors hover:bg-surface-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
               >
                 <span className="text-text-2 transition-colors group-hover:text-primary-600">
-                  <BusinessTypeIcon type={item.type} size={22} />
+                  <BusinessTypeIcon type={typeOf(item.type)?.icon ?? item.type} size={22} />
                 </span>
                 <span className="min-w-0 flex-1">
                   <span className="block font-display text-xl font-semibold">{item.title}</span>

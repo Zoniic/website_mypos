@@ -1,22 +1,9 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
-import { industrySlugs } from "@/data/industries";
+import { getTranslations } from "next-intl/server";
+import { getCatalog, publishedBusinessTypes } from "@/lib/catalog";
 import { SECTION_GUIDES, type SectionGuideKey } from "../guides";
-
-const industryLabels: Record<string, string> = {
-  restaurant: "ร้านอาหาร",
-  cafeteria: "โรงอาหาร",
-  buffet: "บุฟเฟต์",
-  bakery: "เบเกอรี่",
-  retail: "ค้าปลีก",
-  convenience: "ร้านสะดวกซื้อ",
-  hotel: "โรงแรม",
-  themepark: "สวนสนุก",
-  manufacturing: "โรงงาน",
-  office: "สำนักงานและอาคาร",
-  school: "สถานศึกษา",
-};
 
 const competitors = [
   { name: "Wongnai POS (FoodStory)", strength: "72,000+ ร้าน, 8 หน้าประเภทธุรกิจ, ราคาแพ็กเกจชัด, ปุ่มนัดสาธิต", gap: "ไม่มีเคสลูกค้าละเอียด ไม่มีวิดีโอสาธิต ไม่ผลิตฮาร์ดแวร์เอง" },
@@ -116,6 +103,10 @@ export default async function PlaybookPage() {
       getSiteImages(),
     ]);
 
+  const industrySlugs = publishedBusinessTypes(await getCatalog()).map((b) => b.slug);
+  const tp = await getTranslations({ locale: "th", namespace: "productsCommon" });
+  const industryLabel = (slug: string) => tp(`businessTypes.${slug}`);
+
   const productsNoImage = products.filter((p) => !p.imageUrl).length;
   const productsNoType = products.filter((p) => p.businessTypes.length === 0).length;
   const industriesWithCase = new Set(references.map((r) => r.businessType));
@@ -146,7 +137,7 @@ export default async function PlaybookPage() {
           <Status ok={industriesMissingCase.length === 0}>
             {industriesMissingCase.length === 0
               ? "ทุกประเภทธุรกิจมีเคสลูกค้าแล้ว"
-              : `ประเภทธุรกิจที่ยังไม่มีเคสลูกค้า: ${industriesMissingCase.map((t) => industryLabels[t]).join(", ")}`}
+              : `ประเภทธุรกิจที่ยังไม่มีเคสลูกค้า: ${industriesMissingCase.map(industryLabel).join(", ")}`}
           </Status>
           <Status ok={industryPhotos === industrySlugs.length}>
             รูปหน้าประเภทธุรกิจ {industryPhotos}/{industrySlugs.length} ภาพ

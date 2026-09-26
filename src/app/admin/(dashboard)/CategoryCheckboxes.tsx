@@ -4,11 +4,14 @@ export function CategoryCheckboxes({
   name,
   label,
   defaultValue,
+  options = CATEGORIES,
 }: {
   name: string;
   label: string;
   /** Categories currently selected. */
   defaultValue: string[];
+  /** Every category incl. ones of lines added in /admin/catalog (defaults to the built-in list). */
+  options?: readonly string[];
 }) {
   const selected = new Set(defaultValue);
 
@@ -16,7 +19,7 @@ export function CategoryCheckboxes({
     <div>
       <span className="text-sm font-medium text-text-2">{label}</span>
       <div className="mt-2 flex flex-wrap gap-4">
-        {CATEGORIES.map((category) => (
+        {options.map((category) => (
           <label key={category} className="flex items-center gap-2 text-sm text-text-1">
             <input
               type="checkbox"

@@ -95,11 +95,15 @@ export function ProductForm({
   action,
   initialValues = emptyValues,
   relatedProductOptions = [],
+  categoryOptions,
+  businessTypeOptions,
   submitLabel,
 }: {
   action: (prevState: string | null, formData: FormData) => Promise<string | null>;
   initialValues?: ProductFormValues;
   relatedProductOptions?: { slug: string; name: string }[];
+  categoryOptions?: string[];
+  businessTypeOptions?: string[];
   submitLabel: string;
 }) {
   const [error, formAction, isPending] = useActionState(action, null);
@@ -124,6 +128,7 @@ export function ProductForm({
             name="categories"
             label="Categories (a product can belong to more than one)"
             defaultValue={initialValues.categories}
+            options={categoryOptions}
           />
         </div>
 
@@ -183,6 +188,7 @@ export function ProductForm({
             name="businessTypes"
             label="Business Types (which kinds of businesses this suits)"
             defaultValue={initialValues.businessTypes}
+            options={businessTypeOptions}
           />
         </div>
 

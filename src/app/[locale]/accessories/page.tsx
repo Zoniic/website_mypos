@@ -9,6 +9,7 @@ import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { absoluteUrl } from "@/lib/structuredData";
 import { AccessoriesExplorer } from "@/components/accessories/AccessoriesExplorer";
+import { getCatalog, publishedCategories } from "@/lib/catalog";
 
 
 // Reads searchParams (filters / query), so it renders per request; its
@@ -102,6 +103,7 @@ export default async function AccessoriesPage({
         <div className="mt-8">
           <AccessoriesExplorer
             items={items}
+            categoryOrder={publishedCategories(await getCatalog())}
             initialCategory={category ?? ""}
             filterLabel={tProducts("filterCategory")}
             allLabel={tProducts("allLabel")}

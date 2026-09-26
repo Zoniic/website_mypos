@@ -6,9 +6,8 @@ import { siteConfig } from "@/config/site";
 import { getProductsByBusinessType } from "@/lib/products";
 import { getReferenceCasesByBusinessType } from "@/lib/references";
 import { getSiteImages } from "@/lib/siteSettings";
-import { isIndustrySlug } from "@/data/industries";
 import { getSiteStructure } from "@/lib/siteStructure";
-import { solutionMachine, solutionMessageKey } from "@/data/solutions";
+import { findBusinessType, findSolution, getCatalog, type CatalogSolution } from "@/lib/catalog";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
@@ -23,7 +22,6 @@ import { PageSections } from "@/components/layout/PageSections";
 import { getPageSections } from "@/lib/pageLayout";
 import { RecommendedSolutions } from "@/components/industries/RecommendedSolutions";
 
-
 // Empty list = render each page on its first visit, then serve it from
 // the cache (ISR). Without this export the route renders on every request.
 export function generateStaticParams() {
@@ -36,13 +34,16 @@ export async function generateMetadata({
   params: Promise<{ locale: string; type: string }>;
 }): Promise<Metadata> {
   const { locale, type } = await params;
-  if (!isIndustrySlug(type)) return {};
+  const businessType = findBusinessType(await getCatalog(), type);
+  if (!businessType) return {};
 
   const t = await getTranslations({ locale, namespace: `industries.${type}` });
   const alternates = buildAlternates(locale, `/industries/${type}`);
 
   return {
     title: { absolute: t("metaTitle") },
+    // Types added in the admin stay out of search until published.
+    ...(!businessType.published && { robots: { index: false, follow: false } }),
     description: t("metaDescription"),
     alternates,
     openGraph: {
@@ -62,7 +63,8 @@ export default async function IndustryPage({
   params: Promise<{ locale: string; type: string }>;
 }) {
   const { locale, type } = await params;
-  if (!isIndustrySlug(type)) notFound();
+  const catalog = await getCatalog();
+  if (!findBusinessType(catalog, type)) notFound();
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: `industries.${type}` });
@@ -77,23 +79,28 @@ export default async function IndustryPage({
     getSiteImages(),
   ]);
 
-  const painGain = t.raw("painGain") as PainGainItem[];
-  const steps = t.raw("steps") as StepItem[];
-  const faq = t.raw("faq") as FaqItem[];
-  const blurbs = tc.raw("solutionBlurbs") as Record<string, string>;
+  // Admin-editable lists: missing or malformed ones render as empty.
+  const list = <T,>(key: string): T[] => {
+    const value: unknown = t.has(key) ? t.raw(key) : [];
+    return Array.isArray(value) ? (value as T[]) : [];
+  };
+  const painGain = list<PainGainItem>("painGain");
+  const steps = list<StepItem>("steps");
+  const faq = list<FaqItem>("faq");
+  const blurbs = (tc.has("solutionBlurbs") ? tc.raw("solutionBlurbs") : {}) as Record<string, string>;
   const typeLabel = tProducts(`businessTypes.${type}`);
 
   // Recommended lines, as arranged in the admin (Navigation → industries).
-  const recommendedSlugs = (await getSiteStructure()).industrySolutions[type];
-  const solutions = recommendedSlugs.map((slug) => {
-    const key = solutionMessageKey[slug];
-    return {
-      slug,
-      label: tNav(`solutionsItems.${key}`),
-      blurb: blurbs[key] ?? "",
-      machine: solutionMachine[slug],
-    };
-  });
+  // Unpublished lines are skipped until they go live.
+  const recommended = ((await getSiteStructure()).industrySolutions[type] ?? [])
+    .map((slug) => findSolution(catalog, slug))
+    .filter((line): line is CatalogSolution => line !== undefined && line.published);
+  const solutions = recommended.map((line) => ({
+    slug: line.slug,
+    label: tNav(`solutionsItems.${line.key}`),
+    blurb: blurbs[line.key] ?? "",
+    machine: line.machine,
+  }));
 
   const pageUrl = `${siteConfig.url}/${locale}/industries/${type}`;
   const breadcrumbSchema = {
@@ -140,7 +147,7 @@ export default async function IndustryPage({
         ctaSecondaryHref={shown("recommended") && solutions.length ? "#solutions" : "#how-it-works"}
         imageLabel={`${typeLabel} photo`}
         imageUrl={images[`industry-${type}`]}
-        machine={solutionMachine[recommendedSlugs[0] ?? "self-order"]}
+        machine={recommended[0]?.machine ?? "kiosk"}
       />
       <PageSections
         order={order}

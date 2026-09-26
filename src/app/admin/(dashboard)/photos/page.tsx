@@ -1,9 +1,10 @@
 import { getSiteImages } from "@/lib/siteSettings";
 import { AdminGuide } from "../AdminGuide";
 import { PhotosForm } from "./PhotosForm";
+import { getAllImageSlots } from "./allSlots";
 
 export default async function AdminPhotosPage() {
-  const currentUrls = await getSiteImages();
+  const [currentUrls, slots] = await Promise.all([getSiteImages(), getAllImageSlots()]);
 
   return (
     <div>
@@ -13,7 +14,7 @@ export default async function AdminPhotosPage() {
       </p>
       <AdminGuide section="photos" />
       <div className="mt-6">
-        <PhotosForm currentUrls={currentUrls} />
+        <PhotosForm currentUrls={currentUrls} slots={slots} />
       </div>
     </div>
   );
