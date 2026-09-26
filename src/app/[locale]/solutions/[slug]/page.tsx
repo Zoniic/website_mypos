@@ -96,7 +96,7 @@ export default async function SolutionPage({
   const navLabel = tNav(`solutionsItems.${key}`);
   const categoryProducts = await getProductsByCategory(solutionCategory[slug], locale);
   const images = await getSiteImages();
-  const order = await getPageSections("solution");
+  const order = await getPageSections("solution", slug);
   const { onlineSolutions } = await getSiteStructure();
   const shown = (id: string) => order.includes(id);
 

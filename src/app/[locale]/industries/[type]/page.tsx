@@ -115,7 +115,7 @@ export default async function IndustryPage({
     })),
   };
 
-  const order = await getPageSections("industry");
+  const order = await getPageSections("industry", type);
   const shown = (id: string) => order.includes(id);
 
   return (

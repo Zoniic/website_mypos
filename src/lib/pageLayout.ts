@@ -113,7 +113,16 @@ export type PageKey = keyof typeof PAGE_LAYOUTS;
 
 export type StoredSection = { id: string; visible: boolean };
 
-export const layoutSettingKey = (page: PageKey) => `layout.${page}`;
+/** `layout.<page>`, or `layout.<page>:<slug>` for a single page's own layout. */
+export const layoutSettingKey = (page: PageKey, variant?: string) =>
+  variant ? `layout.${page}:${variant}` : `layout.${page}`;
+
+/** Templates whose individual pages (by slug) can override the shared layout. */
+export const PAGES_WITH_VARIANTS: readonly PageKey[] = ["solution", "industry"];
+
+export function isLayoutVariant(page: PageKey, variant: string): boolean {
+  return PAGES_WITH_VARIANTS.includes(page) && /^[a-z0-9-]{1,60}$/.test(variant);
+}
 
 export function isPageKey(value: string): value is PageKey {
   return Object.hasOwn(PAGE_LAYOUTS, value);
@@ -159,10 +168,14 @@ const loadLayouts = unstable_cache(
   { tags: [SITE_CONTENT_TAG], revalidate: SITE_CONTENT_TTL_SECONDS },
 );
 
-/** Ordered ids of the sections to render on a page. */
-export async function getPageSections(page: PageKey): Promise<string[]> {
+/**
+ * Ordered ids of the sections to render on a page. `variant` (a solution or
+ * industry slug) uses that page's own layout when the admin set one.
+ */
+export async function getPageSections(page: PageKey, variant?: string): Promise<string[]> {
   const layouts = await loadLayouts();
-  return resolveLayout(page, parseStoredLayout(layouts[layoutSettingKey(page)]))
+  const own = variant ? layouts[layoutSettingKey(page, variant)] : undefined;
+  return resolveLayout(page, parseStoredLayout(own ?? layouts[layoutSettingKey(page)]))
     .filter((s) => s.visible)
     .map((s) => s.id);
 }
@@ -170,4 +183,15 @@ export async function getPageSections(page: PageKey): Promise<string[]> {
 export async function getStoredLayout(page: PageKey): Promise<StoredSection[]> {
   const layouts = await loadLayouts();
   return resolveLayout(page, parseStoredLayout(layouts[layoutSettingKey(page)]));
+}
+
+/** Per-page layouts saved for a template, keyed by slug. */
+export async function getLayoutVariants(page: PageKey): Promise<Record<string, StoredSection[]>> {
+  const layouts = await loadLayouts();
+  const prefix = `${layoutSettingKey(page)}:`;
+  return Object.fromEntries(
+    Object.entries(layouts)
+      .filter(([key]) => key.startsWith(prefix))
+      .map(([key, raw]) => [key.slice(prefix.length), resolveLayout(page, parseStoredLayout(raw))]),
+  );
 }

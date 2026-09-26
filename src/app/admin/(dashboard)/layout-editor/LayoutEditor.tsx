@@ -12,16 +12,32 @@ const iconButton =
 type Props = {
   page: string;
   label: string;
-  previewHref: string;
+  /** Site path of the page (or template), without the locale. */
+  path: string;
   sections: LayoutSection[];
   initial: StoredSection[];
+  /** Individual pages of this template that can have their own layout. */
+  variants?: { key: string; label: string; path: string }[];
+  /** Layouts already saved for individual pages, by slug. */
+  variantLayouts?: Record<string, StoredSection[]>;
 };
 
-export function LayoutEditor({ page, label, previewHref, sections, initial }: Props) {
+export function LayoutEditor({ page, label, path, sections, initial, variants = [], variantLayouts = {} }: Props) {
   const defs = new Map(sections.map((s) => [s.id, s]));
+  const [shared, setShared] = useState(initial);
+  const [own, setOwn] = useState(variantLayouts);
+  const [variant, setVariant] = useState("");
   const [items, setItems] = useState(initial);
   const [status, setStatus] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const hasOwn = variant !== "" && variant in own;
+  const previewHref = `/th${variant ? variants.find((v) => v.key === variant)?.path ?? path : path === "/" ? "" : path}`;
+
+  function pick(next: string) {
+    setVariant(next);
+    setItems(next === "" ? shared : own[next] ?? shared);
+    setStatus(null);
+  }
   const firstMovable = items.findIndex((s) => !defs.get(s.id)?.locked);
 
   function move(index: number, delta: number) {
@@ -39,14 +55,35 @@ export function LayoutEditor({ page, label, previewHref, sections, initial }: Pr
   }
 
   function save() {
-    startTransition(async () => setStatus(await savePageLayout(page, JSON.stringify(items))));
+    startTransition(async () => {
+      const result = await savePageLayout(page, JSON.stringify(items), variant || undefined);
+      if (result === "saved") {
+        if (variant) setOwn({ ...own, [variant]: items });
+        else setShared(items);
+      }
+      setStatus(result);
+    });
   }
 
   function reset() {
-    if (!confirm("คืนค่าลำดับและการแสดงผลเริ่มต้นของหน้านี้?")) return;
+    const question = variant
+      ? "ลบการตั้งค่าเฉพาะหน้านี้ ให้กลับไปใช้แบบเดียวกับทุกหน้า?"
+      : "คืนค่าลำดับและการแสดงผลเริ่มต้น (ใช้กับทุกหน้าที่ไม่ได้ตั้งค่าเฉพาะ)?";
+    if (!confirm(question)) return;
     startTransition(async () => {
-      const result = await resetPageLayout(page);
-      if (result === "saved") setItems(sections.map((s) => ({ id: s.id, visible: true })));
+      const result = await resetPageLayout(page, variant || undefined);
+      if (result === "saved") {
+        if (variant) {
+          const rest = { ...own };
+          delete rest[variant];
+          setOwn(rest);
+          setItems(shared);
+        } else {
+          const defaults = sections.map((s) => ({ id: s.id, visible: true }));
+          setShared(defaults);
+          setItems(defaults);
+        }
+      }
       setStatus(result);
     });
   }
@@ -55,10 +92,31 @@ export function LayoutEditor({ page, label, previewHref, sections, initial }: Pr
     <section className="rounded-xl border border-border p-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 className="text-lg font-semibold">{label}</h2>
+        {variants.length > 0 && (
+          <label className="flex items-center gap-2 text-sm">
+            <span className="text-text-2">ตั้งค่าให้</span>
+            <select className="rounded-lg border border-border bg-bg px-2 py-1.5 text-sm" value={variant} onChange={(e) => pick(e.target.value)}>
+              <option value="">ทุกหน้า (ค่าหลัก)</option>
+              {variants.map((v) => (
+                <option key={v.key} value={v.key}>
+                  เฉพาะ {v.label}
+                  {v.key in own ? " ✓" : ""}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
         <a href={previewHref} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-primary-700 hover:underline">
           ดูหน้าจริง ↗
         </a>
       </div>
+      {variant && (
+        <p className="mt-2 rounded-lg bg-surface-0 px-3 py-2 text-sm text-text-2">
+          {hasOwn
+            ? "หน้านี้ใช้ลำดับของตัวเอง ไม่เปลี่ยนตามค่าหลัก"
+            : "หน้านี้ใช้ค่าหลักอยู่ แก้แล้วกดบันทึก จะกลายเป็นลำดับเฉพาะของหน้านี้"}
+        </p>
+      )}
       <ol className="mt-3 divide-y divide-border rounded-lg border border-border">
         {items.map((item, index) => {
           const def = defs.get(item.id);
@@ -96,9 +154,11 @@ export function LayoutEditor({ page, label, previewHref, sections, initial }: Pr
         <button type="button" className={primaryButton} onClick={save} disabled={isPending}>
           {isPending ? "กำลังบันทึก..." : "บันทึก"}
         </button>
-        <button type="button" className="text-sm text-text-2 underline-offset-4 hover:underline" onClick={reset} disabled={isPending}>
-          คืนค่าเริ่มต้น
-        </button>
+        {(!variant || hasOwn) && (
+          <button type="button" className="text-sm text-text-2 underline-offset-4 hover:underline" onClick={reset} disabled={isPending}>
+            {variant ? "กลับไปใช้ค่าหลัก" : "คืนค่าเริ่มต้น"}
+          </button>
+        )}
         {status === "saved" && <p className="text-sm text-success">บันทึกแล้ว เว็บอัปเดตทันที</p>}
         {status && status !== "saved" && <p className="text-sm text-error">{status}</p>}
       </div>
