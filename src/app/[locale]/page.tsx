@@ -112,6 +112,7 @@ export default async function HomePage({
       <JsonLd data={productListSchema} />
 
       <PageSections
+        page="home"
         order={order}
         blocks={{
           hero: <Hero />,

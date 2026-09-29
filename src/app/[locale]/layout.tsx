@@ -17,6 +17,9 @@ import { cleanTrackingId, cleanVerificationToken } from "@/lib/trackingIds";
 import { QuoteCartProvider } from "@/lib/quoteCart";
 import { ShopCartProvider } from "@/lib/shopCart";
 import { getHeaderNav } from "@/lib/navView";
+import { isEditMode } from "@/lib/editMode";
+import { EditModeLoader } from "@/components/edit/EditModeLoader";
+import { AdminEditButton } from "@/components/edit/AdminEditButton";
 import "../globals.css";
 
 // Body/UI: Anuphan (Cadson Demak) — a loopless humanist Thai that stays
@@ -162,6 +165,7 @@ export default async function LocaleLayout({
               <Footer />
               <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
               <CookieConsent />
+              {(await isEditMode()) ? <EditModeLoader locale={locale} /> : <AdminEditButton />}
             </MotionConfig>
             </ShopCartProvider>
           </QuoteCartProvider>

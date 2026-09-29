@@ -151,9 +151,12 @@ export default async function SolutionPage({
         ctaSecondaryHref={hasCompare ? "#compare" : hasDetails ? "#details" : "#how-it-works"}
         imageLabel={`${navLabel} photo`}
         imageUrl={images[`solution-${slug}`]}
+        imageSlot={`solution-${slug}`}
         machine={line.machine}
       />
       <PageSections
+        page="solution"
+        variant={slug}
         order={order}
         blocks={{
           subNav: (

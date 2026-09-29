@@ -54,6 +54,7 @@ export function ProductCard({ product }: { product: Product }) {
 
       <Link
         href={`/products/${product.slug}`}
+        data-edit-admin={`/admin/goto/product/${product.slug}`}
         className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 p-4 transition-all hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]"
       >
         <div className="overflow-hidden rounded-lg">

@@ -46,7 +46,10 @@ export async function Solutions() {
                   className="group flex h-full flex-col rounded-[22px] outline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                 >
                   <TiltedCard>
-                    <div className="stage-grid-ink relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-[22px] bg-surface-2 transition-colors duration-300 group-hover:bg-primary-50">
+                    <div
+                      data-edit-image={`solution-${item.slug}`}
+                      className="stage-grid-ink relative flex aspect-[4/5] items-end justify-center overflow-hidden rounded-[22px] bg-surface-2 transition-colors duration-300 group-hover:bg-primary-50"
+                    >
                       {photo ? (
                         <Image
                           src={photo}

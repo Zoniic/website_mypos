@@ -90,11 +90,13 @@ export default async function SoftwarePage({
           ratio="4/3"
           label="Software UI photo"
           src={images["software-hero"]}
+          slot="software-hero"
           sizes="(min-width: 1024px) 50vw, 100vw"
         />
       </section>
 
       <PageSections
+        page="software"
         order={order}
         blocks={{
           features: (
@@ -201,16 +203,19 @@ export default async function SoftwarePage({
                   ratio="4/3"
                   label="Dashboard screenshot"
                   src={images["software-screenshot-dashboard"]}
+                  slot="software-screenshot-dashboard"
                 />
                 <PlaceholderImage
                   ratio="4/3"
                   label="Menu management screenshot"
                   src={images["software-screenshot-menu"]}
+                  slot="software-screenshot-menu"
                 />
                 <PlaceholderImage
                   ratio="4/3"
                   label="Sales report screenshot"
                   src={images["software-screenshot-sales"]}
+                  slot="software-screenshot-sales"
                 />
               </div>
             </section>

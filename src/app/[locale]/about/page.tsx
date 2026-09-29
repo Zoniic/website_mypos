@@ -77,6 +77,7 @@ export default async function AboutPage({
       </section>
 
       <PageSections
+        page="about"
         order={order}
         blocks={{
           story: (
@@ -87,6 +88,7 @@ export default async function AboutPage({
                     ratio="4/3"
                     label="Factory / team photo"
                     src={images["about-team"]}
+                    slot="about-team"
                     machine="kiosk"
                     tone="ember"
                     className="!rounded-[22px]"
@@ -117,6 +119,7 @@ export default async function AboutPage({
                       ratio="4/3"
                       label="Product assembly photo"
                       src={images["about-assembly"]}
+                      slot="about-assembly"
                       machine="pos"
                       className="!rounded-[22px]"
                       sizes="(min-width: 1024px) 50vw, 100vw"

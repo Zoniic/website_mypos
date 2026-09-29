@@ -33,6 +33,7 @@ export function PlaceholderImage({
   sizes = DEFAULT_SIZES,
   machine,
   tone = "neutral",
+  slot,
 }: {
   ratio?: Ratio;
   label: string;
@@ -45,10 +46,12 @@ export function PlaceholderImage({
   machine?: MachineKind;
   /** "ember" puts the illustration on the brand-orange stage (page heroes). */
   tone?: "neutral" | "ember";
+  /** Site Photos slot key — lets edit-on-site mode replace this photo in place. */
+  slot?: string;
 }) {
   if (src) {
     return (
-      <div className={`relative overflow-hidden rounded-xl bg-surface-2 ${ratioClass[ratio]} ${className ?? ""}`}>
+      <div data-edit-image={slot} className={`relative overflow-hidden rounded-xl bg-surface-2 ${ratioClass[ratio]} ${className ?? ""}`}>
         <Image src={src} alt={label} fill sizes={sizes} className="object-cover" />
       </div>
     );
@@ -56,6 +59,7 @@ export function PlaceholderImage({
 
   return (
     <div
+      data-edit-image={slot}
       className={`relative flex items-end justify-center overflow-hidden rounded-xl ${
         tone === "ember" ? "stage-grid bg-primary-500" : "stage-grid-ink bg-surface-2"
       } ${ratioClass[ratio]} ${className ?? ""}`}

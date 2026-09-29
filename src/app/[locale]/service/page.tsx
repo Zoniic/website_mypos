@@ -99,6 +99,7 @@ export default async function ServicePage({
       </section>
 
       <PageSections
+        page="service"
         order={order}
         blocks={{
           types: (

@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { SITE_CONTENT_TAG, SITE_CONTENT_TTL_SECONDS } from "@/lib/siteCache";
+import { encodeEditMarker, markValue } from "@/lib/editMode";
 
 // Namespaces where the DB's "items" list is merged back in as a structured
 // array/object matching the original messages/*.json shape, so every
@@ -39,12 +40,15 @@ function ensureNamespace(messages: Messages, namespace: string): Record<string, 
   return messages[namespace] as Record<string, unknown>;
 }
 
-async function loadMessages(locale: string): Promise<Messages> {
+/** `editable`: tag visible copy with its row id for "edit on site" mode (lib/editMode). */
+async function loadMessages(locale: string, editable = false): Promise<Messages> {
   const rows = await prisma.pageContent.findMany({ where: { locale } });
 
   const messages: Messages = {};
   for (const row of rows) {
-    setDeep(ensureNamespace(messages, row.namespace), row.key, parseValue(row.value));
+    const value = parseValue(row.value);
+    const tagged = editable && !/meta(Title|Description)$/.test(row.key) ? markValue(value, encodeEditMarker(row.id)) : value;
+    setDeep(ensureNamespace(messages, row.namespace), row.key, tagged);
   }
 
   const [products, accessories, referenceCases] = await Promise.all([
@@ -90,7 +94,12 @@ async function loadMessages(locale: string): Promise<Messages> {
  * All copy for one locale. Several queries per call, needed by every page,
  * so it's cached across requests and purged by admin saves (lib/siteCache).
  */
-export const getMessages = unstable_cache(loadMessages, ["messages"], {
+export const getMessages = unstable_cache((locale: string) => loadMessages(locale), ["messages"], {
   tags: [SITE_CONTENT_TAG],
   revalidate: SITE_CONTENT_TTL_SECONDS,
 });
+
+/** Uncached, marked copy for an admin in edit mode. */
+export function getEditableMessages(locale: string): Promise<Messages> {
+  return loadMessages(locale, true);
+}

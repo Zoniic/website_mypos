@@ -147,9 +147,12 @@ export default async function IndustryPage({
         ctaSecondaryHref={shown("recommended") && solutions.length ? "#solutions" : "#how-it-works"}
         imageLabel={`${typeLabel} photo`}
         imageUrl={images[`industry-${type}`]}
+        imageSlot={`industry-${type}`}
         machine={recommended[0]?.machine ?? "kiosk"}
       />
       <PageSections
+        page="industry"
+        variant={type}
         order={order}
         blocks={{
           painGain: (

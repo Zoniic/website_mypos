@@ -13,6 +13,7 @@ export function SolutionHero({
   ctaSecondaryHref = "#compare",
   imageLabel,
   imageUrl,
+  imageSlot,
   machine,
 }: {
   eyebrow: string;
@@ -24,6 +25,8 @@ export function SolutionHero({
   ctaSecondaryHref?: string;
   imageLabel: string;
   imageUrl?: string;
+  /** Site Photos slot of the hero photo (edit-on-site mode). */
+  imageSlot?: string;
   machine?: MachineKind;
 }) {
   return (
@@ -48,6 +51,7 @@ export function SolutionHero({
           ratio="4/3"
           label={imageLabel}
           src={imageUrl}
+          slot={imageSlot}
           machine={machine}
           tone="ember"
           className="!rounded-[28px]"

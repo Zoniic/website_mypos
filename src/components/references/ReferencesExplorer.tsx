@@ -87,6 +87,7 @@ export function ReferencesExplorer({
             <FadeIn key={item.slug} delay={(index % 6) * 0.06}>
               <Link
                 href={`/references/${item.slug}`}
+                data-edit-admin={`/admin/goto/reference/${item.slug}`}
                 className="group block h-full overflow-hidden rounded-card border border-border bg-surface-1/40 outline-offset-2 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400">
                 {item.imageUrl ? (
                   <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">

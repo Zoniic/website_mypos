@@ -36,7 +36,7 @@ export async function About() {
 
         {photo ? (
           <FadeIn delay={0.08} className="relative aspect-[16/10] overflow-hidden rounded-[22px] lg:col-span-7">
-            <Image src={photo} alt="" fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" />
+            <Image src={photo} alt="" fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" data-edit-image="about-team" />
           </FadeIn>
         ) : (
           <FadeIn delay={0.08} className="lg:col-span-6 lg:col-start-7 lg:pt-3">

@@ -72,7 +72,10 @@ export function AccessoriesExplorer({
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {filtered.map((item, index) => (
             <FadeIn key={item.slug} delay={(index % 8) * 0.06}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 p-4 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]">
+              <div
+                data-edit-admin={`/admin/goto/accessory/${item.slug}`}
+                className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 p-4 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]"
+              >
                 <div className="overflow-hidden rounded-lg">
                   <PlaceholderImage
                     ratio="1/1"

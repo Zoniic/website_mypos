@@ -52,7 +52,7 @@ export async function Hero() {
         </FadeIn>
 
         <FadeIn delay={0.1} className="lg:col-span-7">
-          <div className="stage-grid relative aspect-[16/10] overflow-hidden rounded-[28px] bg-primary-500">
+          <div data-edit-image="hero" className="stage-grid relative aspect-[16/10] overflow-hidden rounded-[28px] bg-primary-500">
             {heroUrlIsVideo ? (
               <HeroVideoBackground src={heroUrl} />
             ) : heroPhoto ? (

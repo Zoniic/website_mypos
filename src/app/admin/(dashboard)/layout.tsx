@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/admin/kb-categories", label: "KB Categories" },
   { href: "/admin/kb-articles", label: "KB Articles" },
   { href: "/admin/content", label: "Page Content" },
+  { href: "/admin/live?path=/th", label: "✏️ แก้บนหน้าเว็บ" },
   { href: "/admin/layout-editor", label: "Page Layout" },
   { href: "/admin/navigation", label: "Navigation" },
   { href: "/admin/catalog", label: "Catalog (สายสินค้า/ธุรกิจ)" },
@@ -43,6 +44,8 @@ export default async function DashboardLayout({ children }: { children: React.Re
             <Link
               key={link.href}
               href={link.href}
+              // /admin/live is a route handler that switches on edit mode: never prefetch it.
+              prefetch={link.href.startsWith("/admin/live") ? false : undefined}
               className="rounded-lg px-3 py-2 text-sm font-medium text-text-2 outline-offset-2 transition-colors hover:bg-surface-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
             >
               {link.label}

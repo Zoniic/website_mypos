@@ -221,7 +221,7 @@ export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav
         {tCommon("skipToContent")}
       </a>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center transition-transform hover:scale-105">
+        <Link href="/" data-edit-image="logo" className="flex items-center transition-transform hover:scale-105">
           <Image
             src={logoUrl}
             alt="MYPOS"

@@ -83,6 +83,7 @@ export default async function ContactPage({
                   label="LINE QR code"
                   className="w-32 shrink-0"
                   src={images["line-qr-code"]}
+                  slot="line-qr-code"
                   sizes="128px"
                 />
                 {settings.lineUrl && (

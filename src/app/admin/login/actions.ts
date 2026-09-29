@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ADMIN_SESSION_COOKIE, createSessionToken } from "@/lib/adminAuth";
 import { clearAttempts, isRateLimited, recordAttempt } from "@/lib/rateLimit";
+import { ADMIN_HINT_COOKIE } from "@/lib/editMode";
 
 async function getClientKey(): Promise<string> {
   const headerList = await headers();
@@ -45,6 +46,13 @@ export async function loginAction(_prevState: string | null, formData: FormData)
   const cookieStore = await cookies();
   cookieStore.set(ADMIN_SESSION_COOKIE, token, {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+  // Readable hint (not a credential) so public pages can show "Edit this page".
+  cookieStore.set(ADMIN_HINT_COOKIE, "1", {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
