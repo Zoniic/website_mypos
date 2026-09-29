@@ -1,10 +1,12 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { ORDER_STATUSES, type OrderStatus } from "@/lib/orders";
 
 export async function updateOrder(orderId: number, _prev: string | null, formData: FormData) {
+  await requireAdmin();
   const status = String(formData.get("status") ?? "");
   if (!(ORDER_STATUSES as readonly string[]).includes(status)) return "Unknown status.";
   const adminNote = String(formData.get("adminNote") ?? "").trim().slice(0, 2000) || null;

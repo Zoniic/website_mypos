@@ -3,6 +3,7 @@
 import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyTeam, quoteAlert } from "@/lib/notify";
+import { overSubmissionLimit } from "@/lib/clientIp";
 
 export type QuoteCartItemInput = { slug: string; name: string; quantity: number };
 
@@ -32,6 +33,8 @@ export async function submitQuoteRequest(
   if (!Array.isArray(items) || items.length === 0) {
     return { status: "error", message: "Add at least one product first." };
   }
+
+  if (await overSubmissionLimit("quote")) return { status: "error", message: "Too many requests — please try again later." };
 
   const quote = await prisma.quoteRequest.create({
     data: {

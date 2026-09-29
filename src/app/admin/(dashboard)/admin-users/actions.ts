@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getSessionUser } from "@/lib/adminAuth";
+import { getSessionUser, requireAdmin } from "@/lib/adminAuth";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -18,6 +18,7 @@ function isUniqueConstraintError(error: unknown): boolean {
 }
 
 export async function createAdminUser(_prevState: string | null, formData: FormData) {
+  await requireAdmin();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const name = String(formData.get("name") ?? "").trim();
   const password = String(formData.get("password") ?? "");
@@ -44,6 +45,7 @@ export async function updateAdminUser(
   _prevState: string | null,
   formData: FormData
 ) {
+  await requireAdmin();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const name = String(formData.get("name") ?? "").trim();
   const password = String(formData.get("password") ?? "");
@@ -67,6 +69,7 @@ export async function updateAdminUser(
 }
 
 export async function deleteAdminUser(targetId: number) {
+  await requireAdmin();
   const session = await getSessionUser();
   if (session?.userId === targetId) {
     throw new Error("You can't delete your own account while signed in as it.");

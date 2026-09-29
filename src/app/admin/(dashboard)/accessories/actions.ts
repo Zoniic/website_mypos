@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
@@ -43,6 +44,7 @@ function readCategories(formData: FormData): string[] {
 }
 
 export async function createAccessory(_prevState: string | null, formData: FormData) {
+  await requireAdmin();
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
@@ -93,6 +95,7 @@ export async function updateAccessory(
   _prevState: string | null,
   formData: FormData
 ) {
+  await requireAdmin();
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
@@ -150,6 +153,7 @@ export async function updateAccessory(
 }
 
 export async function deleteAccessory(accessoryId: number) {
+  await requireAdmin();
   await prisma.accessory.delete({ where: { id: accessoryId } });
   revalidateAccessoryPaths();
   redirect("/admin/accessories");

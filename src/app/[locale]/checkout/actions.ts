@@ -1,12 +1,12 @@
 "use server";
 
-import { headers } from "next/headers";
 import { after } from "next/server";
 import { notifyTeam, orderAlert } from "@/lib/notify";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getSiteSettings, isOnlineOrderingOn, shippingFeeFor } from "@/lib/siteSettings";
 import { isRateLimited, recordAttempt } from "@/lib/rateLimit";
+import { clientIp } from "@/lib/clientIp";
 import {
   PAYMENT_METHODS,
   availablePaymentMethods,
@@ -60,9 +60,7 @@ export async function placeOrder(_prev: CheckoutState, formData: FormData): Prom
   // Honeypot: real visitors never fill this hidden field.
   if (String(formData.get("website") ?? "")) return { status: "error", error: "invalid" };
 
-  const requestHeaders = await headers();
-  const ip = requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() || requestHeaders.get("x-real-ip") || "unknown";
-  const limitKey = `order:${ip}`;
+  const limitKey = `order:${await clientIp()}`;
   if (isRateLimited(limitKey)) return { status: "error", error: "rateLimited" };
 
   const locale = ["th", "en", "zh"].includes(String(formData.get("locale"))) ? String(formData.get("locale")) : "th";

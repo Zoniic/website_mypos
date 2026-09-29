@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
@@ -42,6 +43,7 @@ async function readReferenceImageFields(
 }
 
 export async function createReference(_prevState: string | null, formData: FormData) {
+  await requireAdmin();
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
   const businessType = String(formData.get("businessType") ?? "").trim();
@@ -89,6 +91,7 @@ export async function updateReference(
   _prevState: string | null,
   formData: FormData
 ) {
+  await requireAdmin();
   const slug = String(formData.get("slug") ?? "").trim();
   if (!slug) return "Slug is required.";
   const businessType = String(formData.get("businessType") ?? "").trim();
@@ -138,6 +141,7 @@ export async function updateReference(
 }
 
 export async function deleteReference(caseId: number) {
+  await requireAdmin();
   await prisma.referenceCase.delete({ where: { id: caseId } });
   revalidateReferencePaths();
   redirect("/admin/references");

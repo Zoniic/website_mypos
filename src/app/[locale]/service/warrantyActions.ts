@@ -3,6 +3,7 @@
 import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyTeam, warrantyAlert } from "@/lib/notify";
+import { overSubmissionLimit } from "@/lib/clientIp";
 
 export type WarrantyClaimState = { status: "idle" | "error" | "success"; message?: string };
 
@@ -21,6 +22,8 @@ export async function submitWarrantyClaim(
   if (!phone) return { status: "error", message: "phone" };
   if (!email) return { status: "error", message: "email" };
   if (!issue) return { status: "error", message: "issue" };
+
+  if (await overSubmissionLimit("warranty")) return { status: "error" };
 
   await prisma.warrantyClaim.create({
     data: { name, phone, email, productSlug, serialNumber, issue },

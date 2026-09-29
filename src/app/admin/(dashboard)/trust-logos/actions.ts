@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
@@ -11,6 +12,7 @@ function revalidateHome() {
 }
 
 export async function createTrustLogo(_prevState: string | null, formData: FormData) {
+  await requireAdmin();
   const name = String(formData.get("name") ?? "").trim();
   if (!name) return "Name is required.";
 
@@ -37,6 +39,7 @@ export async function updateTrustLogo(
   _prevState: string | null,
   formData: FormData
 ) {
+  await requireAdmin();
   const name = String(formData.get("name") ?? "").trim();
   if (!name) return "Name is required.";
 
@@ -62,6 +65,7 @@ export async function updateTrustLogo(
 }
 
 export async function deleteTrustLogo(logoId: number) {
+  await requireAdmin();
   await prisma.trustLogo.delete({ where: { id: logoId } });
   revalidateHome();
   redirect("/admin/trust-logos");

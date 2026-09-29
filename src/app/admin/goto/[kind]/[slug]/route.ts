@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { requireAdmin } from "@/lib/adminAuth";
 
 /**
  * Edit-mode shortcut: public cards know an item's slug, admin edit pages use
@@ -20,6 +21,7 @@ const editPaths: Record<string, string> = {
 };
 
 export async function GET(_request: Request, { params }: { params: Promise<{ kind: string; slug: string }> }) {
+  await requireAdmin();
   const { kind, slug } = await params;
   const find = finders[kind];
   if (!find) redirect("/admin");

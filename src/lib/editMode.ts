@@ -1,5 +1,5 @@
 import { draftMode } from "next/headers";
-import { getSessionUser } from "@/lib/adminAuth";
+import { getSessionUser, requireAdmin } from "@/lib/adminAuth";
 
 /**
  * "Edit on site" mode: an admin browses the real website and clicks text,
@@ -23,9 +23,7 @@ export async function isEditMode(): Promise<boolean> {
  * by the /admin proxy check, so every action verifies the session itself.
  */
 export async function requireEditor() {
-  const user = await getSessionUser();
-  if (!user) throw new Error("Not signed in as admin.");
-  return user;
+  return requireAdmin();
 }
 
 // Copy rendered in edit mode carries an invisible marker naming its

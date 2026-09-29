@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
@@ -30,6 +31,7 @@ function revalidateBlogPaths(slug?: string) {
 }
 
 export async function createBlogPost(_prevState: string | null, formData: FormData) {
+  await requireAdmin();
   const fields = readPostFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
@@ -70,6 +72,7 @@ export async function createBlogPost(_prevState: string | null, formData: FormDa
 }
 
 export async function updateBlogPost(postId: number, _prevState: string | null, formData: FormData) {
+  await requireAdmin();
   const fields = readPostFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
@@ -116,6 +119,7 @@ export async function updateBlogPost(postId: number, _prevState: string | null, 
 }
 
 export async function deleteBlogPost(postId: number) {
+  await requireAdmin();
   await prisma.blogPost.delete({ where: { id: postId } });
   revalidateBlogPaths();
   redirect("/admin/blog");

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { overSubmissionLimit } from "@/lib/clientIp";
 
 export type NewsletterState = { status: "idle" | "error" | "success" | "already"; message?: string };
 
@@ -14,6 +15,8 @@ export async function subscribeNewsletter(
   if (!email || !EMAIL_PATTERN.test(email)) {
     return { status: "error", message: "invalid" };
   }
+
+  if (await overSubmissionLimit("newsletter")) return { status: "error", message: "invalid" };
 
   try {
     await prisma.newsletterSubscriber.create({ data: { email } });

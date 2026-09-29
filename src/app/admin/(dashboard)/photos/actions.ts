@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
@@ -7,6 +8,7 @@ import { saveUploadedImage } from "@/lib/uploads";
 import { getAllImageSlots } from "./allSlots";
 
 export async function updateSitePhotos(_prevState: string | null, formData: FormData) {
+  await requireAdmin();
   for (const slot of await getAllImageSlots()) {
     let newUrl: string | null;
     try {

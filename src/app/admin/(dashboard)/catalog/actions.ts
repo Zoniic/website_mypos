@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 import {
@@ -68,6 +69,7 @@ export async function createSolution(input: {
   group: string;
   blurb: Names;
 }): Promise<string> {
+  await requireAdmin();
   const slug = input.slug.trim().toLowerCase();
   const names = cleanNames(input.names);
   const catalog = await getCatalog();
@@ -110,6 +112,7 @@ export async function createBusinessType(input: {
   template: string;
   icon: string;
 }): Promise<string> {
+  await requireAdmin();
   const slug = input.slug.trim().toLowerCase();
   const names = cleanNames(input.names);
   const catalog = await getCatalog();
@@ -142,6 +145,7 @@ export async function updateSolution(
   slug: string,
   change: { machine?: string; group?: string; published?: boolean },
 ): Promise<string> {
+  await requireAdmin();
   const current = parseCustomSolutions(await readSetting("catalog.solutions"));
   if (!current.some((s) => s.slug === slug)) return "สายสินค้าในระบบแก้ได้ที่ Navigation / Page Content เท่านั้น";
   if (change.machine && !MACHINE_KINDS.includes(change.machine as MachineKind)) return "ภาพเครื่องไม่ถูกต้อง";
@@ -158,6 +162,7 @@ export async function updateSolution(
 }
 
 export async function updateBusinessType(slug: string, change: { icon?: string; published?: boolean }): Promise<string> {
+  await requireAdmin();
   const current = parseCustomBusinessTypes(await readSetting("catalog.businessTypes"));
   if (!current.some((b) => b.slug === slug)) return "ประเภทธุรกิจในระบบแก้ได้ที่ Navigation / Page Content เท่านั้น";
   if (change.icon && !(BUSINESS_ICONS as readonly string[]).includes(change.icon)) return "ไอคอนไม่ถูกต้อง";
@@ -175,6 +180,7 @@ export async function updateBusinessType(slug: string, change: { icon?: string; 
  * products already tagged with it keep saving; untag them if it's gone for good.
  */
 export async function deleteSolution(slug: string): Promise<string> {
+  await requireAdmin();
   const current = parseCustomSolutions(await readSetting("catalog.solutions"));
   const line = current.find((s) => s.slug === slug);
   if (!line) return "ลบได้เฉพาะสายสินค้าที่เพิ่มเอง";
@@ -196,6 +202,7 @@ export async function deleteSolution(slug: string): Promise<string> {
 }
 
 export async function deleteBusinessType(slug: string): Promise<string> {
+  await requireAdmin();
   const current = parseCustomBusinessTypes(await readSetting("catalog.businessTypes"));
   if (!current.some((b) => b.slug === slug)) return "ลบได้เฉพาะประเภทธุรกิจที่เพิ่มเอง";
   await writeSetting(

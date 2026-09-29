@@ -1,5 +1,7 @@
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
+import { prisma } from "@/lib/prisma";
 
 export const ADMIN_SESSION_COOKIE = "mypos_admin_session";
 
@@ -42,4 +44,17 @@ export async function getSessionUser(): Promise<SessionUser | null> {
   const payload = await verifyPayload(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
   if (!payload) return null;
   return { userId: payload.userId, email: payload.email, name: payload.name };
+}
+
+/**
+ * Authorization for admin Server Actions and route handlers. Actions are
+ * reachable as public endpoints, so each one calls this itself — the proxy's
+ * /admin cookie check is only the optimistic first line. Also rejects
+ * sessions of admin users that were deleted since signing in.
+ */
+export async function requireAdmin(): Promise<SessionUser> {
+  const user = await getSessionUser();
+  const exists = user && (await prisma.adminUser.findUnique({ where: { id: user.userId }, select: { id: true } }));
+  if (!user || !exists) redirect("/admin/login");
+  return user;
 }

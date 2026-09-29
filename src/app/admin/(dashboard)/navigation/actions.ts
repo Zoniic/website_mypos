@@ -1,5 +1,6 @@
 "use server";
 
+import { requireAdmin } from "@/lib/adminAuth";
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 import { getCatalog } from "@/lib/catalog";
@@ -30,6 +31,7 @@ function parse(json: string): unknown {
 }
 
 export async function saveMenu(menu: string, json: string): Promise<string> {
+  await requireAdmin();
   if (!(MENU_KEYS as readonly string[]).includes(menu)) return "Unknown menu.";
   const data = parse(json);
   if (!Array.isArray(data)) return "Menu data is invalid.";
@@ -53,6 +55,7 @@ export async function saveMenu(menu: string, json: string): Promise<string> {
 }
 
 export async function saveIndustrySolutions(json: string): Promise<string> {
+  await requireAdmin();
   const data = parse(json);
   if (typeof data !== "object" || data === null) return "Data is invalid.";
   await store("map.industrySolutions", resolveIndustrySolutions(data, await getCatalog()));
@@ -60,6 +63,7 @@ export async function saveIndustrySolutions(json: string): Promise<string> {
 }
 
 export async function saveOnlineSolutions(json: string): Promise<string> {
+  await requireAdmin();
   const data = parse(json);
   if (!Array.isArray(data)) return "Data is invalid.";
   await store("map.onlineSolutions", resolveOnlineSolutions(data, await getCatalog()));
@@ -67,6 +71,7 @@ export async function saveOnlineSolutions(json: string): Promise<string> {
 }
 
 export async function resetStructure(key: string): Promise<string> {
+  await requireAdmin();
   if (!(STRUCTURE_KEYS as readonly string[]).includes(key)) return "Unknown setting.";
   await prisma.siteSetting.deleteMany({ where: { key } });
   revalidatePath("/admin/navigation");

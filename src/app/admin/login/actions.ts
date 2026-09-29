@@ -1,20 +1,16 @@
 "use server";
 
 import bcrypt from "bcryptjs";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { ADMIN_SESSION_COOKIE, createSessionToken } from "@/lib/adminAuth";
 import { clearAttempts, isRateLimited, recordAttempt } from "@/lib/rateLimit";
 import { ADMIN_HINT_COOKIE } from "@/lib/editMode";
+import { clientIp } from "@/lib/clientIp";
 
 async function getClientKey(): Promise<string> {
-  const headerList = await headers();
-  return (
-    headerList.get("x-forwarded-for")?.split(",")[0]?.trim() ??
-    headerList.get("x-real-ip") ??
-    "unknown"
-  );
+  return `login:${await clientIp()}`;
 }
 
 export async function loginAction(_prevState: string | null, formData: FormData) {
