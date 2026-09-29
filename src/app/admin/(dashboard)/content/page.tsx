@@ -11,7 +11,7 @@ export default async function AdminContentPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Page Content</h1>
+      <h1 className="text-2xl font-bold">ข้อความทุกหน้า</h1>
       <p className="mt-1 text-text-2">
         Marketing copy for every page, grouped by section. Pick a section to edit its text
         across all three languages.

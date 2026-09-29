@@ -20,7 +20,7 @@ export default async function EditContentNamespacePage({
   return (
     <div>
       <Link href="/admin/content" className="text-sm text-text-2 hover:text-text-1">
-        &larr; Back to Page Content
+        &larr; กลับไปข้อความทุกหน้า
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{namespace}</h1>
       <p className="mt-1 text-sm text-text-2">

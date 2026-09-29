@@ -29,10 +29,10 @@ const roadmap = [
   {
     phase: "สัปดาห์ที่ 1–2: ใส่ข้อมูลจริง",
     items: [
-      "Site Settings: เบอร์ LINE แผนที่ และตัวเลขสถิติจริง",
-      "Page Content → pricing: ราคาแพ็กเกจจริงที่ฝ่ายขายยืนยัน",
+      "ตั้งค่าเว็บไซต์: เบอร์ LINE แผนที่ และตัวเลขสถิติจริง",
+      "ข้อความทุกหน้า → pricing: ราคาแพ็กเกจจริงที่ฝ่ายขายยืนยัน",
       "สร้าง/อัปเดต Google Business Profile และเริ่มขอรีวิวจากลูกค้า",
-      "Site Photos: รูปหน้าประเภทธุรกิจ 11 ภาพ",
+      "รูปภาพและโลโก้: รูปหน้าประเภทธุรกิจ 11 ภาพ",
       "ตรวจตัวเลขในเคสลูกค้าเดิมทุกเคสว่ามีที่มาจริง",
     ],
   },
@@ -117,7 +117,7 @@ export default async function PlaybookPage() {
 
   return (
     <div className="max-w-5xl">
-      <h1 className="text-2xl font-bold">Content Playbook — แผนแซงคู่แข่ง</h1>
+      <h1 className="text-2xl font-bold">แผนเนื้อหา — แซงคู่แข่ง</h1>
       <p className="mt-1 text-text-2">
         สรุปว่าคู่แข่งทำอะไร เว็บเราทำอะไรไปแล้ว และทีมต้องใส่เนื้อหาอะไรต่อ ทุกเมนูใน Admin มีกล่อง
         &quot;📋 คู่มือเนื้อหา&quot; ด้านบนที่ลงรายละเอียดของหัวข้อนั้น
@@ -144,8 +144,8 @@ export default async function PlaybookPage() {
           </Status>
           <Status ok={missingSettings.length === 0}>
             {missingSettings.length === 0
-              ? "Site Settings ครบทุกช่องสำคัญ"
-              : `Site Settings ที่ยังว่าง: ${missingSettings.join(", ")}`}
+              ? "ตั้งค่าเว็บไซต์ครบทุกช่องสำคัญ"
+              : `ตั้งค่าเว็บไซต์ที่ยังว่าง: ${missingSettings.join(", ")}`}
           </Status>
           <Status ok={trustLogoCount >= 12}>โลโก้ลูกค้า {trustLogoCount} แบรนด์ (เป้าหมาย 12+)</Status>
           <Status ok={blogCount >= 6}>บทความ {blogCount} บทความ (เป้าหมาย 2/เดือน)</Status>

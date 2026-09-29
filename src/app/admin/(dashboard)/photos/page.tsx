@@ -8,7 +8,7 @@ export default async function AdminPhotosPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Site Photos</h1>
+      <h1 className="text-2xl font-bold">รูปภาพและโลโก้</h1>
       <p className="mt-1 text-text-2">
         Section photos used on the homepage, about page, solution pages, and software page.
       </p>

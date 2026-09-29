@@ -20,10 +20,10 @@ export default async function AdminCatalogPage() {
 
   return (
     <div className="max-w-5xl">
-      <h1 className="text-2xl font-bold">Catalog</h1>
+      <h1 className="text-2xl font-bold">สายสินค้าและประเภทธุรกิจ</h1>
       <p className="mt-1 text-text-2">
         เพิ่มสายสินค้าใหม่หรือประเภทธุรกิจใหม่ได้เอง ระบบจะสร้างหน้า 3 ภาษาโดยคัดลอกข้อความจากหน้าต้นแบบ
-        แล้วเก็บเป็นฉบับร่างจนกว่าจะกดเผยแพร่ ของที่มีอยู่ในระบบแล้วลบไม่ได้ แต่ซ่อนจากเมนูได้ที่ Navigation
+        แล้วเก็บเป็นฉบับร่างจนกว่าจะกดเผยแพร่ ของที่มีอยู่ในระบบแล้วลบไม่ได้ แต่ซ่อนจากเมนูได้ที่ &quot;เมนูและลิงก์&quot;
       </p>
       <div className="mt-6 space-y-6">
         <SolutionsCatalog

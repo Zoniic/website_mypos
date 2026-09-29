@@ -26,7 +26,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Orders</h1>
+      <h1 className="text-2xl font-bold">ออเดอร์</h1>
       <p className="mt-1 text-sm text-text-2">
         Orders placed through the website cart. Check the payment slip the customer sends on LINE against the bank
         account, then move the order to &quot;ชำระแล้ว&quot;.

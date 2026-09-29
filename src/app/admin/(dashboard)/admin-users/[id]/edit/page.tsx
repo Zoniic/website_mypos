@@ -29,9 +29,9 @@ export default async function EditAdminUserPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Admin User</h1>
+      <h1 className="text-2xl font-bold">แก้ไขผู้ดูแลระบบ</h1>
       <div className="mt-6">
-        <UserForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" isEdit />
+        <UserForm action={boundUpdate} initialValues={initialValues} submitLabel="บันทึก" isEdit />
       </div>
 
       <div className="mt-10 border-t border-border pt-6">

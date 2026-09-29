@@ -35,9 +35,9 @@ export default async function EditKbCategoryPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Knowledge Base Category</h1>
+      <h1 className="text-2xl font-bold">แก้ไขหมวดคลังความรู้</h1>
       <div className="mt-6">
-        <CategoryForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <CategoryForm action={boundUpdate} initialValues={initialValues} submitLabel="บันทึก" />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

@@ -78,7 +78,7 @@ export default async function LaunchChecklistPage() {
         { label: "ยืนยันเว็บกับ Bing", state: cleanVerificationToken(settings.bingSiteVerification) ? "ok" : "optional", detail: "นำเข้าจาก Search Console ได้ในคลิกเดียว", href: "/admin/settings" },
         { label: "สินค้าแปลครบ 3 ภาษา", state: products.length && fullyTranslated === products.length ? "ok" : "todo", detail: `${fullyTranslated}/${products.length} รุ่นมีชื่อ + highlight ครบ th/en/zh`, href: "/admin/products" },
         { label: "โปรไฟล์โซเชียลอย่างเป็นทางการ ≥ 2", state: sameAs >= 2 ? "ok" : "todo", detail: `${sameAs} ลิงก์ (Facebook, YouTube, TikTok, LINE, Shopee...) — บอก Google ว่าเป็นแบรนด์เดียวกัน`, href: "/admin/settings" },
-        { label: "บทความบล็อก ≥ 8", state: blogPosts >= 8 ? "ok" : "todo", detail: `${blogPosts} บทความ — เขียนตอบคำถามที่ลูกค้าค้นจริง ดู Content Playbook`, href: "/admin/blog" },
+        { label: "บทความบล็อก ≥ 8", state: blogPosts >= 8 ? "ok" : "todo", detail: `${blogPosts} บทความ — เขียนตอบคำถามที่ลูกค้าค้นจริง ดูแผนเนื้อหา`, href: "/admin/blog" },
         { label: "บทความคลังความรู้ ≥ 10", state: kbArticles >= 10 ? "ok" : "todo", detail: `${kbArticles} บทความ`, href: "/admin/kb-articles" },
       ],
     },
@@ -121,7 +121,7 @@ export default async function LaunchChecklistPage() {
   const done = scored.filter((c) => c.state === "ok").length;
 
   const manualSteps = [
-    { title: "Google Search Console", body: `เพิ่มโดเมน → ยืนยันด้วย meta tag (วางใน Site Settings) → เมนู Sitemaps ส่ง ${siteConfig.url}/sitemap.xml → ใช้ "URL Inspection" ขอ index หน้าสำคัญ`, href: "https://search.google.com/search-console" },
+    { title: "Google Search Console", body: `เพิ่มโดเมน → ยืนยันด้วย meta tag (วางในตั้งค่าเว็บไซต์) → เมนู Sitemaps ส่ง ${siteConfig.url}/sitemap.xml → ใช้ "URL Inspection" ขอ index หน้าสำคัญ`, href: "https://search.google.com/search-console" },
     { title: "Google Business Profile", body: "ลงทะเบียนสำนักงาน/โรงงาน ใส่รูปจริง เวลาทำการ ลิงก์เว็บ และขอรีวิวจากลูกค้าหลังติดตั้งทุกครั้ง — ทำให้ขึ้นใน Google Maps และช่องขวาของผลค้นหา", href: "https://business.google.com" },
     { title: "Google Merchant Center", body: `Products → Add feed → Scheduled fetch ใส่ ${siteConfig.url}/feeds/products.xml (ภาษาไทย, ประเทศไทย) → เปิด Free listings เพื่อขึ้นแท็บ Shopping ฟรี`, href: "https://merchants.google.com" },
     { title: "Meta Commerce Manager", body: `สร้าง Catalog → Data source → Scheduled feed ใส่ URL เดียวกัน → เชื่อม Pixel เพื่อทำ Advantage+ catalog ads (แอดสินค้าที่เคยดู) บน Facebook/Instagram`, href: "https://business.facebook.com/commerce" },
@@ -132,7 +132,7 @@ export default async function LaunchChecklistPage() {
 
   return (
     <div className="max-w-5xl">
-      <h1 className="text-2xl font-bold">🚀 Launch &amp; Growth checklist</h1>
+      <h1 className="text-2xl font-bold">ความพร้อมเปิดเว็บ</h1>
       <p className="mt-1 text-text-2">
         ตรวจอัตโนมัติจากข้อมูลจริงในระบบ ทุกข้อที่เป็น &quot;ต้องทำ&quot; คลิกไปแก้ได้ทันที
       </p>

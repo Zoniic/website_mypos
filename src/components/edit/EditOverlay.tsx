@@ -376,7 +376,7 @@ function ImageEditor({ slot, preview, onSaved }: { slot: string; preview: string
 
   return (
     <div className="space-y-3">
-      <p className="font-mono text-xs text-text-3">Site Photos › {slot}</p>
+      <p className="font-mono text-xs text-text-3">รูปภาพและโลโก้ › {slot}</p>
       {localPreview ? (
         // eslint-disable-next-line @next/next/no-img-element -- local preview of the chosen file
         <img src={localPreview} alt="" className="max-h-64 w-full rounded-lg border border-border object-contain" />
@@ -384,7 +384,7 @@ function ImageEditor({ slot, preview, onSaved }: { slot: string; preview: string
         <p className="rounded-lg bg-surface-2 p-4 text-sm text-text-2">ยังไม่มีรูป ตอนนี้ใช้ภาพวาดแทน</p>
       )}
       <input type="file" accept="image/jpeg,image/png,image/webp" onChange={(e) => setFile(e.target.files?.[0] ?? null)} className="block w-full text-sm" />
-      <p className="text-xs text-text-3">JPG, PNG หรือ WebP ไม่เกิน 5MB · ขนาดและมุมภาพที่แนะนำดูได้ที่หลังบ้าน → Site Photos</p>
+      <p className="text-xs text-text-3">JPG, PNG หรือ WebP ไม่เกิน 5MB · ขนาดและมุมภาพที่แนะนำดูได้ที่หลังบ้าน → รูปภาพและโลโก้</p>
       <button
         type="button"
         onClick={upload}

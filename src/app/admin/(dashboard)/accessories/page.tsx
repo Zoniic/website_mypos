@@ -11,7 +11,7 @@ export default async function AdminAccessoriesPage() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Accessories</h1>
+        <h1 className="text-2xl font-bold">อุปกรณ์เสริม</h1>
         <Link
           href="/admin/accessories/new"
           className="rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)]"

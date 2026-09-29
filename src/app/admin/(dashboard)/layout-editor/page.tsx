@@ -29,10 +29,10 @@ export default async function AdminLayoutPage() {
 
   return (
     <div className="max-w-3xl">
-      <h1 className="text-2xl font-bold">Page Layout</h1>
+      <h1 className="text-2xl font-bold">ลำดับส่วนของหน้า</h1>
       <p className="mt-1 text-text-2">
         เลือกว่าหน้าไหนแสดงส่วนอะไร และเรียงลำดับอย่างไร ติ๊กออกเพื่อซ่อน กดลูกศรเพื่อเลื่อน แล้วกดบันทึก
-        ข้อความในแต่ละส่วนแก้ได้ที่ Page Content ส่วนรูปแก้ได้ที่ Site Photos
+        ข้อความในแต่ละส่วนแก้ได้ที่ &quot;ข้อความทุกหน้า&quot; ส่วนรูปแก้ได้ที่ &quot;รูปภาพและโลโก้&quot;
       </p>
       <p className="mt-2 text-sm text-text-3">
         ส่วนที่มีหมายเหตุ &quot;ซ่อนเอง&quot; จะไม่แสดงถ้ายังไม่มีข้อมูล แม้จะติ๊กไว้ · หน้าโซลูชันและหน้าประเภทธุรกิจ

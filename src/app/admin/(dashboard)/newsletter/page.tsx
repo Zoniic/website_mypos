@@ -13,7 +13,7 @@ export default async function AdminNewsletterPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Newsletter Subscribers</h1>
+          <h1 className="text-2xl font-bold">ผู้รับข่าวสาร</h1>
           <p className="mt-1 text-sm text-text-2">
             No email-sending integration is configured yet — export this list to import into
             whichever ESP (Mailchimp, Brevo, etc.) you choose.

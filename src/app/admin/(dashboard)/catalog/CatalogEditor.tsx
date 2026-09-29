@@ -208,8 +208,8 @@ export function SolutionsCatalog({
           </button>
           <p className="text-xs text-text-3">
             หน้าใหม่จะเป็นฉบับร่าง: เปิดดูได้แต่ Google ไม่เก็บ และยังไม่ขึ้นในเมนู แก้ข้อความที่{" "}
-            <Link href="/admin/content/solutions" className="text-primary-700 hover:underline">Page Content → solutions</Link>{" "}
-            (หัวข้อที่ขึ้นต้นด้วยชื่อสายใหม่) ใส่รูปที่ Site Photos แล้วกด &quot;เผยแพร่&quot;
+            <Link href="/admin/content/solutions" className="text-primary-700 hover:underline">ข้อความทุกหน้า → solutions</Link>{" "}
+            (หัวข้อที่ขึ้นต้นด้วยชื่อสายใหม่) ใส่รูปที่ &quot;รูปภาพและโลโก้&quot; แล้วกด &quot;เผยแพร่&quot;
           </p>
         </div>
       </details>
@@ -242,7 +242,7 @@ export function BusinessTypesCatalog({ rows, icons }: { rows: BusinessTypeRow[];
     <section className="rounded-xl border border-border p-4">
       <h2 className="text-lg font-semibold">ประเภทธุรกิจ</h2>
       <p className="mt-1 text-sm text-text-2">
-        แต่ละประเภทมีหน้า /industries/&lt;slug&gt; ใช้ติ๊กใน Products และ Case Studies ระบบที่แนะนำตั้งได้ที่ Navigation
+        แต่ละประเภทมีหน้า /industries/&lt;slug&gt; ใช้ติ๊กในหน้าสินค้าและผลงานลูกค้า ระบบที่แนะนำตั้งได้ที่ &quot;เมนูและลิงก์&quot;
       </p>
       <div className="mt-3 overflow-x-auto rounded-lg border border-border">
         <table className="w-full text-left text-sm">
@@ -337,8 +337,8 @@ export function BusinessTypesCatalog({ rows, icons }: { rows: BusinessTypeRow[];
           </button>
           <p className="text-xs text-text-3">
             แก้ข้อความที่{" "}
-            <Link href="/admin/content/industries" className="text-primary-700 hover:underline">Page Content → industries</Link>{" "}
-            ตั้งระบบที่แนะนำที่ Navigation ใส่รูปที่ Site Photos แล้วกด &quot;เผยแพร่&quot;
+            <Link href="/admin/content/industries" className="text-primary-700 hover:underline">ข้อความทุกหน้า → industries</Link>{" "}
+            ตั้งระบบที่แนะนำที่ &quot;เมนูและลิงก์&quot; ใส่รูปที่ &quot;รูปภาพและโลโก้&quot; แล้วกด &quot;เผยแพร่&quot;
           </p>
         </div>
       </details>

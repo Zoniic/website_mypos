@@ -147,7 +147,7 @@ export async function updateSolution(
 ): Promise<string> {
   await requireAdmin();
   const current = parseCustomSolutions(await readSetting("catalog.solutions"));
-  if (!current.some((s) => s.slug === slug)) return "สายสินค้าในระบบแก้ได้ที่ Navigation / Page Content เท่านั้น";
+  if (!current.some((s) => s.slug === slug)) return "สายสินค้าในระบบแก้ได้ที่เมนูและลิงก์ กับข้อความทุกหน้า เท่านั้น";
   if (change.machine && !MACHINE_KINDS.includes(change.machine as MachineKind)) return "ภาพเครื่องไม่ถูกต้อง";
   if (change.group && !(SOLUTION_GROUPS as readonly string[]).includes(change.group)) return "กลุ่มเมนูไม่ถูกต้อง";
   await writeSetting(
@@ -164,7 +164,7 @@ export async function updateSolution(
 export async function updateBusinessType(slug: string, change: { icon?: string; published?: boolean }): Promise<string> {
   await requireAdmin();
   const current = parseCustomBusinessTypes(await readSetting("catalog.businessTypes"));
-  if (!current.some((b) => b.slug === slug)) return "ประเภทธุรกิจในระบบแก้ได้ที่ Navigation / Page Content เท่านั้น";
+  if (!current.some((b) => b.slug === slug)) return "ประเภทธุรกิจในระบบแก้ได้ที่เมนูและลิงก์ กับข้อความทุกหน้า เท่านั้น";
   if (change.icon && !(BUSINESS_ICONS as readonly string[]).includes(change.icon)) return "ไอคอนไม่ถูกต้อง";
   await writeSetting(
     "catalog.businessTypes",

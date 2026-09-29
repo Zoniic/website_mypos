@@ -11,11 +11,11 @@ export default async function AdminWarrantyClaimsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Warranty Claims</h1>
-      <p className="mt-1 text-sm text-text-2">Submitted from the warranty form on /service.</p>
+      <h1 className="text-2xl font-bold">แจ้งซ่อม / เคลม</h1>
+      <p className="mt-1 text-sm text-text-2">คำขอจากฟอร์มแจ้งซ่อมในหน้าบริการ</p>
 
       <div className="mt-6 space-y-4">
-        {claims.length === 0 && <p className="text-text-2">No claims yet.</p>}
+        {claims.length === 0 && <p className="text-text-2">ยังไม่มีงานแจ้งซ่อม</p>}
         {claims.map((claim) => (
           <div key={claim.id} className="rounded-xl border border-border p-4">
             <div className="flex flex-wrap items-start justify-between gap-4">

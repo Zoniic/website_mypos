@@ -51,7 +51,7 @@ export function AdminGuide({ section }: { section: SectionGuideKey }) {
           href="/admin/playbook"
           className="inline-block rounded-sm font-semibold text-primary-600 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
         >
-          ดูแผนรวมทั้งหมดใน Content Playbook →
+          ดูแผนรวมทั้งหมดในแผนเนื้อหา →
         </Link>
       </div>
     </details>

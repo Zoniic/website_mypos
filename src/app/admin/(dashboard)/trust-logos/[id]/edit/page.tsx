@@ -20,9 +20,9 @@ export default async function EditTrustLogoPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Trust Logo</h1>
+      <h1 className="text-2xl font-bold">แก้ไขโลโก้ลูกค้า</h1>
       <div className="mt-6">
-        <TrustLogoForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <TrustLogoForm action={boundUpdate} initialValues={initialValues} submitLabel="บันทึก" />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

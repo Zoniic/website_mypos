@@ -42,13 +42,13 @@ export default async function EditAccessoryPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Accessory</h1>
+      <h1 className="text-2xl font-bold">แก้ไขอุปกรณ์เสริม</h1>
       <div className="mt-6">
         <AccessoryForm
           categoryOptions={catalog.categories}
           action={boundUpdate}
           initialValues={initialValues}
-          submitLabel="Save Changes"
+          submitLabel="บันทึก"
         />
       </div>
 

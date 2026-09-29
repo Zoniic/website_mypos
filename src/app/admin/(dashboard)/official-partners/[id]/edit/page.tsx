@@ -24,9 +24,9 @@ export default async function EditOfficialPartnerPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Official Partner</h1>
+      <h1 className="text-2xl font-bold">แก้ไขพาร์ทเนอร์</h1>
       <div className="mt-6">
-        <PartnerForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <PartnerForm action={boundUpdate} initialValues={initialValues} submitLabel="บันทึก" />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

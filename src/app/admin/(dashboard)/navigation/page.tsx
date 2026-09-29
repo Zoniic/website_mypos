@@ -16,7 +16,7 @@ import { IndustrySolutionsEditor, OnlineSolutionsEditor } from "./MappingEditors
 const MENU_INFO: Record<MenuKey, { title: string; help: string }> = {
   "nav.solutions": {
     title: "เมนู \"โซลูชัน\" (Header)",
-    help: "เมนูใหญ่ด้านบน แบ่งเป็นกลุ่ม ติ๊กออกเพื่อซ่อน ย้ายกลุ่มได้ หรือเพิ่มลิงก์ใหม่ ชื่อกลุ่มแก้ที่ Page Content → nav",
+    help: "เมนูใหญ่ด้านบน แบ่งเป็นกลุ่ม ติ๊กออกเพื่อซ่อน ย้ายกลุ่มได้ หรือเพิ่มลิงก์ใหม่ ชื่อกลุ่มแก้ที่ &quot;ข้อความทุกหน้า&quot; → nav",
   },
   "nav.categories": {
     title: "หมวดในเมนู \"สินค้า\" และ \"อุปกรณ์เสริม\"",
@@ -32,7 +32,7 @@ const MENU_INFO: Record<MenuKey, { title: string; help: string }> = {
   },
   "nav.footer": {
     title: "ลิงก์ท้ายเว็บ (Footer)",
-    help: "ลิงก์ 3 กลุ่มท้ายทุกหน้า ย้ายข้ามกลุ่มได้ ชื่อกลุ่มแก้ที่ Page Content → nav",
+    help: "ลิงก์ 3 กลุ่มท้ายทุกหน้า ย้ายข้ามกลุ่มได้ ชื่อกลุ่มแก้ที่ &quot;ข้อความทุกหน้า&quot; → nav",
   },
 };
 
@@ -76,10 +76,10 @@ export default async function AdminNavigationPage() {
 
   return (
     <div className="max-w-5xl">
-      <h1 className="text-2xl font-bold">Navigation</h1>
+      <h1 className="text-2xl font-bold">เมนูและลิงก์</h1>
       <p className="mt-1 text-text-2">
         จัดเมนูบนสุด ลิงก์ท้ายเว็บ และระบบที่แนะนำในแต่ละหน้า กดบันทึกทีละกล่อง เว็บอัปเดตทันที
-        ชื่อเมนูที่มีอยู่แล้วแก้ได้ที่ Page Content → nav (ครบ 3 ภาษา)
+        ชื่อเมนูที่มีอยู่แล้วแก้ได้ที่ &quot;ข้อความทุกหน้า&quot; → nav (ครบ 3 ภาษา)
       </p>
       <div className="mt-6 space-y-6">
         {MENU_KEYS.map((menu) => (

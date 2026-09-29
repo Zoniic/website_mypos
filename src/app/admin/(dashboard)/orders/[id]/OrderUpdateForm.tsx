@@ -47,7 +47,7 @@ export function OrderUpdateForm({
         disabled={isPending}
         className="w-full rounded-button bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-50"
       >
-        {isPending ? "Saving..." : "บันทึก"}
+        {isPending ? "กำลังบันทึก..." : "บันทึก"}
       </button>
       {result === "saved" && <p className="text-sm text-success">Saved.</p>}
       {result && result !== "saved" && <p className="text-sm text-error">{result}</p>}

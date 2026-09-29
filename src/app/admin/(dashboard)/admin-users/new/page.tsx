@@ -4,9 +4,9 @@ import { createAdminUser } from "../actions";
 export default function NewAdminUserPage() {
   return (
     <div>
-      <h1 className="text-2xl font-bold">New Admin User</h1>
+      <h1 className="text-2xl font-bold">เพิ่มผู้ดูแลระบบ</h1>
       <div className="mt-6">
-        <UserForm action={createAdminUser} submitLabel="Create" />
+        <UserForm action={createAdminUser} submitLabel="สร้าง" />
       </div>
     </div>
   );

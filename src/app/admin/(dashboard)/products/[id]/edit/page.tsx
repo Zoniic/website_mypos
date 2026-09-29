@@ -77,7 +77,7 @@ export default async function EditProductPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Product</h1>
+      <h1 className="text-2xl font-bold">แก้ไขสินค้า</h1>
       <div className="mt-6">
         <ProductForm
           categoryOptions={catalog.categories}
@@ -85,7 +85,7 @@ export default async function EditProductPage({
           action={boundUpdate}
           initialValues={initialValues}
           relatedProductOptions={relatedProductOptions}
-          submitLabel="Save Changes"
+          submitLabel="บันทึก"
         />
       </div>
 

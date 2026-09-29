@@ -17,14 +17,14 @@ export default async function NewKbArticlePage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">New Knowledge Base Article</h1>
+      <h1 className="text-2xl font-bold">เพิ่มบทความคลังความรู้</h1>
       {categoryOptions.length === 0 ? (
         <p className="mt-4 text-text-2">
           Create a category first under Admin → Knowledge Base Categories.
         </p>
       ) : (
         <div className="mt-6">
-          <ArticleForm action={createKbArticle} categories={categoryOptions} submitLabel="Create" />
+          <ArticleForm action={createKbArticle} categories={categoryOptions} submitLabel="สร้าง" />
         </div>
       )}
     </div>

@@ -1,135 +1,117 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { getSessionUser } from "@/lib/adminAuth";
+import { ADMIN_NAV } from "./adminNav";
+import { AdminIcon } from "./AdminShell";
 
-function StatIcon({ path }: { path: string }) {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true" className="text-primary-600">
-      <path d={path} stroke="currentColor" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-const ICONS = {
-  box: "M21 8l-9-5-9 5 9 5 9-5zM3 8v8l9 5 9-5V8M12 13v8",
-  tag: "M20 12l-8 8-9-9V3h8l9 9zM7 7h.01",
-  users: "M17 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 20v-1a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75",
-  doc: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zM14 2v6h6M9 13h6M9 17h6",
-  book: "M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15z",
-  award: "M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM8.21 13.89L7 23l5-3 5 3-1.21-9.12",
-  handshake: "M11 17l-1.5-1.5a2.12 2.12 0 0 1 3-3L14 14l4-4M3 10l4-4 4 4M11 6l2-2 6 6-2 2",
-  key: "M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4",
-} as const;
+const primaryButton =
+  "rounded-button bg-[image:var(--gradient-primary)] px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
+const ghostButton =
+  "rounded-button border border-border-strong bg-bg px-4 py-2 text-sm font-semibold text-text-1 hover:bg-surface-2";
 
 export default async function AdminDashboardPage() {
-  const [
-    productCount,
-    accessoryCount,
-    referenceCount,
-    contentCount,
-    kbArticleCount,
-    kbCategoryCount,
-    trustLogoCount,
-    partnerCount,
-    userCount,
-    session,
-    pendingOrders,
-    newLeads,
-  ] = await Promise.all([
-    prisma.product.count(),
-    prisma.accessory.count(),
-    prisma.referenceCase.count(),
-    prisma.pageContent.count(),
-    prisma.kbArticle.count(),
-    prisma.kbCategory.count(),
-    prisma.trustLogo.count(),
-    prisma.officialPartner.count(),
-    prisma.adminUser.count(),
+  const [session, orders, quotes, messages, warranty, products, posts] = await Promise.all([
     getSessionUser(),
     prisma.order.count({ where: { status: "pending_payment" } }),
+    prisma.quoteRequest.count({ where: { status: "new" } }),
     prisma.contactMessage.count({ where: { status: "new" } }),
+    prisma.warrantyClaim.count({ where: { status: "open" } }),
+    prisma.product.count(),
+    prisma.blogPost.count(),
   ]);
 
-  const cards = [
-    { label: "Products", count: productCount, href: "/admin/products", icon: ICONS.box },
-    { label: "Accessories", count: accessoryCount, href: "/admin/accessories", icon: ICONS.tag },
-    { label: "Case Studies", count: referenceCount, href: "/admin/references", icon: ICONS.award },
-    { label: "KB Articles", count: kbArticleCount, href: "/admin/kb-articles", icon: ICONS.book },
-    { label: "KB Categories", count: kbCategoryCount, href: "/admin/kb-categories", icon: ICONS.book },
-    { label: "Trust Logos", count: trustLogoCount, href: "/admin/trust-logos", icon: ICONS.users },
-    { label: "Official Partners", count: partnerCount, href: "/admin/official-partners", icon: ICONS.handshake },
-    { label: "Page Content Entries", count: contentCount, href: "/admin/content", icon: ICONS.doc },
-    { label: "Admin Users", count: userCount, href: "/admin/admin-users", icon: ICONS.key },
+  const inbox = [
+    { label: "ออเดอร์รอตรวจยอดโอน", count: orders, href: "/admin/orders?status=pending_payment" },
+    { label: "ขอใบเสนอราคาใหม่", count: quotes, href: "/admin/quote-requests" },
+    { label: "ข้อความที่ยังไม่ได้ติดต่อกลับ", count: messages, href: "/admin/contact-messages" },
+    { label: "งานซ่อม / เคลมที่เปิดอยู่", count: warranty, href: "/admin/warranty-claims" },
   ];
-
-  const quickActions = [
-    { label: "New Product", href: "/admin/products/new" },
-    { label: "New Accessory", href: "/admin/accessories/new" },
-    { label: "New KB Article", href: "/admin/kb-articles/new" },
-    { label: "New Case Study", href: "/admin/references/new" },
-  ];
+  const pending = inbox.reduce((sum, item) => sum + item.count, 0);
 
   return (
     <div>
-      <div className="overflow-hidden rounded-2xl border border-border bg-[image:var(--gradient-hero)] p-6 sm:p-8">
-        <p className="text-sm font-semibold uppercase tracking-wide text-text-2">
-          {session ? `Welcome back, ${session.name}` : "Welcome"}
-        </p>
-        <h1 className="mt-2 text-2xl font-bold sm:text-3xl">Dashboard</h1>
-        <p className="mt-1 text-text-2">
-          Edits here go live on the website immediately — no rebuild needed.
-        </p>
-      </div>
+      <p className="text-sm text-text-2">{session ? `สวัสดี ${session.name}` : "สวัสดี"}</p>
+      <h1 className="mt-1 text-2xl font-bold">หน้าหลัก</h1>
+      <p className="mt-1 text-sm text-text-2">แก้ไขอะไรในหลังบ้าน เว็บจะอัปเดตทันที ไม่ต้อง build ใหม่</p>
 
-      {(pendingOrders > 0 || newLeads > 0) && (
-        <div className="mt-6 grid gap-3 sm:grid-cols-2">
-          {pendingOrders > 0 && (
-            <Link href="/admin/orders?status=pending_payment" className="rounded-2xl border border-primary-200 bg-primary-50 p-4 hover:border-primary-400">
-              <p className="text-2xl font-bold text-primary-700">{pendingOrders}</p>
-              <p className="text-sm text-text-2">ออเดอร์รอตรวจยอดชำระ →</p>
+      <section className="mt-6">
+        <h2 className="text-sm font-semibold text-text-2">
+          {pending > 0 ? `งานที่รออยู่ ${pending} รายการ` : "ไม่มีงานค้าง"}
+        </h2>
+        <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {inbox.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`rounded-xl border p-4 transition-colors ${
+                item.count > 0 ? "border-primary-200 bg-primary-50 hover:border-primary-400" : "border-border bg-bg hover:border-border-strong"
+              }`}
+            >
+              <p className={`text-2xl font-bold tabular-nums ${item.count > 0 ? "text-primary-700" : "text-text-3"}`}>{item.count}</p>
+              <p className="mt-0.5 text-sm text-text-2">{item.label}</p>
             </Link>
-          )}
-          {newLeads > 0 && (
-            <Link href="/admin/contact-messages" className="rounded-2xl border border-border bg-surface-0 p-4 hover:border-border-strong">
-              <p className="text-2xl font-bold">{newLeads}</p>
-              <p className="text-sm text-text-2">ข้อความใหม่ที่ยังไม่ได้ติดต่อกลับ →</p>
-            </Link>
-          )}
+          ))}
         </div>
-      )}
+      </section>
 
-      <div className="mt-6 flex flex-wrap gap-3">
-        <Link href="/admin/launch" className="rounded-button border border-border-strong px-4 py-2 text-sm font-semibold hover:bg-surface-2">
-          🚀 Launch checklist
+      <section className="mt-6 flex flex-wrap gap-2">
+        {/* Route handler that sets the edit-mode cookie: needs a full-page request, not <Link>. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a href="/admin/live?path=/th" className={primaryButton}>
+          แก้บนหน้าเว็บ
+        </a>
+        <Link href="/admin/products/new" className={ghostButton}>
+          + เพิ่มสินค้า
         </Link>
-        {quickActions.map((action) => (
-          <Link
-            key={action.href}
-            href={action.href}
-            className="rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-4 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] transition-transform hover:-translate-y-0.5"
-          >
-            + {action.label}
-          </Link>
-        ))}
-      </div>
+        <Link href="/admin/blog/new" className={ghostButton}>
+          + เขียนบทความ
+        </Link>
+        <Link href="/admin/references/new" className={ghostButton}>
+          + เพิ่มผลงานลูกค้า
+        </Link>
+        <Link href="/admin/launch" className={ghostButton}>
+          ความพร้อมเปิดเว็บ
+        </Link>
+      </section>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {cards.map((card) => (
-          <Link
-            key={card.href}
-            href={card.href}
-            className="group rounded-2xl border border-border bg-surface-1 p-6 shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:border-border-strong hover:shadow-[var(--shadow-card-hover)]"
-          >
-            <div className="flex items-center justify-between">
-              <p className="text-3xl font-bold">{card.count}</p>
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-2 transition-colors group-hover:bg-primary-900/40">
-                <StatIcon path={card.icon} />
-              </span>
-            </div>
-            <p className="mt-1 text-sm text-text-2">{card.label}</p>
-          </Link>
+      <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {ADMIN_NAV.filter((group) => group.title !== "ภาพรวม").map((group) => (
+          <div key={group.title} className="rounded-xl border border-border bg-bg p-4">
+            <h2 className="font-semibold">{group.title}</h2>
+            <ul className="mt-2 divide-y divide-border">
+              {group.items.map((item) => {
+                const body = (
+                  <>
+                    <AdminIcon name={item.icon} className="mt-0.5 text-text-3 group-hover:text-primary-600" />
+                    <span className="min-w-0">
+                      <span className="block text-sm font-medium text-text-1">{item.label}</span>
+                      <span className="block text-xs text-text-2">{item.hint}</span>
+                    </span>
+                  </>
+                );
+                const className = "group -mx-2 flex gap-2.5 rounded-lg px-2 py-2 hover:bg-surface-0";
+                return (
+                  <li key={item.href}>
+                    {item.external ? (
+                      <a href={item.href} className={className}>
+                        {body}
+                      </a>
+                    ) : (
+                      <Link href={item.href} className={className}>
+                        {body}
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
         ))}
-      </div>
+      </section>
+
+      <p className="mt-6 text-xs text-text-3">
+        ในระบบตอนนี้: สินค้า {products} รุ่น · บทความ {posts} เรื่อง
+      </p>
     </div>
   );
 }

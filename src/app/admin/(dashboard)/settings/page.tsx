@@ -7,7 +7,7 @@ export default async function AdminSettingsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Site Settings</h1>
+      <h1 className="text-2xl font-bold">ตั้งค่าเว็บไซต์</h1>
       <p className="mt-1 text-text-2">
         Contact info, map, and homepage stats used across every page.
       </p>

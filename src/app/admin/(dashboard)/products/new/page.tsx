@@ -17,14 +17,14 @@ export default async function NewProductPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">New Product</h1>
+      <h1 className="text-2xl font-bold">เพิ่มสินค้า</h1>
       <div className="mt-6">
         <ProductForm
           categoryOptions={catalog.categories}
           businessTypeOptions={catalog.businessTypes.map((b) => b.slug)}
           action={createProduct}
           relatedProductOptions={relatedProductOptions}
-          submitLabel="Create Product"
+          submitLabel="สร้างสินค้า"
         />
       </div>
     </div>

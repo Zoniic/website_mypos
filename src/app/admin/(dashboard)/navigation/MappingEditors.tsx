@@ -52,7 +52,7 @@ export function IndustrySolutionsEditor({
     <section className="rounded-xl border border-border p-4">
       <h2 className="text-lg font-semibold">ระบบที่แนะนำ ในหน้าประเภทธุรกิจ</h2>
       <p className="mt-1 text-sm text-text-2">
-        ลำดับแรกคือระบบหลักของธุรกิจนั้น (ใช้เป็นภาพ Hero ถ้ายังไม่มีรูปจริง) คำอธิบายใต้การ์ดแก้ได้ที่ Page Content → industries
+        ลำดับแรกคือระบบหลักของธุรกิจนั้น (ใช้เป็นภาพ Hero ถ้ายังไม่มีรูปจริง) คำอธิบายใต้การ์ดแก้ได้ที่ &quot;ข้อความทุกหน้า&quot; → industries
       </p>
       <div className="mt-3 divide-y divide-border rounded-lg border border-border">
         {industries.map((industry) => {

@@ -13,7 +13,7 @@ export default async function AdminQuoteRequestsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Quote Requests</h1>
+      <h1 className="text-2xl font-bold">ขอใบเสนอราคา</h1>
       <p className="mt-1 text-sm text-text-2">
         Submitted from the product compare/quote cart on the public site.
       </p>

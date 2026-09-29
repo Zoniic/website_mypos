@@ -51,13 +51,13 @@ export default async function EditKbArticlePage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Knowledge Base Article</h1>
+      <h1 className="text-2xl font-bold">แก้ไขบทความคลังความรู้</h1>
       <div className="mt-6">
         <ArticleForm
           action={boundUpdate}
           categories={categoryOptions}
           initialValues={initialValues}
-          submitLabel="Save Changes"
+          submitLabel="บันทึก"
         />
       </div>
 

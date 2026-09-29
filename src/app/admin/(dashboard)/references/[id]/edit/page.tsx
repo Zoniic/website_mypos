@@ -45,13 +45,13 @@ export default async function EditReferencePage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Case Study</h1>
+      <h1 className="text-2xl font-bold">แก้ไขผลงานลูกค้า</h1>
       <div className="mt-6">
         <ReferenceForm
           businessTypes={catalog.businessTypes.map((b) => b.slug)}
           action={boundUpdate}
           initialValues={initialValues}
-          submitLabel="Save Changes"
+          submitLabel="บันทึก"
         />
       </div>
 

@@ -37,9 +37,9 @@ export default async function EditBlogPostPage({
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Edit Blog Post</h1>
+      <h1 className="text-2xl font-bold">แก้ไขบทความ</h1>
       <div className="mt-6">
-        <BlogPostForm action={boundUpdate} initialValues={initialValues} submitLabel="Save Changes" />
+        <BlogPostForm action={boundUpdate} initialValues={initialValues} submitLabel="บันทึก" />
       </div>
 
       <form action={boundDelete} className="mt-10 border-t border-border pt-6">

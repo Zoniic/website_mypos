@@ -17,12 +17,12 @@ export default async function AdminContactMessagesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Contact Messages</h1>
-      <p className="mt-1 text-sm text-text-2">Submitted from the Contact page form on the public site.</p>
+      <h1 className="text-2xl font-bold">ข้อความติดต่อ</h1>
+      <p className="mt-1 text-sm text-text-2">ข้อความจากฟอร์มหน้าติดต่อเรา และปุ่มนัดสาธิตบนเว็บ</p>
       <AdminGuide section="contactMessages" />
 
       <div className="mt-6 space-y-4">
-        {messages.length === 0 && <p className="text-text-2">No messages yet.</p>}
+        {messages.length === 0 && <p className="text-text-2">ยังไม่มีข้อความ</p>}
         {messages.map((message) => (
           <div key={message.id} className="rounded-xl border border-border p-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
