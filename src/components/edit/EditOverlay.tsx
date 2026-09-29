@@ -226,7 +226,7 @@ export default function EditOverlay({ locale }: { locale: string }) {
         </div>
       )}
 
-      <div className="fixed bottom-24 left-1/2 z-[70] flex max-w-[calc(100vw-2rem)] -translate-x-1/2 flex-wrap items-center gap-2 rounded-2xl bg-[#111318] px-3 py-2 text-xs text-white shadow-2xl lg:bottom-5">
+      <div className="fixed inset-x-3 bottom-20 z-[70] flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-[#111318] px-3 py-2 text-xs text-white shadow-2xl lg:inset-x-auto lg:bottom-5 lg:left-1/2 lg:max-w-[calc(100vw-2rem)] lg:-translate-x-1/2">
         <span className="font-semibold">✏️ โหมดแก้ไข</span>
         <button type="button" className={btn} onClick={() => setEnabled(!enabled)}>
           {enabled ? "คลิกเพื่อแก้: เปิด" : "คลิกเพื่อแก้: ปิด (ใช้งานปกติ)"}
