@@ -3,7 +3,7 @@ import { MotionConfig } from "framer-motion";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Anuphan, Chakra_Petch } from "next/font/google";
+import { siteFonts } from "@/fonts";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
 import { getLogoUrl, getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
@@ -21,30 +21,6 @@ import { isEditMode } from "@/lib/editMode";
 import { EditModeLoader } from "@/components/edit/EditModeLoader";
 import { AdminEditButton } from "@/components/edit/AdminEditButton";
 import "../globals.css";
-
-// Body/UI: Anuphan (Cadson Demak) — a loopless humanist Thai that stays
-// readable at small sizes and doesn't look like every other Prompt/Kanit
-// POS site.
-const fontSans = Anuphan({
-  variable: "--font-sans-loaded",
-  subsets: ["thai", "latin"],
-  // Variable font: one file per subset covers every weight (was 4 weights ×
-  // 2 subsets = 8 files). Body text is the LCP element on most pages, and it
-  // repaints when this font arrives, so fewer files = earlier LCP.
-  weight: "variable",
-});
-
-// Display: Chakra Petch — squared, machined terminals that echo the hardware
-// MYPOS builds (and its receipt/price digits). Headings and prices only.
-const fontDisplay = Chakra_Petch({
-  variable: "--font-display-loaded",
-  subsets: ["thai", "latin"],
-  // Headings use 600/700 only; every extra weight is two more preloaded
-  // files competing with the page on slow mobile connections.
-  weight: ["600", "700"],
-});
-
-
 
 // Empty list = render each page on its first visit, then serve it from
 // the cache (ISR). Without this export the route renders on every request.
@@ -127,7 +103,8 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
-      className={`${fontSans.variable} ${fontDisplay.variable} h-full antialiased`}
+      className={`${siteFonts.className} h-full antialiased`}
+      style={siteFonts.style}
       // The consent script below sets data-consent before React hydrates.
       suppressHydrationWarning
     >
