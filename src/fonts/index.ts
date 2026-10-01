@@ -1,46 +1,17 @@
 import localFont from "next/font/local";
 
 /**
- * Self-hosted fonts (OFL, files from Fontsource — see the OFL-*.txt files).
+ * Prompt (OFL, files from Fontsource — see OFL-Prompt.txt), self-hosted:
  * next/font/google downloads fonts at build time, which fails on servers
- * that can't reach fonts.gstatic.com; these ship with the repo instead.
+ * that can't reach fonts.gstatic.com.
  *
- * Each font is split into a Latin and a Thai subset file loaded as two
- * families. The stack "latin, thai" lets the browser pick per character, so
- * only the Latin file is used for English/digits and the Thai file for Thai.
- * The Latin family skips next/font's metric fallback so that fallback (a
- * system font without Thai) can't sit between the two in the stack.
+ * The font is split into a Latin and a Thai subset file per weight, loaded
+ * as two families. The stack "latin, thai" lets the browser pick per
+ * character, so English/digits come from the Latin file and Thai from the
+ * Thai file. The Latin family skips next/font's metric fallback so that
+ * fallback (a system font without Thai) can't sit between the two.
+ * Weights match what the site uses: 400 body, 500/600 UI, 700 headings.
  */
-
-const anuphanLatin = localFont({
-  src: "./anuphan-latin-wght-normal.woff2",
-  weight: "100 700",
-  variable: "--font-sans-latin",
-  adjustFontFallback: false,
-});
-
-const anuphanThai = localFont({
-  src: "./anuphan-thai-wght-normal.woff2",
-  weight: "100 700",
-  variable: "--font-sans-thai",
-});
-
-const chakraLatin = localFont({
-  src: [
-    { path: "./chakra-petch-latin-600-normal.woff2", weight: "600" },
-    { path: "./chakra-petch-latin-700-normal.woff2", weight: "700" },
-  ],
-  variable: "--font-display-latin",
-  adjustFontFallback: false,
-});
-
-const chakraThai = localFont({
-  src: [
-    { path: "./chakra-petch-thai-600-normal.woff2", weight: "600" },
-    { path: "./chakra-petch-thai-700-normal.woff2", weight: "700" },
-  ],
-  variable: "--font-display-thai",
-});
 
 const promptLatin = localFont({
   src: [
@@ -49,10 +20,8 @@ const promptLatin = localFont({
     { path: "./prompt-latin-600-normal.woff2", weight: "600" },
     { path: "./prompt-latin-700-normal.woff2", weight: "700" },
   ],
-  variable: "--font-admin-latin",
+  variable: "--font-prompt-latin",
   adjustFontFallback: false,
-  // Admin only: don't compete with the admin page's own requests.
-  preload: false,
 });
 
 const promptThai = localFont({
@@ -62,21 +31,19 @@ const promptThai = localFont({
     { path: "./prompt-thai-600-normal.woff2", weight: "600" },
     { path: "./prompt-thai-700-normal.woff2", weight: "700" },
   ],
-  variable: "--font-admin-thai",
-  preload: false,
+  variable: "--font-prompt-thai",
 });
 
-/** Public site: class names defining the variables + the stacks globals.css reads. */
+const stack = "var(--font-prompt-latin), var(--font-prompt-thai)";
+
+/** Public site: body and headings both use Prompt. */
 export const siteFonts = {
-  className: [anuphanLatin.variable, anuphanThai.variable, chakraLatin.variable, chakraThai.variable].join(" "),
-  style: {
-    "--font-sans-loaded": "var(--font-sans-latin), var(--font-sans-thai)",
-    "--font-display-loaded": "var(--font-display-latin), var(--font-display-thai)",
-  } as React.CSSProperties,
+  className: [promptLatin.variable, promptThai.variable].join(" "),
+  style: { "--font-sans-loaded": stack, "--font-display-loaded": stack } as React.CSSProperties,
 };
 
-/** Admin: Prompt for both Latin and Thai. */
+/** Admin uses the same font. */
 export const adminFonts = {
-  className: [promptLatin.variable, promptThai.variable].join(" "),
-  style: { "--font-sans-loaded": "var(--font-admin-latin), var(--font-admin-thai)" } as React.CSSProperties,
+  className: siteFonts.className,
+  style: { "--font-sans-loaded": stack } as React.CSSProperties,
 };
