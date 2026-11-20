@@ -123,7 +123,7 @@ export function ContentForm({
           );
         })}
 
-        {status === "saved" && <p className="text-sm text-success">Saved. Preview refreshed →</p>}
+        {status === "saved" && <p className="text-sm text-success">Saved. Preview refreshed.</p>}
         {isError && <p className="text-sm text-error">{status}</p>}
 
         <button

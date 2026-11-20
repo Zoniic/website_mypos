@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { Minus, Plus } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { useShopCart, MAX_QUANTITY } from "@/lib/shopCart";
@@ -223,9 +224,9 @@ export function CheckoutClient({
                       aria-label={t("decrease")}
                       disabled={line.quantity <= 1}
                       onClick={() => cart.setQuantity(line.kind, line.slug, line.quantity - 1)}
-                      className="h-9 w-9 text-lg disabled:opacity-40"
+                      className="flex h-9 w-9 items-center justify-center disabled:opacity-40"
                     >
-                      −
+                      <Minus size={16} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                     <span className="w-8 text-center text-sm tabular-nums" aria-label={t("quantity")}>
                       {line.quantity}
@@ -235,9 +236,9 @@ export function CheckoutClient({
                       aria-label={t("increase")}
                       disabled={line.quantity >= MAX_QUANTITY}
                       onClick={() => cart.setQuantity(line.kind, line.slug, line.quantity + 1)}
-                      className="h-9 w-9 text-lg disabled:opacity-40"
+                      className="flex h-9 w-9 items-center justify-center disabled:opacity-40"
                     >
-                      +
+                      <Plus size={16} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                   </div>
                   <button

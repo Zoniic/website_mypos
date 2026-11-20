@@ -1,3 +1,5 @@
+import { Check, Lightbulb } from "lucide-react";
+
 const HINTS = {
   slug: {
     tip: "ส่วนนี้จะกลายเป็นส่วนหนึ่งของ URL หน้าเว็บ ใช้ตัวพิมพ์เล็ก คั่นด้วยขีดกลาง และมีคีย์เวิร์ดที่เกี่ยวข้อง — ห้ามเปลี่ยนหลังจากหน้าเว็บเผยแพร่แล้ว (จะทำให้ลิงก์เดิมเสียและกระทบอันดับการค้นหา)",
@@ -31,7 +33,7 @@ export function SeoHint({ type }: { type: SeoHintType }) {
   const { tip, example } = HINTS[type];
   return (
     <p className="mt-1 flex gap-1.5 text-xs text-text-2">
-      <span aria-hidden="true">💡</span>
+      <Lightbulb size={14} strokeWidth={1.75} aria-hidden="true" className="mt-0.5 shrink-0 text-primary-600" />
       <span>
         <span className="font-medium text-text-1">เคล็ดลับ SEO:</span> {tip}
         <br />
@@ -54,7 +56,14 @@ export function CharCounter({
   const inRange = length >= min && length <= max;
   return (
     <span className={`text-xs ${inRange ? "text-success" : "text-warning"}`}>
-      {length}/{max} ตัวอักษร {inRange ? "✓" : length > max ? "(ยาวเกินไป)" : "(สั้นไปหน่อย)"}
+      {length}/{max} ตัวอักษร{" "}
+      {inRange ? (
+        <Check size={12} strokeWidth={2} aria-label="ความยาวเหมาะสม" className="inline-block align-[-1px]" />
+      ) : length > max ? (
+        "(ยาวเกินไป)"
+      ) : (
+        "(สั้นไปหน่อย)"
+      )}
     </span>
   );
 }

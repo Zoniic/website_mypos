@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { resetStructure, saveIndustrySolutions, saveOnlineSolutions } from "./actions";
 import { SaveBar, iconButton } from "./ui";
 
@@ -68,13 +69,13 @@ export function IndustrySolutionsEditor({
                     <span className="mr-1 tabular-nums text-text-3">{i + 1}.</span>
                     {label.get(key) ?? key}
                     <button type="button" className={`${iconButton} h-7 w-7`} onClick={() => move(industry.key, i, -1)} disabled={i === 0} aria-label={`เลื่อน ${label.get(key)} ไปก่อน`}>
-                      ←
+                      <ArrowLeft size={14} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                     <button type="button" className={`${iconButton} h-7 w-7`} onClick={() => move(industry.key, i, 1)} disabled={i === list.length - 1} aria-label={`เลื่อน ${label.get(key)} ไปหลัง`}>
-                      →
+                      <ArrowRight size={14} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                     <button type="button" className={`${iconButton} h-7 w-7`} onClick={() => set(industry.key, list.filter((k) => k !== key))} aria-label={`เอา ${label.get(key)} ออก`}>
-                      ×
+                      <X size={14} strokeWidth={1.75} aria-hidden="true" />
                     </button>
                   </li>
                 ))}

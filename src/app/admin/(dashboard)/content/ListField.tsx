@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { ArrowDown, ArrowUp, X } from "lucide-react";
 
 /**
  * Form editor for Page Content values stored as JSON lists (FAQ, features,
@@ -119,15 +120,15 @@ function ListEditor({ items, onChange }: { items: Item[]; onChange: (items: Item
         <div key={i} className="rounded-lg border border-border bg-bg p-3">
           <div className="flex items-center gap-1.5">
             <span className="flex-1 text-xs font-semibold text-text-3">รายการที่ {i + 1}</span>
-            <button type="button" className={iconButton} onClick={() => move(i, -1)} disabled={i === 0} aria-label={`เลื่อนรายการที่ ${i + 1} ขึ้น`}>↑</button>
-            <button type="button" className={iconButton} onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label={`เลื่อนรายการที่ ${i + 1} ลง`}>↓</button>
+            <button type="button" className={iconButton} onClick={() => move(i, -1)} disabled={i === 0} aria-label={`เลื่อนรายการที่ ${i + 1} ขึ้น`}><ArrowUp size={16} strokeWidth={1.75} aria-hidden="true" /></button>
+            <button type="button" className={iconButton} onClick={() => move(i, 1)} disabled={i === items.length - 1} aria-label={`เลื่อนรายการที่ ${i + 1} ลง`}><ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" /></button>
             <button
               type="button"
               className={iconButton}
               onClick={() => confirm(`ลบรายการที่ ${i + 1}?`) && onChange(items.filter((_, j) => j !== i))}
               aria-label={`ลบรายการที่ ${i + 1}`}
             >
-              ×
+              <X size={16} strokeWidth={1.75} aria-hidden="true" />
             </button>
           </div>
           <div className="mt-2 grid gap-2">

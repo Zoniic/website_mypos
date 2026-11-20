@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { ContentForm } from "../ContentForm";
 
@@ -19,8 +20,9 @@ export default async function EditContentNamespacePage({
 
   return (
     <div>
-      <Link href="/admin/content" className="text-sm text-text-2 hover:text-text-1">
-        &larr; กลับไปข้อความทุกหน้า
+      <Link href="/admin/content" className="inline-flex items-center gap-1 text-sm text-text-2 hover:text-text-1">
+        <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+        กลับไปข้อความทุกหน้า
       </Link>
       <h1 className="mt-2 text-2xl font-bold">{namespace}</h1>
       <p className="mt-1 text-sm text-text-2">

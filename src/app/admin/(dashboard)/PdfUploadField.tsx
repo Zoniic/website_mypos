@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowUpRight } from "lucide-react";
+
 export function PdfUploadField({
   name,
   label,
@@ -22,7 +24,8 @@ export function PdfUploadField({
           rel="noopener noreferrer"
           className="mt-1 inline-block text-sm text-primary-600 rounded-sm outline-offset-2 transition-colors hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
         >
-          Current PDF ↗
+          Current PDF
+          <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="ml-0.5 inline-block align-[-2px]" />
         </a>
       )}
       <input

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight, CircleCheck, TriangleAlert } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { getTranslations } from "next-intl/server";
@@ -85,7 +86,11 @@ const sectionLinks: Record<SectionGuideKey, string> = {
 function Status({ ok, children }: { ok: boolean; children: React.ReactNode }) {
   return (
     <li className="flex gap-2">
-      <span aria-hidden>{ok ? "✅" : "⚠️"}</span>
+      {ok ? (
+        <CircleCheck size={16} strokeWidth={1.75} aria-label="เรียบร้อย" className="mt-0.5 shrink-0 text-success" />
+      ) : (
+        <TriangleAlert size={16} strokeWidth={1.75} aria-label="ต้องแก้ไข" className="mt-0.5 shrink-0 text-warning" />
+      )}
       <span className={ok ? "text-text-2" : "text-text-1"}>{children}</span>
     </li>
   );
@@ -120,7 +125,7 @@ export default async function PlaybookPage() {
       <h1 className="text-2xl font-bold">แผนเนื้อหา — แซงคู่แข่ง</h1>
       <p className="mt-1 text-text-2">
         สรุปว่าคู่แข่งทำอะไร เว็บเราทำอะไรไปแล้ว และทีมต้องใส่เนื้อหาอะไรต่อ ทุกเมนูใน Admin มีกล่อง
-        &quot;📋 คู่มือเนื้อหา&quot; ด้านบนที่ลงรายละเอียดของหัวข้อนั้น
+        &quot;คู่มือเนื้อหา&quot; ด้านบนที่ลงรายละเอียดของหัวข้อนั้น
       </p>
 
       <section className="mt-8 rounded-xl border border-border p-5">
@@ -189,7 +194,7 @@ export default async function PlaybookPage() {
         <ul className="mt-3 space-y-2 text-sm">
           {done.map((item) => (
             <li key={item.label} className="flex gap-2">
-              <span aria-hidden>✅</span>
+              <CircleCheck size={16} strokeWidth={1.75} aria-hidden="true" className="mt-0.5 shrink-0 text-success" />
               <span>
                 <Link
                   href={item.href}
@@ -229,8 +234,9 @@ export default async function PlaybookPage() {
             const guide = SECTION_GUIDES[key];
             return (
               <div key={key} className="rounded-xl border border-border p-4">
-                <Link href={sectionLinks[key]} className="font-semibold text-primary-600 hover:underline">
-                  {guide.title} →
+                <Link href={sectionLinks[key]} className="inline-flex items-center gap-1 font-semibold text-primary-600 hover:underline">
+                  {guide.title}
+                  <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                 </Link>
                 <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-text-2">
                   {guide.checklist.map((item) => (

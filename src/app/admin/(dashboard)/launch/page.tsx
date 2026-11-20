@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/config/site";
 import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
@@ -164,7 +165,7 @@ export default async function LaunchChecklistPage() {
                         : "border border-border-strong"
                   }`}
                 >
-                  {check.state === "ok" ? "✓" : ""}
+                  {check.state === "ok" ? <Check size={12} strokeWidth={3} aria-hidden="true" /> : null}
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="font-medium">
@@ -177,8 +178,9 @@ export default async function LaunchChecklistPage() {
                   <p className="break-words text-sm text-text-2">{check.detail}</p>
                 </div>
                 {check.state !== "ok" && (
-                  <Link href={check.href} className="shrink-0 text-sm font-semibold text-primary-700 hover:underline">
-                    แก้ไข →
+                  <Link href={check.href} className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary-700 hover:underline">
+                    แก้ไข
+                    <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                   </Link>
                 )}
               </li>
@@ -195,8 +197,9 @@ export default async function LaunchChecklistPage() {
             <li key={step.title} className="rounded-xl border border-border p-4">
               <p className="font-medium">
                 {index + 1}. {step.title}{" "}
-                <a href={step.href} target="_blank" rel="noopener noreferrer" className="text-sm font-normal text-primary-700 hover:underline">
-                  เปิด ↗
+                <a href={step.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-0.5 text-sm font-normal text-primary-700 hover:underline">
+                  เปิด
+                  <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
                 </a>
               </p>
               <p className="mt-1 text-sm text-text-2">{step.body}</p>

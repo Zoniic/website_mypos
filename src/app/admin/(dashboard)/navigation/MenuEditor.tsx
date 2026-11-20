@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { ArrowDown, ArrowUp, X } from "lucide-react";
 import { resetStructure, saveMenu } from "./actions";
 import { SaveBar, iconButton, inputClass } from "./ui";
 
@@ -133,14 +134,14 @@ export function MenuEditor({ menu, title, help, allowCustom, initial, defaults }
                         </select>
                       )}
                       <button type="button" className={iconButton} onClick={() => move(g, i, -1)} disabled={i === 0} aria-label={`เลื่อน ${item.display} ขึ้น`}>
-                        ↑
+                        <ArrowUp size={16} strokeWidth={1.75} aria-hidden="true" />
                       </button>
                       <button type="button" className={iconButton} onClick={() => move(g, i, 1)} disabled={i === group.items.length - 1} aria-label={`เลื่อน ${item.display} ลง`}>
-                        ↓
+                        <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
                       </button>
                       {custom && (
                         <button type="button" className={iconButton} onClick={() => remove(g, i)} aria-label={`ลบ ${item.display}`}>
-                          ×
+                          <X size={16} strokeWidth={1.75} aria-hidden="true" />
                         </button>
                       )}
                     </div>

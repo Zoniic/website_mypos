@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/config/site";
 import { ORDER_STATUSES } from "@/lib/orders";
@@ -21,8 +22,9 @@ export default async function AdminOrderPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="max-w-4xl">
-      <Link href="/admin/orders" className="text-sm text-text-2 hover:text-text-1">
-        ← Orders
+      <Link href="/admin/orders" className="inline-flex items-center gap-1 text-sm text-text-2 hover:text-text-1">
+        <ArrowLeft size={16} strokeWidth={1.75} aria-hidden="true" />
+        Orders
       </Link>
       <div className="mt-3 flex flex-wrap items-center gap-3">
         <h1 className="text-2xl font-bold">{order.number}</h1>

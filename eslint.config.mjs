@@ -14,7 +14,13 @@ import nextTs from "eslint-config-next/typescript";
 const EMOJI = /(?![\u00A9\u00AE\u2122])\p{Extended_Pictographic}/u;
 const ICON_GLYPH = /^\s*[\u2190-\u21FF\u2713\u2715\u25BE\u2731]|[\u2190-\u21FF\u2713\u2715\u25BE\u2731]\s*$/u;
 
+// A string that is only a symbol (a button label such as "×", "+", "−").
+// Padding must contain a line break, so inline operators like " × " (quantity ×
+// price) and " + " (a list separator) are left alone.
+const SOLE_SYMBOL = /^(?:[\t ]*[\r\n]\s*)?[\u00D7\u2212+\u2715](?:\s*[\r\n]\s*)?$/u;
+
 function glyphProblem(text) {
+  if (SOLE_SYMBOL.test(text)) return "Do not use a text character as an icon. Use an icon from lucide-react (DESIGN.md §10).";
   if (EMOJI.test(text)) return "Emoji is not allowed. Use an icon from lucide-react (DESIGN.md §10).";
   if (ICON_GLYPH.test(text)) return "Do not use a text character as an icon. Use an icon from lucide-react (DESIGN.md §10).";
   return null;

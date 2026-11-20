@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import { Pencil } from "lucide-react";
 
 /**
  * "Edit this page" shortcut for a signed-in admin, keyed off a non-secret
@@ -21,9 +22,10 @@ export function AdminEditButton() {
   return (
     <a
       href={`/admin/live?path=${encodeURIComponent(pathname)}`}
-      className="fixed bottom-24 left-4 z-50 rounded-full bg-[#111318] px-4 py-2 text-xs font-semibold text-white shadow-lg outline-offset-2 hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 lg:bottom-5"
+      className="fixed bottom-24 left-4 z-50 inline-flex items-center gap-1.5 rounded-full bg-[#111318] px-4 py-2 text-xs font-semibold text-white shadow-lg outline-offset-2 hover:bg-black focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 lg:bottom-5"
     >
-      ✏️ แก้ไขหน้านี้
+      <Pencil size={14} strokeWidth={1.75} aria-hidden="true" />
+      แก้ไขหน้านี้
     </a>
   );
 }

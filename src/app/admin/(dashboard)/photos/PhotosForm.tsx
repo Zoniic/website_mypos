@@ -1,6 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
+import { Ban, Camera, MapPin, Palette } from "lucide-react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
 import type { SiteImageSlot } from "./slots";
@@ -30,19 +31,31 @@ export function PhotosForm({
 
           <div className="mt-3 rounded-lg border border-primary-200 bg-primary-50 p-3 text-xs leading-relaxed">
             <p className="text-text-2">
-              <span className="font-semibold text-text-1">📍 ใช้ที่: </span>
+              <span className="mr-1.5 inline-flex items-center gap-1.5 align-middle font-semibold text-text-1">
+                <MapPin size={14} strokeWidth={1.75} aria-hidden="true" className="shrink-0" />
+                ใช้ที่
+              </span>
               {slot.usedOn}
             </p>
             <p className="mt-1.5 text-text-2">
-              <span className="font-semibold text-text-1">📷 ถ่ายอะไร: </span>
+              <span className="mr-1.5 inline-flex items-center gap-1.5 align-middle font-semibold text-text-1">
+                <Camera size={14} strokeWidth={1.75} aria-hidden="true" className="shrink-0" />
+                ถ่ายอะไร
+              </span>
               {slot.subject}
             </p>
             <p className="mt-1.5 text-text-2">
-              <span className="font-semibold text-text-1">🎨 สไตล์: </span>
+              <span className="mr-1.5 inline-flex items-center gap-1.5 align-middle font-semibold text-text-1">
+                <Palette size={14} strokeWidth={1.75} aria-hidden="true" className="shrink-0" />
+                สไตล์
+              </span>
               {slot.style}
             </p>
             <p className="mt-1.5 text-error">
-              <span className="font-semibold">🚫 เลี่ยง: </span>
+              <span className="mr-1.5 inline-flex items-center gap-1.5 align-middle font-semibold">
+                <Ban size={14} strokeWidth={1.75} aria-hidden="true" className="shrink-0" />
+                เลี่ยง
+              </span>
               {slot.avoid}
             </p>
           </div>

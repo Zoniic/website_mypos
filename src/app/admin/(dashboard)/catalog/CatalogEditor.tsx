@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
 import {
   createBusinessType,
   createSolution,
@@ -139,7 +140,8 @@ export function SolutionsCatalog({
                 </td>
                 <td className="whitespace-nowrap px-3 py-2 text-right text-xs">
                   <a href={`/th/solutions/${row.slug}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary-700 hover:underline">
-                    ดูหน้า ↗
+                    ดูหน้า
+                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="ml-0.5 inline-block align-[-2px]" />
                   </a>
                   {!row.builtIn && (
                     <>
@@ -277,7 +279,8 @@ export function BusinessTypesCatalog({ rows, icons }: { rows: BusinessTypeRow[];
                 </td>
                 <td className="whitespace-nowrap px-3 py-2 text-right text-xs">
                   <a href={`/th/industries/${row.slug}`} target="_blank" rel="noopener noreferrer" className="font-semibold text-primary-700 hover:underline">
-                    ดูหน้า ↗
+                    ดูหน้า
+                    <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="ml-0.5 inline-block align-[-2px]" />
                   </a>
                   {!row.builtIn && (
                     <>

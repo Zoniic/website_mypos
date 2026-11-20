@@ -2,15 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { ArrowUpRight, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ADMIN_ICONS, ADMIN_NAV, findNavItem, type AdminNavItem, type BadgeKey } from "./adminNav";
 
 export function AdminIcon({ name, className = "" }: { name: keyof typeof ADMIN_ICONS; className?: string }) {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" className={`shrink-0 ${className}`}>
-      <path d={ADMIN_ICONS[name]} stroke="currentColor" fill="none" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
+  const Icon = ADMIN_ICONS[name];
+  return <Icon size={18} strokeWidth={1.75} aria-hidden="true" className={`shrink-0 ${className}`} />;
 }
 
 function NavLink({ item, active, count, onNavigate }: { item: AdminNavItem; active: boolean; count?: number; onNavigate?: () => void }) {
@@ -68,8 +66,9 @@ function Account({ name, email }: { name?: string; email?: string }) {
         </p>
       )}
       <div className="mt-2 flex gap-2 px-2.5">
-        <a href="/th" target="_blank" rel="noopener noreferrer" className="flex-1 rounded-lg border border-border-strong px-3 py-1.5 text-center text-xs text-text-2 hover:bg-surface-2">
-          ดูหน้าเว็บ ↗
+        <a href="/th" target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-1 rounded-lg border border-border-strong px-3 py-1.5 text-center text-xs text-text-2 hover:bg-surface-2">
+          ดูหน้าเว็บ
+          <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
         </a>
         <form action="/admin/logout" method="post" className="flex-1">
           <button type="submit" className="w-full rounded-lg border border-border-strong px-3 py-1.5 text-xs text-text-2 hover:bg-surface-2">
@@ -136,7 +135,7 @@ export function AdminShell({
             <div className="flex items-center justify-between px-4 py-3">
               <span className="font-semibold">หลังบ้าน MYPOS</span>
               <button type="button" onClick={() => setOpen(false)} className="rounded-lg px-2 py-1 text-text-2 hover:bg-surface-2" aria-label="ปิดเมนู">
-                ✕
+                <X size={18} strokeWidth={1.75} aria-hidden="true" />
               </button>
             </div>
             <div className="flex-1 overflow-y-auto px-3 pb-4">

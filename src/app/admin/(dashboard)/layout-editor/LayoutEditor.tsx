@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { ArrowDown, ArrowUp, ArrowUpRight } from "lucide-react";
 import type { LayoutSection, StoredSection } from "@/lib/pageLayout";
 import { resetPageLayout, savePageLayout } from "./actions";
 
@@ -100,14 +101,15 @@ export function LayoutEditor({ page, label, path, sections, initial, variants = 
               {variants.map((v) => (
                 <option key={v.key} value={v.key}>
                   เฉพาะ {v.label}
-                  {v.key in own ? " ✓" : ""}
+                  {v.key in own ? " (ตั้งลำดับเอง)" : ""}
                 </option>
               ))}
             </select>
           </label>
         )}
-        <a href={previewHref} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-primary-700 hover:underline">
-          ดูหน้าจริง ↗
+        <a href={previewHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-sm font-semibold text-primary-700 hover:underline">
+          ดูหน้าจริง
+          <ArrowUpRight size={16} strokeWidth={1.75} aria-hidden="true" />
         </a>
       </div>
       {variant && (
@@ -139,10 +141,10 @@ export function LayoutEditor({ page, label, path, sections, initial, variants = 
               {!def.locked && (
                 <div className="flex gap-1">
                   <button type="button" className={iconButton} onClick={() => move(index, -1)} disabled={index <= firstMovable} aria-label={`เลื่อน ${def.label} ขึ้น`}>
-                    ↑
+                    <ArrowUp size={16} strokeWidth={1.75} aria-hidden="true" />
                   </button>
                   <button type="button" className={iconButton} onClick={() => move(index, 1)} disabled={index === items.length - 1} aria-label={`เลื่อน ${def.label} ลง`}>
-                    ↓
+                    <ArrowDown size={16} strokeWidth={1.75} aria-hidden="true" />
                   </button>
                 </div>
               )}
