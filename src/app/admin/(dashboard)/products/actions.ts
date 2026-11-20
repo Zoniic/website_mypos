@@ -1,6 +1,7 @@
 "use server";
 
 import { requireAdmin } from "@/lib/adminAuth";
+import { emojiFormError } from "@/lib/emoji";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
@@ -95,6 +96,8 @@ function revalidateProductPaths(slug: string) {
 
 export async function createProduct(_prevState: string | null, formData: FormData) {
   await requireAdmin();
+  const emojiError = emojiFormError(formData);
+  if (emojiError) return emojiError;
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (fields.categories.length === 0) return "Select at least one category.";
@@ -148,6 +151,8 @@ export async function updateProduct(
   formData: FormData
 ) {
   await requireAdmin();
+  const emojiError = emojiFormError(formData);
+  if (emojiError) return emojiError;
   const fields = readProductFields(formData);
   if (!fields.slug) return "Slug is required.";
   if (fields.categories.length === 0) return "Select at least one category.";

@@ -1,6 +1,7 @@
 "use server";
 
 import { requireAdmin } from "@/lib/adminAuth";
+import { emojiValuesError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 import {
@@ -70,6 +71,8 @@ export async function createSolution(input: {
   blurb: Names;
 }): Promise<string> {
   await requireAdmin();
+  const emojiError = emojiValuesError({ ...input.names, ...input.blurb });
+  if (emojiError) return emojiError;
   const slug = input.slug.trim().toLowerCase();
   const names = cleanNames(input.names);
   const catalog = await getCatalog();
@@ -113,6 +116,8 @@ export async function createBusinessType(input: {
   icon: string;
 }): Promise<string> {
   await requireAdmin();
+  const emojiError = emojiValuesError(input.names);
+  if (emojiError) return emojiError;
   const slug = input.slug.trim().toLowerCase();
   const names = cleanNames(input.names);
   const catalog = await getCatalog();

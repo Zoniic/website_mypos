@@ -40,6 +40,10 @@ yarn-error.log*
 # admin-uploaded images (stored on the server, not in the repo)
 /public/uploads
 
+# originals saved by prisma/strip-emoji.ts --write
+/prisma/backups
+lint-out.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

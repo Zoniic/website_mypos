@@ -1,6 +1,7 @@
 "use server";
 
 import { requireAdmin } from "@/lib/adminAuth";
+import { emojiFormError } from "@/lib/emoji";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
@@ -13,6 +14,8 @@ export async function updateContent(
   formData: FormData
 ) {
   await requireAdmin();
+  const emojiError = emojiFormError(formData);
+  if (emojiError) return emojiError;
   const updates: { key: string; locale: string; value: string }[] = [];
 
   for (const [fieldName, value] of formData.entries()) {

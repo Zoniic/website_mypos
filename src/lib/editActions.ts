@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { requireEditor } from "@/lib/editMode";
+import { emojiValuesError } from "@/lib/emoji";
 import { revalidatePublicSite } from "@/lib/siteCache";
 import { saveUploadedImage } from "@/lib/uploads";
 import { isLayoutVariant, isPageKey, layoutSettingKey, parseStoredLayout, resolveLayout } from "@/lib/pageLayout";
@@ -28,6 +29,8 @@ export async function getContentRow(rowId: number): Promise<ContentRow | null> {
 
 export async function saveContentRow(namespace: string, key: string, values: Record<string, string>): Promise<string> {
   await requireEditor();
+  const emojiError = emojiValuesError(values);
+  if (emojiError) return emojiError;
   const existing = await prisma.pageContent.count({ where: { namespace, key } });
   if (!existing) return "ไม่พบข้อความนี้";
   // Same rule as Page Content: lists/objects must stay valid JSON.

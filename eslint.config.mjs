@@ -65,8 +65,8 @@ const eslintConfig = defineConfig([
     files: ["src/**/*.{ts,tsx}"],
     plugins: { lucide: lucideRulePlugin },
     rules: {
-      "lucide/no-icon-glyphs": "warn",
-      "lucide/no-raw-svg": "warn",
+      "lucide/no-icon-glyphs": "error",
+      "lucide/no-raw-svg": "error",
     },
   },
   // Allowed exceptions (DESIGN.md §10).
