@@ -99,6 +99,12 @@
     "shimmer": { "duration": "3s", "easing": "linear" },
     "reducedMotion": "All CSS/JS animation disabled under prefers-reduced-motion"
   },
+  "icon": {
+    "library": { "value": "lucide-react", "description": "The only icon source. No emoji, no text-character icons, no hand-drawn inline svg (see DESIGN.md §10)" },
+    "strokeWidth": { "value": 1.75 },
+    "color": { "value": "currentColor" },
+    "size": { "inline": "16px", "default": "18px", "large": "20-24px" }
+  },
   "breakpoints": {
     "sm": "640px",
     "md": "768px",

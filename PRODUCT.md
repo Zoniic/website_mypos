@@ -25,6 +25,7 @@ Boring corporate/factory websites — generic navy-and-gray B2B sites with stock
 - **Trust through specificity, not decoration.** Prefer real customer photos, real logos, and real numbers over generic stats, gradient badges, or motifs that don't say anything true (a floating icon with no label is worse than no icon).
 - **Navigation groups by what the visitor is trying to do**, not by internal site structure — e.g. "by use case" and "by product category" as two honest entry points into the same catalog, low-traffic pages folded into a shared "Resources" menu rather than each claiming top-level space.
 - **The brand orange is used with intent**, not applied as a generic AI-default accent — it should feel like it belongs to this manufacturer specifically.
+- **Icons come from Lucide only, and never from emoji.** One icon family keeps the site consistent across th/en/zh and the admin. Emoji and text-character icons render differently per device and read as informal. Exceptions are listed in DESIGN.md §10.
 - **Every visual flourish must earn its place.** Motion, badges, and imagery should reinforce a real claim (an actual installation, an actual result) — cut anything decorative-only, however polished it looks in isolation.
 - **Thai-first, multilingual-safe.** All three locales (th/en/zh) must render correctly with the same visual quality — typography choices (e.g. avoiding monospace for Thai body/label text) are load-bearing, not cosmetic.
 

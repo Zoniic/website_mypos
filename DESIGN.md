@@ -29,9 +29,9 @@ colors:
 > ink typography, soft diffuse shadows, generous whitespace — with MYPOS's
 > Ember Orange as the single point of heat.
 >
-> **The only binding rule** carried over from the previous system is The One
-> Register Rule (§2). Everything else here is descriptive documentation of
-> the current implementation, not constraint.
+> **The binding rules** are The One Register Rule (§2) and The Lucide Rule
+> (§10). Everything else here is descriptive documentation of the current
+> implementation, not constraint.
 
 ## 1. Overview
 
@@ -171,7 +171,35 @@ guarded by `prefers-reduced-motion`.
   shimmer sweep (3s linear loop)
 - Nothing bounces; nothing loops faster than 3s.
 
-## 10. Accessibility
+## 10. Iconography
+
+**The Lucide Rule.** Every icon on the site, public pages and admin alike,
+comes from [Lucide](https://lucide.dev) (`lucide-react`). Emoji are never
+used in the UI or in stored content. Text characters that stand in for an
+icon (`→ ↗ ↑ ↓ ✓ ✕ ▾ ✱`) are replaced by the matching Lucide icon, and
+hand-drawn inline `<svg>` icons are replaced by Lucide components.
+
+- Import named icons: `import { ArrowRight } from "lucide-react"`.
+- Default `strokeWidth` is 1.75. Colour comes from `currentColor`, so icons
+  follow the surrounding text colour.
+- Decorative icons carry `aria-hidden="true"`. An icon-only button needs an
+  `aria-label`.
+- Do not use an icon that says nothing true. Remove it instead
+  (see PRODUCT.md, "Every visual flourish must earn its place").
+
+Allowed exceptions (ESLint is switched off for these files only):
+
+| Exception | Why |
+|---|---|
+| `src/components/ui/MachineArt.tsx` | Product illustration, not an icon |
+| Brand logos (LINE, Shopee, Lazada, Facebook) | Brand marks are not in Lucide |
+| `src/lib/ogImage.tsx` | Satori renders plain SVG and cannot use React icon components |
+| `src/lib/notify.ts` | Plain-text LINE/email alerts to the team, not site UI |
+
+Enforced by `no-restricted-syntax` in `eslint.config.mjs`. Stored copy is
+checked by `src/lib/emoji.ts` (admin forms) and `prisma/strip-emoji.ts`.
+
+## 11. Accessibility
 
 - WCAG AA contrast per §2 conventions
 - Focus: 2px outline, offset 2, `primary`/`primary-400` per component;
