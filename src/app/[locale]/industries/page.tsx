@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
@@ -92,12 +93,12 @@ export default async function IndustriesPage({
                 </span>
                 <h2 className="mt-4 text-lg font-semibold">{item.label}</h2>
                 <p className="mt-2 flex-1 text-sm leading-relaxed text-text-2">{item.title}</p>
-                <span
-                  aria-hidden
+                <ArrowRight
+                  size={20}
+                  strokeWidth={1.75}
+                  aria-hidden="true"
                   className="mt-4 text-primary-600 transition-transform group-hover:translate-x-1"
-                >
-                  →
-                </span>
+                />
               </Link>
             </FadeIn>
           ))}

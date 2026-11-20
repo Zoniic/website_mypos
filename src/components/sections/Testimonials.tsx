@@ -1,3 +1,4 @@
+import { Quote } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -26,12 +27,7 @@ export async function Testimonials() {
         {items.map((item, index) => (
           <FadeIn key={`${item.name}-${index}`} delay={(index % 3) * 0.08}>
             <figure className="flex h-full flex-col rounded-3xl border border-border bg-surface-1 p-8">
-              <svg viewBox="0 0 24 24" aria-hidden className="h-8 w-8 text-primary-600/40">
-                <path
-                  fill="currentColor"
-                  d="M9.5 8H6a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v3H5v2h5v-6.5A3.5 3.5 0 0 0 9.5 8Zm10 0H16a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v3h-3v2h5v-6.5A3.5 3.5 0 0 0 19.5 8Z"
-                />
-              </svg>
+              <Quote size={32} strokeWidth={1.75} aria-hidden="true" className="text-primary-600/40" />
               <blockquote className="mt-4 flex-1 text-text-1">{item.quote}</blockquote>
               <figcaption className="mt-6 border-t border-border pt-4">
                 <span className="block font-semibold">{item.name}</span>

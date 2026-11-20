@@ -1,3 +1,4 @@
+import { Asterisk } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { ScrollVelocity } from "@/components/reactbits/ScrollVelocity";
 
@@ -21,9 +22,7 @@ export async function ReceiptTape() {
           {items.map((item) => (
             <span key={item.type} className="flex items-center gap-6 sm:gap-10">
               <span className="font-display text-3xl font-semibold tracking-tight sm:text-5xl">{item.title}</span>
-              <span aria-hidden className="text-2xl text-primary-600 sm:text-4xl">
-                ✱
-              </span>
+              <Asterisk aria-hidden="true" strokeWidth={2.5} className="h-6 w-6 shrink-0 text-primary-600 sm:h-9 sm:w-9" />
             </span>
           ))}
         </ScrollVelocity>

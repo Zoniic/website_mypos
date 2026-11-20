@@ -1,3 +1,5 @@
+import { ArrowUpRight } from "lucide-react";
+
 const MARKETPLACES = [
   { key: "shopee", name: "Shopee", color: "#ee4d2d" },
   { key: "lazada", name: "Lazada", color: "#0f136d" },
@@ -49,9 +51,7 @@ export function MarketplaceLinks({
             >
               <span aria-hidden className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: m.color }} />
               {m.name}
-              <span aria-hidden className="text-text-3">
-                ↗
-              </span>
+              <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" className="text-text-3" />
             </a>
           </li>
         ))}

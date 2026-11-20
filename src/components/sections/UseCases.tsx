@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -40,12 +41,12 @@ export async function UseCases() {
                   <span className="block font-display text-xl font-semibold">{item.title}</span>
                   <span className="mt-0.5 block text-sm text-text-2">{item.blurb}</span>
                 </span>
-                <span
-                  aria-hidden
-                  className="text-lg text-text-3 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary-600"
-                >
-                  →
-                </span>
+                <ArrowRight
+                  size={20}
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                  className="shrink-0 text-text-3 transition-all duration-300 group-hover:translate-x-1 group-hover:text-primary-600"
+                />
               </Link>
             </FadeIn>
           </li>

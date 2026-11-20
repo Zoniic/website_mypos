@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -110,13 +111,15 @@ export function AccessoriesExplorer({
                     {(item.shopeeUrl || item.lazadaUrl) && (
                       <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
                         {item.shopeeUrl && (
-                          <a href={item.shopeeUrl} target="_blank" rel="noopener noreferrer" data-item-name={item.name} className="font-medium text-[#c4391d] underline-offset-4 hover:underline">
-                            Shopee ↗
+                          <a href={item.shopeeUrl} target="_blank" rel="noopener noreferrer" data-item-name={item.name} className="inline-flex items-center gap-1 font-medium text-[#c4391d] underline-offset-4 hover:underline">
+                            Shopee
+                            <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
                           </a>
                         )}
                         {item.lazadaUrl && (
-                          <a href={item.lazadaUrl} target="_blank" rel="noopener noreferrer" data-item-name={item.name} className="font-medium text-[#0f136d] underline-offset-4 hover:underline">
-                            Lazada ↗
+                          <a href={item.lazadaUrl} target="_blank" rel="noopener noreferrer" data-item-name={item.name} className="inline-flex items-center gap-1 font-medium text-[#0f136d] underline-offset-4 hover:underline">
+                            Lazada
+                            <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
                           </a>
                         )}
                       </p>

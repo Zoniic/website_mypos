@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -48,8 +49,9 @@ export function RecommendedSolutions({
                 </div>
                 <h3 className="mt-5 px-1 font-display text-xl font-semibold">{item.label}</h3>
                 <p className="mt-2 flex-1 px-1 text-sm leading-relaxed text-text-2">{item.blurb}</p>
-                <span className="mt-4 px-1 text-sm font-semibold text-primary-600 underline-offset-4 group-hover:underline">
-                  {viewLabel} →
+                <span className="mt-4 inline-flex items-center gap-1 px-1 text-sm font-semibold text-primary-600 underline-offset-4 group-hover:underline">
+                  {viewLabel}
+                  <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                 </span>
               </Link>
             </FadeIn>

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -73,12 +74,12 @@ export async function Solutions() {
                     <h3 className="font-display text-lg font-semibold leading-snug sm:text-xl">
                       {t(`items.${item.key}.title`)}
                     </h3>
-                    <span
-                      aria-hidden
-                      className="text-primary-600 transition-transform duration-300 group-hover:translate-x-1"
-                    >
-                      →
-                    </span>
+                    <ArrowRight
+                      size={20}
+                      strokeWidth={1.75}
+                      aria-hidden="true"
+                      className="shrink-0 self-center text-primary-600 transition-transform duration-300 group-hover:translate-x-1"
+                    />
                   </div>
                   <p className="mt-2 px-1 text-sm leading-relaxed text-text-2">
                     {t(`items.${item.key}.description`)}
@@ -107,9 +108,12 @@ export async function Solutions() {
               <span className="flex min-w-0 flex-col justify-center py-1">
                 <span className="font-display text-base font-semibold leading-snug">
                   {t(`items.${item.key}.title`)}
-                  <span aria-hidden className="ml-1 text-primary-600 transition-transform group-hover:translate-x-0.5">
-                    →
-                  </span>
+                  <ArrowRight
+                    size={16}
+                    strokeWidth={1.75}
+                    aria-hidden="true"
+                    className="ml-1 inline-block align-[-2px] text-primary-600 transition-transform group-hover:translate-x-0.5"
+                  />
                 </span>
                 <span className="mt-1 text-sm leading-snug text-text-2">{t(`items.${item.key}.description`)}</span>
               </span>

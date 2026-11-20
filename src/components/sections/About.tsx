@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
@@ -17,9 +18,7 @@ export async function About() {
         className="group mt-6 inline-flex items-center gap-1.5 rounded-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
       >
         {t("cta")}
-        <span aria-hidden className="transition-transform group-hover:translate-x-1">
-          →
-        </span>
+        <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="transition-transform group-hover:translate-x-1" />
       </Link>
     </>
   );

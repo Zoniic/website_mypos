@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/navigation";
 import { locales, type Locale } from "@/i18n/routing";
@@ -61,15 +62,12 @@ export function LanguageSwitcher() {
         className="flex cursor-pointer items-center gap-1 rounded-full border border-border-strong px-3 py-1.5 text-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
       >
         {localeLabels[activeLocale]}
-        <svg
-          width="10"
-          height="10"
-          viewBox="0 0 10 10"
+        <ChevronDown
+          size={12}
+          strokeWidth={1.75}
           aria-hidden="true"
           className={`transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          <path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" />
-        </svg>
+        />
       </button>
       {open && (
         <div

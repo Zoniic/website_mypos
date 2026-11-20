@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
@@ -88,15 +89,12 @@ function NavDropdown({
           onClick={onNavigate}
         >
           {label}
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
+          <ChevronDown
+            size={12}
+            strokeWidth={1.75}
             aria-hidden="true"
             className={`transition-transform ${open ? "rotate-180" : ""}`}
-          >
-            <path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" />
-          </svg>
+          />
         </Link>
       ) : (
         <button
@@ -107,15 +105,12 @@ function NavDropdown({
           onClick={() => setOpen((o) => !o)}
         >
           {label}
-          <svg
-            width="10"
-            height="10"
-            viewBox="0 0 10 10"
+          <ChevronDown
+            size={12}
+            strokeWidth={1.75}
             aria-hidden="true"
             className={`transition-transform ${open ? "rotate-180" : ""}`}
-          >
-            <path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" />
-          </svg>
+          />
         </button>
       )}
       {open && (
@@ -152,15 +147,12 @@ function SolutionsMenu({ label, groups }: { label: string; groups: SolutionGroup
         onClick={() => setOpen((o) => !o)}
       >
         {label}
-        <svg
-          width="10"
-          height="10"
-          viewBox="0 0 10 10"
+        <ChevronDown
+          size={12}
+          strokeWidth={1.75}
           aria-hidden="true"
           className={`transition-transform ${open ? "rotate-180" : ""}`}
-        >
-          <path d="M1 3l4 4 4-4" stroke="currentColor" fill="none" strokeWidth="1.5" />
-        </svg>
+        />
       </button>
       {open && (
         <div
@@ -269,10 +261,7 @@ export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav
             aria-label={t("search")}
             className="rounded-sm p-1.5 text-text-2 outline-offset-2 hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
           >
-            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <circle cx="9" cy="9" r="6.5" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M18 18l-4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
+            <Search size={18} strokeWidth={1.75} aria-hidden="true" />
           </Link>
           <CompareCartLink label={t("compare")} />
           {shopOn && <ShopCartLink label={t("cart")} />}
@@ -290,25 +279,11 @@ export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav
           aria-label="Toggle menu"
           onClick={() => setMobileOpen((open) => !open)}
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
-            {mobileOpen ? (
-              <path
-                d="M6 6l12 12M18 6L6 18"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                fill="none"
-                strokeLinecap="round"
-              />
-            ) : (
-              <path
-                d="M4 7h16M4 12h16M4 17h16"
-                stroke="currentColor"
-                strokeWidth="1.75"
-                fill="none"
-                strokeLinecap="round"
-              />
-            )}
-          </svg>
+          {mobileOpen ? (
+            <X size={24} strokeWidth={1.75} aria-hidden="true" />
+          ) : (
+            <Menu size={24} strokeWidth={1.75} aria-hidden="true" />
+          )}
         </button>
       </div>
 

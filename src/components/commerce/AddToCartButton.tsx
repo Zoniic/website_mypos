@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Check } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { useShopCart, type CartItemKind } from "@/lib/shopCart";
 import { track } from "@/lib/analytics";
@@ -51,7 +52,8 @@ export function AddToCartButton({
         onClick={handleAdd}
         className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-button bg-primary-600 font-semibold text-white outline-offset-2 transition-colors hover:bg-primary-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 active:scale-[0.98] max-sm:min-h-11 ${pad}`}
       >
-        {justAdded ? `✓ ${labels.added}` : labels.add}
+        {justAdded && <Check size={size === "lg" ? 20 : 18} strokeWidth={2} aria-hidden="true" />}
+        {justAdded ? labels.added : labels.add}
       </button>
       {/* Announced to screen readers; stays visible briefly so the shopper
           can jump straight to the cart. */}
@@ -59,9 +61,10 @@ export function AddToCartButton({
         {justAdded && (
           <Link
             href="/checkout"
-            className="rounded-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+            className="inline-flex items-center gap-1 rounded-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
           >
-            {labels.viewCart} →
+            {labels.viewCart}
+            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
           </Link>
         )}
       </span>

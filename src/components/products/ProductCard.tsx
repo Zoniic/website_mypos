@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Check, Plus } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -43,13 +44,11 @@ export function ProductCard({ product }: { product: Product }) {
             : "border-border-strong bg-surface-0/90 text-text-2 hover:border-primary-400/40 hover:text-primary-600"
         }`}
       >
-        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-          {inCart ? (
-            <path d="M3 8.5l3 3 7-7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-          ) : (
-            <path d="M8 3v10M3 8h10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          )}
-        </svg>
+        {inCart ? (
+          <Check size={14} strokeWidth={2} aria-hidden="true" />
+        ) : (
+          <Plus size={14} strokeWidth={2} aria-hidden="true" />
+        )}
       </button>
 
       <Link

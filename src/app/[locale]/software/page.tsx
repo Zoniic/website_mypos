@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ArrowRight } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
@@ -141,9 +142,10 @@ export default async function SoftwarePage({
                       {app.href && app.href.startsWith("/") && (
                         <Link
                           href={app.href}
-                          className="mt-3 inline-block rounded-sm text-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                          className="mt-3 inline-flex items-center gap-1 rounded-sm text-sm font-semibold text-primary-600 underline-offset-4 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                         >
-                          {t("apps.more")} →
+                          {t("apps.more")}
+                          <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
                         </Link>
                       )}
                     </div>

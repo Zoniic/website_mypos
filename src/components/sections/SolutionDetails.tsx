@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/navigation";
 import { FadeIn } from "@/components/ui/FadeIn";
 
@@ -72,7 +73,8 @@ export function BackOfficeBand({ title, body, cta }: { title: string; body: stri
           href="/software"
           className="inline-flex shrink-0 items-center rounded-button border border-white/30 px-5 py-3 font-semibold text-white outline-offset-2 transition-colors hover:bg-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white"
         >
-          {cta} →
+          {cta}
+          <ArrowRight size={18} strokeWidth={1.75} aria-hidden="true" className="ml-1.5" />
         </Link>
       </div>
     </section>
