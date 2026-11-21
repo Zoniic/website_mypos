@@ -1,0 +1,27 @@
+/th/nope -> 404 
+/en/products/zzz -> 404 
+/zh/blog/zzz -> 404 
+/th/references/zzz -> 404 
+/th/careers/zzz -> 404 
+/th/order/MP0-1?t=x -> 404 
+/th/knowledge-base/article/zzz -> 404 
+/th/knowledge-base/foo -> 404 
+/th/solutions/zzz -> 404 
+/th/products/TEST -> 404 
+/th/products/test -> 404 
+/th/products/mypos-K1 -> 308 http://localhost:3100/th/products/mypos-k1
+/th/products/mypos-k1 -> 200 
+/th/knowledge-base/article/Change%20paper%20K1 -> 308 http://localhost:3100/th/knowledge-base/article/change-paper-k1
+/th/knowledge-base/article/change-paper-k1 -> 200 
+/th -> 200 
+/th/contact -> 200 
+th contact: iframe=False missingMessage=False mapsLink=
+en contact: iframe=False missingMessage=False mapsLink=
+zh contact: iframe=False missingMessage=False mapsLink=
+/th contains fm1896p: False
+/en contains fm1896p: False
+/zh contains fm1896p: False
+/th/about contains fm1896p: False
+kb article h1: α╣Çα╕¢α╕Ñα╕╡α╣êα╕óα╕Öα╕üα╕úα╕░α╕öα╕▓α╕⌐ K1 | shows 404 text: False
+sitemap lists /products/test: False
+products list links /products/test: False
