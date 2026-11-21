@@ -123,33 +123,34 @@
 
 - Page: `v2 - D04 สี่จังหวะหน้าร้าน`
 - Page node id: `83:2`
-- Scope: created one new D04 page with exactly four desktop frames at 1440 px wide. No other Figma page or website code was changed.
-- Structure audit: the page has exactly the four required top-level frames at `1440 × 3928`, `1440 × 5588`, `1440 × 3708`, and `1440 × 2648`. IBM Plex Sans Thai, Prompt, and Noto Sans SC loaded in every required style.
-- Review status: `review-v2/D04.json` did not exist when this direction was built, so there were no prior findings to apply.
-- Design treatment: persistent phase rail, alternating real-workplace scenes and product/software evidence, square editorial media, ruled disclosure rows, large Thai hierarchy, product imagery integrated into the page surface rather than white cards, and Ember Orange limited to primary CTAs.
+- Scope: fixed the existing D04 page in place. It retains exactly four desktop frames at 1440 px wide; no other Figma page or website code was changed.
+- Structure audit: the four direct children are the required frames at `1440 × 3928`, `1440 × 5588`, `1440 × 3708`, and `1440 × 2648`. IBM Plex Sans Thai, Prompt, and Noto Sans SC have zero missing-font nodes.
+- Review fixes applied: `D04-1` through `D04-6` from `review-v2/D04.json`. A05/A07 were removed from all five flagged occurrences; exact highlights were restored for C04, C05, C06, C07, C09, and C10; all ten listing actions are visible above their section boundaries; subject-aware media viewports enlarge C02, C04, C05, and C08 without cropping hardware; the detail blank runs were removed; and exported production language was replaced with buyer-facing copy.
 
 ### Frames
 
 | Frame | Node id | Link | Final get_screenshot result | Checked |
 |---|---|---|---|---|
-| D04 Home | `83:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-3 | PASS, rendered `880 × 2400` from `1440 × 3928` | Checked the full frame, exact four-phase sequence, real retail/cafeteria/outdoor-service scenes, NB65 and T70 secondary evidence, dashboard caption and compatibility restraint, cross-location disclosure, header/subnav, CTA hierarchy, and footer. No visible clipping, collision, generated-photo asset, or dominant placeholder block remains. |
-| D04 Products listing | `83:145` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-145 | PASS, rendered `722 × 2800` from `1440 × 5588` | Checked the complete filter shell and `พบ 10 รายการ`; C01–C10 each appear once in the specified phase order. Product media remain complete and readable, product whites blend into the alternating surfaces, long model names stay intact, scene/software evidence is captioned, and the result rail and footer have no visible clipping or overlap. No price, stock badge, pagination, or `TEST` item appears. |
-| D04 Product detail | `83:402` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-402 | PASS, rendered `933 × 2400` from `1440 × 3708` | Checked the large NB65 stage, exact product name/highlight/metadata, quote actions, explicit non-installation disclosure beside the real service-context photo, all nine exact specification rows, four operational questions, section boundaries, and footer. The hardware is fully visible without a white card or low-resolution enlargement. |
-| D04 Contact / quote request | `83:557` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-557 | PASS, rendered `1197 × 2200` from `1440 × 2648` | Checked the four phase tabs with `รับรายการ` selected, exact general-topic and message context mapping, Contract A field geometry, visibly muted placeholders, helper and mapping note, separately labelled office/sales/email channels, CTA hierarchy, and footer. No invented address, client, testimonial, number, or response-time claim appears. |
+| D04 Home | `83:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-3 | PASS, rendered `1100 × 3000` from `1440 × 3928` | Checked the full four-phase sequence, documentary retail and A03 POS-context imagery, cross-location disclosure, NB65/T70 evidence, dashboard caption, Thai hierarchy, header/subnav, CTA color use, and footer. No raw direction ID, asset filename, clipping, collision, or disallowed image remains visible. |
+| D04 Products listing | `83:145` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-145 | PASS, rendered `1031 × 4000` from `1440 × 5588` | Checked the exact filter shell, `พบ 10 รายการ`, and C01–C10 once each. Every block shows model, exact name, exact highlight, screen/OS, and `ดูรายละเอียด`; all ten actions end before the Results section. C02/C04/C05/C08 hardware reads at comparison scale in clipped whitespace viewports, while complete devices remain visible. The dashboard follows complete C06/C07 blocks and C10 clears the Results boundary. |
+| D04 Product detail | `83:402` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-402 | PASS, rendered `1166 × 3000` from `1440 × 3708` | Checked the enlarged complete NB65 overview, exact name/highlight/metadata, quote and compare actions, A03 POS-context image with the non-installation disclosure, all nine exact specification rows distributed through the section, four operational questions, CTA hierarchy, and footer. The two reviewed blank runs are gone. |
+| D04 Contact / quote request | `83:557` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-557 | PASS, rendered `1440 × 2648` from `1440 × 2648` | Checked the four phase tabs with `รับรายการ` selected, Contract A geometry, general-topic/message prefill, visibly muted placeholders, buyer-facing guidance `เลือกช่วงงาน แล้วเล่ารายละเอียดที่ทีมควรรู้`, separately labelled office/sales/email channels, CTA hierarchy, and footer. No field/payload implementation language or invented contact data remains visible. |
 
 ### Assets used
 
 - Shared: `logo`.
-- Home: `a-neighborhood-mini-mart`, `an-office-cafeteria`, `an-outdoor-made-to-order-restaurant-chain`, `software-screenshot-dashboard`, `mypos-t70`, `mypos-nb65`.
-- Products listing: `mypos-k156`, `mypos-fm-ea-22`, `mypos-k1`, `mypos-fm-ea-slim-22--desktop-`, `mypos-f62`, `mypos-fm-ea-22mart`, `mypos-t70`, `mypos-f58`, `mypos-nb65`, `mypos-nb80t`, `a-neighborhood-mini-mart`, `an-office-cafeteria`, `an-outdoor-made-to-order-restaurant-chain`, `software-screenshot-dashboard`.
-- Product detail: `mypos-nb65`, `an-outdoor-made-to-order-restaurant-chain`.
+- Home: `a-neighborhood-mini-mart`, `solution-pos` (A03 fallback in two phase scenes), `software-screenshot-dashboard`, `mypos-t70`, `mypos-nb65`.
+- Products listing: `mypos-k156`, `mypos-fm-ea-22`, `mypos-k1`, `mypos-fm-ea-slim-22--desktop-`, `mypos-f62`, `mypos-fm-ea-22mart`, `mypos-t70`, `mypos-f58`, `mypos-nb65`, `mypos-nb80t`, `a-neighborhood-mini-mart`, `solution-pos` (A03 fallback in two context slots), `software-screenshot-dashboard`.
+- Product detail: `mypos-nb65`, `solution-pos`.
 - Contact: `logo` only.
+- Removed after visual review: `an-office-cafeteria` and `an-outdoor-made-to-order-restaurant-chain`.
 
 ### Image provenance flag
 
 - The hero photo (`software-hero`) was **not used**.
 - The hotel-lobby kiosk photo (`a-beachside-resort-hotel` / `solution-self-order`) was **not used**.
-- Whether those two images are real photos or renders remains an open user decision in the task brief. This D04 build makes no determination.
+- Whether those two images are real photos or renders remains an open user decision in the task brief. This D04 revision makes no determination.
+- The reviewer found A05 and A07 render-like in the exported frames, so every D04 occurrence was replaced with the prescribed `solution-pos` A03 fallback; this does not resolve the separate hero/hotel-lobby question.
 
 ### Placeholders marked
 
