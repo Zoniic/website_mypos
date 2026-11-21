@@ -38,3 +38,41 @@
 - Contact name and phone fields: `กรอกชื่อ-นามสกุล` and `กรอกเบอร์โทร` are styled as input placeholders.
 - Contact message: `ตัวอย่าง: ลักษณะร้าน จุดใช้งาน และสิ่งที่ต้องการให้ทีมช่วย` is styled as example placeholder copy.
 - No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
+
+## D02
+
+- Page: `v2 - D02 สองฝั่งร้าน`
+- Page node id: `63:2`
+- Scope: four desktop frames at 1440 px wide. This step created only the D02 page and did not change any other Figma page or website code.
+- Structure audit: the page has exactly four top-level frames; every frame has the specified dimensions and zero missing fonts. No `review-v2/D02.json` existed when this build began.
+
+### Frames
+
+| Frame | Node id | Link | Final get_screenshot result | Checked |
+|---|---|---|---|---|
+| D02 Home | `63:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-3 | PASS, rendered `824 × 2200` from `1440 × 3848` | The two-sided hero, real bakery-counter scene, sales UI, FMEA22/T70 physical-digital pairings, dashboard evidence, decision split, global header, active local subnav, CTA hierarchy, and footer all render completely. Checked image scale, seam continuity, Thai text wrapping, and absence of clipping or overlap. |
+| D02 Products listing | `63:4` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-4 | PASS, rendered `644 × 2400` from `1440 × 5368` | The exact filter shell and `พบ 10 รายการ` state render above five fixed customer/operator pairs. C01–C10 appear once in D02 order with large FIT media, exact product names and highlights, screen/OS facts, processor and memory rows, direct detail actions, result rail, and footer. Checked that there are no prices, stock badges, pagination, product-card shells, clipping, or broken pair seams. |
+| D02 Product detail | `63:5` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-5 | PASS, rendered `811 × 2200` from `1440 × 3908` | The T70 hero is readable at primary size; the storefront and dashboard evidence are explicitly neutral context. All nine exact T70 specification rows and all six specification-derived questions render without clipping. Checked the quote actions, compatibility disclaimer, active subnav, section boundaries, and footer. |
+| D02 Contact / quote request | `63:6` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-6 | PASS, rendered `1153 × 2200` from `1440 × 2748` | The real cafeteria scene, T70 selection, quote topic/product/industry prefill, Contract A-520 fields, marked placeholders, cause/effect rows, separately labelled office/sales/email rail, idle/privacy state, and footer all render fully. Checked field alignment, placeholder contrast, CTA placement, seam continuity, and absence of invented contact data. |
+
+### Assets used
+
+- Shared: `logo`.
+- Home: `a-mall-bakery-counter`, `software-screenshot-sales`, `mypos-fm-ea-22`, `mypos-t70`, `software-screenshot-dashboard`.
+- Products listing: `mypos-k156`, `mypos-fm-ea-22`, `mypos-k1`, `mypos-fm-ea-slim-22--desktop-`, `mypos-f62`, `mypos-fm-ea-22mart`, `mypos-t70`, `mypos-f58`, `mypos-nb65`, `mypos-nb80t`.
+- Product detail: `mypos-t70`, `solution-pos`, `software-screenshot-dashboard`.
+- Contact: `an-office-cafeteria`, `mypos-t70`.
+
+### Image provenance flag
+
+- The disputed `software-hero` hero photo was **not used**.
+- The disputed `a-beachside-resort-hotel` / `solution-self-order` hotel-lobby kiosk photo was **not used**.
+- Their real-photo/render status remains an open user decision; this D02 build makes no determination.
+
+### Placeholders marked
+
+- Products search: `ค้นหาชื่อรุ่นหรือฟังก์ชัน` is styled as placeholder text.
+- Contact name and phone fields: `กรอกภายหลัง` is visibly styled as muted placeholder text.
+- Contact message: `กรอกรายละเอียดบริบทหน้าร้านเพิ่มเติมภายหลัง` is visibly styled as muted placeholder text.
+- Topic, product, and industry are confirmed prefill values for this mockup, not placeholders.
+- No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
