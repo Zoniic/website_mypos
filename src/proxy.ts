@@ -6,6 +6,8 @@ import { prisma } from "@/lib/prisma";
 import { CATALOG_KEYS, buildCatalog, type Catalog } from "@/lib/catalog";
 import { decodeSlugParam, slugKey } from "@/lib/slug";
 import { HIDDEN_PRODUCTS_KEY, parseHiddenSlugs } from "@/lib/hiddenProducts";
+import { matchPublicRoute } from "@/lib/routeMap";
+import { tokenMatches } from "@/lib/orders";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -97,6 +99,46 @@ async function legacySlugRedirect(request: NextRequest): Promise<URL | null> {
   return null;
 }
 
+/** Does a page exist for this slug? Pages accept old-style slugs that differ only in case/spacing. */
+function hasSlug(slugs: string[], requested: string): boolean {
+  const key = slugKey(requested);
+  return slugs.includes(requested) || (key !== "" && slugs.some((s) => slugKey(s) === key));
+}
+
+/** True when the URL is a known page shape but names a record that does not exist (or an unknown path). */
+async function isMissingPage(request: NextRequest): Promise<boolean> {
+  const match = matchPublicRoute(request.nextUrl.pathname);
+  if (match.type === "outside" || match.type === "page") return false;
+  if (match.type === "unknown") return true;
+
+  try {
+    switch (match.kind) {
+      case "product":
+      case "kbArticle": {
+        const [name, load] =
+          match.kind === "product" ? ["/products/", loadProductSlugs] : ["/knowledge-base/article/", loadKbArticleSlugs];
+        if (hasSlug(await cachedSlugs(name, load), match.slug)) return false;
+        // Not in the 30 s cache: it may have just been created, so ask the DB once.
+        return !hasSlug(await load(), match.slug);
+      }
+      case "blog":
+        return !(await prisma.blogPost.findUnique({ where: { slug: match.slug }, select: { id: true } }));
+      case "career":
+        return !(await prisma.jobPosting.findUnique({ where: { slug: match.slug }, select: { id: true } }));
+      case "reference":
+        return !(await prisma.referenceCase.findUnique({ where: { slug: match.slug }, select: { id: true } }));
+      case "order": {
+        const order = await prisma.order.findUnique({ where: { number: match.slug }, select: { accessToken: true } });
+        // Same answer for "no such order" and "wrong link", as the page itself gives.
+        return !order || !tokenMatches(order.accessToken, request.nextUrl.searchParams.get("t") ?? undefined);
+      }
+    }
+  } catch {
+    // DB unreachable: let the page render rather than 404 real URLs.
+    return false;
+  }
+}
+
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -116,7 +158,7 @@ export default async function middleware(request: NextRequest) {
   const legacyTarget = await legacySlugRedirect(request);
   if (legacyTarget) return NextResponse.redirect(legacyTarget, 308);
 
-  if (await isUnknownFixedSlug(pathname)) {
+  if ((await isUnknownFixedSlug(pathname)) || (await isMissingPage(request))) {
     const locale = routing.locales.find((l) => pathname.startsWith(`/${l}/`)) ?? routing.defaultLocale;
     return NextResponse.rewrite(new URL(`/${locale}/not-found`, request.url), { status: 404 });
   }
