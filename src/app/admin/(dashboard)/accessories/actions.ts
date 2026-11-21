@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
 
@@ -49,7 +50,8 @@ export async function createAccessory(_prevState: string | null, formData: FormD
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
-  if (!slug) return "Slug is required.";
+  const slugError = slugFormError(slug);
+  if (slugError) return slugError;
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
   const categories = readCategories(formData);
 
@@ -102,7 +104,8 @@ export async function updateAccessory(
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
-  if (!slug) return "Slug is required.";
+  const slugError = slugFormError(slug);
+  if (slugError) return slugError;
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
   const categories = readCategories(formData);
 

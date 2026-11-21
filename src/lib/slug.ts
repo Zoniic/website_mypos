@@ -33,3 +33,13 @@ export function slugify(input: string): string {
  * the same key are the same page, so an old link maps to the new slug.
  */
 export const slugKey = (raw: string): string => slugify(decodeSlugParam(raw));
+
+/** Server-side check for the admin forms. Returns an error message, or null when the slug is fine. */
+export function slugFormError(slug: string): string | null {
+  if (!slug) return "Slug is required.";
+  if (!isSafeSlug(slug)) {
+    const hint = slugify(slug);
+    return `Slug "${slug}" is not URL-safe. Use only lowercase letters (a-z), digits and single hyphens, for example "${hint || "my-item"}".`;
+  }
+  return null;
+}

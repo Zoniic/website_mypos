@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
 
@@ -38,7 +39,8 @@ export async function createJobPosting(_prevState: string | null, formData: Form
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readJobFields(formData);
-  if (!fields.slug) return "Slug is required.";
+  const slugError = slugFormError(fields.slug);
+  if (slugError) return slugError;
   if (!fields.department) return "Department is required.";
   if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
@@ -71,7 +73,8 @@ export async function updateJobPosting(jobId: number, _prevState: string | null,
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readJobFields(formData);
-  if (!fields.slug) return "Slug is required.";
+  const slugError = slugFormError(fields.slug);
+  if (slugError) return slugError;
   if (!fields.department) return "Department is required.";
   if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 

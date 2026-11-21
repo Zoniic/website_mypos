@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
 
@@ -36,7 +37,8 @@ export async function createBlogPost(_prevState: string | null, formData: FormDa
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readPostFields(formData);
-  if (!fields.slug) return "Slug is required.";
+  const slugError = slugFormError(fields.slug);
+  if (slugError) return slugError;
   if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const coverFile = formData.get("coverImage") as File | null;
@@ -79,7 +81,8 @@ export async function updateBlogPost(postId: number, _prevState: string | null, 
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readPostFields(formData);
-  if (!fields.slug) return "Slug is required.";
+  const slugError = slugFormError(fields.slug);
+  if (slugError) return slugError;
   if (!String(formData.get("title_th") ?? "").trim()) return "Thai title is required.";
 
   const existing = await prisma.blogPost.findUnique({ where: { id: postId } });

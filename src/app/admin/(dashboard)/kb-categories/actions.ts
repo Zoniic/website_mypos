@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
 
@@ -29,7 +30,8 @@ export async function createKbCategory(_prevState: string | null, formData: Form
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
   const section = String(formData.get("section") ?? "hardware").trim();
-  if (!slug) return "Slug is required.";
+  const slugError = slugFormError(slug);
+  if (slugError) return slugError;
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
   const count = await prisma.kbCategory.count({ where: { section } });
@@ -66,7 +68,8 @@ export async function updateKbCategory(
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
   const section = String(formData.get("section") ?? "hardware").trim();
-  if (!slug) return "Slug is required.";
+  const slugError = slugFormError(slug);
+  if (slugError) return slugError;
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
   try {

@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
 
@@ -48,7 +49,8 @@ export async function createReference(_prevState: string | null, formData: FormD
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
-  if (!slug) return "Slug is required.";
+  const slugError = slugFormError(slug);
+  if (slugError) return slugError;
   const businessType = String(formData.get("businessType") ?? "").trim();
   if (!businessType) return "Business type is required.";
   if (!String(formData.get("business_th") ?? "").trim()) return "Thai business name is required.";
@@ -98,7 +100,8 @@ export async function updateReference(
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
-  if (!slug) return "Slug is required.";
+  const slugError = slugFormError(slug);
+  if (slugError) return slugError;
   const businessType = String(formData.get("businessType") ?? "").trim();
   if (!businessType) return "Business type is required.";
   if (!String(formData.get("business_th") ?? "").trim()) return "Thai business name is required.";

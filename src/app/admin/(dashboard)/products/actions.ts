@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
 const GALLERY_SLOTS = 3;
@@ -99,7 +100,8 @@ export async function createProduct(_prevState: string | null, formData: FormDat
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readProductFields(formData);
-  if (!fields.slug) return "Slug is required.";
+  const slugError = slugFormError(fields.slug);
+  if (slugError) return slugError;
   if (fields.categories.length === 0) return "Select at least one category.";
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
@@ -154,7 +156,8 @@ export async function updateProduct(
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readProductFields(formData);
-  if (!fields.slug) return "Slug is required.";
+  const slugError = slugFormError(fields.slug);
+  if (slugError) return slugError;
   if (fields.categories.length === 0) return "Select at least one category.";
   if (!String(formData.get("name_th") ?? "").trim()) return "Thai name is required.";
 
