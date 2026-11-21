@@ -89,6 +89,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Scan and verification scripts, not part of the site:
+    ".agents/**",
   ]),
 ]);
 

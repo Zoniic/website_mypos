@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { FadeIn } from "@/components/ui/FadeIn";
 import { OfficialPartners } from "@/components/sections/OfficialPartners";
 import { CountUp } from "@/components/ui/CountUp";
+import { isShowableStat, statGridClass } from "@/lib/siteDisplay";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { PageSections } from "@/components/layout/PageSections";
 import { getPageSections } from "@/lib/pageLayout";
@@ -127,10 +128,10 @@ export default async function AboutPage({
                   </FadeIn>
                 </div>
 
-                {stats.some((stat) => stat.value.trim() !== "") && (
-                  <dl className="mt-14 grid gap-8 sm:grid-cols-3">
+                {stats.some((stat) => isShowableStat(stat.value)) && (
+                  <dl className={`mt-14 grid gap-8 ${statGridClass(stats.filter((stat) => isShowableStat(stat.value)).length)}`}>
                     {stats
-                      .filter((stat) => stat.value.trim() !== "")
+                      .filter((stat) => isShowableStat(stat.value))
                       .map((stat) => (
                         <div key={stat.key} className="border-t-2 border-text-1 pt-4">
                           <dd className="font-display text-4xl font-semibold tracking-tight">

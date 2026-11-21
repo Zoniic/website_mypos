@@ -162,15 +162,15 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
           label="Google Maps embed URL"
           name="mapEmbedUrl"
           defaultValue={settings.mapEmbedUrl}
-          hint="From Google Maps: Share > Embed a map > copy the src=&quot;...&quot; URL"
+          hint="Must be the embed link that starts with https://www.google.com/maps/embed?pb= . In Google Maps: Share > Embed a map > copy only the src=&quot;...&quot; value. A normal maps link is not shown; visitors get an address and an Open in Google Maps button instead."
         />
       </section>
 
       <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Homepage Stats</h3>
-        <Field label="Businesses served" name="statsClients" defaultValue={settings.statsClients} />
-        <Field label="Years of experience" name="statsYears" defaultValue={settings.statsYears} />
-        <Field label="Support availability" name="statsSupport" defaultValue={settings.statsSupport} />
+        <Field label="Businesses served" name="statsClients" defaultValue={settings.statsClients} hint="Short figure only, e.g. 500+ . No web address or sentence (max 16 characters). Leave empty to hide this figure." />
+        <Field label="Years of experience" name="statsYears" defaultValue={settings.statsYears} hint="Short figure only, e.g. 500+ . No web address or sentence (max 16 characters). Leave empty to hide this figure." />
+        <Field label="Support availability" name="statsSupport" defaultValue={settings.statsSupport} hint="Short figure only, e.g. 500+ . No web address or sentence (max 16 characters). Leave empty to hide this figure." />
       </section>
 
       {status === "saved" && <p className="text-sm text-success">Saved.</p>}

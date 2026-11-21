@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { getSiteSettings } from "@/lib/siteSettings";
 import { FadeIn } from "@/components/ui/FadeIn";
+import { isShowableStat, statGridClass } from "@/lib/siteDisplay";
 import { CountUp } from "@/components/ui/CountUp";
 
 const whyItems = ["manufacture", "support", "software"] as const;
@@ -10,13 +11,13 @@ export async function WhyMypos() {
   const t = await getTranslations("home.why");
   const settings = await getSiteSettings();
 
-  // Only show numbers that have actually been entered in Site Settings — an
+  // Only show short figures that have actually been entered in Site Settings (no URLs, no long text) — an
   // empty stat slot looks broken, and made-up ones would be worse.
   const stats = [
     { key: "clients", value: settings.statsClients },
     { key: "years", value: settings.statsYears },
     { key: "support", value: settings.statsSupport },
-  ].filter((stat) => stat.value.trim() !== "");
+  ].filter((stat) => isShowableStat(stat.value));
 
   return (
     <section className="bg-ink text-white">
@@ -28,7 +29,7 @@ export async function WhyMypos() {
         </FadeIn>
 
         {stats.length > 0 && (
-          <dl className="mt-14 grid gap-8 sm:grid-cols-3">
+          <dl className={`mt-14 grid gap-8 ${statGridClass(stats.length)}`}>
             {stats.map((stat, index) => (
               <FadeIn key={stat.key} delay={index * 0.08} className="border-t border-white/20 pt-5">
                 <dd className="font-display text-5xl font-semibold tracking-tight text-primary-400 lg:text-6xl">

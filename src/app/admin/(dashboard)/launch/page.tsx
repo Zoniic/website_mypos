@@ -7,6 +7,7 @@ import { availablePaymentMethods } from "@/lib/orders";
 import { organizationSameAs } from "@/lib/structuredData";
 import { cleanTrackingId, cleanVerificationToken } from "@/lib/trackingIds";
 import { notificationStatus } from "@/lib/notify";
+import { isShowableStat } from "@/lib/siteDisplay";
 
 type Check = {
   label: string;
@@ -68,7 +69,7 @@ export default async function LaunchChecklistPage() {
         { label: "รูปสินค้า", state: products.length && withPhoto === products.length ? "ok" : "todo", detail: `${withPhoto}/${products.length} รุ่นมีรูป (${pct(withPhoto, products.length)}%)`, href: "/admin/products" },
         { label: "โลโก้ลูกค้า ≥ 8", state: trustLogos >= 8 ? "ok" : "todo", detail: `${trustLogos} โลโก้`, href: "/admin/trust-logos" },
         { label: "ผลงานลูกค้า (Case study) ≥ 3", state: references >= 3 ? "ok" : "todo", detail: `${references} เรื่อง`, href: "/admin/references" },
-        { label: "ตัวเลขหน้าแรก (จำนวนร้าน/ปี)", state: settings.statsClients && settings.statsYears ? "ok" : "todo", detail: settings.statsClients ? `${settings.statsClients} ร้าน · ${settings.statsYears} ปี` : "ยังไม่ได้ใส่ — ส่วนนี้จะซ่อนจนกว่าจะใส่", href: "/admin/settings" },
+        { label: "ตัวเลขหน้าแรก (จำนวนร้าน/ปี)", state: isShowableStat(settings.statsClients) && isShowableStat(settings.statsYears) ? "ok" : "todo", detail: isShowableStat(settings.statsClients) ? `${settings.statsClients} ร้าน · ${settings.statsYears} ปี` : "ยังไม่ได้ใส่ — ส่วนนี้จะซ่อนจนกว่าจะใส่", href: "/admin/settings" },
       ],
     },
     {

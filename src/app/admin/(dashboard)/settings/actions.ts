@@ -5,6 +5,7 @@ import { emojiFormError } from "@/lib/emoji";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
+import { STAT_MAX_LENGTH, isGoogleMapsEmbedUrl, isShowableStat } from "@/lib/siteDisplay";
 import { saveUploadedHeroBackground } from "@/lib/uploads";
 import {
   TRACKING_ID_PATTERNS,
@@ -47,6 +48,8 @@ const URL_KEYS = new Set<string>([
   "tiktokShopUrl",
 ]);
 
+const STAT_KEYS = ["statsClients", "statsYears", "statsSupport"] as const;
+const DISPLAY_KEYS = ["mapEmbedUrl", ...STAT_KEYS] as const;
 const TRACKING_KEYS = Object.keys(TRACKING_ID_PATTERNS) as TrackingIdKey[];
 const VERIFICATION_KEYS = ["googleSiteVerification", "bingSiteVerification", "facebookDomainVerification"] as const;
 
@@ -86,6 +89,22 @@ export async function updateSiteSettings(_prevState: string | null, formData: Fo
       errors.push(`${key}: must be a full https:// link.`);
     }
     values[key] = value;
+  }
+  // A value that is already stored (even a bad one) can stay, so unrelated
+  // settings can still be saved; only a new or edited value is checked.
+  const stored = Object.fromEntries(
+    (await prisma.siteSetting.findMany({ where: { key: { in: [...DISPLAY_KEYS] } } })).map((r) => [r.key, r.value])
+  );
+  const changed = (key: string) => values[key] !== (stored[key] ?? "");
+  if (values.mapEmbedUrl && changed("mapEmbedUrl") && !isGoogleMapsEmbedUrl(values.mapEmbedUrl)) {
+    errors.push(
+      "mapEmbedUrl: needs the embed link, https://www.google.com/maps/embed?pb=... In Google Maps choose Share > Embed a map and copy only the src=\"...\" value. A normal maps link cannot be shown in the page."
+    );
+  }
+  for (const key of STAT_KEYS) {
+    if (values[key] && changed(key) && !isShowableStat(values[key])) {
+      errors.push(`${key}: enter a short figure such as 500+, 30 or 24/7 (max ${STAT_MAX_LENGTH} characters), not a web address or a sentence.`);
+    }
   }
   for (const key of TRACKING_KEYS) {
     const value = read(formData, key);
