@@ -155,7 +155,12 @@ export function companyInfo(settings: SiteSettings, locale: string, defaultAddre
 }
 
 // Read on every page (layout, metadata, header, footer): cached across requests.
-export const getSiteSettings = unstable_cache(loadSiteSettings, ["site-settings"], cacheOptions);
+const getCachedSiteSettings = unstable_cache(loadSiteSettings, ["site-settings"], cacheOptions);
+
+/** The defaults are applied on every read, so an entry cached before a key existed still has every field. */
+export async function getSiteSettings(): Promise<SiteSettings> {
+  return { ...defaults, ...(await getCachedSiteSettings()) };
+}
 
 export const getSiteImages = unstable_cache(loadSiteImages, ["site-images"], cacheOptions);
 
