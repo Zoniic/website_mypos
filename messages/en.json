@@ -1442,6 +1442,7 @@
     "formError": "Something went wrong. Please try again.",
     "formNote": "We'll get back to you during business hours. Your details are only used to contact you.",
     "mapTitle": "Company Map",
+    "mapOpen": "Open in Google Maps",
     "formTopic": "What can we help with?",
     "topics": {
       "demo": "Book a demo (free)",

@@ -1442,6 +1442,7 @@
     "formError": "发送失败，请重试。",
     "formNote": "我们会在工作时间内回复您。您的信息仅用于与您联系。",
     "mapTitle": "公司地图",
+    "mapOpen": "在 Google 地图中打开",
     "formTopic": "咨询事项",
     "topics": {
       "demo": "预约演示（免费）",

@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import { ExternalLink, MapPin } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
+import { googleMapsOpenUrl, isGoogleMapsEmbedUrl } from "@/lib/siteDisplay";
 import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
@@ -118,13 +120,29 @@ export default async function ContactPage({
             <div>
               <h2 className="text-lg font-semibold">{t("mapTitle")}</h2>
               <p className="mt-1 text-sm text-text-2">{tFooter("address")}</p>
-              {settings.mapEmbedUrl && (
+              {isGoogleMapsEmbedUrl(settings.mapEmbedUrl) ? (
                 <iframe
                   title={t("mapTitle")}
-                  src={settings.mapEmbedUrl}
+                  src={settings.mapEmbedUrl.trim()}
                   className="mt-3 h-64 w-full rounded-card border border-border"
                   loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
                 />
+              ) : (
+                <div className="mt-3 flex items-center gap-3 rounded-card border border-border bg-surface-1 p-4">
+                  <MapPin className="size-5 shrink-0 text-primary-600" aria-hidden="true" />
+                  <div>
+                    <Button
+                      href={googleMapsOpenUrl(settings.mapEmbedUrl, tFooter("address"))}
+                      external
+                      variant="ghost"
+                      size="sm"
+                      icon={<ExternalLink className="size-4" aria-hidden="true" />}
+                    >
+                      {t("mapOpen")}
+                    </Button>
+                  </div>
+                </div>
               )}
             </div>
           </div>
