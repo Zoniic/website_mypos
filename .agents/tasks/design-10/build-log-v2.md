@@ -43,17 +43,18 @@
 
 - Page: `v2 - D02 สองฝั่งร้าน`
 - Page node id: `63:2`
-- Scope: four desktop frames at 1440 px wide. This step created only the D02 page and did not change any other Figma page or website code.
-- Structure audit: the page has exactly four top-level frames; every frame has the specified dimensions and zero missing fonts. No `review-v2/D02.json` existed when this build began.
+- Scope: four desktop frames at 1440 px wide. The existing D02 page was fixed in place; no other Figma page or website code was changed.
+- Review findings resolved: `D02-1` through `D02-4` from `review-v2/D02.json`.
+- Structure audit: exactly four top-level frames with the required names and dimensions; zero missing fonts. The FMEA22, C02, C04, and C08 media now use clipped 520 × 360 orientation-aware stages with enlarged full-device images. Product image whites are blended into their column surfaces. The C04 and C08 model tokens occupy dedicated unbroken lines. The in-frame variants annotation was removed.
 
 ### Frames
 
 | Frame | Node id | Link | Final get_screenshot result | Checked |
 |---|---|---|---|---|
-| D02 Home | `63:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-3 | PASS, rendered `824 × 2200` from `1440 × 3848` | The two-sided hero, real bakery-counter scene, sales UI, FMEA22/T70 physical-digital pairings, dashboard evidence, decision split, global header, active local subnav, CTA hierarchy, and footer all render completely. Checked image scale, seam continuity, Thai text wrapping, and absence of clipping or overlap. |
-| D02 Products listing | `63:4` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-4 | PASS, rendered `644 × 2400` from `1440 × 5368` | The exact filter shell and `พบ 10 รายการ` state render above five fixed customer/operator pairs. C01–C10 appear once in D02 order with large FIT media, exact product names and highlights, screen/OS facts, processor and memory rows, direct detail actions, result rail, and footer. Checked that there are no prices, stock badges, pagination, product-card shells, clipping, or broken pair seams. |
-| D02 Product detail | `63:5` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-5 | PASS, rendered `811 × 2200` from `1440 × 3908` | The T70 hero is readable at primary size; the storefront and dashboard evidence are explicitly neutral context. All nine exact T70 specification rows and all six specification-derived questions render without clipping. Checked the quote actions, compatibility disclaimer, active subnav, section boundaries, and footer. |
-| D02 Contact / quote request | `63:6` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-6 | PASS, rendered `1153 × 2200` from `1440 × 2748` | The real cafeteria scene, T70 selection, quote topic/product/industry prefill, Contract A-520 fields, marked placeholders, cause/effect rows, separately labelled office/sales/email rail, idle/privacy state, and footer all render fully. Checked field alignment, placeholder contrast, CTA placement, seam continuity, and absence of invented contact data. |
+| D02 Home | `63:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-3 | PASS, rendered `1123 × 3000` from `1440 × 3848` | Checked the complete frame, two-sided hero, real bakery-counter scene, sales UI, seam continuity, FMEA22 portrait stage, T70 pairing, dashboard evidence, Thai wrapping, CTA hierarchy, and footer. The FMEA22 is fully visible at a larger portrait scale without a white card or clipping. |
+| D02 Products listing | `63:4` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-4 | PASS, rendered `1074 × 4000` from `1440 × 5368` | Checked the exact filter shell, `พบ 10 รายการ`, five fixed customer/operator pairs, and C01–C10 order. C02, C04, and C08 are fully visible at comparable portrait heights; all product media blend into the split surfaces instead of appearing in white boxes. `FM-EA-SLIM-22-(Desktop)` and `FM-EA-22MART` remain whole on dedicated lines. No price, stock badge, pagination, clipping, or broken seam is present. |
+| D02 Product detail | `63:5` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-5 | PASS, rendered `1106 × 3000` from `1440 × 3908` | Checked the full-size T70 hero, explicitly neutral storefront/dashboard evidence, all nine exact T70 specification rows, all six decision questions, quote actions, compatibility disclaimer, active local subnav, section boundaries, and footer. No clipping or overlap is visible. |
+| D02 Contact / quote request | `63:6` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=63-6 | PASS, rendered `1440 × 2748` from `1440 × 2748` | Checked the real cafeteria scene, T70 selection, quote topic/product/industry prefill, Contract A-520 fields, marked placeholders, cause/effect rows, separately labelled office/sales/email rail, idle state, exact privacy note, and footer. The internal variants annotation is absent from the exported frame; no invented contact data appears. |
 
 ### Assets used
 
@@ -67,7 +68,7 @@
 
 - The disputed `software-hero` hero photo was **not used**.
 - The disputed `a-beachside-resort-hotel` / `solution-self-order` hotel-lobby kiosk photo was **not used**.
-- Their real-photo/render status remains an open user decision; this D02 build makes no determination.
+- Whether the hero photo and hotel-lobby kiosk photo are real photos or renders remains an open user decision; this D02 build makes no determination.
 
 ### Placeholders marked
 
