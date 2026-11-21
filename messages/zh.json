@@ -87,8 +87,8 @@
     "backToBrowsing": "继续添加产品"
   },
   "blog": {
-    "metaTitle": "博客 | MYPOS",
-    "metaDescription": "来自 MYPOS 的 POS 与自助服务系统技巧、指南与最新消息。",
+    "metaTitle": "POS 收银系统与自助点餐机实用指南 | MYPOS",
+    "metaDescription": "为餐厅与零售店主准备的实用文章：如何选择 POS 收银系统、自助点餐机是否划算、厨房显示屏（KDS）是什么、叫号系统，以及如何降低人力成本。",
     "breadcrumb": "博客",
     "title": "博客",
     "subtitle": "关于 POS 与自助服务系统的技巧、指南与最新消息。",
@@ -133,8 +133,8 @@
     "quote": "索取报价"
   },
   "home": {
-    "metaTitle": "MYPOS | 泰国收银与自助服务系统一站式解决方案",
-    "metaDescription": "MYPOS 是泰国本土的收银系统与自助点餐机制造商，自主设计、生产并提供售后服务，适用于餐饮、零售、自助餐及主题乐园等行业。",
+    "metaTitle": "MYPOS | 泰国本土 POS 收银系统与自助点餐机制造商",
+    "metaDescription": "MYPOS 是泰国本土 POS 收银系统与自助点餐机制造商，自主设计、生产、安装并提供售后服务，适用于餐厅、咖啡店、零售、自助餐、员工食堂及主题乐园。",
     "hero": {
       "tagline": "泰国制造商 · 自主设计、生产、安装、维护",
       "headlineLine1": "POS 与自助服务系统",
@@ -935,8 +935,8 @@
     }
   },
   "productsCommon": {
-    "metaTitle": "全部产品 | MYPOS",
-    "metaDescription": "选购 MYPOS 自助点餐机、自助称重设备、收银系统与自助售票机，支持按行业类型、操作系统与屏幕尺寸搜索筛选。",
+    "metaTitle": "POS 收银机与自助点餐机全系列及价格 | MYPOS",
+    "metaDescription": "MYPOS 在泰国自主生产的自助点餐机、POS 收银机、自助称重收银设备与自助售票机。查看起售价与规格、对比型号，并可按行业类型、操作系统与屏幕尺寸筛选。",
     "breadcrumbProducts": "产品",
     "searchPlaceholder": "搜索型号名称或功能",
     "filterBusinessType": "行业类型",
@@ -1204,8 +1204,8 @@
     }
   },
   "references": {
-    "metaTitle": "客户案例 | MYPOS",
-    "metaDescription": "了解各行业商家如何使用 MYPOS 系统，涵盖餐厅、零售、自助餐、主题乐园及酒店等领域。",
+    "metaTitle": "客户案例：POS 收银与自助点餐机安装实例 | MYPOS",
+    "metaDescription": "了解餐厅、便利店、自助餐、员工食堂、酒店、主题乐园与工厂如何使用 MYPOS POS 收银系统与自助点餐机：面临的问题、安装方案与使用成效。",
     "breadcrumb": "客户案例",
     "title": "客户案例",
     "subtitle": "以下为使用 MYPOS 系统的真实商家案例示例，按行业类型筛选查看与您相近的案例。",
@@ -1452,8 +1452,8 @@
     }
   },
   "kb": {
-    "metaTitle": "知识库 | MYPOS",
-    "metaDescription": "MYPOS 硬件与软件的使用指南与手册——安装、故障排除与操作教程。",
+    "metaTitle": "知识库：POS 收银机与自助点餐机使用教程 | MYPOS",
+    "metaDescription": "MYPOS POS 收银机、自助点餐机及软件的安装与使用教程，以及更换小票纸等常见问题的排查方法，可按型号或主题搜索。",
     "breadcrumb": "知识库",
     "title": "知识库",
     "subtitle": "MYPOS 硬件与软件的使用指南，无需等待客服即可自助查找答案。",

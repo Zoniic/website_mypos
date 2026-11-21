@@ -1,10 +1,17 @@
 import { unstable_cache } from "next/cache";
+import { siteConfig } from "@/config/site";
 import { prisma } from "@/lib/prisma";
 import { SITE_CONTENT_TAG, SITE_CONTENT_TTL_SECONDS } from "@/lib/siteCache";
 
 const cacheOptions = { tags: [SITE_CONTENT_TAG], revalidate: SITE_CONTENT_TTL_SECONDS };
 
 export type SiteSettings = {
+  // Company identity, read through companyInfo(). The English values are used
+  // on the en and zh pages; empty = the Thai value.
+  legalName: string;
+  legalNameEn: string;
+  address: string;
+  addressEn: string;
   phone: string;
   phoneDisplay: string;
   email: string;
@@ -57,6 +64,10 @@ export type SiteSettings = {
 };
 
 const defaults: SiteSettings = {
+  legalName: "",
+  legalNameEn: "",
+  address: "",
+  addressEn: "",
   phone: "",
   phoneDisplay: "",
   email: "",
@@ -105,6 +116,42 @@ export function shippingFeeFor(settings: SiteSettings, subtotal: number): number
 
 export function isOnlineOrderingOn(settings: SiteSettings): boolean {
   return settings.onlineOrdering === "on";
+}
+
+export type CompanyInfo = {
+  /** Brand name. */
+  name: string;
+  /** Registered company name; "" until it is entered. */
+  legalName: string;
+  /** Full address, or the short footer address copy until one is entered. */
+  address: string;
+  /** Number for tel: links and JSON-LD; "" until it is entered. */
+  phone: string;
+  /** The same number as visitors read it (falls back to `phone`). */
+  phoneDisplay: string;
+  email: string;
+  /** LINE chat link for the mobile bar and the footer: the setting, else siteConfig.lineUrl. */
+  lineUrl: string;
+};
+
+/**
+ * The company's name, address, phone and email from Site Settings: the one
+ * set used by the footer, the contact page, the mobile bar and the
+ * Organization / LocalBusiness JSON-LD, so they always agree. Empty values
+ * stay empty and callers leave them out; nothing falls back to a placeholder.
+ */
+export function companyInfo(settings: SiteSettings, locale: string, defaultAddress = ""): CompanyInfo {
+  const localized = (th: string, en: string) => (locale === "th" ? th.trim() : en.trim() || th.trim());
+  const phone = settings.phone.trim();
+  return {
+    name: siteConfig.name,
+    legalName: localized(settings.legalName, settings.legalNameEn),
+    address: localized(settings.address, settings.addressEn) || defaultAddress.trim(),
+    phone,
+    phoneDisplay: settings.phoneDisplay.trim() || phone,
+    email: settings.email.trim(),
+    lineUrl: settings.lineUrl.trim() || siteConfig.lineUrl,
+  };
 }
 
 // Read on every page (layout, metadata, header, footer): cached across requests.

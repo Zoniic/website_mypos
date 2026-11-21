@@ -8,6 +8,7 @@ import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { Markdown } from "@/components/ui/Markdown";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getBlogPostBySlug } from "@/lib/blog";
+import { absoluteUrl } from "@/lib/structuredData";
 
 
 // Empty list = render each page on its first visit, then serve it from
@@ -57,8 +58,9 @@ export default async function BlogPostPage({
     "@type": "Article",
     headline: post.title,
     description: post.excerpt,
-    image: post.coverImageUrl ? `${siteConfig.url}${post.coverImageUrl}` : undefined,
+    image: post.coverImageUrl ? absoluteUrl(post.coverImageUrl) : undefined,
     datePublished: post.createdAt.toISOString(),
+    dateModified: post.updatedAt.toISOString(),
     author: { "@type": "Organization", name: siteConfig.name },
     publisher: { "@type": "Organization", name: siteConfig.name },
     mainEntityOfPage: `${siteConfig.url}/${locale}/blog/${slug}`,

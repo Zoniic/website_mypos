@@ -6,7 +6,7 @@ import { notFound } from "next/navigation";
 import { siteFonts } from "@/fonts";
 import { routing } from "@/i18n/routing";
 import { siteConfig } from "@/config/site";
-import { getLogoUrl, getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
+import { companyInfo, getLogoUrl, getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { StickyMobileBar } from "@/components/layout/StickyMobileBar";
@@ -99,6 +99,7 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const settings = await getSiteSettings();
+  const company = companyInfo(settings, locale);
 
   return (
     <html
@@ -140,7 +141,7 @@ export default async function LocaleLayout({
                 {children}
               </main>
               <Footer />
-              <StickyMobileBar phone={settings.phone} lineUrl={settings.lineUrl} />
+              <StickyMobileBar phone={company.phone} lineUrl={company.lineUrl} />
               <CookieConsent />
               {(await isEditMode()) ? <EditModeLoader locale={locale} /> : <AdminEditButton />}
             </MotionConfig>

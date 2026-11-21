@@ -5,7 +5,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
 import { googleMapsOpenUrl, isGoogleMapsEmbedUrl } from "@/lib/siteDisplay";
-import { getSiteImages, getSiteSettings } from "@/lib/siteSettings";
+import { companyInfo, getSiteImages, getSiteSettings } from "@/lib/siteSettings";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -56,15 +56,17 @@ export default async function ContactPage({
   const tFooter = await getTranslations({ locale, namespace: "footer" });
   const settings = await getSiteSettings();
   const images = await getSiteImages();
+  const company = companyInfo(settings, locale, tFooter("address"));
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: siteConfig.name,
+    name: company.name,
+    legalName: company.legalName || undefined,
     url: `${siteConfig.url}/${locale}/contact`,
-    telephone: settings.phone,
-    email: settings.email,
-    address: tFooter("address"),
+    telephone: company.phone || undefined,
+    email: company.email || undefined,
+    address: company.address || undefined,
   };
 
   return (
@@ -104,29 +106,34 @@ export default async function ContactPage({
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-card border border-border p-6">
-                <h2 className="text-lg font-semibold">{t("callTitle")}</h2>
-                <a
-                  href={`tel:${settings.phone}`}
-                  className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-                >
-                  {settings.phoneDisplay}
-                </a>
-              </div>
-              <div className="rounded-card border border-border p-6">
-                <h2 className="text-lg font-semibold">{t("emailTitle")}</h2>
-                <a
-                  href={`mailto:${settings.email}`}
-                  className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-                >
-                  {settings.email}
-                </a>
-              </div>
+              {company.phone && (
+                <div className="rounded-card border border-border p-6">
+                  <h2 className="text-lg font-semibold">{t("callTitle")}</h2>
+                  <a
+                    href={`tel:${company.phone}`}
+                    className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                  >
+                    {company.phoneDisplay}
+                  </a>
+                </div>
+              )}
+              {company.email && (
+                <div className="rounded-card border border-border p-6">
+                  <h2 className="text-lg font-semibold">{t("emailTitle")}</h2>
+                  <a
+                    href={`mailto:${company.email}`}
+                    className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                  >
+                    {company.email}
+                  </a>
+                </div>
+              )}
             </div>
 
             <div>
               <h2 className="text-lg font-semibold">{t("mapTitle")}</h2>
-              <p className="mt-1 text-sm text-text-2">{tFooter("address")}</p>
+              {company.legalName && <p className="mt-1 text-sm font-medium text-text-1">{company.legalName}</p>}
+              <p className="mt-1 text-sm text-text-2">{company.address}</p>
               {isGoogleMapsEmbedUrl(settings.mapEmbedUrl) ? (
                 <iframe
                   title={t("mapTitle")}
@@ -140,7 +147,7 @@ export default async function ContactPage({
                   <MapPin className="size-5 shrink-0 text-primary-600" aria-hidden="true" />
                   <div>
                     <Button
-                      href={googleMapsOpenUrl(settings.mapEmbedUrl, tFooter("address"))}
+                      href={googleMapsOpenUrl(settings.mapEmbedUrl, company.address)}
                       external
                       variant="ghost"
                       size="sm"

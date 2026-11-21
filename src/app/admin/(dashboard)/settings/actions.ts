@@ -15,6 +15,10 @@ import {
 } from "@/lib/trackingIds";
 
 const PLAIN_KEYS = [
+  "legalName",
+  "legalNameEn",
+  "address",
+  "addressEn",
   "phone",
   "phoneDisplay",
   "email",

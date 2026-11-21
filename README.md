@@ -121,9 +121,9 @@ Pages fall back to a labeled gray placeholder tile automatically until a real ph
 - **All body copy** — written as reasonable placeholder text, not the real DEV-SPEC/prototype wording.
 - **Images** — every photo is a gray placeholder tile rendered via `next/image` at the correct aspect ratio (`src/components/ui/PlaceholderImage.tsx`). Swap the `src` for real photography; the layout won't need to change.
 - **Product prices, specs, datasheets** — mostly real now (pulled from the MYPOS brochure), but `datasheetUrl` is still unset on every product (the page shows a "coming soon" state) until you have real PDFs to link.
-- **Contact info** — phone is `02-XXX-XXXX` (area code confirmed, local digits still placeholder). Update `src/config/site.ts`.
+- **Company details** — legal name, address, phone and email come only from **Admin → ตั้งค่าเว็บไซต์** (Company and Contact sections), read through `companyInfo()` in `src/lib/siteSettings.ts`; empty values are left out. What to enter and where to get each value: `docs/owner-data-guide-th.md`.
 - **Map** — `/contact` embeds a generic Google Maps query for "Bangkok, Thailand". Once you have a real address, update the `src` in `src/app/[locale]/contact/page.tsx`.
-- **LINE OA** — `siteConfig.lineUrl` points at `https://line.me/R/ti/p/@mypos` (real LINE ID from the brochure). The QR code image is still a placeholder tile.
+- **LINE OA** — set the LINE chat link in Admin → ตั้งค่าเว็บไซต์. While it is empty, the mobile bar and the footer use `siteConfig.lineUrl` (`https://line.me/R/ti/p/@mypos`, the LINE ID from the brochure). The QR code is uploaded in Admin → รูปภาพและโลโก้ (`line-qr-code`).
 - **301 redirects** — `src/data/legacyRedirects.ts` has the mapping structure and commented examples, but no real entries yet. Fill it in from the old site's URL list / Search Console export.
 - **Contact form** — `src/components/contact/ContactForm.tsx` shows real loading/success/error UI, but still doesn't send anywhere yet (see Phase 8 below).
 - **Privacy Policy / Terms of Service** (`legal` namespace, `/privacy-policy` and `/terms-of-service`) — generic drafted boilerplate, not legal advice. **Have a lawyer review before relying on this in production**, especially the PDPA-related claims in the Privacy Policy.

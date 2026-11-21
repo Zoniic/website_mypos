@@ -10,13 +10,16 @@ export function StickyMobileBar({ phone, lineUrl }: { phone: string; lineUrl: st
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 flex border-t border-border bg-surface-1 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] lg:hidden">
-      <a
-        href={`tel:${phone}`}
-        className="flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium text-text-2 outline-offset-[-2px] transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-      >
-        <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
-        {t("call")}
-      </a>
+      {/* No phone in Site Settings: no call button rather than a dead tel: link. */}
+      {phone && (
+        <a
+          href={`tel:${phone}`}
+          className="flex flex-1 flex-col items-center justify-center gap-0.5 py-2.5 text-xs font-medium text-text-2 outline-offset-[-2px] transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+        >
+          <Phone size={20} strokeWidth={1.75} aria-hidden="true" />
+          {t("call")}
+        </a>
+      )}
       <a
         href={lineUrl}
         target="_blank"

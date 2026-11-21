@@ -87,8 +87,8 @@
     "backToBrowsing": "Add more products"
   },
   "blog": {
-    "metaTitle": "Blog | MYPOS",
-    "metaDescription": "Tips, guides, and news about POS and self-service systems from MYPOS.",
+    "metaTitle": "POS and Self-Order Kiosk Guides for Shop Owners | MYPOS",
+    "metaDescription": "Guides for restaurant and shop owners: choosing a POS, whether a self-order kiosk pays off, what a KDS kitchen display is, queue systems, cutting staff costs.",
     "breadcrumb": "Blog",
     "title": "Blog",
     "subtitle": "Tips, guides, and news about POS and self-service systems.",
@@ -133,8 +133,8 @@
     "quote": "Get a Quote"
   },
   "home": {
-    "metaTitle": "MYPOS | Full-Service POS & Self-Service Systems for Retail and F&B",
-    "metaDescription": "MYPOS is a Thai manufacturer of POS and self-order kiosk systems — designed, built, and supported in-house. Built for restaurants, retail, buffets, and theme parks.",
+    "metaTitle": "MYPOS | POS Systems and Self-Order Kiosks Made in Thailand",
+    "metaDescription": "MYPOS is a Thai maker of POS systems and self-order kiosks, designed, built, installed and supported in-house for restaurants, cafes, retail and theme parks.",
     "hero": {
       "tagline": "Thai manufacturer · designed, built, installed, supported in-house",
       "headlineLine1": "POS & self-service systems",
@@ -935,8 +935,8 @@
     }
   },
   "productsCommon": {
-    "metaTitle": "All Products | MYPOS",
-    "metaDescription": "Shop self-order kiosks, weigh & pay scales, POS terminals, and ticketing kiosks from MYPOS. Search and filter by business type, OS, and screen size.",
+    "metaTitle": "POS Machines and Self-Order Kiosks with Prices | MYPOS",
+    "metaDescription": "MYPOS self-order kiosks, POS terminals, weigh & pay scales and ticketing kiosks, made in Thailand. Compare models, prices and specs, filter by business type.",
     "breadcrumbProducts": "Products",
     "searchPlaceholder": "Search by model name or function",
     "filterBusinessType": "Business Type",
@@ -1204,8 +1204,8 @@
     }
   },
   "references": {
-    "metaTitle": "Case Studies | MYPOS",
-    "metaDescription": "See how businesses use MYPOS — from restaurants and retail to buffets, theme parks, and hotels.",
+    "metaTitle": "Customer Case Studies: POS and Kiosk Installations | MYPOS",
+    "metaDescription": "How restaurants, mini-marts, buffets, canteens, hotels, theme parks and factories use MYPOS POS systems and self-order kiosks: the problem, setup and result.",
     "breadcrumb": "Case Studies",
     "title": "Case Studies",
     "subtitle": "Real-world examples of businesses using MYPOS. Filter by your business type to see the closest match.",
@@ -1452,8 +1452,8 @@
     }
   },
   "kb": {
-    "metaTitle": "Knowledge Base | MYPOS",
-    "metaDescription": "Guides and manuals for MYPOS hardware and software — installation, troubleshooting, and how-to articles.",
+    "metaTitle": "Knowledge Base: POS and Kiosk How-To Guides | MYPOS",
+    "metaDescription": "Setup and how-to guides for MYPOS POS terminals, self-order kiosks and software, plus basic fixes such as changing receipt paper. Search by model or topic.",
     "breadcrumb": "Knowledge Base",
     "title": "Knowledge Base",
     "subtitle": "Guides and manuals for your MYPOS hardware and software, so you can find answers without waiting for support.",

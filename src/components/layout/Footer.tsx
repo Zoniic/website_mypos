@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
+import { companyInfo, getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { CookieSettingsButton } from "@/components/layout/CookieConsent";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
@@ -13,8 +13,10 @@ const linkClass =
 export async function Footer() {
   const t = await getTranslations("footer");
   const settings = await getSiteSettings();
+  const locale = await getLocale();
+  const company = companyInfo(settings, locale, t("address"));
   // Link groups as arranged in the admin (Navigation → Footer).
-  const linkGroups = await getFooterNav(await getLocale());
+  const linkGroups = await getFooterNav(locale);
   const year = new Date().getFullYear();
 
   return (
@@ -61,28 +63,27 @@ export async function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-text-1">{t("contactTitle")}</h3>
             <ul className="mt-4 space-y-2.5 text-sm text-text-2">
-              {settings.phone && (
+              {company.phone && (
                 <li>
-                  <a href={`tel:${settings.phone}`} className={linkClass}>
-                    {settings.phoneDisplay || settings.phone}
+                  <a href={`tel:${company.phone}`} className={linkClass}>
+                    {company.phoneDisplay}
                   </a>
                 </li>
               )}
-              {settings.email && (
+              {company.email && (
                 <li>
-                  <a href={`mailto:${settings.email}`} className={`${linkClass} break-all`}>
-                    {settings.email}
+                  <a href={`mailto:${company.email}`} className={`${linkClass} break-all`}>
+                    {company.email}
                   </a>
                 </li>
               )}
-              <li>{t("address")}</li>
-              {settings.lineUrl && (
-                <li>
-                  <a href={settings.lineUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
-                    LINE
-                  </a>
-                </li>
-              )}
+              {company.legalName && <li>{company.legalName}</li>}
+              {company.address && <li>{company.address}</li>}
+              <li>
+                <a href={company.lineUrl} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  LINE
+                </a>
+              </li>
               {(
                 [
                   ["Facebook", settings.facebookUrl],

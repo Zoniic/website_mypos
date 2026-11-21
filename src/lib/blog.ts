@@ -10,7 +10,7 @@ export type BlogPostSummary = {
   createdAt: Date;
 };
 
-export type BlogPost = BlogPostSummary & { body: string };
+export type BlogPost = BlogPostSummary & { body: string; updatedAt: Date };
 
 type RowWithTranslations = {
   id: number;
@@ -48,5 +48,5 @@ export async function getBlogPostBySlug(slug: string, locale: string): Promise<B
     include: { translations: { where: { locale } } },
   });
   if (!row) return null;
-  return { ...toSummary(row), body: row.translations[0]?.body ?? "" };
+  return { ...toSummary(row), body: row.translations[0]?.body ?? "", updatedAt: row.updatedAt };
 }

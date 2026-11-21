@@ -36,9 +36,47 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
   return (
     <form onSubmit={submitWithoutReset(formAction)} className="max-w-2xl space-y-8">
       <section className="space-y-4 rounded-xl border border-border p-4">
+        <h3 className="text-sm font-semibold uppercase text-text-2">Company</h3>
+        <p className="text-xs text-text-2">
+          Shown in the footer and on the contact page, and told to Google as the company&apos;s details together with
+          the phone and email below. Use exactly the same name, address and phone as on Google Business Profile.
+          Empty fields are left out.
+        </p>
+        <Field
+          label="Company legal name (Thai)"
+          name="legalName"
+          defaultValue={settings.legalName}
+          hint="As on the company certificate (หนังสือรับรองบริษัท), e.g. บริษัท ตัวอย่าง จำกัด"
+        />
+        <Field
+          label="Company legal name (English)"
+          name="legalNameEn"
+          defaultValue={settings.legalNameEn}
+          hint="e.g. Example Co., Ltd. Used on the English and Chinese pages; empty = the Thai name."
+        />
+        <Field
+          label="Address (Thai)"
+          name="address"
+          defaultValue={settings.address}
+          hint="Full address with postcode, e.g. 123 ถนนตัวอย่าง แขวงตัวอย่าง เขตตัวอย่าง กรุงเทพมหานคร 10000. Empty = the short address in Page Content > footer > address."
+        />
+        <Field
+          label="Address (English)"
+          name="addressEn"
+          defaultValue={settings.addressEn}
+          hint="e.g. 123 Example Road, Example Subdistrict, Example District, Bangkok 10000. Used on the English and Chinese pages; empty = the Thai address."
+        />
+      </section>
+
+      <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Contact</h3>
         <Field label="Phone (tel: link, e.g. +66-2-123-4567)" name="phone" defaultValue={settings.phone} />
-        <Field label="Phone (display text, e.g. 02-123-4567)" name="phoneDisplay" defaultValue={settings.phoneDisplay} />
+        <Field
+          label="Phone (display text, e.g. 02-123-4567)"
+          name="phoneDisplay"
+          defaultValue={settings.phoneDisplay}
+          hint="The same number as the tel: link above, written the way visitors read it."
+        />
         <Field label="Email" name="email" defaultValue={settings.email} />
         <Field label="LINE ID (e.g. @mypos)" name="lineId" defaultValue={settings.lineId} />
         <Field

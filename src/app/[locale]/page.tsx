@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
-import { getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
+import { companyInfo, getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
 import { organizationSameAs } from "@/lib/structuredData";
 import { getFeaturedProducts } from "@/lib/products";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -60,15 +60,19 @@ export default async function HomePage({
   const featuredProducts = await getFeaturedProducts(locale);
   const settings = await getSiteSettings();
   const order = await getPageSections("home");
+  const tFooter = await getTranslations({ locale, namespace: "footer" });
+  const company = companyInfo(settings, locale, tFooter("address"));
 
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: siteConfig.name,
+    name: company.name,
+    legalName: company.legalName || undefined,
     url: siteConfig.url,
     logo: new URL(await getLogoUrl(), siteConfig.url).toString(),
-    telephone: settings.phone || undefined,
-    email: settings.email || undefined,
+    telephone: company.phone || undefined,
+    email: company.email || undefined,
+    address: company.address || undefined,
     sameAs: organizationSameAs(settings),
   };
 
