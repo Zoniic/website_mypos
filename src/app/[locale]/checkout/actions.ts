@@ -10,6 +10,7 @@ import { clientIp } from "@/lib/clientIp";
 import {
   PAYMENT_METHODS,
   availablePaymentMethods,
+  findCatalogEntry,
   getOnlineCatalog,
   newAccessToken,
   newOrderNumber,
@@ -101,7 +102,7 @@ export async function placeOrder(_prev: CheckoutState, formData: FormData): Prom
   const catalog = await getOnlineCatalog(locale);
   const items = [];
   for (const line of lines) {
-    const entry = catalog[`${line.kind}:${line.slug}`];
+    const entry = findCatalogEntry(catalog, line.kind, line.slug);
     if (!entry) return { status: "error", error: "itemsChanged" };
     items.push({ kind: entry.kind, slug: entry.slug, name: entry.name, unitPrice: entry.price, quantity: line.quantity });
   }

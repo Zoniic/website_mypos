@@ -29,7 +29,7 @@ export async function generateMetadata({
   const slug = decodeSlugParam(rawSlug);
   const article = await getKbArticleBySlug(slug, locale);
   if (!article) return {};
-  const alternates = buildAlternates(locale, `/knowledge-base/article/${slug}`);
+  const alternates = buildAlternates(locale, `/knowledge-base/article/${article.slug}`);
 
   return {
     title: { absolute: `${article.title} | ${siteConfig.name}` },
@@ -62,7 +62,7 @@ export default async function KbArticlePage({
       })
     : null;
 
-  const articleUrl = `${siteConfig.url}/${locale}/knowledge-base/article/${slug}`;
+  const articleUrl = `${siteConfig.url}/${locale}/knowledge-base/article/${article.slug}`;
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "TechArticle",

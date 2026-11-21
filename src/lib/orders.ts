@@ -2,6 +2,8 @@ import { randomBytes, randomInt, timingSafeEqual } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import type { SiteSettings } from "@/lib/siteSettings";
 import { cleanPromptPayId } from "@/lib/trackingIds";
+import { slugKey } from "@/lib/slug";
+import { getHiddenProductSlugs } from "@/lib/hiddenProducts";
 
 export const ORDER_STATUSES = ["pending_payment", "paid", "preparing", "shipped", "completed", "cancelled"] as const;
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
@@ -11,9 +13,13 @@ export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 
 export type CatalogEntry = { kind: "product" | "accessory"; slug: string; name: string; price: number; imageUrl: string | null };
 
-/** Everything currently sold online, keyed "kind:slug", with names in `locale`. */
+/**
+ * Everything currently sold online, keyed "kind:slug", with names in `locale`.
+ * Each item is also keyed by its normalised slug (slugKey), so carts saved
+ * under an old slug ("mypos-K1") still find it. Use `findCatalogEntry`.
+ */
 export async function getOnlineCatalog(locale: string): Promise<Record<string, CatalogEntry>> {
-  const [products, accessories] = await Promise.all([
+  const [products, accessories, hidden] = await Promise.all([
     prisma.product.findMany({
       where: { onlinePrice: { not: null } },
       include: { translations: { where: { locale } } },
@@ -22,15 +28,27 @@ export async function getOnlineCatalog(locale: string): Promise<Record<string, C
       where: { onlinePrice: { not: null } },
       include: { translations: { where: { locale } } },
     }),
+    getHiddenProductSlugs(),
   ]);
   const catalog: Record<string, CatalogEntry> = {};
+  const put = (entry: CatalogEntry) => {
+    catalog[`${entry.kind}:${entry.slug}`] = entry;
+    const alias = `${entry.kind}:${slugKey(entry.slug)}`;
+    if (!(alias in catalog)) catalog[alias] = entry;
+  };
   for (const p of products) {
-    catalog[`product:${p.slug}`] = { kind: "product", slug: p.slug, name: p.translations[0]?.name ?? p.slug, price: p.onlinePrice!, imageUrl: p.imageUrl };
+    if (hidden.includes(p.slug)) continue;
+    put({ kind: "product", slug: p.slug, name: p.translations[0]?.name ?? p.slug, price: p.onlinePrice!, imageUrl: p.imageUrl });
   }
   for (const a of accessories) {
-    catalog[`accessory:${a.slug}`] = { kind: "accessory", slug: a.slug, name: a.translations[0]?.name ?? a.slug, price: a.onlinePrice!, imageUrl: a.imageUrl };
+    put({ kind: "accessory", slug: a.slug, name: a.translations[0]?.name ?? a.slug, price: a.onlinePrice!, imageUrl: a.imageUrl });
   }
   return catalog;
+}
+
+/** Looks a cart line up by its exact slug, then by the normalised one (old slugs). */
+export function findCatalogEntry(catalog: Record<string, CatalogEntry>, kind: string, slug: string): CatalogEntry | undefined {
+  return catalog[`${kind}:${slug}`] ?? catalog[`${kind}:${slugKey(slug)}`];
 }
 
 /** Payment methods the admin has actually set up. */

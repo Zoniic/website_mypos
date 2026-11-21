@@ -15,6 +15,7 @@ import { ProductCard } from "@/components/products/ProductCard";
 import { StockBadge } from "@/components/products/StockBadge";
 import { AddToCompareButton } from "@/components/products/AddToCompareButton";
 import { toEmbedUrl } from "@/lib/kb";
+import { decodeSlugParam } from "@/lib/slug";
 import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
 import { TrackView } from "@/components/analytics/TrackView";
@@ -32,12 +33,13 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale, slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const product = await getProductBySlug(slug, locale);
   if (!product) return {};
 
-  const t = await getTranslations({ locale, namespace: `products.items.${slug}` });
-  const alternates = buildAlternates(locale, `/products/${slug}`);
+  const t = await getTranslations({ locale, namespace: `products.items.${product.slug}` });
+  const alternates = buildAlternates(locale, `/products/${product.slug}`);
   const title = `${product.name} | MYPOS`;
   const description = t("highlight");
   const images = [product.imageUrl, ...product.galleryUrls].filter(Boolean).map((url) => absoluteUrl(url!));
@@ -64,7 +66,8 @@ export default async function ProductDetailPage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const product = await getProductBySlug(slug, locale);
 
   if (!product) {
@@ -73,7 +76,7 @@ export default async function ProductDetailPage({
 
   setRequestLocale(locale);
 
-  const t = await getTranslations({ locale, namespace: `products.items.${slug}` });
+  const t = await getTranslations({ locale, namespace: `products.items.${product.slug}` });
   const tDetail = await getTranslations({ locale, namespace: "productDetail" });
   const tCommon = await getTranslations({ locale, namespace: "productsCommon" });
   const tSolutionsCommon = await getTranslations({ locale, namespace: "solutionsCommon" });

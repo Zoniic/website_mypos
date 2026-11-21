@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { slugKey } from "@/lib/slug";
 
 export type QuoteCartItem = {
   slug: string;
@@ -23,6 +24,16 @@ const QuoteCartContext = createContext<QuoteCartContextValue | null>(null);
 
 const STORAGE_KEY = "mypos-quote-cart";
 
+/** Lists saved before the slugs were made URL-safe hold old slugs ("mypos-K1"): map them to the new ones. */
+function normaliseSavedItems(items: QuoteCartItem[]): QuoteCartItem[] {
+  const merged: QuoteCartItem[] = [];
+  for (const item of items) {
+    const slug = slugKey(String(item.slug)) || item.slug;
+    if (!merged.some((m) => m.slug === slug)) merged.push({ ...item, slug });
+  }
+  return merged;
+}
+
 export function QuoteCartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<QuoteCartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
@@ -34,8 +45,11 @@ export function QuoteCartProvider({ children }: { children: ReactNode }) {
     // can't be a lazy useState initializer.
     try {
       const raw = window.localStorage.getItem(STORAGE_KEY);
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (raw) setItems(JSON.parse(raw));
+      if (raw) {
+        const parsed: unknown = JSON.parse(raw);
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        if (Array.isArray(parsed)) setItems(normaliseSavedItems(parsed as QuoteCartItem[]));
+      }
     } catch {
       // Ignore malformed/unavailable localStorage — cart just starts empty.
     }

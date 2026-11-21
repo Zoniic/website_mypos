@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { siteConfig } from "@/config/site";
 import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { absoluteUrl } from "@/lib/structuredData";
+import { getHiddenProductSlugs } from "@/lib/hiddenProducts";
 
 /**
  * Product feed (RSS 2.0 + Google "g:" namespace), the format both Google
@@ -71,6 +72,7 @@ export async function GET() {
   const items: FeedItem[] = [];
 
   if (isOnlineOrderingOn(settings)) {
+    const hidden = await getHiddenProductSlugs();
     const [products, accessories] = await Promise.all([
       prisma.product.findMany({
         where: { onlinePrice: { not: null }, imageUrl: { not: null } },
@@ -82,7 +84,7 @@ export async function GET() {
       }),
     ]);
 
-    for (const p of products) {
+    for (const p of products.filter((x) => !hidden.includes(x.slug))) {
       const tr = p.translations[0];
       items.push({
         id: `product-${p.slug}`,

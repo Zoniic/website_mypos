@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { decodeSlugParam, slugKey } from "@/lib/slug";
 
 export type KbSection = "hardware" | "software";
 
@@ -96,11 +97,16 @@ export async function getFeaturedKbArticles(
   return rows.map(toSummary);
 }
 
-export async function getKbArticleBySlug(slug: string, locale: string): Promise<KbArticle | null> {
-  const row = await prisma.kbArticle.findUnique({
-    where: { slug },
-    include: { translations: { where: { locale } }, category: true },
-  });
+/** Exact slug first, then an old-style one that differs only in case, spacing or encoding. */
+export async function getKbArticleBySlug(rawSlug: string, locale: string): Promise<KbArticle | null> {
+  const slug = decodeSlugParam(rawSlug);
+  const include = { translations: { where: { locale } }, category: true };
+  let row = await prisma.kbArticle.findUnique({ where: { slug }, include });
+  if (!row && slugKey(slug)) {
+    const all = await prisma.kbArticle.findMany({ select: { slug: true } });
+    const match = all.find((a) => slugKey(a.slug) === slugKey(slug));
+    if (match) row = await prisma.kbArticle.findUnique({ where: { slug: match.slug }, include });
+  }
   if (!row) return null;
   const translation = row.translations[0];
   return {

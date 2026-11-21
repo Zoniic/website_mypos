@@ -1,6 +1,8 @@
 import type { Product as ProductRow, ProductTranslation } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getCatalog, machineForCategory } from "@/lib/catalog";
+import { decodeSlugParam, slugKey } from "@/lib/slug";
+import { getHiddenProductSlugs, withoutHidden } from "@/lib/hiddenProducts";
 import type { MachineKind } from "@/components/ui/MachineArt";
 
 /** Category slug — built-in (src/data/categories) or added in the admin catalog. */
@@ -59,7 +61,8 @@ type RowWithRelations = ProductRow & {
 };
 
 /** Rows → products, with each one's fallback drawing from the catalog. */
-async function toProducts(rows: RowWithRelations[]): Promise<Product[]> {
+async function toProducts(allRows: RowWithRelations[]): Promise<Product[]> {
+  const rows = await withoutHidden(allRows);
   const catalog = await getCatalog();
   return rows.map((row) => {
     const product = toProduct(row);
@@ -127,17 +130,26 @@ export async function getFeaturedProducts(locale: string): Promise<Product[]> {
   return toProducts(rows);
 }
 
+/**
+ * Finds a product by slug. Accepts the exact slug, or an old-style one that
+ * differs only in case, spacing, punctuation or URL encoding ("mypos-K1",
+ * "mypos%20k1"). Hidden products are not found.
+ */
 export async function getProductBySlug(slug: string, locale: string): Promise<Product | null> {
-  const row = await prisma.product.findUnique({
-    where: { slug },
-    include: {
-      translations: { where: { locale } },
-      categories: true,
-      businessTypes: true,
-      relatedProducts: { select: { slug: true } },
-    },
-  });
-  return row ? (await toProducts([row]))[0] : null;
+  const include = {
+    translations: { where: { locale } },
+    categories: true,
+    businessTypes: true,
+    relatedProducts: { select: { slug: true } },
+  };
+  const wanted = decodeSlugParam(slug);
+  let row = await prisma.product.findUnique({ where: { slug: wanted }, include });
+  if (!row && slugKey(wanted)) {
+    const all = await prisma.product.findMany({ select: { slug: true } });
+    const match = all.find((p) => slugKey(p.slug) === slugKey(wanted));
+    if (match) row = await prisma.product.findUnique({ where: { slug: match.slug }, include });
+  }
+  return row ? ((await toProducts([row]))[0] ?? null) : null;
 }
 
 export async function getRelatedProducts(product: Product, locale: string): Promise<Product[]> {
@@ -189,6 +201,6 @@ export async function getProductsByBusinessType(
 }
 
 export async function getAllProductSlugs(): Promise<string[]> {
-  const rows = await prisma.product.findMany({ select: { slug: true } });
-  return rows.map((r) => r.slug);
+  const [rows, hidden] = await Promise.all([prisma.product.findMany({ select: { slug: true } }), getHiddenProductSlugs()]);
+  return rows.map((r) => r.slug).filter((s) => !hidden.includes(s));
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { slugKey } from "@/lib/slug";
 
 /**
  * The shopping cart for online orders — separate from the quote/compare
@@ -37,6 +38,18 @@ export const MAX_QUANTITY = 99;
 
 const same = (a: { kind: string; slug: string }, kind: string, slug: string) => a.kind === kind && a.slug === slug;
 
+/** Carts saved before the slugs were made URL-safe hold old slugs ("mypos-K1"): map them to the new ones. */
+function normaliseSavedItems(items: CartItem[]): CartItem[] {
+  const merged: CartItem[] = [];
+  for (const item of items) {
+    const slug = slugKey(String(item.slug)) || item.slug;
+    const existing = merged.find((m) => same(m, item.kind, slug));
+    if (existing) existing.quantity = Math.min(MAX_QUANTITY, existing.quantity + item.quantity);
+    else merged.push({ ...item, slug });
+  }
+  return merged;
+}
+
 export function ShopCartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
@@ -47,7 +60,7 @@ export function ShopCartProvider({ children }: { children: ReactNode }) {
       const raw = window.localStorage.getItem(STORAGE_KEY);
       const parsed: unknown = raw ? JSON.parse(raw) : [];
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (Array.isArray(parsed)) setItems(parsed as CartItem[]);
+      if (Array.isArray(parsed)) setItems(normaliseSavedItems(parsed as CartItem[]));
     } catch {
       // Malformed or blocked storage: start with an empty cart.
     }

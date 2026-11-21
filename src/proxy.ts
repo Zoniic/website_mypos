@@ -4,6 +4,8 @@ import { routing } from "./i18n/routing";
 import { ADMIN_SESSION_COOKIE, verifySessionToken } from "@/lib/adminAuth";
 import { prisma } from "@/lib/prisma";
 import { CATALOG_KEYS, buildCatalog, type Catalog } from "@/lib/catalog";
+import { decodeSlugParam, slugKey } from "@/lib/slug";
+import { HIDDEN_PRODUCTS_KEY, parseHiddenSlugs } from "@/lib/hiddenProducts";
 
 const intlMiddleware = createMiddleware(routing);
 
@@ -39,6 +41,62 @@ async function isUnknownFixedSlug(pathname: string): Promise<boolean> {
   return !route.isValid(await loadCatalog(), slug);
 }
 
+// Old product / KB article URLs ("/th/products/mypos-K1", "/th/products/mypos-k1",
+// "/th/knowledge-base/article/Change%20paper%20K1") redirect permanently to the
+// stored slug, so links shared before the slugs were made lowercase keep working.
+// A slug matches when it differs only in case, spacing, punctuation or encoding.
+const legacySlugRoutes: { pattern: RegExp; load: () => Promise<string[]> }[] = [
+  { pattern: /^(\/(?:[a-z]{2}\/)?products\/)([^/]+)\/?$/, load: loadProductSlugs },
+  { pattern: /^(\/(?:[a-z]{2}\/)?knowledge-base\/article\/)([^/]+)\/?$/, load: loadKbArticleSlugs },
+];
+
+const slugListCache = new Map<string, { slugs: string[]; at: number }>();
+
+async function cachedSlugs(name: string, load: () => Promise<string[]>): Promise<string[]> {
+  const hit = slugListCache.get(name);
+  if (hit && Date.now() - hit.at < 30_000) return hit.slugs;
+  try {
+    const slugs = await load();
+    slugListCache.set(name, { slugs, at: Date.now() });
+    return slugs;
+  } catch {
+    // DB unreachable: serve the page as requested rather than redirect wrongly.
+    return hit?.slugs ?? [];
+  }
+}
+
+async function loadProductSlugs(): Promise<string[]> {
+  const [rows, hidden] = await Promise.all([
+    prisma.product.findMany({ select: { slug: true } }),
+    prisma.siteSetting.findUnique({ where: { key: HIDDEN_PRODUCTS_KEY } }),
+  ]);
+  const hiddenSlugs = parseHiddenSlugs(hidden?.value);
+  return rows.map((r) => r.slug).filter((s) => !hiddenSlugs.includes(s));
+}
+
+async function loadKbArticleSlugs(): Promise<string[]> {
+  return (await prisma.kbArticle.findMany({ select: { slug: true } })).map((r) => r.slug);
+}
+
+/** The redirect target for an old-style slug URL, or null when the URL is already right (or unknown). */
+async function legacySlugRedirect(request: NextRequest): Promise<URL | null> {
+  const { pathname } = request.nextUrl;
+  for (const { pattern, load } of legacySlugRoutes) {
+    const match = pathname.match(pattern);
+    if (!match) continue;
+    const requested = decodeSlugParam(match[2]);
+    const slugs = await cachedSlugs(match[1], load);
+    if (slugs.includes(requested)) return null;
+    const key = slugKey(requested);
+    const target = key ? slugs.find((s) => slugKey(s) === key) : undefined;
+    if (!target) return null;
+    const url = request.nextUrl.clone();
+    url.pathname = match[1] + encodeURIComponent(target);
+    return url;
+  }
+  return null;
+}
+
 export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -54,6 +112,9 @@ export default async function middleware(request: NextRequest) {
     }
     return NextResponse.next();
   }
+
+  const legacyTarget = await legacySlugRedirect(request);
+  if (legacyTarget) return NextResponse.redirect(legacyTarget, 308);
 
   if (await isUnknownFixedSlug(pathname)) {
     const locale = routing.locales.find((l) => pathname.startsWith(`/${l}/`)) ?? routing.defaultLocale;
