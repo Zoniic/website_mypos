@@ -118,3 +118,42 @@
 - Quote message: `ระบุบริบทการใช้งาน จำนวน และสิ่งที่ต้องการให้ทีมช่วย` is styled as muted example placeholder copy.
 - The two selected products and quantity values are confirmed mockup state, not placeholders; the matching item payload stays in a hidden text layer rather than appearing as another input.
 - No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
+
+## D04
+
+- Page: `v2 - D04 สี่จังหวะหน้าร้าน`
+- Page node id: `83:2`
+- Scope: created one new D04 page with exactly four desktop frames at 1440 px wide. No other Figma page or website code was changed.
+- Structure audit: the page has exactly the four required top-level frames at `1440 × 3928`, `1440 × 5588`, `1440 × 3708`, and `1440 × 2648`. IBM Plex Sans Thai, Prompt, and Noto Sans SC loaded in every required style.
+- Review status: `review-v2/D04.json` did not exist when this direction was built, so there were no prior findings to apply.
+- Design treatment: persistent phase rail, alternating real-workplace scenes and product/software evidence, square editorial media, ruled disclosure rows, large Thai hierarchy, product imagery integrated into the page surface rather than white cards, and Ember Orange limited to primary CTAs.
+
+### Frames
+
+| Frame | Node id | Link | Final get_screenshot result | Checked |
+|---|---|---|---|---|
+| D04 Home | `83:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-3 | PASS, rendered `880 × 2400` from `1440 × 3928` | Checked the full frame, exact four-phase sequence, real retail/cafeteria/outdoor-service scenes, NB65 and T70 secondary evidence, dashboard caption and compatibility restraint, cross-location disclosure, header/subnav, CTA hierarchy, and footer. No visible clipping, collision, generated-photo asset, or dominant placeholder block remains. |
+| D04 Products listing | `83:145` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-145 | PASS, rendered `722 × 2800` from `1440 × 5588` | Checked the complete filter shell and `พบ 10 รายการ`; C01–C10 each appear once in the specified phase order. Product media remain complete and readable, product whites blend into the alternating surfaces, long model names stay intact, scene/software evidence is captioned, and the result rail and footer have no visible clipping or overlap. No price, stock badge, pagination, or `TEST` item appears. |
+| D04 Product detail | `83:402` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-402 | PASS, rendered `933 × 2400` from `1440 × 3708` | Checked the large NB65 stage, exact product name/highlight/metadata, quote actions, explicit non-installation disclosure beside the real service-context photo, all nine exact specification rows, four operational questions, section boundaries, and footer. The hardware is fully visible without a white card or low-resolution enlargement. |
+| D04 Contact / quote request | `83:557` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=83-557 | PASS, rendered `1197 × 2200` from `1440 × 2648` | Checked the four phase tabs with `รับรายการ` selected, exact general-topic and message context mapping, Contract A field geometry, visibly muted placeholders, helper and mapping note, separately labelled office/sales/email channels, CTA hierarchy, and footer. No invented address, client, testimonial, number, or response-time claim appears. |
+
+### Assets used
+
+- Shared: `logo`.
+- Home: `a-neighborhood-mini-mart`, `an-office-cafeteria`, `an-outdoor-made-to-order-restaurant-chain`, `software-screenshot-dashboard`, `mypos-t70`, `mypos-nb65`.
+- Products listing: `mypos-k156`, `mypos-fm-ea-22`, `mypos-k1`, `mypos-fm-ea-slim-22--desktop-`, `mypos-f62`, `mypos-fm-ea-22mart`, `mypos-t70`, `mypos-f58`, `mypos-nb65`, `mypos-nb80t`, `a-neighborhood-mini-mart`, `an-office-cafeteria`, `an-outdoor-made-to-order-restaurant-chain`, `software-screenshot-dashboard`.
+- Product detail: `mypos-nb65`, `an-outdoor-made-to-order-restaurant-chain`.
+- Contact: `logo` only.
+
+### Image provenance flag
+
+- The hero photo (`software-hero`) was **not used**.
+- The hotel-lobby kiosk photo (`a-beachside-resort-hotel` / `solution-self-order`) was **not used**.
+- Whether those two images are real photos or renders remains an open user decision in the task brief. This D04 build makes no determination.
+
+### Placeholders marked
+
+- Products search: `ค้นหาชื่อรุ่นหรือฟังก์ชัน` is styled as muted placeholder text.
+- Contact name, phone, and optional product fields use visibly muted `กรอกชื่อ-นามสกุล`, `กรอกเบอร์โทร`, and `ระบุรุ่น (ถ้ามี)` placeholders.
+- `สอบถามข้อมูลทั่วไป` and `บริบทที่ต้องการคุย: รับรายการ` are confirmed mockup prefill values, not placeholders.
+- No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
