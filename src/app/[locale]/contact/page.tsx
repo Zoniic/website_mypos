@@ -12,6 +12,13 @@ import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 
+// Site copy is read from the database; until the "mapOpen" row exists there (messages/*.json is only the seed), use this label.
+const MAP_OPEN_FALLBACK: Record<string, string> = {
+  th: "เปิดใน Google Maps",
+  en: "Open in Google Maps",
+  zh: "在 Google 地图中打开",
+};
+
 export async function generateMetadata({
   params,
 }: {
@@ -139,7 +146,7 @@ export default async function ContactPage({
                       size="sm"
                       icon={<ExternalLink className="size-4" aria-hidden="true" />}
                     >
-                      {t("mapOpen")}
+                      {t.has("mapOpen") ? t("mapOpen") : MAP_OPEN_FALLBACK[locale] ?? MAP_OPEN_FALLBACK.en}
                     </Button>
                   </div>
                 </div>
