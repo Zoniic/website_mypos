@@ -70,12 +70,23 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
 
       <section className="space-y-4 rounded-xl border border-border p-4">
         <h3 className="text-sm font-semibold uppercase text-text-2">Contact</h3>
-        <Field label="Phone (tel: link, e.g. +66-2-123-4567)" name="phone" defaultValue={settings.phone} />
         <Field
-          label="Phone (display text, e.g. 02-123-4567)"
+          label="Office phone (tel: link, e.g. 02 521 7155)"
+          name="phone"
+          defaultValue={settings.phone}
+          hint="One dialable office number. Also the company number given to Google."
+        />
+        <Field
+          label="Office phone (display text, e.g. 02 521 7155-59)"
           name="phoneDisplay"
           defaultValue={settings.phoneDisplay}
-          hint="The same number as the tel: link above, written the way visitors read it."
+          hint="The same office number as the tel: link above, written the way visitors read it."
+        />
+        <Field
+          label="Sales phone (e.g. 086 688 9050)"
+          name="salesPhone"
+          defaultValue={settings.salesPhone}
+          hint="Shown as Sales next to the office number in the footer and on the contact page, and dialled by the Call button in the mobile bar. Empty = the office number only."
         />
         <Field label="Email" name="email" defaultValue={settings.email} />
         <Field label="LINE ID (e.g. @mypos)" name="lineId" defaultValue={settings.lineId} />

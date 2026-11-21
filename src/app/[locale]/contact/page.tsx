@@ -4,8 +4,8 @@ import { ExternalLink, MapPin } from "lucide-react";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { buildAlternates } from "@/lib/seo";
 import { siteConfig } from "@/config/site";
-import { googleMapsOpenUrl, isGoogleMapsEmbedUrl } from "@/lib/siteDisplay";
-import { companyInfo, getSiteImages, getSiteSettings } from "@/lib/siteSettings";
+import { PHONE_LABEL_FALLBACK, PHONE_LABEL_KEY, googleMapsOpenUrl, isGoogleMapsEmbedUrl } from "@/lib/siteDisplay";
+import { companyInfo, getSiteImages, getSiteSettings, type CompanyPhone } from "@/lib/siteSettings";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Button } from "@/components/ui/Button";
 import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
@@ -57,6 +57,10 @@ export default async function ContactPage({
   const settings = await getSiteSettings();
   const images = await getSiteImages();
   const company = companyInfo(settings, locale, tFooter("address"));
+  const phoneLabel = (kind: CompanyPhone["kind"]) => {
+    const key = PHONE_LABEL_KEY[kind];
+    return tFooter.has(key) ? tFooter(key) : (PHONE_LABEL_FALLBACK[kind][locale] ?? PHONE_LABEL_FALLBACK[kind].en);
+  };
 
   const localBusinessSchema = {
     "@context": "https://schema.org",
@@ -106,15 +110,25 @@ export default async function ContactPage({
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              {company.phone && (
+              {company.phones.length > 0 && (
                 <div className="rounded-card border border-border p-6">
                   <h2 className="text-lg font-semibold">{t("callTitle")}</h2>
-                  <a
-                    href={`tel:${company.phone}`}
-                    className="mt-2 block rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
-                  >
-                    {company.phoneDisplay}
-                  </a>
+                  <ul className="mt-2 space-y-1">
+                    {company.phones.map((phone) => (
+                      <li key={phone.kind}>
+                        {/* Labels only when both numbers are shown. */}
+                        {company.phones.length > 1 && (
+                          <span className="block text-sm font-medium text-text-1">{phoneLabel(phone.kind)}</span>
+                        )}
+                        <a
+                          href={`tel:${phone.tel}`}
+                          className="rounded-sm text-text-2 outline-offset-2 transition-colors hover:text-text-1 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+                        >
+                          {phone.display}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
               {company.email && (

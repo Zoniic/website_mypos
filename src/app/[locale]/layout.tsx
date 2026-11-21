@@ -141,7 +141,7 @@ export default async function LocaleLayout({
                 {children}
               </main>
               <Footer />
-              <StickyMobileBar phone={company.phone} lineUrl={company.lineUrl} />
+              <StickyMobileBar phone={company.callPhone} lineUrl={company.lineUrl} />
               <CookieConsent />
               {(await isEditMode()) ? <EditModeLoader locale={locale} /> : <AdminEditButton />}
             </MotionConfig>

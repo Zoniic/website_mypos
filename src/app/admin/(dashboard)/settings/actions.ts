@@ -21,6 +21,7 @@ const PLAIN_KEYS = [
   "addressEn",
   "phone",
   "phoneDisplay",
+  "salesPhone",
   "email",
   "lineId",
   "lineUrl",

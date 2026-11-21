@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { companyInfo, getLogoUrl, getSiteSettings } from "@/lib/siteSettings";
+import { companyInfo, getLogoUrl, getSiteSettings, type CompanyPhone } from "@/lib/siteSettings";
+import { PHONE_LABEL_FALLBACK, PHONE_LABEL_KEY } from "@/lib/siteDisplay";
 import { NewsletterForm } from "@/components/layout/NewsletterForm";
 import { CookieSettingsButton } from "@/components/layout/CookieConsent";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
@@ -15,6 +16,10 @@ export async function Footer() {
   const settings = await getSiteSettings();
   const locale = await getLocale();
   const company = companyInfo(settings, locale, t("address"));
+  const phoneLabel = (kind: CompanyPhone["kind"]) => {
+    const key = PHONE_LABEL_KEY[kind];
+    return t.has(key) ? t(key) : (PHONE_LABEL_FALLBACK[kind][locale] ?? PHONE_LABEL_FALLBACK[kind].en);
+  };
   // Link groups as arranged in the admin (Navigation → Footer).
   const linkGroups = await getFooterNav(locale);
   const year = new Date().getFullYear();
@@ -63,13 +68,15 @@ export async function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-text-1">{t("contactTitle")}</h3>
             <ul className="mt-4 space-y-2.5 text-sm text-text-2">
-              {company.phone && (
-                <li>
-                  <a href={`tel:${company.phone}`} className={linkClass}>
-                    {company.phoneDisplay}
+              {company.phones.map((phone) => (
+                <li key={phone.kind}>
+                  {/* Labels only when both numbers are shown. */}
+                  {company.phones.length > 1 && <span className="text-text-1">{phoneLabel(phone.kind)} </span>}
+                  <a href={`tel:${phone.tel}`} className={linkClass}>
+                    {phone.display}
                   </a>
                 </li>
-              )}
+              ))}
               {company.email && (
                 <li>
                   <a href={`mailto:${company.email}`} className={`${linkClass} break-all`}>

@@ -25,6 +25,15 @@ export function googleMapsOpenUrl(stored: string, address: string): string {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
 }
 
+/** Page Content keys (namespace "footer") for the labels shown next to the office and sales numbers. */
+export const PHONE_LABEL_KEY = { office: "phoneOffice", sales: "phoneSales" } as const;
+
+/** The same labels, used until their copy rows exist in the database (messages/*.json is only the seed). */
+export const PHONE_LABEL_FALLBACK: Record<keyof typeof PHONE_LABEL_KEY, Record<string, string>> = {
+  office: { th: "สำนักงาน", en: "Office", zh: "办公室" },
+  sales: { th: "ฝ่ายขาย", en: "Sales", zh: "销售" },
+};
+
 /** Grid columns for a stats row of 1 to 3 items (literal class names so Tailwind sees them). */
 export function statGridClass(count: number): string {
   if (count >= 3) return "sm:grid-cols-3";

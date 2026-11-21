@@ -12,8 +12,11 @@ export type SiteSettings = {
   legalNameEn: string;
   address: string;
   addressEn: string;
+  /** Office number: `phone` is the tel: target, `phoneDisplay` the same number as visitors read it. */
   phone: string;
   phoneDisplay: string;
+  /** Second number, shown as "Sales" next to the office number and dialled by the mobile bar's Call button. */
+  salesPhone: string;
   email: string;
   lineId: string;
   lineUrl: string;
@@ -70,6 +73,7 @@ const defaults: SiteSettings = {
   addressEn: "",
   phone: "",
   phoneDisplay: "",
+  salesPhone: "",
   email: "",
   lineId: "",
   lineUrl: "",
@@ -125,14 +129,32 @@ export type CompanyInfo = {
   legalName: string;
   /** Full address, or the short footer address copy until one is entered. */
   address: string;
-  /** Number for tel: links and JSON-LD; "" until it is entered. */
+  /** Office number for JSON-LD; "" until it is entered. */
   phone: string;
-  /** The same number as visitors read it (falls back to `phone`). */
+  /** The office number as visitors read it (falls back to `phone`). */
   phoneDisplay: string;
+  /** Numbers to show, office first, then sales. Empty numbers are left out. */
+  phones: CompanyPhone[];
+  /** Number the mobile bar's Call button dials: the sales number, else the office number. Digits only, "" if neither. */
+  callPhone: string;
   email: string;
   /** LINE chat link for the mobile bar and the footer: the setting, else siteConfig.lineUrl. */
   lineUrl: string;
 };
+
+export type CompanyPhone = {
+  kind: "office" | "sales";
+  /** Value for a tel: link (digits, optional leading +). */
+  tel: string;
+  /** Text shown to visitors. */
+  display: string;
+};
+
+/** A phone number as a tel: target: keeps a leading + and the digits, drops spaces and dashes. */
+export function telDigits(value: string): string {
+  // Every non-digit goes, except a plus sign at the very start.
+  return value.trim().replace(/(?!^\+)\D/g, "");
+}
 
 /**
  * The company's name, address, phone and email from Site Settings: the one
@@ -143,12 +165,20 @@ export type CompanyInfo = {
 export function companyInfo(settings: SiteSettings, locale: string, defaultAddress = ""): CompanyInfo {
   const localized = (th: string, en: string) => (locale === "th" ? th.trim() : en.trim() || th.trim());
   const phone = settings.phone.trim();
+  const phoneDisplay = settings.phoneDisplay.trim() || phone;
+  const sales = settings.salesPhone.trim();
+  const phones: CompanyPhone[] = [];
+  if (phone) phones.push({ kind: "office", tel: telDigits(phone), display: phoneDisplay });
+  // The same number entered twice is shown once.
+  if (sales && telDigits(sales) !== telDigits(phone)) phones.push({ kind: "sales", tel: telDigits(sales), display: sales });
   return {
     name: siteConfig.name,
     legalName: localized(settings.legalName, settings.legalNameEn),
     address: localized(settings.address, settings.addressEn) || defaultAddress.trim(),
     phone,
-    phoneDisplay: settings.phoneDisplay.trim() || phone,
+    phoneDisplay,
+    phones,
+    callPhone: sales ? telDigits(sales) : phone ? telDigits(phone) : "",
     email: settings.email.trim(),
     lineUrl: settings.lineUrl.trim() || siteConfig.lineUrl,
   };
