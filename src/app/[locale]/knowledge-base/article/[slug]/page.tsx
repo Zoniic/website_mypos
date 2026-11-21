@@ -11,6 +11,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { getKbArticleBySlug, getKbCategoryBySlug, toEmbedUrl } from "@/lib/kb";
 import { getProductBySlug } from "@/lib/products";
 import { prisma } from "@/lib/prisma";
+import { decodeSlugParam } from "@/lib/slug";
 
 
 // Empty list = render each page on its first visit, then serve it from
@@ -24,7 +25,8 @@ export async function generateMetadata({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
-  const { locale, slug } = await params;
+  const { locale, slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   const article = await getKbArticleBySlug(slug, locale);
   if (!article) return {};
   const alternates = buildAlternates(locale, `/knowledge-base/article/${slug}`);
@@ -41,7 +43,8 @@ export default async function KbArticlePage({
 }: {
   params: Promise<{ locale: string; slug: string }>;
 }) {
-  const { locale, slug } = await params;
+  const { locale, slug: rawSlug } = await params;
+  const slug = decodeSlugParam(rawSlug);
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: "kb" });
 
