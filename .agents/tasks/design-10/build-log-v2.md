@@ -82,18 +82,19 @@
 
 - Page: `v2 - D03 ครอบครัวเครื่อง`
 - Page node id: `74:2`
-- Scope: four desktop frames at 1440 px wide on a new D03-only page. No other Figma page or website code was changed.
-- Structure audit: exactly four top-level frames with the required names and dimensions; zero missing fonts across 341 text layers; 48 vector instances are named as Lucide icons.
+- Scope: revised only the existing D03 page after review. It contains exactly four desktop frames at 1440 px wide; no other Figma page or website code was changed.
+- Structure audit: the four top-level frames retain the required names. Final sizes are 1440 × 3788, 1440 × 4430, 1440 × 3648, and 1440 × 3128.
 - Design treatment: editorial product-family stages organized by placement type, explicit non-scale disclosure, large full-device media, continuous ruled image rails instead of rounded product cards, IBM Plex Sans Thai/Prompt hierarchy, restrained neutral surfaces, and Ember Orange limited to primary CTAs.
+- Review status: findings `D03-1` through `D03-6` were fixed and rechecked. `review-v2/D03.json` now records `APPROVED`.
 
 ### Frames
 
 | Frame | Node id | Link | Final get_screenshot result | Checked |
 |---|---|---|---|---|
-| D03 Home | `74:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-3 | PASS, rendered `1141 × 3000` from `1440 × 3788` | Checked the complete two-line hero, non-scale disclosure, 420 px K156 principal image, three-device family portrait, compact-device continuous stage, three placement criteria, real `solution-pos` context scene, consultation rows, header/subnav, CTA hierarchy, and footer. The final FM-EA-22 view keeps the full device visible while trimming excess source whitespace. |
-| D03 Products listing | `74:150` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-150 | PASS, rendered `1209 × 4000` from `1440 × 4768` | Checked the complete filter shell, `พบ 10 รายการ`, exact C01–C10 order, five distinct family stages, 420 px K156, continuous image bands on gray stages, readable full-device media, long `FM-EA-SLIM-22-(Desktop)` token on one line, separated multi-line highlights/metadata, result rail, and footer. No prices, stock badges, pagination, card shadows, clipping, or text collision remain. |
-| D03 Product detail | `74:330` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-330 | PASS, rendered `1185 × 3000` from `1440 × 3648` | Checked the full-size 600 × 848 K156 stage without a nested white card, exact name/highlight, first four decision specs, quote path, three-image continuous gallery rail, all nine exact specification rows, size/placement comparison path, closing quote rail, active local subnav, and footer. |
-| D03 Contact / quote request | `74:475` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-475 | PASS, rendered `1382 × 3000` from `1440 × 3128` | Checked K156 and T70 at quantity 1 with Lucide Minus/Plus/X controls, separated form heading/helper copy, all Contract B fields, muted placeholders, submit CTA, visible two-item review rows, hidden quote-item JSON, three process rows, separately labelled office/sales/email strip, and footer. No overlap or invented contact data is present. |
+| D03 Home | `74:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-3 | PASS, rendered `1440 × 3788` from `1440 × 3788` | Checked the two-line hero, non-scale disclosure, readable K156/FM-EA-22/T70 family portrait, compact-device stage, placement criteria, `solution-pos` context scene, consultation rows, header/subnav, CTA hierarchy, and footer. FM-EA-22 now uses a portrait-aware 420 × 594 clipped viewport; its complete device is visible without upscaling. The context heading and body have a measured 24 px gap, and no label crosses the next section boundary. |
+| D03 Products listing | `74:150` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-150 | PASS, rendered `1301 × 4000` from `1440 × 4430` | Checked the complete filter shell, `พบ 10 รายการ`, exact C01–C10 order, five distinct family stages, readable full-device media, long model names, separated highlights/metadata, result rail, and footer. FM-EA-22 now uses a portrait-aware 520 × 594 clipped viewport. Every family stage ends with 48 px bottom padding; the repeated dead bands are gone. No prices, stock badges, pagination, clipping, or text collision remain. |
+| D03 Product detail | `74:330` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-330 | PASS, rendered `1440 × 3648` from `1440 × 3648` | Checked the full-size K156 stage, exact product copy, first four decision specs, quote path, three-image gallery rail, all nine exact specification rows, size/placement comparison path, closing quote rail, active local subnav, and footer. |
+| D03 Contact / quote request | `74:475` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-475 | PASS, rendered `1440 × 3128` from `1440 × 3128` | Checked K156 and T70 at quantity 1 with Lucide Minus/Plus/X controls, all Contract B fields, muted placeholders, submit CTA, two-item review rows, three process rows, separately labelled office/sales/email strip, and footer. The heading now breaks semantically as `ส่งคำขอ` / `ใบเสนอราคา`; the message field ends 16 px before the submit button, and the inline state is back in its contracted position. |
 
 ### Assets used
 
@@ -106,14 +107,14 @@
 ### Image provenance flag
 
 - `solution-pos` is used as the Home context scene.
-- The disputed `software-hero` hero photo was **not used**.
-- The disputed `a-beachside-resort-hotel` / `solution-self-order` hotel-lobby kiosk photo was **not used**.
-- Whether the hero photo and hotel-lobby kiosk photo are real photos or renders remains an open user decision; this D03 build makes no determination.
+- The hero photo was **not used**.
+- The `a-beachside-resort-hotel` / `solution-self-order` hotel-lobby kiosk photo was **not used**.
+- The brief leaves whether the hero photo and hotel-lobby kiosk photo are real photos or renders unresolved. This D03 build makes no determination and keeps the question flagged for the final report.
 
 ### Placeholders marked
 
 - Products search: `ค้นหาชื่อรุ่นหรือฟังก์ชัน` is styled as muted placeholder text.
 - Quote name, company, phone, and email fields use visibly muted `กรอก...` placeholder text; the company label also states `(ถ้ามี)`.
 - Quote message: `ระบุบริบทการใช้งาน จำนวน และสิ่งที่ต้องการให้ทีมช่วย` is styled as muted example placeholder copy.
-- The two selected products and quantity values are confirmed mockup state, not placeholders; the matching item payload is stored in a hidden text layer rather than shown as another input.
+- The two selected products and quantity values are confirmed mockup state, not placeholders; the matching item payload stays in a hidden text layer rather than appearing as another input.
 - No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
