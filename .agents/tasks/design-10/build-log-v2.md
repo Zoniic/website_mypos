@@ -77,3 +77,43 @@
 - Contact message: `กรอกรายละเอียดบริบทหน้าร้านเพิ่มเติมภายหลัง` is visibly styled as muted placeholder text.
 - Topic, product, and industry are confirmed prefill values for this mockup, not placeholders.
 - No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
+
+## D03
+
+- Page: `v2 - D03 ครอบครัวเครื่อง`
+- Page node id: `74:2`
+- Scope: four desktop frames at 1440 px wide on a new D03-only page. No other Figma page or website code was changed.
+- Structure audit: exactly four top-level frames with the required names and dimensions; zero missing fonts across 341 text layers; 48 vector instances are named as Lucide icons.
+- Design treatment: editorial product-family stages organized by placement type, explicit non-scale disclosure, large full-device media, continuous ruled image rails instead of rounded product cards, IBM Plex Sans Thai/Prompt hierarchy, restrained neutral surfaces, and Ember Orange limited to primary CTAs.
+
+### Frames
+
+| Frame | Node id | Link | Final get_screenshot result | Checked |
+|---|---|---|---|---|
+| D03 Home | `74:3` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-3 | PASS, rendered `1141 × 3000` from `1440 × 3788` | Checked the complete two-line hero, non-scale disclosure, 420 px K156 principal image, three-device family portrait, compact-device continuous stage, three placement criteria, real `solution-pos` context scene, consultation rows, header/subnav, CTA hierarchy, and footer. The final FM-EA-22 view keeps the full device visible while trimming excess source whitespace. |
+| D03 Products listing | `74:150` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-150 | PASS, rendered `1209 × 4000` from `1440 × 4768` | Checked the complete filter shell, `พบ 10 รายการ`, exact C01–C10 order, five distinct family stages, 420 px K156, continuous image bands on gray stages, readable full-device media, long `FM-EA-SLIM-22-(Desktop)` token on one line, separated multi-line highlights/metadata, result rail, and footer. No prices, stock badges, pagination, card shadows, clipping, or text collision remain. |
+| D03 Product detail | `74:330` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-330 | PASS, rendered `1185 × 3000` from `1440 × 3648` | Checked the full-size 600 × 848 K156 stage without a nested white card, exact name/highlight, first four decision specs, quote path, three-image continuous gallery rail, all nine exact specification rows, size/placement comparison path, closing quote rail, active local subnav, and footer. |
+| D03 Contact / quote request | `74:475` | https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=74-475 | PASS, rendered `1382 × 3000` from `1440 × 3128` | Checked K156 and T70 at quantity 1 with Lucide Minus/Plus/X controls, separated form heading/helper copy, all Contract B fields, muted placeholders, submit CTA, visible two-item review rows, hidden quote-item JSON, three process rows, separately labelled office/sales/email strip, and footer. No overlap or invented contact data is present. |
+
+### Assets used
+
+- Shared: `logo`.
+- Home: `mypos-k156`, `mypos-fm-ea-22`, `mypos-t70`, `mypos-nb65`, `mypos-f62`, `solution-pos`.
+- Products listing: `mypos-k156`, `mypos-fm-ea-22`, `mypos-k1`, `mypos-fm-ea-slim-22--desktop-`, `mypos-f62`, `mypos-fm-ea-22mart`, `mypos-t70`, `mypos-f58`, `mypos-nb65`, `mypos-nb80t`.
+- Product detail: `mypos-k156`, `mypos-k156-gallery-1`, `mypos-k156-gallery-2`, `mypos-k156-gallery-3`.
+- Contact: `mypos-k156`, `mypos-t70`.
+
+### Image provenance flag
+
+- `solution-pos` is used as the Home context scene.
+- The disputed `software-hero` hero photo was **not used**.
+- The disputed `a-beachside-resort-hotel` / `solution-self-order` hotel-lobby kiosk photo was **not used**.
+- Whether the hero photo and hotel-lobby kiosk photo are real photos or renders remains an open user decision; this D03 build makes no determination.
+
+### Placeholders marked
+
+- Products search: `ค้นหาชื่อรุ่นหรือฟังก์ชัน` is styled as muted placeholder text.
+- Quote name, company, phone, and email fields use visibly muted `กรอก...` placeholder text; the company label also states `(ถ้ามี)`.
+- Quote message: `ระบุบริบทการใช้งาน จำนวน และสิ่งที่ต้องการให้ทีมช่วย` is styled as muted example placeholder copy.
+- The two selected products and quantity values are confirmed mockup state, not placeholders; the matching item payload is stored in a hidden text layer rather than shown as another input.
+- No testimonial, client name, address, price, SLA, stock value, or unconfirmed number was introduced.
