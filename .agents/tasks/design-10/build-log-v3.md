@@ -113,3 +113,31 @@ Every placed image remains below its source pixel dimensions. The excluded hashe
 ### Fresh `get_screenshot` check
 
 The final fresh screenshot rendered the complete frame at its native 1440 × 5900 size. It showed a clearly distinct factory specification catalog: a light-grey drafting grid, a large annotated FM-EA-22MART plate, factual 22 inch/4GB/64GB/35 kg figures, ruled product rows with measurement lines, a dark technical dashboard chapter, and an orange contact sheet. The required MYPOS logo, six current menu items, Lucide Search and Columns2 icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. Thai text, product names, approved dimensions, and the dashboard remained legible; no visible text or image clipping, overlap, or unintended empty band appeared. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 05
+
+- Direction: **ภาพหน้างานเต็มจอ**
+- Page: `v3 Home 05 - ภาพหน้างานเต็มจอ` (`114:2`)
+- Frame: `v3 Home 05` (`114:3`), 1440 × 5940 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=114-3
+
+### Awwwards references
+
+- **Tengile MalaMala Collection** (`tengile-malamala-collection`, https://tengilemalamala.com/): used the full-bleed cinematic photograph, oversized low-weight white display type placed directly on the image, and minimal navigation treatment over the hero. No copy or imagery was copied.
+- **PSP Production** (`psp-production`, https://productionportugal.com/): used the compact overlay navigation, continuous sequence of image-led chapters, high-contrast edge labels, and thin lower information rails instead of cards. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `ruengrawin-metal` — `03e79fa82ca3c61eec39ddf259f43f8218593b88` (source 1672 × 941). Displayed at 1440 × 810 with `FILL` at the source aspect ratio, a restrained dark tonal wash, left-side readability gradient, top navigation shade, and lower chapter shade. The overlay copy is generic MYPOS Home copy and does not assign a business or location to the scene.
+- `a-neighborhood-mini-mart` — `182371721f0ee80cd06d079508b3495075a638d8` (source 1477 × 1108). Displayed at 1440 × 1080 with `FILL`, a restrained tonal wash, and left/bottom readability gradients; labelled only as `ร้านสะดวกซื้อ`.
+- `solution-pos` — `ad40270a7b0ff988950515f2e7bf5225a21b9203` (source 1477 × 1108). Displayed at 1440 × 1080 with `FILL`, a restrained tonal wash, and left/bottom readability gradients. Its context label is the neutral current-menu term `โซลูชัน`, avoiding an unsupported business or location caption.
+- `a-mall-bakery-counter` — `e54480493a57d711ed62fcd51cde52d870379f44` (source 1448 × 1086). Displayed at 1440 × 1080 with `FILL`, a restrained tonal wash, and right/bottom readability gradients behind the back-office copy.
+- `an-outdoor-made-to-order-restaurant-chain` — `c5d5b5efdd3b2d1ee447d9ca1912b42b0ede87b7` (source 1672 × 941). Displayed at 1440 × 810 with `FILL` at the source aspect ratio, a restrained tonal wash, and left/bottom readability gradients; labelled only as `ร้านอาหาร`.
+- `an-office-cafeteria` — `291f4a35f7575e65e231f6f9e4a772c8198a552d` (source 1448 × 1086). Displayed at 1440 × 1080 with `FILL`, a 55% dark wash, and a lower gradient so the contact and footer text remain readable; labelled only as `โรงอาหาร`.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 140 × 29 in the image-overlay header and 150 × 31 in the footer, each on a compact white field with a MYPOS-orange edge.
+
+Every placed image remains below its source pixel dimensions. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used. The main image is not the main image of v3 Homes 01–04.
+
+### Fresh `get_screenshot` check
+
+The final fresh `get_screenshot` rendered the complete 1440 × 5940 frame as a 970 × 4000 verification image. It showed a clearly distinct full-screen field-photography direction: six edge-to-edge real deployment photographs, large Thai copy placed directly on the images, alternating left/right readability gradients, thin chapter rails, and almost no framed UI beyond the two CTAs and compact logo fields. The required MYPOS logo, all six current menu items, Lucide Search and Columns2 icons, `th / en / zh` switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. The corrected company-story heading had a clear two-line lockup with space before its body copy, and the solution scene used a neutral `โซลูชัน` label. No text or image was visibly clipped or unintentionally overlapped. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
