@@ -141,3 +141,30 @@ Every placed image remains below its source pixel dimensions. The excluded hashe
 ### Fresh `get_screenshot` check
 
 The final fresh `get_screenshot` rendered the complete 1440 × 5940 frame as a 970 × 4000 verification image. It showed a clearly distinct full-screen field-photography direction: six edge-to-edge real deployment photographs, large Thai copy placed directly on the images, alternating left/right readability gradients, thin chapter rails, and almost no framed UI beyond the two CTAs and compact logo fields. The required MYPOS logo, all six current menu items, Lucide Search and Columns2 icons, `th / en / zh` switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. The corrected company-story heading had a clear two-line lockup with space before its body copy, and the solution scene used a neutral `โซลูชัน` label. No text or image was visibly clipped or unintentionally overlapped. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 06
+
+- Direction: **งานพิมพ์สองสี**
+- Page: `v3 Home 06 - งานพิมพ์สองสี` (`121:2`)
+- Frame: `v3 Home 06` (`121:3`), 1440 × 6220 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=121-3
+
+### Awwwards references
+
+- **Codapress Publishing** (`codapress-publishing`, https://codapress.co.uk): used the visible dither/halftone image language, monochrome publishing atmosphere, compact editorial labels, and image-led opening plate. No copy or imagery was copied.
+- **Short Print Promo** (`short-print-promo`, https://shortprintpromo.com): used the direct promotional-flyer hierarchy, bold photo-and-type relationship, and small printed caption-plate treatment. No copy or imagery was copied.
+- **The Faces Behind Typefaces** (`the-faces-behind-typefaces`, https://readymag.com/tdc-medal): used the oversized stacked type, offset overprint effect, edition-like numbering, and graphic registration-mark rhythm. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `solution-ticketing` — source hash `e9c325175092d0e511fd03aabfa8eb80ebe02262` (source 1108 × 1477). Converted at source dimensions into a true 8 px circular screen using only MYPOS orange `#e85520` and navy `#122439`, uploaded as derived hash `a865c796a5e399805ba42d4d6f832ee154c307d3`, and displayed at 506 × 675 with `FILL`, a slight counter-clockwise rotation, navy offset backing, registration marks, and a factual ticketing caption.
+- `solution-weigh-pay` — source hash `f5a0a0ed70f3aef518b0db3fdb13465722c2df8b` (source 1477 × 1108). Converted at source dimensions into the same two-color 8 px circular screen, uploaded as derived hash `9404bec9155f3800b8da5935ed09e92f96449a9d`, and displayed at 740 × 555 with `FILL`, an orange offset backing, hard navy rule, and the factual `POS / SELF ORDERING ชั่งขีด` caption.
+- `mypos-k1` — source hash `f10953380688b9f35fd03d7f1a5326095fbc37f8` (source 1920 × 1080). Converted at source dimensions into the same two-color 8 px circular screen, uploaded as derived hash `621705b6f7ae767222347378202f7cac25d437da`, and displayed at 700 × 394 with `FILL` as an orange product plate inside the navy K1 section.
+- `about-team` — source hash `a017f5ef137b4cb523e10accaa992aab9aa2b791` (source 1108 × 1477). Converted at source dimensions into the same two-color 8 px circular screen, uploaded as derived hash `bd11da35c6b404fb5a6df393f67d06cf2c80d3cf`, and displayed at 430 × 573 with `FILL`, a slight counter-clockwise rotation, navy offset backing, and the factual `ทีมงาน MYPOS` caption.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 144 × 30 in the header and 162 × 34 in the footer, each on a sharp paper plaque.
+
+Every image remains below its source pixel dimensions. The main image is not the main image of v3 Homes 01–05. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used.
+
+### Fresh `get_screenshot` check
+
+The final fresh `get_screenshot` rendered the complete 1440 × 6220 frame as a 927 × 4000 verification image. It showed an unmistakable two-color printed-flyer direction: every photograph and product image is visibly resolved into orange-and-navy screen dots; the warm paper stock, hard rules, crop/registration marks, offset headline shadows, condensed Thai display type, issue numbering, and alternating orange/navy plates hold the print metaphor across the full Home. The unique `solution-ticketing` hero remains recognizable, followed by the weigh-and-pay field photograph, K1 product plate, team photograph, ruled product index, contact block, and compact colophon-like footer. The corrected solution and K1 headings no longer wrap into or overlap adjacent copy. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. No text or image was visibly clipped, and no excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
