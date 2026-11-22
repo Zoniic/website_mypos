@@ -84,3 +84,32 @@ Every placed image remains below its source pixel dimensions. The excluded hashe
 ### Fresh `get_screenshot` check
 
 The final fresh screenshot rendered the complete frame at its native 1440 × 6200 size. It showed an unmistakable cream-paper magazine direction: a large Thai serif cover headline, a dominant portrait deployment photo, fine editorial rules and folios, a three-column set of real shop stories, a two-page product spread, and a colophon-style footer. The corrected hero had three deliberate headline lines with clear space before the deck; no text or image visibly overlapped or clipped. The required MYPOS logo, all six current menu items, Lucide Search and Columns2 icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. Product names, highlights, and metadata matched the approved content. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 04
+
+- Direction: **แคตตาล็อกช่าง**
+- Page: `v3 Home 04 - แคตตาล็อกช่าง` (`112:2`)
+- Frame: `v3 Home 04` (`112:3`), 1440 × 5900 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=112-3
+
+### Awwwards references
+
+- **Terminal Industries** (`terminal-industries`, https://terminal-industries.com): used the industrial-document tone, the compact utility navigation, and the idea of registering a large physical machine against engineering overlays. No copy or imagery was copied.
+- **Lidar Drone Scanning** (`lidar-drone-scanning`, https://drone.riotters.com/): used the isolated hardware stage, pale technical field, sparse coordinate labels, and precise framing around the product. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `mypos-fm-ea-22mart` — `1f1fb67331b0c50b455edc167aad8980f2645efc` (source 1920 × 1080). Displayed at 520 × 585 with centered `FILL`, `MULTIPLY`, slight contrast/desaturation adjustment, orange registration marks, and factual dimension lines for 1080 × 640 × 1610 mm.
+- `mypos-k1` — `f10953380688b9f35fd03d7f1a5326095fbc37f8` (source 1920 × 1080). Displayed at 470 × 264 with `FIT`, `MULTIPLY`, a light contrast/desaturation adjustment, and a dimension rail using the approved 240 × 240 × 510 mm specification.
+- `mypos-t70` — `4a736823768098cf61ee2c1b2977db5735dcc6c2` (source 1920 × 1080). Displayed at 470 × 264 with `FIT`, `MULTIPLY`, a light contrast/desaturation adjustment, and a dimension rail using the approved 380 × 280 × 410 mm specification.
+- `mypos-nb65` — `6a5cc7ace1de090d9e556e6ce00b2722cfadbd41` (source 1920 × 1080). Displayed at 470 × 264 with `FIT`, `MULTIPLY`, a light contrast/desaturation adjustment, and a dimension rail using the approved 80 × 60 × 120 mm specification.
+- `software-screenshot-dashboard` — `14f2ac46d8d66121a8d781a35c7812cb6ee904c7` (source 1107 × 730). Displayed at 726 × 478 with `FIT` inside a sharp orange keyline and labelled `ตัวอย่างหน้าจอระบบ`; the full dashboard remains visible without cropping.
+- `ruengrawin-metal` — `03e79fa82ca3c61eec39ddf259f43f8218593b88` (source 1672 × 941). Displayed at 720 × 405 with `FILL`, strong desaturation, restrained contrast, a black keyline, orange coordinate rules, and the factual context label `การผลิต`.
+- `about-assembly` — `e348c37dae5912d130f2297a26e4201ee4666f12` (source 350 × 350). Displayed at 176 × 176 with `FILL`, desaturation, a black keyline, and a small measurement annotation; it stays within the brief's 176 px maximum.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 150 × 31 in the header and 158 × 32 in the footer plaque.
+
+Every placed image remains below its source pixel dimensions. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used. The main image is not the main image of v3 Homes 01–03.
+
+### Fresh `get_screenshot` check
+
+The final fresh screenshot rendered the complete frame at its native 1440 × 5900 size. It showed a clearly distinct factory specification catalog: a light-grey drafting grid, a large annotated FM-EA-22MART plate, factual 22 inch/4GB/64GB/35 kg figures, ruled product rows with measurement lines, a dark technical dashboard chapter, and an orange contact sheet. The required MYPOS logo, six current menu items, Lucide Search and Columns2 icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. Thai text, product names, approved dimensions, and the dashboard remained legible; no visible text or image clipping, overlap, or unintended empty band appeared. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
