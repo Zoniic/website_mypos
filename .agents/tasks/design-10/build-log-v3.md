@@ -195,3 +195,29 @@ Every placed image remains below its source pixel dimensions. The excluded hashe
 ### Fresh `get_screenshot` check
 
 The final fresh `get_screenshot` rendered the complete 1440 × 5900 frame as a 977 × 4000 verification image. It showed an unmistakable blueprint shop-plan direction: a dark-blue top-down restaurant plan with furniture, room boundaries, and orange numbered placements for K1 at the front of store, NB65 at the counter, and T70 in the kitchen; a pale architectural schedule repeats those three positions with exact product names and approved dimensions; and a numbered route diagram carries the spatial system through the page. The desaturated real team photograph, orange contact sheet, and deep-blue technical footer remained consistent with the direction. The corrected plan walls and vertical route aligned inside the plan, with no stray line crossing the header. The required MYPOS logo, all six current menu items, search, compare, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. No text or image was visibly clipped or unintentionally overlapped. No excluded image, emoji, non-Lucide icon, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 08
+
+- Direction: **หน้าจอซอฟต์แวร์**
+- Page: `v3 Home 08 - หน้าจอซอฟต์แวร์` (`127:2`)
+- Frame: `v3 Home 08` (`128:2`), 1440 × 6480 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=128-2
+
+### Awwwards references
+
+- **Viture Dashboard** (`viture-dashboard`, https://www.viture.com/dashboard): used the product dashboard as the hero's dominant visual, the dark control-console framing, and restrained orange state markers. No copy or imagery was copied.
+- **Legacy bridge software** (`legacy-bridge-software`, https://legacybridge.software/): used the application-window hierarchy, split screen-and-process composition, fine background grid, and compact functional navigation. No copy or imagery was copied.
+- **imflorea — Software Architect** (`imflorea-software-architect`, https://imflorea.dev): used the deep navy workspace, technical crosshair-grid atmosphere, sparse micro-labels, and framed system panels around large Thai typography. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `software-screenshot-dashboard` — `14f2ac46d8d66121a8d781a35c7812cb6ee904c7` (source 1107 × 730). Displayed at 1080 × 712 with `FIT` inside the hero's dark back-office window, with the complete dashboard visible and no crop.
+- `software-screenshot-sales` — `e35eb99afcc24a7cb7850b49642cc71856d6926b` (source 2081 × 2141). Displayed at 560 × 576 with `FIT` on a white screen underlay inside a dark application window; the full report remains visible and is captioned `ตัวอย่างหน้าจอระบบ`.
+- `about-team` — `a017f5ef137b4cb523e10accaa992aab9aa2b791` (source 1108 × 1477). Displayed at 420 × 560 with `FILL` at the source aspect ratio, a 24% navy overlay, a sharp orange left edge, and the factual caption `ทีมงาน MYPOS`.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 128 × 27 in the header and 152 × 32 in the footer, both on compact white system plaques.
+
+Every placed image remains below its source pixel dimensions. The main dashboard image is not a main image used by v3 Homes 01–07. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used.
+
+### Fresh `get_screenshot` check
+
+The final fresh `get_screenshot` rendered the complete 1440 × 6480 frame as a 1112 × 5000 verification image. It showed an unmistakable dark-navy back-office software direction: the real dashboard screenshot dominates the hero at readable scale, followed by the complete sales screenshot and a factual product-list interface built from approved catalog data. Numbered system rails, thin data grids, sharp application windows, the three-part hardware/software/after-sales module map, and the ruled product table carry the system-screen language through the page. MYPOS orange is used for active states, primary actions, and the contact command band. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, ChevronDown, Monitor, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. The screenshot showed no visible clipping, overlap, unintended empty band, or misleading photo caption. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
