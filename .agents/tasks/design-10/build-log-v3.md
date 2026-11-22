@@ -252,3 +252,32 @@ Every placed image remains below its source pixel dimensions. The main image is 
 ### Fresh `get_screenshot` check
 
 The final fresh `get_screenshot` rendered the complete 1440 × 5800 frame as a 994 × 4000 verification image. It showed a clearly distinct friendly small-shop direction: a peach first screen, chunky rounded Mitr headlines, outlined sticker labels with hard offset shadows, a real neighborhood mini-mart hero, soft mint/yellow supporting fields, tilted product sticker-cards, and two warmly treated real business photos. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, ChevronDown, Store, Monitor, Headphones, Phone, Mail, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. Thai copy, product names, approved highlights, and photo captions remained legible; no visible clipping, unintended overlap, or empty band appeared. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 10
+
+- Direction: **ตัวอักษรยักษ์**
+- Page: `v3 Home 10 - ตัวอักษรยักษ์` (`132:2`)
+- Frame: `v3 Home 10` (`132:3`), 1440 × 6400 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=132-3
+
+### Awwwards references
+
+- **Groteskly Yours Studio** (`groteskly-yours-studio`, https://groteskly.xyz): used the type-foundry approach in which oversized typography is the primary visual object, plus the compact monochrome navigation and hard white/black transitions. No copy or imagery was copied.
+- **Grids** (`grids-1`, https://grids03.obys.agency/): used the explicit modular grid as a visible part of the composition, with content locked to hard column boundaries and oversized chapter numerals acting as navigation. No copy or imagery was copied.
+- **Exat typeface** (`exat-typeface`, https://exat.hottype.co/): used the modernist type-specimen scale, tightly stacked display lines, and disciplined two-tone field as the basis for the giant Thai headings and numerals. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `solution-weigh-pay` — `f5a0a0ed70f3aef518b0db3fdb13465722c2df8b` (source 1477 × 1108). Displayed at 680 × 510 with `FILL`, full desaturation, +0.18 contrast, -0.04 exposure, a black keyline, and a 12 px MYPOS-orange left edge; captioned factually as `POS / Self Ordering ชั่งขีด`. This asset was not the main image of v3 Homes 01–09.
+- `about-team` — `a017f5ef137b4cb523e10accaa992aab9aa2b791` (source 1108 × 1477). Displayed at 390 × 520 with `FILL`, full desaturation, +0.15 contrast, -0.08 exposure, a white keyline, and a sharp orange offset frame; captioned `ทีมงาน MYPOS`.
+- `mypos-f62` — `a51147ab0d815b2b5d82533dbf273b39b6bd7fa6` (source 1920 × 1080). Displayed at 372 × 210 with `FIT`, full desaturation, +0.12 contrast, and +0.02 exposure directly on the white product grid.
+- `mypos-t70` — `4a736823768098cf61ee2c1b2977db5735dcc6c2` (source 1920 × 1080). Displayed at 372 × 210 with `FIT`, full desaturation, +0.12 contrast, and +0.02 exposure directly on the white product grid.
+- `mypos-nb80t` — `dce4d84ab88be1908e7057d33ea4cc3a20ff1889` (source 1920 × 1080). Displayed at 372 × 210 with `FIT`, full desaturation, +0.12 contrast, and +0.02 exposure directly on the white product grid.
+- `software-screenshot-sales` — `e35eb99afcc24a7cb7850b49642cc71856d6926b` (source 2081 × 2141). Displayed at 464 × 477 with `FIT`, full desaturation, +0.08 contrast, +0.02 exposure, a white keyline, and a sharp orange offset frame; the complete screenshot is visible without cropping and is labelled `ตัวอย่างหน้าจอระบบ`.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 134 × 28 in the header and 156 × 32 in the footer, both on sharp white plaques.
+
+Every placed image remains below its source pixel dimensions. All photographs and screenshots are monochrome, so MYPOS orange `#e85520` is the only hue. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used.
+
+### Fresh `get_screenshot` check
+
+The final fresh `get_screenshot` rendered the complete 1440 × 6400 frame as a 1125 × 5000 verification image. It showed an unmistakable giant-type direction: alternating white and black fields, a visible strict grid, a three-line oversized Thai hero, giant chapter numerals `01`–`05`, and MYPOS orange as the only hue. The grayscale weigh-and-pay field photograph remained the hero's main image, followed by a real MYPOS team photograph, three sharp product columns, a complete monochrome sales-system screenshot, and a large contact grid. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. The corrected hero `01` stayed on one line, the About heading resolved to two deliberate lines, and no text or image was visibly clipped or unintentionally overlapped. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
