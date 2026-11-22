@@ -54,3 +54,33 @@ Every placed image remains below its source pixel dimensions. The excluded hashe
 ### Fresh `get_screenshot` check
 
 The final fresh screenshot rendered the complete frame at its native 1440 × 6280 size. It showed a clearly distinct black showroom direction: the FM-EA-22 alone under a hero spotlight, then T70, F62, and NB80T in alternating full-width display bays with thin Thai typography, fine specification rails, dark floor shadows, and MYPOS orange limited to small dots and the logo. The real-use gallery remained subdued and accurately labelled as `โรงอาหาร`, `ค้าปลีก`, and `เบเกอรี่`. The required MYPOS logo, six menu items, Lucide Search and Columns2 icons, language switch, CTA, exact contact details, and footer were visible. Product names, highlights, and specifications matched the approved content; no text or image was visibly clipped. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 03
+
+- Direction: **นิตยสาร**
+- Page: `v3 Home 03 - นิตยสาร` (`106:2`)
+- Frame: `v3 Home 03` (`106:3`), 1440 × 6200 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=106-3
+
+### Awwwards references
+
+- **Julie Cate Christman** (`julie-cate-christman`, https://www.juliecate.com): used the asymmetrical paper-spread grid, small marginal labels and captions, portrait feature image, and narrow prose columns. No copy or imagery was copied.
+- **Emergence Magazine** (`emergence-magazine`, https://emergencemagazine.org/): used the large serif issue-like hierarchy, documentary image as the cover's main character, and editorial section-marker/folio rhythm. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `a-hot-pot-restaurant-in-a-community-mall` — `54b34f4d8fa5506e8e1d17009f0a1772decf6f8c` (source 960 × 1706). Displayed at 526 × 936 with `FILL`, slight desaturation, subtle warmth and contrast, a 1 px ink keyline, and a cream print-style caption rail.
+- `a-neighborhood-mini-mart` — `182371721f0ee80cd06d079508b3495075a638d8` (source 1477 × 1108). Displayed at 396 × 297 with `FILL`, slight warm desaturation, restrained contrast, and a 1 px ink keyline in customer-story column 01.
+- `an-office-cafeteria` — `291f4a35f7575e65e231f6f9e4a772c8198a552d` (source 1448 × 1086). Displayed at 396 × 297 with `FILL`, slight warm desaturation, restrained contrast, and a 1 px ink keyline in customer-story column 02.
+- `a-mall-bakery-counter` — `e54480493a57d711ed62fcd51cde52d870379f44` (source 1448 × 1086). Displayed at 396 × 297 with `FILL`, slight warm desaturation, restrained contrast, and a 1 px ink keyline in customer-story column 03.
+- `an-outdoor-made-to-order-restaurant-chain` — `c5d5b5efdd3b2d1ee447d9ca1912b42b0ede87b7` (source 1672 × 941). Displayed at 790 × 444 with `FILL`, mild warm desaturation, restrained contrast, a 1 px ink keyline, and a small factual context caption.
+- `about-team` — `a017f5ef137b4cb523e10accaa992aab9aa2b791` (source 1108 × 1477). Displayed at 396 × 528 with `FILL`, slight warm desaturation, restrained contrast, a 1 px ink keyline, and a team/support caption.
+- `mypos-fm-ea-slim-22--desktop-` — `31e27246b8776be20654571baeffe44919230c82` (source 1920 × 1080). Displayed at 560 × 315 with `FIT` and `MULTIPLY` directly on the cream product spread, with no white card.
+- `mypos-f58` — `99fd888dc758f72374ebd6e921b026a854186720` (source 1920 × 1080). Displayed at 560 × 315 with `FIT` and `MULTIPLY` directly on the cream product spread, with no white card.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 164 × 34 in the header and 180 × 38 in the footer.
+
+Every placed image remains below its source pixel dimensions. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used.
+
+### Fresh `get_screenshot` check
+
+The final fresh screenshot rendered the complete frame at its native 1440 × 6200 size. It showed an unmistakable cream-paper magazine direction: a large Thai serif cover headline, a dominant portrait deployment photo, fine editorial rules and folios, a three-column set of real shop stories, a two-page product spread, and a colophon-style footer. The corrected hero had three deliberate headline lines with clear space before the deck; no text or image visibly overlapped or clipped. The required MYPOS logo, all six current menu items, Lucide Search and Columns2 icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. Product names, highlights, and metadata matched the approved content. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
