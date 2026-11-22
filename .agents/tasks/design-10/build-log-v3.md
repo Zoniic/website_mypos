@@ -168,3 +168,30 @@ Every image remains below its source pixel dimensions. The main image is not the
 ### Fresh `get_screenshot` check
 
 The final fresh `get_screenshot` rendered the complete 1440 × 6220 frame as a 927 × 4000 verification image. It showed an unmistakable two-color printed-flyer direction: every photograph and product image is visibly resolved into orange-and-navy screen dots; the warm paper stock, hard rules, crop/registration marks, offset headline shadows, condensed Thai display type, issue numbering, and alternating orange/navy plates hold the print metaphor across the full Home. The unique `solution-ticketing` hero remains recognizable, followed by the weigh-and-pay field photograph, K1 product plate, team photograph, ruled product index, contact block, and compact colophon-like footer. The corrected solution and K1 headings no longer wrap into or overlap adjacent copy. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. No text or image was visibly clipped, and no excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 07
+
+- Direction: **ผังร้าน**
+- Page: `v3 Home 07 - ผังร้าน` (`125:2`)
+- Frame: `v3 Home 07` (`125:3`), 1440 × 5900 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=125-3
+
+### Awwwards references
+
+- **Floor Planner** (`floor-planner`, https://floor-planner.ai/): used the top-down room plan as the primary interface, simplified furniture symbols, and the plan-plus-schedule relationship. No copy or imagery was copied.
+- **AP Transit - NYC Subway Map** (`ap-transit-nyc-subway-map`, https://aptransit.co): used the numbered-node route language and compact spatial legend to connect the front-of-store, counter, and kitchen positions. No copy or imagery was copied.
+- **BLUEPRINT** (`blueprint-2`, https://blueprintapps.io/): used the dark gridded canvas, crisp framed information fields, and restrained technical annotations around a central system view. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `mypos-k1` — `f10953380688b9f35fd03d7f1a5326095fbc37f8` (source 1920 × 1080). Displayed at 370 × 208 with `FIT`, slight desaturation and contrast adjustment inside the orange-keyed front-of-store position on the blueprint. It is not a main image used by v3 Homes 01–06.
+- `mypos-nb65` — `6a5cc7ace1de090d9e556e6ce00b2722cfadbd41` (source 1920 × 1080). Displayed at 156 × 88 with `FIT`, slight desaturation and contrast adjustment in the counter position.
+- `mypos-t70` — `4a736823768098cf61ee2c1b2977db5735dcc6c2` (source 1920 × 1080). Displayed at 220 × 124 with `FIT`, slight desaturation and contrast adjustment in the kitchen position.
+- `about-team` — `a017f5ef137b4cb523e10accaa992aab9aa2b791` (source 1108 × 1477). Displayed at 466 × 640 with `FILL`, full desaturation, restrained contrast/exposure adjustment, a 38% blueprint-blue color layer, and a cyan drafting grid; captioned factually as `ทีมงาน MYPOS`.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 134 × 28 in the header and 166 × 34 in the footer, both on white plan-label plaques.
+
+Every placed image remains below its source pixel dimensions. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used.
+
+### Fresh `get_screenshot` check
+
+The final fresh `get_screenshot` rendered the complete 1440 × 5900 frame as a 977 × 4000 verification image. It showed an unmistakable blueprint shop-plan direction: a dark-blue top-down restaurant plan with furniture, room boundaries, and orange numbered placements for K1 at the front of store, NB65 at the counter, and T70 in the kitchen; a pale architectural schedule repeats those three positions with exact product names and approved dimensions; and a numbered route diagram carries the spatial system through the page. The desaturated real team photograph, orange contact sheet, and deep-blue technical footer remained consistent with the direction. The corrected plan walls and vertical route aligned inside the plan, with no stray line crossing the header. The required MYPOS logo, all six current menu items, search, compare, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. No text or image was visibly clipped or unintentionally overlapped. No excluded image, emoji, non-Lucide icon, invented statistic, testimonial, price, SLA, or address appeared.
