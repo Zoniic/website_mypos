@@ -221,3 +221,34 @@ Every placed image remains below its source pixel dimensions. The main dashboard
 ### Fresh `get_screenshot` check
 
 The final fresh `get_screenshot` rendered the complete 1440 × 6480 frame as a 1112 × 5000 verification image. It showed an unmistakable dark-navy back-office software direction: the real dashboard screenshot dominates the hero at readable scale, followed by the complete sales screenshot and a factual product-list interface built from approved catalog data. Numbered system rails, thin data grids, sharp application windows, the three-part hardware/software/after-sales module map, and the ruled product table carry the system-screen language through the page. MYPOS orange is used for active states, primary actions, and the contact command band. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, ChevronDown, Monitor, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. The screenshot showed no visible clipping, overlap, unintended empty band, or misleading photo caption. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
+
+## v3 Home 09
+
+- Direction: **เป็นกันเอง**
+- Page: `v3 Home 09 - เป็นกันเอง` (`131:2`)
+- Frame: `v3 Home 09` (`131:3`), 1440 × 5800 px
+- Figma: https://www.figma.com/design/RfzIGGGsN5zgLssxmgHouj?node-id=131-3
+
+### Awwwards references
+
+- **2025 Small Business Guide** (`2025-small-business-guide`, https://small-business-marketing.vistaprint.com/): used the welcoming small-business tone, oversized organic color loops, and stamp-like labels as a basis for the peach canvas and loose sticker rhythm. No copy or imagery was copied.
+- **Club Charlestown** (`club-charlestown`, https://clubcharlestown.com.au/): used the bold friendly display hierarchy, real community photography, and outlined oval badge language to keep the page approachable rather than corporate. No copy or imagery was copied.
+- **Playbook** (`playbook`, https://www.playbook.com/): used the soft rounded image-tile geometry, generous spacing, and light product framing for the card and photo compositions. No copy or imagery was copied.
+
+### Images used
+
+- **Main image:** `a-neighborhood-mini-mart` — `182371721f0ee80cd06d079508b3495075a638d8` (source 1477 × 1108). Displayed at 548 × 411 with `FILL`, restrained warm color adjustment, a 10 px white inset border, a 46 px radius, and a dark offset backing; captioned only as `ค้าปลีก`.
+- `mypos-f62` — `a51147ab0d815b2b5d82533dbf273b39b6bd7fa6` (source 1920 × 1080). Displayed at 336 × 189 with `FIT`, `MULTIPLY`, and a slight neutral contrast/desaturation adjustment inside the tilted cream hero sticker.
+- `about-team` — `a017f5ef137b4cb523e10accaa992aab9aa2b791` (source 1108 × 1477). Displayed at 360 × 480 with `FILL` at the source aspect ratio, a mild warm adjustment, and a rounded white snapshot frame; labelled with the exact copy fragment `ทีมงานของเราเอง`.
+- `mypos-nb65` — `6a5cc7ace1de090d9e556e6ce00b2722cfadbd41` (source 1920 × 1080). Displayed at 336 × 189 with `FIT`, `MULTIPLY`, and a slight neutral contrast/desaturation adjustment on the cream product sticker-card.
+- `mypos-f58` — `99fd888dc758f72374ebd6e921b026a854186720` (source 1920 × 1080). Displayed at 336 × 189 with `FIT`, `MULTIPLY`, and a slight neutral contrast/desaturation adjustment on the mint product sticker-card.
+- `mypos-nb80t` — `dce4d84ab88be1908e7057d33ea4cc3a20ff1889` (source 1920 × 1080). Displayed at 336 × 189 with `FIT`, `MULTIPLY`, and a slight neutral contrast/desaturation adjustment on the pale-yellow product sticker-card.
+- `a-mall-bakery-counter` — `e54480493a57d711ed62fcd51cde52d870379f44` (source 1448 × 1086). Displayed at 540 × 405 with `FILL`, restrained warm color adjustment, a 10 px white inset border, rounded corners, and a dark offset backing; captioned only as `เบเกอรี่`.
+- `an-outdoor-made-to-order-restaurant-chain` — `c5d5b5efdd3b2d1ee447d9ca1912b42b0ede87b7` (source 1672 × 941). Displayed at 580 × 326 with `FILL` at the source aspect ratio, restrained warm color adjustment, a 10 px white inset border, rounded corners, and a dark offset backing; captioned only as `ร้านอาหาร`.
+- Brand asset `logo` — `a1f618f118959ed2f57120ade7fdfa9dfe818d0e` (source 7908 × 1637). Used with `FIT` at 148 × 31 in the floating header and 180 × 37 in the footer sticker-plaque.
+
+Every placed image remains below its source pixel dimensions. The main image is not a main image used by v3 Homes 01–08. The excluded hashes `379310d70c386017ae791043b22348f024e519af` and `1bd4d8a51a27c2765c7c9656b85ebc0e58dc2d77` were not used.
+
+### Fresh `get_screenshot` check
+
+The final fresh `get_screenshot` rendered the complete 1440 × 5800 frame as a 994 × 4000 verification image. It showed a clearly distinct friendly small-shop direction: a peach first screen, chunky rounded Mitr headlines, outlined sticker labels with hard offset shadows, a real neighborhood mini-mart hero, soft mint/yellow supporting fields, tilted product sticker-cards, and two warmly treated real business photos. The required MYPOS logo, all six current menu items, Lucide Search, Columns2, ChevronDown, Store, Monitor, Headphones, Phone, Mail, and ArrowRight icons, language switch, `นัดสาธิตฟรี` CTA, and exact office, sales, and email details were visible. Thai copy, product names, approved highlights, and photo captions remained legible; no visible clipping, unintended overlap, or empty band appeared. No excluded image, emoji, invented statistic, testimonial, price, SLA, or address appeared.
