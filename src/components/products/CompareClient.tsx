@@ -8,6 +8,7 @@ import { useTranslations, useFormatter } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useQuoteCart } from "@/lib/quoteCart";
 import { submitQuoteRequest, type SubmitQuoteState } from "@/app/[locale]/compare/actions";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 const initialState: SubmitQuoteState = { status: "idle" };
 
@@ -115,6 +116,7 @@ export function CompareClient() {
         <h2 className="text-xl font-bold tracking-tight">{t("formTitle")}</h2>
         <p className="mt-1 text-sm text-text-2">{t("formSubtitle")}</p>
         <form onSubmit={submitWithoutReset(formAction)} className="mt-6 space-y-4">
+          <HoneypotField />
           <input type="hidden" name="items" value={JSON.stringify(items)} />
           <div>
             <label htmlFor="quote-name" className="text-sm font-medium text-text-2">

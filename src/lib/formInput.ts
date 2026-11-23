@@ -23,6 +23,18 @@ export function textField(formData: FormData, key: string, max: number): string 
   return String(formData.get(key) ?? "").trim().slice(0, max);
 }
 
+/** Name of the hidden honeypot input (same name the checkout form uses). */
+export const HONEYPOT_FIELD = "website";
+
+/**
+ * True when the hidden honeypot field was filled, which people never do.
+ * Callers answer with a normal "success" and store nothing, so bots get no
+ * signal that they were filtered.
+ */
+export function isBotSubmission(formData: FormData): boolean {
+  return String(formData.get(HONEYPOT_FIELD) ?? "") !== "";
+}
+
 export type QuoteLine = { slug: string; name: string; quantity: number };
 
 export const MAX_QUOTE_LINES = 50;

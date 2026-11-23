@@ -4,7 +4,7 @@ import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyTeam, quoteAlert } from "@/lib/notify";
 import { overSubmissionLimit } from "@/lib/clientIp";
-import { EMAIL_PATTERN, MAX, parseQuoteLines, textField } from "@/lib/formInput";
+import { EMAIL_PATTERN, MAX, isBotSubmission, parseQuoteLines, textField } from "@/lib/formInput";
 
 export type QuoteCartItemInput = { slug: string; name: string; quantity: number };
 
@@ -28,6 +28,9 @@ export async function submitQuoteRequest(
   // The cart comes from the browser: only a short list of well-formed lines is accepted.
   const items = parseQuoteLines(itemsRaw.length > 20000 ? "" : itemsRaw);
   if (!items) return { status: "error", message: "Add at least one product first." };
+
+  // Honeypot filled: a bot. Look successful, store nothing, send no alert.
+  if (isBotSubmission(formData)) return { status: "success" };
 
   if (await overSubmissionLimit("quote")) return { status: "error", message: "Too many requests — please try again later." };
 

@@ -5,7 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { contactAlert, notifyTeam } from "@/lib/notify";
 import { findBusinessType, getCatalog } from "@/lib/catalog";
 import { overSubmissionLimit } from "@/lib/clientIp";
-import { MAX, textField } from "@/lib/formInput";
+import { MAX, isBotSubmission, textField } from "@/lib/formInput";
 
 /** `topic` is echoed back on success so the page can report a typed lead to analytics. */
 export type ContactFormState = { status: "idle" | "error" | "success"; topic?: string };
@@ -26,6 +26,9 @@ export async function submitContactMessage(
   const industry = findBusinessType(await getCatalog(), rawIndustry) ? rawIndustry : null;
 
   if (!name || !phone) return { status: "error" };
+
+  // Honeypot filled: a bot. Look successful, store nothing, send no alert.
+  if (isBotSubmission(formData)) return { status: "success", topic };
 
   // Anti-spam: 5 messages per 15 minutes per IP.
   if (await overSubmissionLimit("contact")) return { status: "error" };

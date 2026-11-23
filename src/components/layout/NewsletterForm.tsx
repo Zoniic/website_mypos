@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { subscribeNewsletter, type NewsletterState } from "./newsletterActions";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 const initialState: NewsletterState = { status: "idle" };
 
@@ -31,6 +32,7 @@ export function NewsletterForm({
         </p>
       ) : (
         <form action={formAction} className="mt-3 flex gap-2">
+          <HoneypotField />
           <input
             type="email"
             name="email"

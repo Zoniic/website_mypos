@@ -2,6 +2,7 @@
 
 import { prisma } from "@/lib/prisma";
 import { overSubmissionLimit } from "@/lib/clientIp";
+import { isBotSubmission } from "@/lib/formInput";
 
 export type NewsletterState = { status: "idle" | "error" | "success" | "already"; message?: string };
 
@@ -15,6 +16,9 @@ export async function subscribeNewsletter(
   if (!email || !EMAIL_PATTERN.test(email)) {
     return { status: "error", message: "invalid" };
   }
+
+  // Honeypot filled: a bot. Look successful, store nothing.
+  if (isBotSubmission(formData)) return { status: "success" };
 
   if (await overSubmissionLimit("newsletter")) return { status: "error", message: "invalid" };
 

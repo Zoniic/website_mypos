@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { submitWarrantyClaim, type WarrantyClaimState } from "@/app/[locale]/service/warrantyActions";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 const initialState: WarrantyClaimState = { status: "idle" };
 
@@ -43,6 +44,7 @@ export function WarrantyClaimForm({
       <h3 className="text-xl font-bold tracking-tight">{labels.title}</h3>
       <p className="mt-2 text-text-2">{labels.subtitle}</p>
       <form onSubmit={submitWithoutReset(formAction)} className="mt-6 grid gap-4 sm:grid-cols-2">
+        <HoneypotField />
         <label className="block">
           <span className="text-sm font-medium text-text-2">{labels.name}</span>
           <input

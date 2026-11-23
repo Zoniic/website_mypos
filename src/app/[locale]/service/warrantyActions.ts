@@ -4,7 +4,7 @@ import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyTeam, warrantyAlert } from "@/lib/notify";
 import { overSubmissionLimit } from "@/lib/clientIp";
-import { EMAIL_PATTERN, MAX, textField } from "@/lib/formInput";
+import { EMAIL_PATTERN, MAX, isBotSubmission, textField } from "@/lib/formInput";
 
 export type WarrantyClaimState = { status: "idle" | "error" | "success"; message?: string };
 
@@ -23,6 +23,9 @@ export async function submitWarrantyClaim(
   if (!phone) return { status: "error", message: "phone" };
   if (!EMAIL_PATTERN.test(email)) return { status: "error", message: "email" };
   if (!issue) return { status: "error", message: "issue" };
+
+  // Honeypot filled: a bot. Look successful, store nothing, send no alert.
+  if (isBotSubmission(formData)) return { status: "success" };
 
   if (await overSubmissionLimit("warranty")) return { status: "error" };
 

@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { submitContactMessage, type ContactFormState } from "@/app/[locale]/contact/actions";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
+import { HoneypotField } from "@/components/ui/HoneypotField";
 
 export function ContactForm() {
   const t = useTranslations("contact");
@@ -44,6 +45,7 @@ export function ContactForm() {
 
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
+      <HoneypotField />
       <input type="hidden" name="industry" value={industryParam} />
       <div>
         <label htmlFor="contact-topic" className="text-sm font-medium text-text-2">
