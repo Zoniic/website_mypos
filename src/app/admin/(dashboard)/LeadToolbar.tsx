@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Calendar, ChevronDown, Inbox, Search, X } from "lucide-react";
-import { LEAD_STATUSES, LEAD_STATUS_LABELS, type LeadKind, type LeadParams } from "@/lib/leadList";
+import { Calendar, ChevronDown, Download, Inbox, Search, X } from "lucide-react";
+import { LEAD_STATUSES, LEAD_STATUS_LABELS, leadQueryString, type LeadKind, type LeadParams } from "@/lib/leadList";
 
 const TOPIC_OPTIONS: [string, string][] = [
   ["demo", "นัดสาธิต"],
@@ -34,13 +34,19 @@ export function LeadToolbar({
   params,
   admins,
   searchPlaceholder,
+  total,
 }: {
   kind: LeadKind;
   basePath: string;
   params: LeadParams;
   admins: { id: number; name: string }[];
   searchPlaceholder: string;
+  total: number;
 }) {
+  // Same filters as the list, without the page: the export covers every matching row.
+  const exportQs = leadQueryString(params, { page: undefined });
+  const exportHref = `${basePath}/export${exportQs ? `?${exportQs}` : ""}`;
+  const exportClass = "inline-flex items-center gap-2 rounded-full border border-border-strong px-4 py-2 text-sm font-semibold";
   return (
     <form method="get" action={basePath} className="mt-6 rounded-xl border border-border bg-surface-0 p-4">
       <div className="flex flex-wrap items-end gap-3">
@@ -67,6 +73,17 @@ export function LeadToolbar({
         >
           ค้นหา
         </button>
+        {total > 0 ? (
+          <a href={exportHref} className={`${exportClass} text-text-1 hover:bg-surface-2`}>
+            <Download aria-hidden className="size-4" />
+            ส่งออก CSV
+          </a>
+        ) : (
+          <span aria-disabled="true" className={`${exportClass} border-border text-text-2 opacity-60`}>
+            <Download aria-hidden className="size-4" />
+            ส่งออก CSV
+          </span>
+        )}
       </div>
 
       <div className="mt-3 flex flex-wrap items-end gap-3">
@@ -149,10 +166,13 @@ export function LeadToolbar({
 
 export function LeadResultBar({ total, page, pageCount }: { total: number; page: number; pageCount: number }) {
   return (
-    <p className="mt-4 text-sm text-text-2">
-      <span className="font-semibold text-text-1">พบ {total.toLocaleString("th-TH")} รายการ</span>
-      {total > 0 && ` · หน้า ${page} จาก ${pageCount}`}
-    </p>
+    <div className="mt-4 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 text-sm text-text-2">
+      <p>
+        <span className="font-semibold text-text-1">พบ {total.toLocaleString("th-TH")} รายการ</span>
+        {total > 0 && ` · หน้า ${page} จาก ${pageCount}`}
+      </p>
+      {total > 0 && <p className="text-xs">ส่งออก CSV ได้ทุกรายการที่ตรงกับตัวกรอง ไม่ใช่เฉพาะหน้านี้</p>}
+    </div>
   );
 }
 

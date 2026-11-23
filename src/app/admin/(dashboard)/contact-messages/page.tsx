@@ -40,6 +40,7 @@ export default async function AdminContactMessagesPage({
         params={params}
         admins={admins}
         searchPlaceholder="ค้นหาชื่อ เบอร์โทร สินค้า หรือข้อความ"
+        total={total}
       />
       <LeadResultBar total={total} page={page} pageCount={pageCount} />
 

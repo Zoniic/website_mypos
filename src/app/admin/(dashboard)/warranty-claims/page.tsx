@@ -31,6 +31,7 @@ export default async function AdminWarrantyClaimsPage({
         params={params}
         admins={admins}
         searchPlaceholder="ค้นหาชื่อ เบอร์โทร อีเมล Serial หรืออาการ"
+        total={total}
       />
       <LeadResultBar total={total} page={page} pageCount={pageCount} />
 

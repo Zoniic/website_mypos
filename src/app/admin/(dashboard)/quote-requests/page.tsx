@@ -33,6 +33,7 @@ export default async function AdminQuoteRequestsPage({
         params={params}
         admins={admins}
         searchPlaceholder="ค้นหาชื่อ บริษัท เบอร์โทร อีเมล หรือรุ่นสินค้า"
+        total={total}
       />
       <LeadResultBar total={total} page={page} pageCount={pageCount} />
 
