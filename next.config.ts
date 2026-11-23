@@ -4,6 +4,39 @@ import { legacyRedirects } from "./src/data/legacyRedirects";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
+// Content-Security-Policy, report-only. It blocks nothing; violations show in
+// the browser console. Every origin below is one the code really loads:
+// - TrackingScripts.tsx: Google tag/GTM/Ads, Meta pixel, TikTok pixel, LINE tag.
+// - kb.ts toEmbedUrl: YouTube and Google Drive embeds. siteDisplay.ts: Google Maps embed.
+// - uploads and datasheet iframe: Supabase Storage (*.supabase.co).
+// Inline scripts are needed (tracking bootstrap, JSON-LD). A nonce would force
+// dynamic rendering and break cached pages (HANDOFF section 3.8), so none is used.
+// Switching to enforcing (Content-Security-Policy) needs a clean report first.
+const isDev = process.env.NODE_ENV !== "production";
+const contentSecurityPolicyReportOnly = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net`,
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co",
+  "img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com",
+  "media-src 'self' blob: https://*.supabase.co",
+  "frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net",
+  "style-src 'self' 'unsafe-inline'",
+  "font-src 'self' data:",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join("; ");
+
+const securityHeaders = [
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  { key: "X-Frame-Options", value: "SAMEORIGIN" },
+  { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
+  { key: "Content-Security-Policy-Report-Only", value: contentSecurityPolicyReportOnly },
+  // No HSTS here: the app cannot know it is served over HTTPS. Set it on the reverse proxy.
+];
+
 const nextConfig: NextConfig = {
   // Next.js 16 dev server blocks cross-origin requests to /_next/static
   // and RSC data fetches by default (only localhost is allowed). Without
@@ -36,6 +69,9 @@ const nextConfig: NextConfig = {
         pathname: "/storage/v1/object/public/**",
       },
     ],
+  },
+  async headers() {
+    return [{ source: "/:path*", headers: securityHeaders }];
   },
   async redirects() {
     return legacyRedirects.map((redirect) => ({
