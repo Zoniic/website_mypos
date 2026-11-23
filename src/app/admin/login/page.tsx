@@ -12,11 +12,11 @@ export default function AdminLoginPage() {
         action={formAction}
         className="w-full max-w-sm rounded-2xl border border-border bg-surface-1 p-8"
       >
-        <h1 className="text-xl font-bold">MYPOS Admin</h1>
-        <p className="mt-1 text-sm text-text-2">Sign in to manage site content.</p>
+        <h1 className="text-xl font-bold">หลังบ้าน MYPOS</h1>
+        <p className="mt-1 text-sm text-text-2">เข้าสู่ระบบเพื่อจัดการเนื้อหาเว็บไซต์</p>
 
         <label htmlFor="email" className="mt-6 block text-sm font-medium text-text-2">
-          Email
+          อีเมล
         </label>
         <input
           id="email"
@@ -29,7 +29,7 @@ export default function AdminLoginPage() {
         />
 
         <label htmlFor="password" className="mt-4 block text-sm font-medium text-text-2">
-          Password
+          รหัสผ่าน
         </label>
         <input
           id="password"
@@ -47,7 +47,7 @@ export default function AdminLoginPage() {
           disabled={isPending}
           className="mt-6 w-full rounded-button bg-[image:var(--gradient-primary)] outline-offset-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 px-4 py-2.5 font-semibold text-white shadow-[var(--shadow-glow-primary)] disabled:opacity-50"
         >
-          {isPending ? "Signing in..." : "Sign In"}
+          {isPending ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
         </button>
       </form>
     </div>

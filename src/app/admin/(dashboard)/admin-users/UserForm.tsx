@@ -27,7 +27,7 @@ export function UserForm({
   return (
     <form onSubmit={submitWithoutReset(formAction)} className="max-w-xl space-y-6">
       <label className="block">
-        <span className={labelClass}>Email</span>
+        <span className={labelClass}>อีเมล</span>
         <input
           name="email"
           type="text"
@@ -42,13 +42,13 @@ export function UserForm({
       </label>
 
       <label className="block">
-        <span className={labelClass}>Name</span>
+        <span className={labelClass}>ชื่อ</span>
         <input name="name" defaultValue={initialValues.name} className={inputClass} />
       </label>
 
       <label className="block">
         <span className={labelClass}>
-          Password {isEdit && <span className="text-text-2">(leave blank to keep unchanged)</span>}
+          รหัสผ่าน {isEdit && <span className="text-text-2">(เว้นว่างไว้ถ้าไม่เปลี่ยน)</span>}
         </span>
         <input
           name="password"
@@ -56,7 +56,7 @@ export function UserForm({
           autoComplete="new-password"
           className={inputClass}
         />
-        <p className="mt-1 text-xs text-text-2">At least 8 characters.</p>
+        <p className="mt-1 text-xs text-text-2">อย่างน้อย 8 ตัวอักษร</p>
       </label>
 
       {error && <p className="text-sm text-error">{error}</p>}

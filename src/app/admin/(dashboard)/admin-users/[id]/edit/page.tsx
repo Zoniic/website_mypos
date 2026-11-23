@@ -41,14 +41,12 @@ export default async function EditAdminUserPage({
               type="submit"
               className="rounded-button border border-error px-4 py-2 text-sm font-semibold text-error hover:bg-error/10"
             >
-              Delete User
+              ลบผู้ดูแลนี้
             </button>
           </form>
         ) : (
           <p className="text-sm text-text-2">
-            {isSelf
-              ? "You can't delete your own account while signed in as it."
-              : "Can't delete the last remaining admin user."}
+            {isSelf ? "ลบบัญชีที่กำลังใช้เข้าสู่ระบบอยู่ไม่ได้" : "ลบผู้ดูแลคนสุดท้ายไม่ได้"}
           </p>
         )}
       </div>
