@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -144,13 +145,19 @@ export async function updateReference(
     });
   }
 
+  await trashReplacedFiles([
+    existing.imageUrl !== images.imageUrl ? existing.imageUrl : null,
+    existing.logoUrl !== images.logoUrl ? existing.logoUrl : null,
+  ]);
+
   revalidateReferencePaths(slug);
   redirect("/admin/references");
 }
 
 export async function deleteReference(caseId: number) {
   await requireAdmin();
-  await prisma.referenceCase.delete({ where: { id: caseId } });
+  const deleted = await prisma.referenceCase.delete({ where: { id: caseId } });
+  await trashReplacedFiles([deleted.imageUrl, deleted.logoUrl]);
   revalidateReferencePaths();
   redirect("/admin/references");
 }

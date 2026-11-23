@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -122,13 +123,16 @@ export async function updateBlogPost(postId: number, _prevState: string | null, 
     });
   }
 
+  if (existing.coverImageUrl !== coverImageUrl) await trashReplacedFiles([existing.coverImageUrl]);
+
   revalidateBlogPaths(fields.slug);
   redirect("/admin/blog");
 }
 
 export async function deleteBlogPost(postId: number) {
   await requireAdmin();
-  await prisma.blogPost.delete({ where: { id: postId } });
+  const deleted = await prisma.blogPost.delete({ where: { id: postId } });
+  await trashReplacedFiles([deleted.coverImageUrl]);
   revalidateBlogPaths();
   redirect("/admin/blog");
 }

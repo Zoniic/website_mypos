@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/adminAuth";
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { getAllImageSlots } from "./allSlots";
 
 export async function updateSitePhotos(_prevState: string | null, formData: FormData) {
@@ -17,11 +18,16 @@ export async function updateSitePhotos(_prevState: string | null, formData: Form
       return error instanceof Error ? error.message : `Failed to upload ${slot.label}.`;
     }
     if (newUrl) {
+      const previous = await prisma.siteImage.findUnique({
+        where: { key: slot.key },
+        select: { url: true },
+      });
       await prisma.siteImage.upsert({
         where: { key: slot.key },
         create: { key: slot.key, url: newUrl },
         update: { url: newUrl },
       });
+      await trashReplacedFiles([previous?.url]);
     }
   }
 

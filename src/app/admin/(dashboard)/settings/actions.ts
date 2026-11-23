@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
 import { STAT_MAX_LENGTH, isGoogleMapsEmbedUrl, isShowableStat } from "@/lib/siteDisplay";
 import { saveUploadedHeroBackground } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import {
   TRACKING_ID_PATTERNS,
   cleanPromptPayId,
@@ -157,7 +158,14 @@ export async function updateSiteSettings(_prevState: string | null, formData: Fo
   } catch (error) {
     return error instanceof Error ? error.message : "Failed to upload hero background.";
   }
-  if (heroVideoUrl) await save("heroVideoUrl", heroVideoUrl);
+  if (heroVideoUrl) {
+    const previous = await prisma.siteSetting.findUnique({
+      where: { key: "heroVideoUrl" },
+      select: { value: true },
+    });
+    await save("heroVideoUrl", heroVideoUrl);
+    await trashReplacedFiles([previous?.value]);
+  }
 
   revalidatePath("/[locale]", "layout");
   return "saved";

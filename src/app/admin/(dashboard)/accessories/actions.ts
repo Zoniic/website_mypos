@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -156,13 +157,16 @@ export async function updateAccessory(
     });
   }
 
+  if (existing.imageUrl !== imageUrl) await trashReplacedFiles([existing.imageUrl]);
+
   revalidateAccessoryPaths();
   redirect("/admin/accessories");
 }
 
 export async function deleteAccessory(accessoryId: number) {
   await requireAdmin();
-  await prisma.accessory.delete({ where: { id: accessoryId } });
+  const deleted = await prisma.accessory.delete({ where: { id: accessoryId } });
+  await trashReplacedFiles([deleted.imageUrl]);
   revalidateAccessoryPaths();
   redirect("/admin/accessories");
 }

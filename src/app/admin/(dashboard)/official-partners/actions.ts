@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 
 function revalidateAbout() {
   revalidatePath("/[locale]/about", "page");
@@ -70,13 +71,16 @@ export async function updateOfficialPartner(
     data: { name, imageUrl, websiteUrl },
   });
 
+  if (existing.imageUrl !== imageUrl) await trashReplacedFiles([existing.imageUrl]);
+
   revalidateAbout();
   redirect("/admin/official-partners");
 }
 
 export async function deleteOfficialPartner(partnerId: number) {
   await requireAdmin();
-  await prisma.officialPartner.delete({ where: { id: partnerId } });
+  const deleted = await prisma.officialPartner.delete({ where: { id: partnerId } });
+  await trashReplacedFiles([deleted.imageUrl]);
   revalidateAbout();
   redirect("/admin/official-partners");
 }

@@ -5,6 +5,7 @@ import { requireEditor } from "@/lib/editMode";
 import { emojiValuesError } from "@/lib/emoji";
 import { revalidatePublicSite } from "@/lib/siteCache";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { isLayoutVariant, isPageKey, layoutSettingKey, parseStoredLayout, resolveLayout } from "@/lib/pageLayout";
 import { getAllImageSlots } from "@/app/admin/(dashboard)/photos/allSlots";
 
@@ -81,7 +82,9 @@ export async function uploadSlotImage(formData: FormData): Promise<string> {
     return error instanceof Error ? error.message : "อัปโหลดไม่สำเร็จ";
   }
   if (!url) return "เลือกไฟล์รูปก่อน";
+  const previous = await prisma.siteImage.findUnique({ where: { key: slot }, select: { url: true } });
   await prisma.siteImage.upsert({ where: { key: slot }, create: { key: slot, url }, update: { url } });
+  await trashReplacedFiles([previous?.url]);
   revalidatePublicSite();
   return "saved";
 }

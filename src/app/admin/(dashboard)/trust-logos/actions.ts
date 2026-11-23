@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 
 function revalidateHome() {
   revalidatePath("/[locale]", "page");
@@ -65,13 +66,16 @@ export async function updateTrustLogo(
 
   await prisma.trustLogo.update({ where: { id: logoId }, data: { name, imageUrl } });
 
+  if (existing.imageUrl !== imageUrl) await trashReplacedFiles([existing.imageUrl]);
+
   revalidateHome();
   redirect("/admin/trust-logos");
 }
 
 export async function deleteTrustLogo(logoId: number) {
   await requireAdmin();
-  await prisma.trustLogo.delete({ where: { id: logoId } });
+  const deleted = await prisma.trustLogo.delete({ where: { id: logoId } });
+  await trashReplacedFiles([deleted.imageUrl]);
   revalidateHome();
   redirect("/admin/trust-logos");
 }

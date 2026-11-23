@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage, saveUploadedPdf } from "@/lib/uploads";
+import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -145,13 +146,19 @@ export async function updateKbArticle(
     });
   }
 
+  await trashReplacedFiles([
+    existing.coverImageUrl !== assets.coverImageUrl ? existing.coverImageUrl : null,
+    existing.pdfUrl !== assets.pdfUrl ? existing.pdfUrl : null,
+  ]);
+
   revalidateKb();
   redirect("/admin/kb-articles");
 }
 
 export async function deleteKbArticle(articleId: number) {
   await requireAdmin();
-  await prisma.kbArticle.delete({ where: { id: articleId } });
+  const deleted = await prisma.kbArticle.delete({ where: { id: articleId } });
+  await trashReplacedFiles([deleted.coverImageUrl, deleted.pdfUrl]);
   revalidateKb();
   redirect("/admin/kb-articles");
 }

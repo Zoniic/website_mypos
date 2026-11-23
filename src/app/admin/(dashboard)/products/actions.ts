@@ -7,6 +7,7 @@ import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
+import { splitUrlList, trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -212,6 +213,11 @@ export async function updateProduct(
     });
   }
 
+  const keptUrls = new Set([images.imageUrl, ...splitUrlList(images.galleryUrls)]);
+  await trashReplacedFiles(
+    [existing.imageUrl, ...splitUrlList(existing.galleryUrls)].filter((url) => !url || !keptUrls.has(url))
+  );
+
   revalidateProductPaths(fields.slug);
   redirect("/admin/products");
 }
@@ -219,6 +225,11 @@ export async function updateProduct(
 export async function deleteProduct(productId: number) {
   await requireAdmin();
   const product = await prisma.product.delete({ where: { id: productId } });
+  await trashReplacedFiles([
+    product.imageUrl,
+    ...splitUrlList(product.galleryUrls),
+    product.datasheetUrl,
+  ]);
   revalidateProductPaths(product.slug);
   redirect("/admin/products");
 }
