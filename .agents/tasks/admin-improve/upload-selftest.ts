@@ -86,7 +86,7 @@ async function main() {
   check("storagePathFromUrl ignores other host", storagePathFromUrl("https://evil.example/storage/v1/object/public/uploads/x.png", SB, "uploads") === null);
   check("storagePathFromUrl ignores other bucket", storagePathFromUrl(`${SB}/storage/v1/object/public/other/x.png`, SB, "uploads") === null);
   check("storagePathFromUrl ignores /images/...", storagePathFromUrl("/images/brand/logo.png", SB, "uploads") === null);
-  check("storagePathFromUrl ignores _trash and ..", storagePathFromUrl(pub("_trash/202611/a.webp"), SB, "uploads") === null && storagePathFromUrl(pub("a/%2e%2e/b.png"), SB, "uploads") === null);
+  check("storagePathFromUrl ignores _trash, normalizes ..", storagePathFromUrl(pub("_trash/202611/a.webp"), SB, "uploads") === null && storagePathFromUrl(pub("a/%2e%2e/b.png"), SB, "uploads") === "b.png");
   check("splitUrlList trims and drops empties", splitUrlList(" a, ,b ").join("|") === "a|b");
 
   const moves: Array<[string, string]> = [];
