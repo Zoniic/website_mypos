@@ -5,13 +5,16 @@ generator client {
 /// Admin panel users — replaces the single shared ADMIN_PASSWORD.
 /// Bootstrap the first user with: npx tsx prisma/seed-admin-user.ts
 model AdminUser {
-  id           Int       @id @default(autoincrement())
-  email        String    @unique
-  passwordHash String
-  name         String
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  lastLoginAt  DateTime?
+  id                      Int              @id @default(autoincrement())
+  email                   String           @unique
+  passwordHash            String
+  name                    String
+  createdAt               DateTime         @default(now())
+  updatedAt               DateTime         @updatedAt
+  lastLoginAt             DateTime?
+  assignedContactMessages ContactMessage[]
+  assignedQuoteRequests   QuoteRequest[]
+  assignedWarrantyClaims  WarrantyClaim[]
 }
 
 datasource db {
@@ -42,36 +45,36 @@ model Product {
   updatedAt      DateTime @updatedAt
 
   /// Optional video (YouTube/Vimeo/Drive link), embedded on the product detail page.
-  videoUrl       String?
+  videoUrl     String?
   /// "in_stock" | "preorder" | "out_of_stock". Free-text (not an enum) to
   /// match this schema's existing convention of plain strings for
   /// admin-editable status fields.
-  stockStatus    String   @default("in_stock")
+  stockStatus  String  @default("in_stock")
   /// Estimated lead time in days when not in stock. Null when in_stock.
-  leadTimeDays   Int?
+  leadTimeDays Int?
 
   /// Fixed price (THB, VAT included) for buying the standard configuration
   /// online through the site's own cart. Null = quote only, no "Add to cart".
-  onlinePrice    Int?
+  onlinePrice Int?
   /// Product listing on the MYPOS Shopee / Lazada shop, if any.
-  shopeeUrl      String?
-  lazadaUrl      String?
+  shopeeUrl   String?
+  lazadaUrl   String?
 
-  translations  ProductTranslation[]
-  categories    Category[]
-  businessTypes BusinessType[]
+  translations        ProductTranslation[]
+  categories          Category[]
+  businessTypes       BusinessType[]
   /// Self many-to-many. The app connects both directions on save so the
   /// relation behaves symmetrically (A related to B implies B related to A).
-  relatedProducts     Product[] @relation("RelatedProducts")
-  relatedProductsBack Product[] @relation("RelatedProducts")
+  relatedProducts     Product[]            @relation("RelatedProducts")
+  relatedProductsBack Product[]            @relation("RelatedProducts")
 }
 
 /// Product/accessory category (self-order, weigh-pay, pos, ticketing).
 /// Replaces the old comma-separated Product.categories/Accessory.categories
 /// string columns with a real many-to-many relation.
 model Category {
-  id       Int         @id @default(autoincrement())
-  slug     String      @unique
+  id          Int         @id @default(autoincrement())
+  slug        String      @unique
   products    Product[]
   accessories Accessory[]
 }
@@ -97,18 +100,18 @@ model ProductTranslation {
 }
 
 model Accessory {
-  id        Int      @id @default(autoincrement())
-  slug      String   @unique
-  sortOrder Int      @default(0)
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  sortOrder   Int      @default(0)
   /// Product photo (square). Public URL under /uploads/accessories/.
-  imageUrl  String?
+  imageUrl    String?
   /// Price (THB, VAT included) for buying online through the site's cart.
   /// Null = not sold online.
   onlinePrice Int?
   shopeeUrl   String?
   lazadaUrl   String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   translations AccessoryTranslation[]
   categories   Category[]
@@ -246,24 +249,24 @@ model KbCategoryTranslation {
 /// this schema) rather than foreign keys, so an article can point at a
 /// product/accessory without a hard DB constraint.
 model KbArticle {
-  id             Int      @id @default(autoincrement())
-  slug           String   @unique
-  categoryId     Int
-  productSlug    String?
-  accessorySlug  String?
+  id            Int      @id @default(autoincrement())
+  slug          String   @unique
+  categoryId    Int
+  productSlug   String?
+  accessorySlug String?
   /// Optional cover photo. Public URL under /uploads/kb/.
-  coverImageUrl  String?
+  coverImageUrl String?
   /// Optional downloadable PDF. Public URL under /uploads/kb/.
-  pdfUrl         String?
+  pdfUrl        String?
   /// Optional video link (YouTube/Drive) — embedded on the article page.
-  videoUrl       String?
+  videoUrl      String?
   /// Shown in the "Recommended" strip at the top of its section page.
-  featured       Boolean  @default(false)
-  sortOrder      Int      @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  featured      Boolean  @default(false)
+  sortOrder     Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
-  category     KbCategory @relation(fields: [categoryId], references: [id])
+  category     KbCategory             @relation(fields: [categoryId], references: [id])
   translations KbArticleTranslation[]
 }
 
@@ -351,33 +354,49 @@ model NewsletterSubscriber {
 
 /// Message submitted from the public /contact page form.
 model ContactMessage {
-  id        Int      @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   /// "demo" | "quote" | "general" | "support".
-  topic     String   @default("general")
+  topic      String     @default("general")
   /// Industry landing page the visitor came from (/industries/<slug>), if any.
-  industry  String?
-  name      String
-  phone     String
-  product   String?
-  message   String?  @db.Text
+  industry   String?
+  name       String
+  phone      String
+  product    String?
+  message    String?    @db.Text
   /// "new" | "contacted" | "closed".
-  status    String   @default("new")
-  createdAt DateTime @default(now())
+  status     String     @default("new")
+  createdAt  DateTime   @default(now())
+  /// Internal note, max 2000 chars (same limit as Order.adminNote).
+  adminNote  String?    @db.Text
+  /// Admin the lead is assigned to. Unassigned when that admin is deleted.
+  assigneeId Int?
+  assignee   AdminUser? @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assigneeId])
 }
 
 /// A multi-item quote request built from the product comparison/quote cart.
 model QuoteRequest {
-  id        Int      @id @default(autoincrement())
-  name      String
-  company   String?
-  phone     String
-  email     String
-  message   String?  @db.Text
+  id         Int        @id @default(autoincrement())
+  name       String
+  company    String?
+  phone      String
+  email      String
+  message    String?    @db.Text
   /// "new" | "contacted" | "closed".
-  status    String   @default("new")
-  createdAt DateTime @default(now())
+  status     String     @default("new")
+  createdAt  DateTime   @default(now())
+  /// Internal note, max 2000 chars (same limit as Order.adminNote).
+  adminNote  String?    @db.Text
+  /// Admin the lead is assigned to. Unassigned when that admin is deleted.
+  assigneeId Int?
+  assignee   AdminUser? @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
 
   items QuoteRequestItem[]
+
+  @@index([status, createdAt])
+  @@index([assigneeId])
 }
 
 model QuoteRequestItem {
@@ -396,17 +415,25 @@ model QuoteRequestItem {
 /// admin (open -> in_progress -> resolved). No customer-facing status
 /// tracking page yet — status is admin-only for now.
 model WarrantyClaim {
-  id           Int      @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   name         String
   phone        String
   email        String
   productSlug  String?
   serialNumber String?
-  issue        String   @db.Text
+  issue        String     @db.Text
   /// "open" | "in_progress" | "resolved".
-  status       String   @default("open")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  status       String     @default("open")
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  /// Internal note, max 2000 chars (same limit as Order.adminNote).
+  adminNote    String?    @db.Text
+  /// Admin the lead is assigned to. Unassigned when that admin is deleted.
+  assigneeId   Int?
+  assignee     AdminUser? @relation(fields: [assigneeId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([assigneeId])
 }
 
 /// An order placed through the site's own cart and checkout. Prices are
@@ -415,41 +442,41 @@ model WarrantyClaim {
 /// change an existing order. Payment is PromptPay QR or bank transfer,
 /// confirmed by an admin (no card gateway yet).
 model Order {
-  id            Int      @id @default(autoincrement())
+  id            Int    @id @default(autoincrement())
   /// Human-facing order number, e.g. "MP2609-48213".
-  number        String   @unique
+  number        String @unique
   /// Random secret in the customer's order-status link, so order pages
   /// can't be enumerated by guessing numbers.
   accessToken   String
   /// "pending_payment" | "paid" | "preparing" | "shipped" | "completed" | "cancelled".
-  status        String   @default("pending_payment")
+  status        String @default("pending_payment")
   /// "promptpay" | "bank_transfer".
   paymentMethod String
-  locale        String   @default("th")
+  locale        String @default("th")
 
-  customerName  String
-  phone         String
-  email         String
-  address       String   @db.Text
-  postcode      String
+  customerName String
+  phone        String
+  email        String
+  address      String @db.Text
+  postcode     String
 
   /// Tax invoice (ใบกำกับภาษีเต็มรูป) details, when requested.
   wantsTaxInvoice Boolean @default(false)
-  taxName       String?
-  taxId         String?
-  taxBranch     String?
-  taxAddress    String?  @db.Text
+  taxName         String?
+  taxId           String?
+  taxBranch       String?
+  taxAddress      String? @db.Text
 
-  note          String?  @db.Text
-  adminNote     String?  @db.Text
+  note      String? @db.Text
+  adminNote String? @db.Text
 
-  subtotal      Int
-  shippingFee   Int      @default(0)
-  total         Int
+  subtotal    Int
+  shippingFee Int @default(0)
+  total       Int
 
-  paidAt        DateTime?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  paidAt    DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   items OrderItem[]
 
