@@ -1,0 +1,65 @@
+== 1. move orphan uploads to _trash (manifest first) ==
+orphans --write exit=0
+Bucket objects scanned: 106
+Orphans: 24
+  products: 13 files, 1.91 MB
+  accessories: 5 files, 2.99 MB
+  site: 5 files, 1.64 MB
+  hero: 1 files, 2.50 MB
+Report: D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\orphan-uploads-2026-11-23T07-53-21-335Z.json
+Manifest saved: D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\orphan-uploads-manifest-2026-11-23T07-53-21-337Z.json
+Moved 24 of 24 files to _trash/. Undo with --restore D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\orphan-uploads-manifest-2026-11-23T07-53-21-337Z.json
+manifest: orphan-uploads-manifest-2026-11-23T07-53-21-337Z.json
+== 2. dry run again (expect 0 orphans) ==
+Bucket objects scanned: 82
+Orphans: 0
+Report: D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\orphan-uploads-2026-11-23T07-53-31-614Z.json
+
+Dry run: nothing was moved. Re-run with --write to move these files to _trash/.
+== 3. live images still load ==
+referenced images checked=77 not200=0
+== 4. remove worktrees and merged branches ==
+fatal: 'd:/Folk/Own_Dir/FMT/DEV/mypos-website-wt/integ' contains modified or untracked files, use --force to delete it
+worktree integ exit=128
+worktree leads exit=0
+fatal: 'd:/Folk/Own_Dir/FMT/DEV/mypos-website-wt/uploads' contains modified or untracked files, use --force to delete it
+worktree uploads exit=128
+worktree ops exit=0
+error: the branch 'admin-improve-leads' is not fully merged
+hint: If you are sure you want to delete it, run 'git branch -D admin-improve-leads'
+hint: Disable this message with "git config set advice.forceDeleteBranch false"
+error: cannot delete branch 'admin-improve-uploads' used by worktree at 'D:/Folk/Own_Dir/FMT/DEV/mypos-website-wt/uploads'
+error: the branch 'admin-improve-ops' is not fully merged
+hint: If you are sure you want to delete it, run 'git branch -D admin-improve-ops'
+hint: Disable this message with "git config set advice.forceDeleteBranch false"
+error: cannot delete branch 'admin-improve' used by worktree at 'D:/Folk/Own_Dir/FMT/DEV/mypos-website-wt/integ'
+worktrees now:
+D:/Folk/Own_Dir/FMT/DEV/mypos website            b233149 [main]
+D:/Folk/Own_Dir/FMT/DEV/mypos-website-wt/integ   aec019b [admin-improve]
+D:/Folk/Own_Dir/FMT/DEV/mypos-website-wt/uploads f51b37f [admin-improve-uploads]
+branches now:
++ admin-improve
+  admin-improve-leads
+  admin-improve-ops
++ admin-improve-uploads
+  legacy-main-mysql
+* main
+  out-rule-design
+left in mypos-website-wt:
+integ
+ops
+uploads
+build-uploads.txt
+ci-integ.log
+ci-leads.log
+ci-ops.log
+ci-uploads.log
+lint-uploads.txt
+self-uploads.txt
+tsc-uploads.txt
+wt-ci-integ.log
+wt-ci-leads.log
+wt-ci-ops.log
+wt-ci-uploads.log
+== 5. scratch database container ==
+mypos-scratch-pg postgres:16 Exited (0) 5 minutes ago

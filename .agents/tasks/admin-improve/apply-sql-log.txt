@@ -1,0 +1,22 @@
+backup already taken: lead-tables-2026-11-23T07-14-50-131Z.json
+== apply (single transaction, lock timeout 15 s, hard kill after 150 s) ==
+apply exit=0
+12 statements, all ALTER TABLE or CREATE INDEX
+OK ALTER TABLE "ContactMessage" ADD COLUMN     "adminNote" TEXT,
+OK ALTER TABLE "QuoteRequest" ADD COLUMN     "adminNote" TEXT,
+OK ALTER TABLE "WarrantyClaim" ADD COLUMN     "adminNote" TEXT,
+OK CREATE INDEX "ContactMessage_status_createdAt_idx" ON "ContactMessage"("status", "createdA
+OK CREATE INDEX "ContactMessage_assigneeId_idx" ON "ContactMessage"("assigneeId")
+OK CREATE INDEX "QuoteRequest_status_createdAt_idx" ON "QuoteRequest"("status", "createdAt")
+OK CREATE INDEX "QuoteRequest_assigneeId_idx" ON "QuoteRequest"("assigneeId")
+OK CREATE INDEX "WarrantyClaim_status_createdAt_idx" ON "WarrantyClaim"("status", "createdAt"
+OK CREATE INDEX "WarrantyClaim_assigneeId_idx" ON "WarrantyClaim"("assigneeId")
+OK ALTER TABLE "ContactMessage" ADD CONSTRAINT "ContactMessage_assigneeId_fkey" FOREIGN KEY (
+OK ALTER TABLE "QuoteRequest" ADD CONSTRAINT "QuoteRequest_assigneeId_fkey" FOREIGN KEY ("ass
+OK ALTER TABLE "WarrantyClaim" ADD CONSTRAINT "WarrantyClaim_assigneeId_fkey" FOREIGN KEY ("a
+COMMITTED
+== post-check ==
+FOUND 6 of 6: ContactMessage.adminNote, ContactMessage.assigneeId, QuoteRequest.adminNote, QuoteRequest.assigneeId, WarrantyClaim.adminNote, WarrantyClaim.assigneeId
+rows ContactMessage=1
+rows QuoteRequest=1
+rows WarrantyClaim=0
