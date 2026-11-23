@@ -44,6 +44,15 @@ export function notificationStatus() {
   };
 }
 
+/**
+ * True when at least one alert channel has its env vars set. This reads env
+ * vars only; it does not prove that delivery works.
+ */
+export function hasNotificationChannel(): boolean {
+  const status = notificationStatus();
+  return status.line || status.email;
+}
+
 async function post(url: string, token: string, body: unknown) {
   const response = await fetch(url, {
     method: "POST",
