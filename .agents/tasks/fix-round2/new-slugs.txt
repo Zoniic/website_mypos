@@ -1,0 +1,35 @@
+PRODUCTS
+  mypos-f58	Android F58 Back-of-Kitchen Order Taker	[pos]
+  mypos-f62	Android F62 Self-Ordering System	[self-order,weigh-pay,ticketing]
+  mypos-fm-ea-22	Android self-service food ordering system FMEA22	[self-order,weigh-pay,ticketing]
+  mypos-fm-ea-22mart	Android self-service payment system FM-EA-22MART	[self-order,weigh-pay,ticketing]
+  mypos-fm-ea-slim-22-desktop	Android self-service food ordering system FM-EA-SLIM-22-(Desktop)	[self-order,weigh-pay,ticketing]
+  mypos-k1	Android self-service food ordering system K1	[self-order,weigh-pay,ticketing]
+  mypos-k156	Android self-service food ordering system K156	[self-order,weigh-pay,ticketing]
+  mypos-nb65	Small Android order receiver NB65	[self-order,weigh-pay,pos,ticketing]
+  mypos-nb80t	Small Android order receiver NB80T	[self-order,weigh-pay,pos,ticketing]
+  mypos-t70	Android T70 Back-of-Kitchen Order Taker	[pos]
+  test	TEST	[self-order,weigh-pay,pos,ticketing,kds,queue-display,vending-online,vending-offline]
+ACCESSORIES
+  mypos-acc03	ACC03 weighing scale
+  mypos-c300h	Xprinter C300H printer
+  mypos-f-330k	F-330K cash drawer.
+  mypos-fm2200	FM2200 scanner
+  mypos-imo-printer	IMO Printer
+  mypos-label9210	LABEL9210 Thermal Label Printer
+  mypos-pager-20-pcs	Queue calling pager system, 20 pieces.
+  mypos-pager-30-pcs	Queue calling pager system, 30 pcs.
+  mypos-scale-acs	ACS weighing scale
+REFERENCES
+  a-beachside-resort-hotel	A beachside resort hotel
+  a-hot-pot-restaurant-in-a-community-mall	A hot pot restaurant in a community mall
+  a-mall-bakery-counter	A mall bakery counter
+  a-neighborhood-mini-mart	A neighborhood mini-mart
+  an-office-cafeteria	An office cafeteria
+  an-outdoor-made-to-order-restaurant-chain	An outdoor made-to-order restaurant chain
+  dreamworld	DreamWorld
+  ruengrawin-metal	Ruengrawin Metal
+  sme-retail-chain	SME Retail Chain
+SOLUTIONS self-order, pos, kds, weigh-pay, queue-display, vending-online, vending-offline, ticketing
+INDUSTRIES restaurant, cafeteria, buffet, bakery, retail, convenience, hotel, themepark, manufacturing, office, school
+exit=0

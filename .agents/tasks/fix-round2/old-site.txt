@@ -1,0 +1,111 @@
+/robots.txt status=404 type=text/html; charset=iso-8859-1 bytes=315
+/sitemap.xml status=404 type=text/html; charset=iso-8859-1 bytes=315
+/sitemap_index.xml status=404 type=text/html; charset=iso-8859-1 bytes=315
+== pages (107) status / path / redirect / title ==
+200	/index.php		MYPOS : Android &amp; Windows POS Machine
+200	/?lang=en		
+200	/?lang=th		
+404	/025217155		404 Not Found
+404	/about-us.php		404 Not Found
+200	/Android-POS-Machine.php		MYPOS : Android POS Machine
+200	/Windows-POS-Machine.php		MYPOS : Windows POS Machine
+200	/Self-Service-Kiosk.php		MYPOS : Self-Service Kiosk Series
+200	/Cash-Drawer.php		MYPOS : Cash Drawer
+200	/Barcode-Scanner.php		MYPOS : Barcode Scanner
+200	/Thermal-Printer.php		MYPOS : Thermal Printer
+200	/products/Label-Sticker.php		MYPOS Thermal Print Label Sticker
+200	/products/Thermal-Paper.php		MYPOS Thermal Paper
+200	/download.php		Datasheet Download : MYPOS : Android &amp; Windows POS Machine
+200	/Mypos-Home.php		MYPOS : Android &amp; Windows POS Machine
+200	/Mypos-Application.php		MYPOS : Android &amp; Windows POS Machine
+200	/Dreamworld-Project.php		Project Reference : Dreamworld Themepark
+200	/Ruengrawin-Project.php		Project Reference : Ruengrawin Metal Center
+200	/Contact-MYPOS.php		Contact-us : MYPOS : Android &amp; Windows POS Machine
+200	/products/t70.php		T70 Android POS Machine
+200	/products/F-59.php		F59 All-in-One Android POS Machine
+200	/products/o11.php		O11 Hand-held Android POS Machine
+200	/products/D1.php		D1 All-in-One Android POS Machine
+200	/products/F82.php		F82 Android POS Machine
+200	/products/F85.php		F85 Android POS Machine
+200	/products/ranger1-T8.php		Ranger 1 Function (T8) Hand-held Android POS Machine
+200	/products/T1-A.php		T1-A Android POS Machine
+200	/index.html		
+200	/		
+200	/products/Q1A-Lite.php		Q1 A Lite Android POS Machine
+200	/products/F60-58.php		F60 With 58 mm. Thermal Printer Android POS Machine
+200	/products/F60-80.php		F60 80 mm. Printer Android POS Machine
+200	/products/F68-58.php		F68 With 58 mm. Thermal Printer Android POS Machine
+200	/products/F68-80.php		F68 80 mm. Printer Android POS Machine
+200	/products/F88.php		F88 Android POS Machine
+200	/products/t50.php		T50 Android POS Machine
+200	/products/t60.php		T60 Android POS Machine
+200	/products/f1s.php		MYPOS : Android &amp; Windows POS Machine
+200	/products/F3.php		F-3 Android POS Machine
+200	/products/F58.php		F58 Android POS Machine
+200	/products/F58-PLUS.php		F58 Plus Android POS Machine
+200	/products/F100.php		F100 Android POS Machine
+200	/products/N1-A.php		N1-A Android POS Machine
+200	/products/p10.php		P10 Hand-held Android POS Machine
+200	/products/ranger1-T5.php		Ranger 1 (T5) Hand-held Android POS Machine
+200	/products/ranger2.php		Ranger 2 T15 Hand-held Android POS Machine
+200	/products/F60W.php		F60W Windows POS Machine
+200	/products/F82W.php		F82W Windows POS Machine
+200	/products/F85W.php		F85W Windows POS Machine
+200	/products/F88W.php		F88W Windows POS Machine
+200	/products/T1-W.php		T1-W Windows POS Machine
+200	/products/Q1-W.php		Q1-W Windows POS Machine
+200	/products/Q-80-Plus.php		Q80 Plus Windows POS Machine
+200	/products/F61W.php		F61W Windows POS Machine
+200	/products/N1-W.php		N1-W Windows POS Machine
+200	/products/FM-185D.php		FM-185D Windows POS Machine (Touch Screen)
+200	/products/FM-KA-Series.php		FM-KA Series : Android Self-Service Kiosk
+200	/products/FM-EA-Series.php		FM-EA Series : Android Self-Service Kiosk
+200	/products/K156A.php		K156A Android Self-Service Kiosk
+200	/products/K215A.php		K215A Android Self-Service Kiosk
+200	/products/FM-KW-Series.php		FM-KW Series : Windows Self-Service Kiosk
+200	/products/FM-EW-Series.php		FM-EW Series : Windows Self-Service Kiosk
+200	/products/K156W.php		K156W Windows Self-Service Kiosk
+200	/products/K215W.php		K215W Windows Self-Service Kiosk
+200	/products/F-330F-5B2C.php		F-330F-5B2C Cash Drawer
+200	/products/F-330K-4B4C.php		F-330K-4B4C Cash Drawer
+200	/products/F-400A-5B3C.php		F-400A-5B3C Cash Drawer
+200	/products/F-400K-5B5C.php		F-400K-5B5C Cash Drawer
+200	/products/F-405-5B4C.php		F-405-5B4C Cash Drawer
+200	/products/FM2200.php		FM2200 Barcode Scanner
+200	/products/HR11.php		HR11 Barcode Scanner
+200	/products/HR100.php		HR100 Barcode Scanner
+200	/products/HR2081.php		HR2081 Barcode Scanner
+200	/products/HR3280.php		HR3280 Barcode Scanner
+200	/products/FM22.php		FM22 Wireless 1D&amp;2D Code Scanner
+200	/products/FM30.php		FM30 Wireless 1D&amp;2D Code Scanner
+200	/products/FM90.php		FM90 Wireless 1D&amp;2D Code Scanner
+200	/products/FM10.php		FM10 USB Barcode Scanner 1D
+200	/products/F-8220.php		F-8220 Thermal Printer
+200	/products/F-8250.php		F-8250 Thermal Printer
+200	/products/F-8380.php		F-8380 Thermal Printer
+200	/products/P58.php		P58 Bluetooth Thermal Printer
+200	/products/P-8025.php		P-8025 Thermal Printer
+200	/../index.php		MYPOS : Android &amp; Windows POS Machine
+404	/../025217155		404 Not Found
+404	/../about-us.php		404 Not Found
+200	/../Android-POS-Machine.php		MYPOS : Android POS Machine
+200	/../Windows-POS-Machine.php		MYPOS : Windows POS Machine
+200	/../Self-Service-Kiosk.php		MYPOS : Self-Service Kiosk Series
+200	/../Cash-Drawer.php		MYPOS : Cash Drawer
+200	/../Barcode-Scanner.php		MYPOS : Barcode Scanner
+200	/../Thermal-Printer.php		MYPOS : Thermal Printer
+404	/Label-Sticker.php		404 Not Found
+200	/Thermal-Paper.php		MYPOS : Thermal Paper
+200	/../download.php		Datasheet Download : MYPOS : Android &amp; Windows POS Machine
+200	/../Mypos-Home.php		MYPOS : Android &amp; Windows POS Machine
+200	/../Mypos-Application.php		MYPOS : Android &amp; Windows POS Machine
+200	/../Dreamworld-Project.php		Project Reference : Dreamworld Themepark
+200	/../Ruengrawin-Project.php		Project Reference : Ruengrawin Metal Center
+200	/../Contact-MYPOS.php		Contact-us : MYPOS : Android &amp; Windows POS Machine
+200	/../products/t70.php		T70 Android POS Machine
+200	/../products/F-59.php		F59 All-in-One Android POS Machine
+200	/../products/o11.php		O11 Hand-held Android POS Machine
+200	/../products/D1.php		D1 All-in-One Android POS Machine
+200	/../products/F82.php		F82 Android POS Machine
+200	/../products/F85.php		F85 Android POS Machine
+200	/../index.html		
