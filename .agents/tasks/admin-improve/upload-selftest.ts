@@ -4,6 +4,8 @@
  */
 import { detectFileKind, signatureMatchesMime } from "../../../src/lib/imageSignature";
 import { readVerifiedBytes } from "../../../src/lib/uploads";
+import { convertToWebp } from "../../../src/lib/imageProcess";
+import sharp from "sharp";
 
 let failed = 0;
 function check(name: string, ok: boolean) {
@@ -46,6 +48,30 @@ async function main() {
   const asFile = (b: Uint8Array, name: string, type: string) => new File([b as BlobPart], name, { type });
   check("readVerifiedBytes accepts a real png", (await readVerifiedBytes(asFile(png, "a.png", "image/png"), "bad")).length === png.length);
   check("readVerifiedBytes rejects text renamed .png", await rejects(() => readVerifiedBytes(asFile(text, "x.png", "image/png"), "bad")));
+
+  // --- resize / WebP conversion ---
+  const big = await sharp({ create: { width: 4000, height: 3000, channels: 3, background: "#336699" } }).png().toBuffer();
+  const bigOut = await convertToWebp(big);
+  const bigMeta = await sharp(bigOut).metadata();
+  check("4000x3000 png becomes webp", bigMeta.format === "webp");
+  check("4000x3000 fits inside 2000 (2000x1500)", bigMeta.width === 2000 && bigMeta.height === 1500);
+  check("converted output has a webp signature", detectFileKind(bigOut) === "webp");
+
+  const small = await sharp({ create: { width: 300, height: 200, channels: 3, background: "#aa0000" } }).jpeg().toBuffer();
+  const smallMeta = await sharp(await convertToWebp(small)).metadata();
+  check("small image is not enlarged", smallMeta.width === 300 && smallMeta.height === 200);
+
+  const alpha = await sharp({ create: { width: 64, height: 64, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } }).png().toBuffer();
+  const alphaMeta = await sharp(await convertToWebp(alpha)).metadata();
+  check("transparent png keeps alpha", alphaMeta.hasAlpha === true);
+
+  const rotated = await sharp({ create: { width: 100, height: 50, channels: 3, background: "#00aa00" } }).jpeg().withMetadata({ orientation: 6 }).toBuffer();
+  const rotatedMeta = await sharp(await convertToWebp(rotated)).metadata();
+  check("EXIF orientation 6 is applied (100x50 -> 50x100)", rotatedMeta.width === 50 && rotatedMeta.height === 100);
+  check("EXIF is stripped", !rotatedMeta.exif);
+
+  const corrupt = Buffer.concat([Buffer.from(png), Buffer.from("not really a png")]);
+  check("corrupt png with valid signature fails to convert", await rejects(() => convertToWebp(corrupt)));
 
   console.log(failed === 0 ? "\nAll checks passed." : `\n${failed} check(s) FAILED.`);
   process.exit(failed === 0 ? 0 : 1);
