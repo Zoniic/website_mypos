@@ -1,9 +1,12 @@
+import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
 import { prisma } from "@/lib/prisma";
 
 export const ADMIN_SESSION_COOKIE = "mypos_admin_session";
+
+export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 
 export type SessionUser = { userId: number; email: string; name: string };
 
@@ -15,20 +18,32 @@ function getSecret() {
   return new TextEncoder().encode(secret);
 }
 
-export async function createSessionToken(user: SessionUser): Promise<string> {
-  return new SignJWT({ role: "admin", ...user })
+/**
+ * Short fingerprint of the stored password hash. It goes into the session
+ * token, and requireAdmin() compares it with the current hash, so changing a
+ * password ends every session that was signed in with the old one. The hash
+ * itself never leaves the server.
+ */
+export function passwordVersion(passwordHash: string): string {
+  return createHash("sha256").update(passwordHash).digest("base64url").slice(0, 16);
+}
+
+export async function createSessionToken(user: SessionUser, passwordHash: string): Promise<string> {
+  return new SignJWT({ role: "admin", ...user, pwv: passwordVersion(passwordHash) })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
     .sign(getSecret());
 }
 
-async function verifyPayload(token: string | undefined) {
+type SessionPayload = { role: string; userId: number; email: string; name: string; pwv?: string };
+
+async function verifyPayload(token: string | undefined): Promise<SessionPayload | null> {
   if (!token) return null;
   try {
     const { payload } = await jwtVerify(token, getSecret());
     if (payload.role !== "admin") return null;
-    return payload as { role: string; userId: number; email: string; name: string };
+    return payload as unknown as SessionPayload;
   } catch {
     return null;
   }
@@ -38,10 +53,27 @@ export async function verifySessionToken(token: string | undefined): Promise<boo
   return (await verifyPayload(token)) !== null;
 }
 
+/** Signs a session for this user and sets the session cookie (server actions only). */
+export async function setSessionCookie(user: SessionUser, passwordHash: string): Promise<void> {
+  const token = await createSessionToken(user, passwordHash);
+  const cookieStore = await cookies();
+  cookieStore.set(ADMIN_SESSION_COOKIE, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: SESSION_MAX_AGE_SECONDS,
+  });
+}
+
+async function readSession(): Promise<SessionPayload | null> {
+  const cookieStore = await cookies();
+  return verifyPayload(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
+}
+
 /** Reads the current admin's identity from the session cookie (server components/actions only). */
 export async function getSessionUser(): Promise<SessionUser | null> {
-  const cookieStore = await cookies();
-  const payload = await verifyPayload(cookieStore.get(ADMIN_SESSION_COOKIE)?.value);
+  const payload = await readSession();
   if (!payload) return null;
   return { userId: payload.userId, email: payload.email, name: payload.name };
 }
@@ -50,11 +82,15 @@ export async function getSessionUser(): Promise<SessionUser | null> {
  * Authorization for admin Server Actions and route handlers. Actions are
  * reachable as public endpoints, so each one calls this itself — the proxy's
  * /admin cookie check is only the optimistic first line. Also rejects
- * sessions of admin users that were deleted since signing in.
+ * sessions of admin users that were deleted since signing in, and sessions
+ * signed before the user's password last changed (or before this check
+ * existed: tokens without a password fingerprint).
  */
 export async function requireAdmin(): Promise<SessionUser> {
-  const user = await getSessionUser();
-  const exists = user && (await prisma.adminUser.findUnique({ where: { id: user.userId }, select: { id: true } }));
-  if (!user || !exists) redirect("/admin/login");
-  return user;
+  const payload = await readSession();
+  const stored = payload
+    ? await prisma.adminUser.findUnique({ where: { id: payload.userId }, select: { passwordHash: true } })
+    : null;
+  if (!payload || !stored || payload.pwv !== passwordVersion(stored.passwordHash)) redirect("/admin/login");
+  return { userId: payload.userId, email: payload.email, name: payload.name };
 }

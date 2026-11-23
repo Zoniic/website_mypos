@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { getSessionUser, requireAdmin } from "@/lib/adminAuth";
+import { getSessionUser, requireAdmin, setSessionCookie } from "@/lib/adminAuth";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -23,16 +23,16 @@ export async function createAdminUser(_prevState: string | null, formData: FormD
   const name = String(formData.get("name") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  if (!email || !name) return "Email and name are required.";
-  if (!EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
-  if (password.length < 8) return "Password must be at least 8 characters.";
+  if (!email || !name) return "กรุณากรอกอีเมลและชื่อ";
+  if (!EMAIL_PATTERN.test(email)) return "รูปแบบอีเมลไม่ถูกต้อง";
+  if (password.length < 8) return "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร";
 
   const passwordHash = await bcrypt.hash(password, 10);
 
   try {
     await prisma.adminUser.create({ data: { email, name, passwordHash } });
   } catch (error) {
-    if (isUniqueConstraintError(error)) return `"${email}" is already registered.`;
+    if (isUniqueConstraintError(error)) return `อีเมล "${email}" มีในระบบแล้ว`;
     throw error;
   }
 
@@ -45,23 +45,30 @@ export async function updateAdminUser(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const session = await requireAdmin();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const name = String(formData.get("name") ?? "").trim();
   const password = String(formData.get("password") ?? "");
 
-  if (!email || !name) return "Email and name are required.";
-  if (!EMAIL_PATTERN.test(email)) return "Please enter a valid email address.";
-  if (password && password.length < 8) return "Password must be at least 8 characters.";
+  if (!email || !name) return "กรุณากรอกอีเมลและชื่อ";
+  if (!EMAIL_PATTERN.test(email)) return "รูปแบบอีเมลไม่ถูกต้อง";
+  if (password && password.length < 8) return "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร";
 
   const data: { email: string; name: string; passwordHash?: string } = { email, name };
   if (password) data.passwordHash = await bcrypt.hash(password, 10);
 
+  let updated: { id: number; email: string; name: string; passwordHash: string };
   try {
-    await prisma.adminUser.update({ where: { id: targetId }, data });
+    updated = await prisma.adminUser.update({ where: { id: targetId }, data });
   } catch (error) {
-    if (isUniqueConstraintError(error)) return `"${email}" is already registered.`;
+    if (isUniqueConstraintError(error)) return `อีเมล "${email}" มีในระบบแล้ว`;
     throw error;
+  }
+
+  // A new password ends every session signed with the old one (requireAdmin).
+  // Keep the admin who changed their own password signed in on this browser.
+  if (session.userId === targetId) {
+    await setSessionCookie({ userId: updated.id, email: updated.email, name: updated.name }, updated.passwordHash);
   }
 
   revalidatePath("/admin/admin-users");
@@ -72,12 +79,12 @@ export async function deleteAdminUser(targetId: number) {
   await requireAdmin();
   const session = await getSessionUser();
   if (session?.userId === targetId) {
-    throw new Error("You can't delete your own account while signed in as it.");
+    throw new Error("ลบบัญชีที่กำลังใช้เข้าสู่ระบบอยู่ไม่ได้");
   }
 
   const count = await prisma.adminUser.count();
   if (count <= 1) {
-    throw new Error("Can't delete the last remaining admin user.");
+    throw new Error("ลบผู้ดูแลคนสุดท้ายไม่ได้");
   }
 
   await prisma.adminUser.delete({ where: { id: targetId } });

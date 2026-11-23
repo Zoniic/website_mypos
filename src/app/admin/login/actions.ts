@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { ADMIN_SESSION_COOKIE, createSessionToken } from "@/lib/adminAuth";
+import { SESSION_MAX_AGE_SECONDS, setSessionCookie } from "@/lib/adminAuth";
 import { clearAttempts, isRateLimited, recordAttempt } from "@/lib/rateLimit";
 import { ADMIN_HINT_COOKIE } from "@/lib/editMode";
 import { clientIp } from "@/lib/clientIp";
@@ -25,11 +25,11 @@ export async function loginAction(_prevState: string | null, formData: FormData)
   const clientKey = await getClientKey(email);
 
   if (isRateLimited(clientKey)) {
-    return "Too many attempts. Please wait 15 minutes and try again.";
+    return "ลองผิดหลายครั้งเกินไป กรุณารอ 15 นาทีแล้วลองใหม่";
   }
 
   if (!email || typeof password !== "string" || password.length === 0) {
-    return "Email and password are required.";
+    return "กรุณากรอกอีเมลและรหัสผ่าน";
   }
 
   const user = await prisma.adminUser.findUnique({ where: { email } });
@@ -37,27 +37,20 @@ export async function loginAction(_prevState: string | null, formData: FormData)
 
   if (!user || !valid) {
     recordAttempt(clientKey);
-    return "Incorrect email or password.";
+    return "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
   }
 
   clearAttempts(clientKey);
   await prisma.adminUser.update({ where: { id: user.id }, data: { lastLoginAt: new Date() } });
 
-  const token = await createSessionToken({ userId: user.id, email: user.email, name: user.name });
-  const cookieStore = await cookies();
-  cookieStore.set(ADMIN_SESSION_COOKIE, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-  });
+  await setSessionCookie({ userId: user.id, email: user.email, name: user.name }, user.passwordHash);
   // Readable hint (not a credential) so public pages can show "Edit this page".
+  const cookieStore = await cookies();
   cookieStore.set(ADMIN_HINT_COOKIE, "1", {
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: SESSION_MAX_AGE_SECONDS,
   });
 
   redirect("/admin");
