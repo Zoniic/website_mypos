@@ -4,6 +4,7 @@ import { after } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notifyTeam, quoteAlert } from "@/lib/notify";
 import { overSubmissionLimit } from "@/lib/clientIp";
+import { EMAIL_PATTERN, MAX, parseQuoteLines, textField } from "@/lib/formInput";
 
 export type QuoteCartItemInput = { slug: string; name: string; quantity: number };
 
@@ -13,26 +14,20 @@ export async function submitQuoteRequest(
   _prevState: SubmitQuoteState,
   formData: FormData
 ): Promise<SubmitQuoteState> {
-  const name = String(formData.get("name") ?? "").trim();
-  const phone = String(formData.get("phone") ?? "").trim();
-  const email = String(formData.get("email") ?? "").trim();
-  const company = String(formData.get("company") ?? "").trim() || null;
-  const message = String(formData.get("message") ?? "").trim() || null;
+  const name = textField(formData, "name", MAX.name);
+  const phone = textField(formData, "phone", MAX.phone);
+  const email = textField(formData, "email", MAX.email);
+  const company = textField(formData, "company", MAX.company) || null;
+  const message = textField(formData, "message", MAX.message) || null;
   const itemsRaw = String(formData.get("items") ?? "[]");
 
   if (!name) return { status: "error", message: "Name is required." };
   if (!phone) return { status: "error", message: "Phone is required." };
-  if (!email) return { status: "error", message: "Email is required." };
+  if (!EMAIL_PATTERN.test(email)) return { status: "error", message: "A valid email is required." };
 
-  let items: QuoteCartItemInput[];
-  try {
-    items = JSON.parse(itemsRaw);
-  } catch {
-    return { status: "error", message: "Invalid cart data." };
-  }
-  if (!Array.isArray(items) || items.length === 0) {
-    return { status: "error", message: "Add at least one product first." };
-  }
+  // The cart comes from the browser: only a short list of well-formed lines is accepted.
+  const items = parseQuoteLines(itemsRaw.length > 20000 ? "" : itemsRaw);
+  if (!items) return { status: "error", message: "Add at least one product first." };
 
   if (await overSubmissionLimit("quote")) return { status: "error", message: "Too many requests — please try again later." };
 
@@ -47,7 +42,7 @@ export async function submitQuoteRequest(
         create: items.map((item) => ({
           productSlug: item.slug,
           productName: item.name,
-          quantity: Math.max(1, Number(item.quantity) || 1),
+          quantity: item.quantity,
         })),
       },
     },

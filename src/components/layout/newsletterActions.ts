@@ -11,7 +11,7 @@ export async function subscribeNewsletter(
   _prevState: NewsletterState,
   formData: FormData
 ): Promise<NewsletterState> {
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase().slice(0, 160);
   if (!email || !EMAIL_PATTERN.test(email)) {
     return { status: "error", message: "invalid" };
   }

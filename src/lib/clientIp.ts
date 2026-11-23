@@ -18,7 +18,12 @@ export async function clientIp(): Promise<string> {
  * in 15 minutes (see lib/rateLimit). Counts the submission otherwise.
  */
 export async function overSubmissionLimit(kind: string): Promise<boolean> {
-  const key = `${kind}:${await clientIp()}`;
+  const ip = await clientIp();
+  // No client IP (no reverse proxy in front): one shared bucket would block every
+  // real customer after five submissions, so nothing is limited here. Put the app
+  // behind a proxy that sets x-forwarded-for (docs/deploy-checklist-th.md).
+  if (ip === "unknown") return false;
+  const key = `${kind}:${ip}`;
   if (isRateLimited(key)) return true;
   recordAttempt(key);
   return false;

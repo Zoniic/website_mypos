@@ -5,6 +5,7 @@ import { prisma } from "@/lib/prisma";
 import { contactAlert, notifyTeam } from "@/lib/notify";
 import { findBusinessType, getCatalog } from "@/lib/catalog";
 import { overSubmissionLimit } from "@/lib/clientIp";
+import { MAX, textField } from "@/lib/formInput";
 
 /** `topic` is echoed back on success so the page can report a typed lead to analytics. */
 export type ContactFormState = { status: "idle" | "error" | "success"; topic?: string };
@@ -15,10 +16,10 @@ export async function submitContactMessage(
   _prevState: ContactFormState,
   formData: FormData
 ): Promise<ContactFormState> {
-  const name = String(formData.get("name") ?? "").trim();
-  const phone = String(formData.get("phone") ?? "").trim();
-  const product = String(formData.get("product") ?? "").trim() || null;
-  const message = String(formData.get("message") ?? "").trim() || null;
+  const name = textField(formData, "name", MAX.name);
+  const phone = textField(formData, "phone", MAX.phone);
+  const product = textField(formData, "product", MAX.product) || null;
+  const message = textField(formData, "message", MAX.message) || null;
   const rawTopic = String(formData.get("topic") ?? "");
   const topic = (TOPICS as readonly string[]).includes(rawTopic) ? rawTopic : "general";
   const rawIndustry = String(formData.get("industry") ?? "");

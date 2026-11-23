@@ -9,19 +9,24 @@ import { clearAttempts, isRateLimited, recordAttempt } from "@/lib/rateLimit";
 import { ADMIN_HINT_COOKIE } from "@/lib/editMode";
 import { clientIp } from "@/lib/clientIp";
 
-async function getClientKey(): Promise<string> {
-  return `login:${await clientIp()}`;
+/**
+ * Limit key for failed logins. Without a reverse proxy there is no client IP
+ * ("unknown"), and one shared bucket would let five wrong passwords lock every
+ * admin out, so in that case the limit is kept per account instead.
+ */
+async function getClientKey(email: string): Promise<string> {
+  const ip = await clientIp();
+  return ip === "unknown" ? `login:unknown:${email.slice(0, 160)}` : `login:${ip}`;
 }
 
 export async function loginAction(_prevState: string | null, formData: FormData) {
-  const clientKey = await getClientKey();
+  const email = String(formData.get("email") ?? "").trim().toLowerCase();
+  const password = formData.get("password");
+  const clientKey = await getClientKey(email);
 
   if (isRateLimited(clientKey)) {
     return "Too many attempts. Please wait 15 minutes and try again.";
   }
-
-  const email = String(formData.get("email") ?? "").trim().toLowerCase();
-  const password = formData.get("password");
 
   if (!email || typeof password !== "string" || password.length === 0) {
     return "Email and password are required.";
