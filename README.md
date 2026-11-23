@@ -1,5 +1,7 @@
 # MYPOS Website
 
+> **Start with [`HANDOFF.md`](./HANDOFF.md).** Parts of this README are out of date (database, uploads, photo slots, contact form). `HANDOFF.md` lists what is current.
+
 Next.js (App Router) + TypeScript + Tailwind CSS + `next-intl` (th/en/zh) + MySQL (via Prisma) as the content backend, with a password-protected admin panel at `/admin`.
 
 ## Running locally

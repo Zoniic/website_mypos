@@ -1,0 +1,4 @@
+/th/this-page-does-not-exist status=404 h1=[ไม่พบหน้าที่คุณค้นหา] visible404=true jsErrors=0
+/en/products/no-such-product status=404 h1=[Page not found] visible404=true jsErrors=0
+/zh/blog/no-such-post status=404 h1=[找不到此页面] visible404=true jsErrors=0
+/th/knowledge-base/article/change-paper-k1 status=200 h1=[เปลี่ยนกระดาษ K1] visible404=false jsErrors=0

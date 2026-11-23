@@ -1,0 +1,9 @@
+Product: 11 rows, 0 not URL-safe
+Accessory: 9 rows, 0 not URL-safe
+KbArticle: 1 rows, 0 not URL-safe
+KbCategory: 1 rows, 0 not URL-safe
+BlogPost: 11 rows, 0 not URL-safe
+ReferenceCase: 9 rows, 0 not URL-safe
+JobPosting: 0 rows, 0 not URL-safe
+KB slugs with spaces: []
+EXIT=0

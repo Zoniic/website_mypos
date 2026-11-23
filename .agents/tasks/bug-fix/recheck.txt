@@ -1,0 +1,42 @@
+Recheck started 2026-11-23T10:04:46
+PASS | bug1 KB article th | status=200 h1=[เปลี่ยนกระดาษ K1]
+PASS | bug1 KB article en | status=200 h1=[Change paper K1]
+PASS | bug1 KB article zh | status=200 h1=[修改文件 K1]
+PASS | bug1 old KB URL with spaces | status=308 location=/th/knowledge-base/article/change-paper-k1
+PASS | bug2 old mixed-case product URL | status=308 location=/th/products/mypos-k1
+PASS | bug2 lowercase product URL | status=200
+PASS | sitemap readable | status=200 urls=201
+PASS | bug2 sitemap URLs URL-safe | unsafe=0 
+PASS | bug4 every sitemap URL returns 200 | checked=201 not200=0 
+PASS | bug3 contact map th | status=200 embedIframe=False openInMapsLink=True nonEmbedIframe=False
+PASS | bug3 contact map en | status=200 embedIframe=False openInMapsLink=True nonEmbedIframe=False
+PASS | bug3 contact map zh | status=200 embedIframe=False openInMapsLink=True nonEmbedIframe=False
+PASS | bug4 missing page /th/this-page-does-not-exist | status=404 shows404Page=False
+PASS | bug4 missing page /en/no-such-page | status=404 shows404Page=False
+PASS | bug4 missing page /zh/no-such-page | status=404 shows404Page=False
+PASS | bug4 missing page /th/products/no-such-product | status=404 shows404Page=False
+PASS | bug4 missing page /th/blog/no-such-post | status=404 shows404Page=False
+PASS | bug4 missing page /th/references/no-such-case | status=404 shows404Page=False
+PASS | bug4 missing page /th/careers/no-such-job | status=404 shows404Page=False
+PASS | bug4 missing page /th/order/no-such-order | status=404 shows404Page=False
+PASS | bug4 missing page /th/knowledge-base/article/no-such-article | status=404 shows404Page=False
+PASS | bug4 missing page /th/knowledge-base/no-such-section | status=404 shows404Page=False
+PASS | bug4 missing page /th/solutions/no-such-solution | status=404 shows404Page=False
+PASS | bug4 missing page /th/industries/no-such-industry | status=404 shows404Page=False
+PASS | bug5 no URL in stats /th | status=200
+PASS | bug5 no URL in stats /en | status=200
+PASS | bug5 no URL in stats /zh | status=200
+PASS | bug5 no URL in stats /th/about | status=200
+PASS | bug5 /products/test hidden | status=404
+PASS | bug5 /products/TEST hidden | status=404 final=404
+PASS | bug5 TEST not in product list | status=200
+PASS | bug5 TEST not in sitemap | 
+PASS | bug5 TEST not in solutions/self-order | status=200
+PASS | bug5 TEST not in solutions/pos | status=200
+PASS | bug5 TEST not in solutions/kds | status=200
+PASS | bug5 TEST not offered on contact?product=test | status=200
+PASS | LINE link /th | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
+PASS | LINE link /en/products | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
+PASS | LINE link /zh/contact | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
+FAIL | content zh KB article title | h1=[修改文件 K1]
+Recheck finished 2026-11-23T10:06:01, failures=1
