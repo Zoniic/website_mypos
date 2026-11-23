@@ -1,4 +1,5 @@
 import { getSessionUser } from "@/lib/adminAuth";
+import { hasNotificationChannel } from "@/lib/notify";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "./AdminShell";
 
@@ -15,7 +16,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   ]);
 
   return (
-    <AdminShell badges={{ orders, quotes, messages, warranty }} userName={session?.name} userEmail={session?.email}>
+    <AdminShell badges={{ orders, quotes, messages, warranty }} userName={session?.name} userEmail={session?.email} noAlertChannel={!hasNotificationChannel()}>
       {children}
     </AdminShell>
   );

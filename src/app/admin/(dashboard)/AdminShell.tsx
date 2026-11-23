@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BellOff, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ADMIN_ICONS, ADMIN_NAV, findNavItem, type AdminNavItem, type BadgeKey } from "./adminNav";
 
@@ -57,6 +57,26 @@ function Nav({ badges, onNavigate }: { badges: Record<BadgeKey, number>; onNavig
   );
 }
 
+function NoAlertChannelBanner() {
+  return (
+    <div role="status" className="border-b border-warning/35 bg-[#fdf3e3] px-4 py-2.5 text-sm text-[#92400e] sm:px-8">
+      <div className="mx-auto flex max-w-6xl items-start gap-2.5 sm:items-center">
+        <BellOff size={18} strokeWidth={1.75} aria-hidden="true" className="mt-0.5 shrink-0 sm:mt-0" />
+        <div className="flex min-w-0 flex-1 flex-col gap-0.5 sm:flex-row sm:items-center sm:gap-3">
+          <p className="flex-1">
+            <span className="font-semibold">ยังไม่ได้ตั้งช่องทางแจ้งเตือน</span>
+            {"  "}เมื่อลูกค้าส่งฟอร์มหรือสั่งซื้อ ระบบจะไม่แจ้งทาง LINE หรืออีเมล ต้องเข้ามาเช็กในหลังบ้านเอง
+          </p>
+          <Link href="/admin/launch" className="inline-flex shrink-0 items-center gap-1 font-semibold underline underline-offset-2 outline-offset-2 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400">
+            ดูวิธีตั้งค่า
+            <ArrowRight size={16} strokeWidth={1.75} aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Account({ name, email }: { name?: string; email?: string }) {
   return (
     <div className="border-t border-border pt-4">
@@ -85,11 +105,13 @@ export function AdminShell({
   badges,
   userName,
   userEmail,
+  noAlertChannel = false,
 }: {
   children: React.ReactNode;
   badges: Record<BadgeKey, number>;
   userName?: string;
   userEmail?: string;
+  noAlertChannel?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -149,6 +171,7 @@ export function AdminShell({
       )}
 
       <main className="min-w-0 flex-1">
+        {noAlertChannel && <NoAlertChannelBanner />}
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-8 sm:py-8">
           {here && here.item.href !== "/admin" && (
             <p className="mb-1 text-xs font-medium text-text-3">
