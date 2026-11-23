@@ -66,7 +66,7 @@ function form(entries: Record<string, string>) {
   for (const [k, v] of Object.entries(entries)) f.set(k, v);
   return f;
 }
-check("details empty", parseLeadDetails(form({})), { ok: true, value: { adminNote: null, assigneeId: null } });
+check("details empty (absent fields are left unchanged)", parseLeadDetails(form({})), { ok: true, value: {} });
 check("details trims", parseLeadDetails(form({ adminNote: "  hi  ", assigneeId: "3" })), { ok: true, value: { adminNote: "hi", assigneeId: 3 } });
 check("details note too long", parseLeadDetails(form({ adminNote: "x".repeat(2001) })).ok, false);
 check("details note 2000 ok", parseLeadDetails(form({ adminNote: "x".repeat(2000) })).ok, true);
