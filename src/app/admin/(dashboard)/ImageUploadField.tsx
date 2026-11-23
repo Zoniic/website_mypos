@@ -42,7 +42,9 @@ export function ImageUploadField({
   return (
     <div>
       <span className="text-sm font-medium text-text-2">{label}</span>
-      <p className="mt-0.5 text-xs text-text-2">{specHint}</p>
+      <p className="mt-0.5 text-xs text-text-2">
+        {specHint} · ระบบย่อรูปให้ด้านยาวไม่เกิน 2000px และแปลงเป็น WebP ให้อัตโนมัติ
+      </p>
 
       <div className="mt-2 flex items-start gap-4">
         <div
@@ -59,7 +61,7 @@ export function ImageUploadField({
             />
           ) : (
             <span className="absolute inset-0 flex items-center justify-center px-2 text-center text-[10px] text-text-2">
-              No image yet
+              ยังไม่มีรูป
             </span>
           )}
         </div>
@@ -73,7 +75,7 @@ export function ImageUploadField({
             className="block w-full text-sm text-text-2 file:mr-3 file:rounded-lg file:border file:border-border-strong file:bg-surface-0 file:px-3 file:py-1.5 file:text-sm file:text-text-1"
           />
           {previewUrl && (
-            <p className="mt-1 text-xs text-success">New image selected — preview above.</p>
+            <p className="mt-1 text-xs text-success">เลือกรูปใหม่แล้ว ดูตัวอย่างด้านซ้าย</p>
           )}
         </div>
       </div>

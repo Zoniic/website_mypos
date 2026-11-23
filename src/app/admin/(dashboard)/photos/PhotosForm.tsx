@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { Ban, Camera, MapPin, Palette } from "lucide-react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import type { SiteImageSlot } from "./slots";
 import { updateSitePhotos } from "./actions";
 
@@ -63,6 +64,7 @@ export function PhotosForm({
       ))}
 
       {status === "saved" && <p className="text-sm text-success">Saved.</p>}
+      {status && status !== "saved" && <FormError>{status}</FormError>}
 
       <button
         type="submit"

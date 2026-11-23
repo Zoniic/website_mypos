@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import { SeoHint } from "../SeoHint";
 
 export type PartnerFormValues = {
@@ -51,10 +52,10 @@ export function PartnerForm({
         label="Logo"
         currentUrl={initialValues.imageUrl}
         ratio="16/9"
-        specHint="Transparent PNG preferred, roughly 300×150px. Falls back to showing the name as text until a logo is uploaded."
+        specHint="แนะนำ PNG พื้นโปร่งใส ขนาดประมาณ 300×150px ถ้ายังไม่มีโลโก้ ระบบจะแสดงชื่อเป็นตัวอักษรแทน"
       />
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <FormError>{error}</FormError>}
 
       <button
         type="submit"

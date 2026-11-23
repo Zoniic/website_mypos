@@ -5,6 +5,7 @@ import { BUSINESS_TYPES } from "@/data/businessTypes";
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import { SeoHint } from "../SeoHint";
 
 export type ReferenceFormValues = {
@@ -79,14 +80,14 @@ export function ReferenceForm({
           label="On-site photo"
           currentUrl={initialValues.imageUrl}
           ratio="4/3"
-          specHint="Photo of the actual installation at the customer's location. JPG, PNG, or WebP, max 5MB."
+          specHint="รูปถ่ายการติดตั้งจริงที่หน้างานลูกค้า · JPG, PNG หรือ WebP ไม่เกิน 5 MB"
         />
         <ImageUploadField
           name="logoImage"
           label="Customer logo"
           currentUrl={initialValues.logoUrl}
           ratio="1/1"
-          specHint="Customer's brand logo, ideally on a transparent or white background. Optional."
+          specHint="โลโก้แบรนด์ของลูกค้า แนะนำพื้นโปร่งใสหรือพื้นขาว ไม่ใส่ก็ได้"
         />
       </section>
 
@@ -134,7 +135,7 @@ export function ReferenceForm({
         </section>
       ))}
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <FormError>{error}</FormError>}
 
       <button
         type="submit"

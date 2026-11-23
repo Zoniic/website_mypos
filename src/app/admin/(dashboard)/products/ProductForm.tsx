@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import { SeoHint } from "../SeoHint";
 import { CategoryCheckboxes } from "../CategoryCheckboxes";
 import { BusinessTypeCheckboxes } from "../BusinessTypeCheckboxes";
@@ -239,28 +240,28 @@ export function ProductForm({
           label="Main photo"
           currentUrl={initialValues.imageUrl}
           ratio="1/1"
-          specHint="Square, at least 1000×1000px, plain/white background preferred. JPG, PNG, or WebP, max 5MB."
+          specHint="สี่เหลี่ยมจัตุรัส อย่างน้อย 1000×1000px พื้นขาวดีที่สุด · JPG, PNG หรือ WebP ไม่เกิน 5 MB"
         />
         <ImageUploadField
           name="galleryImage1"
           label="Gallery photo — side view"
           currentUrl={initialValues.galleryUrls[0]}
           ratio="1/1"
-          specHint="Same spec as main photo. Optional."
+          specHint="เหมือนรูปหลัก ไม่ใส่ก็ได้"
         />
         <ImageUploadField
           name="galleryImage2"
           label="Gallery photo — back view"
           currentUrl={initialValues.galleryUrls[1]}
           ratio="1/1"
-          specHint="Same spec as main photo. Optional."
+          specHint="เหมือนรูปหลัก ไม่ใส่ก็ได้"
         />
         <ImageUploadField
           name="galleryImage3"
           label="Gallery photo — in use"
           currentUrl={initialValues.galleryUrls[2]}
           ratio="1/1"
-          specHint="Same spec as main photo. Optional."
+          specHint="เหมือนรูปหลัก ไม่ใส่ก็ได้"
         />
       </section>
 
@@ -292,7 +293,7 @@ export function ProductForm({
         </section>
       ))}
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <FormError>{error}</FormError>}
 
       <button
         type="submit"

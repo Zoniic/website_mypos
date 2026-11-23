@@ -3,6 +3,7 @@
 import { useActionState, useState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import { PdfUploadField } from "../PdfUploadField";
 import { CharCounter, SeoHint } from "../SeoHint";
 
@@ -124,14 +125,14 @@ export function ArticleForm({
           label="Cover photo (optional)"
           currentUrl={initialValues.coverImageUrl}
           ratio="16/9"
-          specHint="JPG, PNG, or WebP, max 5MB."
+          specHint="JPG, PNG หรือ WebP ไม่เกิน 5 MB"
         />
         <SeoHint type="altText" />
         <PdfUploadField
           name="pdf"
           label="Downloadable PDF (optional)"
           currentUrl={initialValues.pdfUrl}
-          specHint="PDF only, max 20MB."
+          specHint="ไฟล์ PDF เท่านั้น ไม่เกิน 20 MB"
         />
       </section>
 
@@ -178,7 +179,7 @@ export function ArticleForm({
         </section>
       ))}
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <FormError>{error}</FormError>}
 
       <button
         type="submit"

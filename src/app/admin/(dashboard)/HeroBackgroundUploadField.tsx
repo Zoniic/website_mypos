@@ -60,7 +60,7 @@ export function HeroBackgroundUploadField({
             )
           ) : (
             <span className="absolute inset-0 flex items-center justify-center px-2 text-center text-[10px] text-text-2">
-              No video/image yet
+              ยังไม่มีวิดีโอหรือรูป
             </span>
           )}
         </div>
@@ -74,7 +74,7 @@ export function HeroBackgroundUploadField({
             className="block w-full text-sm text-text-2 file:mr-3 file:rounded-lg file:border file:border-border-strong file:bg-surface-0 file:px-3 file:py-1.5 file:text-sm file:text-text-1"
           />
           {previewUrl && (
-            <p className="mt-1 text-xs text-success">New file selected — preview above.</p>
+            <p className="mt-1 text-xs text-success">เลือกไฟล์ใหม่แล้ว ดูตัวอย่างด้านซ้าย</p>
           )}
         </div>
       </div>

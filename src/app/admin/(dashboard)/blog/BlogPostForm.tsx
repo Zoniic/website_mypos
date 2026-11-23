@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import { SeoHint } from "../SeoHint";
 
 export type BlogPostFormValues = {
@@ -56,7 +57,7 @@ export function BlogPostForm({
         label="Cover photo"
         currentUrl={initialValues.coverImageUrl}
         ratio="16/9"
-        specHint="JPG, PNG, or WebP, max 5MB."
+        specHint="JPG, PNG หรือ WebP ไม่เกิน 5 MB"
       />
       <SeoHint type="altText" />
 
@@ -97,7 +98,7 @@ export function BlogPostForm({
         </section>
       ))}
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <FormError>{error}</FormError>}
 
       <button
         type="submit"

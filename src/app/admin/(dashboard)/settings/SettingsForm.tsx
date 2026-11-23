@@ -201,7 +201,7 @@ export function SettingsForm({ settings }: { settings: SiteSettings }) {
           name="heroVideoUrl"
           label="Background video or image (optional)"
           currentUrl={settings.heroVideoUrl}
-          specHint="Leave empty to use the default animated gradient background. Upload a short, muted, looping MP4 clip of the product/hardware in use, or a still JPG/PNG/WebP image. MP4 max 50MB, image max 5MB."
+          specHint="ไม่ใส่ = ใช้พื้นหลังไล่สีเคลื่อนไหวแบบเดิม อัปโหลดคลิป MP4 สั้น ๆ ไม่มีเสียง เล่นวนซ้ำ ของสินค้าหรืออุปกรณ์ขณะใช้งาน หรือรูป JPG, PNG, WebP · MP4 ไม่เกิน 50 MB รูปไม่เกิน 5 MB · รูปจะถูกย่อและแปลงเป็น WebP ให้อัตโนมัติ"
         />
       </section>
 

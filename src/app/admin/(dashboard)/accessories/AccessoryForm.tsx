@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import { ImageUploadField } from "../ImageUploadField";
+import { FormError } from "../FormError";
 import { SeoHint } from "../SeoHint";
 import { CategoryCheckboxes } from "../CategoryCheckboxes";
 
@@ -67,7 +68,7 @@ export function AccessoryForm({
         label="Photo"
         currentUrl={initialValues.imageUrl}
         ratio="1/1"
-        specHint="Square, at least 800×800px, plain/white background preferred. JPG, PNG, or WebP, max 5MB."
+        specHint="สี่เหลี่ยมจัตุรัส อย่างน้อย 800×800px พื้นขาวดีที่สุด · JPG, PNG หรือ WebP ไม่เกิน 5 MB"
       />
       <SeoHint type="altText" />
 
@@ -121,7 +122,7 @@ export function AccessoryForm({
         </section>
       ))}
 
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <FormError>{error}</FormError>}
 
       <button
         type="submit"
