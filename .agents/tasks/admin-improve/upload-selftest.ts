@@ -6,6 +6,12 @@ import { detectFileKind, signatureMatchesMime } from "../../../src/lib/imageSign
 import { readVerifiedBytes } from "../../../src/lib/uploads";
 import { convertToWebp } from "../../../src/lib/imageProcess";
 import sharp from "sharp";
+import {
+  splitUrlList,
+  storagePathFromUrl,
+  trashUnreferencedUrls,
+  type CleanupDeps,
+} from "../../../src/lib/storageCleanup";
 
 let failed = 0;
 function check(name: string, ok: boolean) {
@@ -72,6 +78,41 @@ async function main() {
 
   const corrupt = Buffer.concat([Buffer.from(png), Buffer.from("not really a png")]);
   check("corrupt png with valid signature fails to convert", await rejects(() => convertToWebp(corrupt)));
+
+  // --- storage cleanup (injected deps, no network, no database) ---
+  const SB = "https://abc.supabase.co";
+  const pub = (p: string) => `${SB}/storage/v1/object/public/uploads/${p}`;
+  check("storagePathFromUrl reads our public URL", storagePathFromUrl(pub("products/a-1.webp"), SB, "uploads") === "products/a-1.webp");
+  check("storagePathFromUrl ignores other host", storagePathFromUrl("https://evil.example/storage/v1/object/public/uploads/x.png", SB, "uploads") === null);
+  check("storagePathFromUrl ignores other bucket", storagePathFromUrl(`${SB}/storage/v1/object/public/other/x.png`, SB, "uploads") === null);
+  check("storagePathFromUrl ignores /images/...", storagePathFromUrl("/images/brand/logo.png", SB, "uploads") === null);
+  check("storagePathFromUrl ignores _trash and ..", storagePathFromUrl(pub("_trash/202611/a.webp"), SB, "uploads") === null && storagePathFromUrl(pub("a/%2e%2e/b.png"), SB, "uploads") === null);
+  check("splitUrlList trims and drops empties", splitUrlList(" a, ,b ").join("|") === "a|b");
+
+  const moves: Array<[string, string]> = [];
+  const logs: string[] = [];
+  const mkDeps = (referenced: Set<string>, failMove = false): CleanupDeps => ({
+    supabaseUrl: SB,
+    bucket: "uploads",
+    isReferenced: async (p) => referenced.has(p),
+    move: async (from, to) => {
+      if (failMove) throw new Error("boom");
+      moves.push([from, to]);
+    },
+    now: () => new Date(Date.UTC(2026, 10, 24)),
+    log: (m) => logs.push(m),
+  });
+  const r1 = await trashUnreferencedUrls(
+    [pub("products/keep.webp"), pub("products/old.webp"), pub("products/old.webp"), "https://cdn.example/x.png", "/images/a.png", null],
+    mkDeps(new Set(["products/keep.webp"]))
+  );
+  check("referenced file is kept", r1.keptReferenced.join() === "products/keep.webp");
+  check("unreferenced file moved once to _trash/yyyymm/", moves.length === 1 && moves[0][0] === "products/old.webp" && moves[0][1] === "_trash/202611/products/old.webp");
+  check("external and local URLs are ignored", r1.ignored.length === 2);
+  const r2 = await trashUnreferencedUrls([pub("products/x.webp")], mkDeps(new Set(), true));
+  check("move failure does not throw, is reported and logged", r2.failed.length === 1 && r2.moved.length === 0 && logs.length === 1);
+  const r3 = await trashUnreferencedUrls([pub("products/x.webp")], { ...mkDeps(new Set()), isReferenced: async () => { throw new Error("db down"); } });
+  check("reference lookup failure keeps the file", r3.failed.length === 1 && r3.moved.length === 0);
 
   console.log(failed === 0 ? "\nAll checks passed." : `\n${failed} check(s) FAILED.`);
   process.exit(failed === 0 ? 0 : 1);
