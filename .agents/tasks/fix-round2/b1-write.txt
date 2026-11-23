@@ -1,0 +1,6 @@
+article title: "Σ┐«µö╣µûçΣ╗╢ K1" -> "K1 µ¢┤µìóµëôσì░τ║╕"
+article summary: "Σ┐«µö╣µûçΣ╗╢ K1" -> "K1 µ¢┤µìóµëôσì░τ║╕"
+category name: "Σ┐«µö╣µûçΣ╗╢" -> "µ¢┤µìóµëôσì░τ║╕"
+Backup: D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\fix-zh-k1-title-2026-11-23T08-12-28-034Z.json
+Applied. The public site shows it within 5 minutes (cache), or at once after any admin save.
+exit=0
