@@ -50,9 +50,10 @@ PASS quote q matches item productName: 25 rows (page 1 of 30)  [25]
 PASS warranty q=serial: 1 row  [1]
 PASS quote CSV q=Q1 => 11 rows, items column filled  [12 hdr=id|created_at|name|company|phone|email|items|message|status|assignee|admin_note]
 PASS newsletter CSV 3 rows + header, BOM  [4]
+PASS newsletter page: Thai headings, export link to route, no data: link  [{"link":1,"data":0}]
 PASS saved note appears in CSV  ["α╣éα╕Öα╣ëα╕òα╕ùα╕öα╕¬α╕¡α╕Üα╕êα╕▓α╕ü verify-leads"]
 PASS assignee change saved (CSV assignee column filled)  ["Admin"]
 PASS banner on /admin
 PASS banner on /admin/orders
 PASS banner on /admin/launch
-pass=57 fail=0
+pass=58 fail=0

@@ -31,6 +31,13 @@ function parseCsv(text) {
   if (f !== "" || row.length) { row.push(f); rows.push(row); }
   return rows;
 }
+async function newsletterPage(page) {
+  await page.goto(base + "/admin/newsletter", { waitUntil: "networkidle" });
+  const body = await page.locator("main").innerText().catch(() => "");
+  const link = await page.locator('a[href="/admin/newsletter/export"]').count();
+  const dis = await page.locator('span[aria-disabled="true"]').count();
+  return { body, link, dis, data: await page.locator('a[href^="data:"]').count() };
+}
 (async () => {
   const browser = await chromium.launch();
   const context = await browser.newContext({ viewport: { width: 1440, height: 1000 } });
@@ -69,6 +76,8 @@ function parseCsv(text) {
       check(`${k.p} empty: CSV header only`, c.r.status === 200 && c.rows.length === 1, `status=${c.r.status} rows=${c.rows.length}`);
       check(`${k.p} empty: CSV BOM`, c.buf[0] === 0xef && c.buf[1] === 0xbb && c.buf[2] === 0xbf);
     }
+    const np = await newsletterPage(page);
+    check("newsletter empty page: Thai text, disabled export, no data: link", np.body.includes("ยังไม่มีผู้สมัครรับข่าวสาร") && np.dis >= 1 && np.link === 0 && np.data === 0 && !/No subscribers|Export CSV/.test(np.body), JSON.stringify({ link: np.link, dis: np.dis }));
     const nl = await csv("/admin/newsletter");
     check("newsletter empty CSV header only", nl.r.status === 200 && nl.rows.length === 1, nl.rows.length);
     await browser.close();
@@ -171,7 +180,8 @@ function parseCsv(text) {
   // --- newsletter
   c = await csv("/admin/newsletter");
   check("newsletter CSV 3 rows + header, BOM", c.r.status === 200 && c.rows.length === 4 && c.buf[0] === 0xef, c.rows.length);
-  await page.goto(base + "/admin/newsletter", { waitUntil: "networkidle" });
+  const np2 = await newsletterPage(page);
+  check("newsletter page: Thai headings, export link to route, no data: link", np2.link === 1 && np2.data === 0 && np2.body.includes("อีเมล") && np2.body.includes("สมัครเมื่อ") && !/Export CSV|Subscribed/.test(np2.body), JSON.stringify({ link: np2.link, data: np2.data }));
   await page.screenshot({ path: path.join(out, "newsletter.png") });
 
   // --- note + assignee save, then it shows in CSV

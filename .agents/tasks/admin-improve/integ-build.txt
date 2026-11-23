@@ -1,0 +1,128 @@
+Γû▓ Next.js 16.3.6 (Turbopack)
+- Environments: .env.local, .env
+Γ£ô Running next.config.ts took 68ms
+- Experiments (use with caution):
+  ┬╖ serverActions
+
+  Creating an optimized production build ...
+Γ£ô Compiled successfully in 2.3s
+  Running TypeScript ...
+  Finished TypeScript in 2.9s ...
+  Collecting page data using 15 workers ...
+  Generating static pages using 15 workers (0/16) ...
+  Generating static pages using 15 workers (4/16) 
+  Generating static pages using 15 workers (8/16) 
+  Generating static pages using 15 workers (12/16) 
+Γ£ô Generating static pages using 15 workers (16/16) in 442ms
+  Finalizing page optimization ...
+
+Route (app)                                     Revalidate  Expire
+Γöî Γùï /_not-found
+Γö£ ΓùÅ /[locale]
+Γö£ ╞Æ /[locale]/[...rest]
+Γö£ ΓùÅ /[locale]/about
+Γö£ ╞Æ /[locale]/about/opengraph-image
+Γö£ ΓùÅ /[locale]/accessories
+Γö£ ╞Æ /[locale]/accessories/opengraph-image
+Γö£ ΓùÅ /[locale]/blog
+Γö£ ΓùÅ /[locale]/blog/[slug]
+Γö£ ΓùÅ /[locale]/careers
+Γö£ ΓùÅ /[locale]/careers/[slug]
+Γö£ ΓùÅ /[locale]/checkout
+Γö£ ΓùÅ /[locale]/compare
+Γö£ ΓùÅ /[locale]/contact
+Γö£ ╞Æ /[locale]/contact/opengraph-image
+Γö£ ΓùÅ /[locale]/industries
+Γö£ ΓùÅ /[locale]/industries/[type]
+Γö£ ΓùÅ /[locale]/knowledge-base
+Γö£ ΓùÅ /[locale]/knowledge-base/[section]
+Γö£ ΓùÅ /[locale]/knowledge-base/article/[slug]
+Γö£ ΓùÅ /[locale]/knowledge-base/search
+Γö£ ╞Æ /[locale]/opengraph-image
+Γö£ ╞Æ /[locale]/order/[number]
+Γö£ ΓùÅ /[locale]/privacy-policy
+Γö£ ΓùÅ /[locale]/products
+Γö£ ΓùÅ /[locale]/products/[slug]
+Γö£ ╞Æ /[locale]/products/[slug]/opengraph-image
+Γö£ ╞Æ /[locale]/products/opengraph-image
+Γö£ ΓùÅ /[locale]/references
+Γö£ ΓùÅ /[locale]/references/[slug]
+Γö£ ╞Æ /[locale]/references/opengraph-image
+Γö£ ΓùÅ /[locale]/search
+Γö£ ΓùÅ /[locale]/service
+Γö£ ╞Æ /[locale]/service/opengraph-image
+Γö£ ΓùÅ /[locale]/software
+Γö£ ╞Æ /[locale]/software/opengraph-image
+Γö£ ΓùÅ /[locale]/solutions/[slug]
+Γö£ ╞Æ /[locale]/solutions/[slug]/opengraph-image
+Γö£ ΓùÅ /[locale]/terms-of-service
+Γö£ ΓùÅ /[locale]/tools/savings-calculator
+Γö£ ╞Æ /admin
+Γö£ ╞Æ /admin/accessories
+Γö£ ╞Æ /admin/accessories/[id]/edit
+Γö£ ╞Æ /admin/accessories/new
+Γö£ ╞Æ /admin/admin-users
+Γö£ ╞Æ /admin/admin-users/[id]/edit
+Γö£ ╞Æ /admin/admin-users/new
+Γö£ ╞Æ /admin/blog
+Γö£ ╞Æ /admin/blog/[id]/edit
+Γö£ ╞Æ /admin/blog/new
+Γö£ ╞Æ /admin/careers
+Γö£ ╞Æ /admin/careers/[id]/edit
+Γö£ ╞Æ /admin/careers/new
+Γö£ ╞Æ /admin/catalog
+Γö£ ╞Æ /admin/contact-messages
+Γö£ ╞Æ /admin/contact-messages/export
+Γö£ ╞Æ /admin/content
+Γö£ ╞Æ /admin/content/[namespace]
+Γö£ ╞Æ /admin/goto/[kind]/[slug]
+Γö£ ╞Æ /admin/kb-articles
+Γö£ ╞Æ /admin/kb-articles/[id]/edit
+Γö£ ╞Æ /admin/kb-articles/new
+Γö£ ╞Æ /admin/kb-categories
+Γö£ ╞Æ /admin/kb-categories/[id]/edit
+Γö£ ╞Æ /admin/kb-categories/new
+Γö£ ╞Æ /admin/launch
+Γö£ ╞Æ /admin/layout-editor
+Γö£ ╞Æ /admin/live
+Γö£ ╞Æ /admin/live/exit
+Γö£ Γùï /admin/login
+Γö£ ╞Æ /admin/logout
+Γö£ ╞Æ /admin/navigation
+Γö£ ╞Æ /admin/newsletter
+Γö£ ╞Æ /admin/newsletter/export
+Γö£ ╞Æ /admin/official-partners
+Γö£ ╞Æ /admin/official-partners/[id]/edit
+Γö£ ╞Æ /admin/official-partners/new
+Γö£ ╞Æ /admin/orders
+Γö£ ╞Æ /admin/orders/[id]
+Γö£ ╞Æ /admin/photos
+Γö£ ╞Æ /admin/playbook
+Γö£ ╞Æ /admin/products
+Γö£ ╞Æ /admin/products/[id]/edit
+Γö£ ╞Æ /admin/products/new
+Γö£ ╞Æ /admin/quote-requests
+Γö£ ╞Æ /admin/quote-requests/export
+Γö£ ╞Æ /admin/references
+Γö£ ╞Æ /admin/references/[id]/edit
+Γö£ ╞Æ /admin/references/new
+Γö£ ╞Æ /admin/settings
+Γö£ ╞Æ /admin/trust-logos
+Γö£ ╞Æ /admin/trust-logos/[id]/edit
+Γö£ ╞Æ /admin/trust-logos/new
+Γö£ ╞Æ /admin/warranty-claims
+Γö£ ╞Æ /admin/warranty-claims/export
+Γö£ ╞Æ /api/line/webhook
+Γö£ Γùï /apple-icon.png
+Γö£ ╞Æ /feeds/products.xml
+Γö£ Γùï /icon.png
+Γö£ Γùï /robots.txt
+Γöö Γùï /sitemap.xml                                        5m      1y
+
+
+╞Æ Proxy (Middleware)
+
+Γùï  (Static)   prerendered as static content
+ΓùÅ  (SSG)      prerendered as static HTML (uses generateStaticParams)
+╞Æ  (Dynamic)  server-rendered on demand
+

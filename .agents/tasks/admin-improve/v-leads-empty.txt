@@ -11,5 +11,6 @@ PASS /admin/warranty-claims empty: no lead cards (1 box = empty-state)  [1]
 PASS /admin/warranty-claims empty: empty text shown
 PASS /admin/warranty-claims empty: CSV header only  [status=200 rows=1]
 PASS /admin/warranty-claims empty: CSV BOM
+PASS newsletter empty page: Thai text, disabled export, no data: link  [{"link":0,"dis":1}]
 PASS newsletter empty CSV header only  [1]
-pass=14 fail=0
+pass=15 fail=0
