@@ -1,0 +1,36 @@
+== tsc ==
+tsc exit=0
+== lint ==
+lint exit=0
+== unit tests ==
+Γä╣ tests 26
+Γä╣ pass 26
+Γä╣ fail 0
+test exit=0
+== build ==
+Γö£ ╞Æ /admin/quote-requests
+Γö£ ╞Æ /admin/quote-requests/export
+Γö£ ╞Æ /admin/references
+Γö£ ╞Æ /admin/references/[id]/edit
+Γö£ ╞Æ /admin/references/new
+Γö£ ╞Æ /admin/settings
+Γö£ ╞Æ /admin/trust-logos
+Γö£ ╞Æ /admin/trust-logos/[id]/edit
+Γö£ ╞Æ /admin/trust-logos/new
+Γö£ ╞Æ /admin/warranty-claims
+Γö£ ╞Æ /admin/warranty-claims/export
+Γö£ ╞Æ /api/line/webhook
+Γö£ Γùï /apple-icon.png
+Γö£ ╞Æ /feeds/products.xml
+Γö£ Γùï /icon.png
+Γö£ Γùï /robots.txt
+Γöö Γùï /sitemap.xml                                        5m      1y
+
+
+╞Æ Proxy (Middleware)
+
+Γùï  (Static)   prerendered as static content
+ΓùÅ  (SSG)      prerendered as static HTML (uses generateStaticParams)
+╞Æ  (Dynamic)  server-rendered on demand
+
+build exit=0

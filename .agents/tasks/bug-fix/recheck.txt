@@ -1,7 +1,7 @@
-Recheck started 2026-11-23T10:04:46
+Recheck started 2026-11-23T15:23:23
 PASS | bug1 KB article th | status=200 h1=[เปลี่ยนกระดาษ K1]
 PASS | bug1 KB article en | status=200 h1=[Change paper K1]
-PASS | bug1 KB article zh | status=200 h1=[修改文件 K1]
+PASS | bug1 KB article zh | status=200 h1=[K1 更换打印纸]
 PASS | bug1 old KB URL with spaces | status=308 location=/th/knowledge-base/article/change-paper-k1
 PASS | bug2 old mixed-case product URL | status=308 location=/th/products/mypos-k1
 PASS | bug2 lowercase product URL | status=200
@@ -38,5 +38,5 @@ PASS | bug5 TEST not offered on contact?product=test | status=200
 PASS | LINE link /th | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
 PASS | LINE link /en/products | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
 PASS | LINE link /zh/contact | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
-FAIL | content zh KB article title | h1=[修改文件 K1]
-Recheck finished 2026-11-23T10:06:01, failures=1
+PASS | content zh KB article title | h1=[K1 更换打印纸]
+Recheck finished 2026-11-23T15:23:56, failures=0

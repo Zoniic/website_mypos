@@ -17,7 +17,7 @@ Production state: **this app is not deployed.** `https://mypos.co.th/` still ser
 - next-intl 4 for routing. Page copy is **not** read from `messages/*.json` at runtime. It lives in the database (`PageContent`) and is edited in the admin. `messages/*.json` is only the seed source and the fallback.
 - Prisma 6 with PostgreSQL (`prisma/schema.prisma`). Uploads go to Supabase Storage (`src/lib/uploads.ts`, `src/lib/supabase.ts`).
 - Auth: bcryptjs password hashes, a signed JWT cookie (`jose`, 7 days). `lucide-react` for icons, `framer-motion` for motion.
-- There is no test suite. Verification is `npx tsc --noEmit`, `npm run lint`, `npm run build`, and the scripts listed in section 9.
+- Tests: `npm test` runs the unit tests in `tests/unit` (node:test through tsx, no database). GitHub Actions (`.github/workflows/ci.yml`) runs `tsc`, lint and `npm test` on every push and pull request to `main`. Add a unit test next to any pure helper you change. Page-level checks need a running server: the scripts in section 9.
 
 ## 3. Rules that are enforced or easy to break
 
@@ -116,7 +116,7 @@ node node_modules/tsx/dist/cli.mjs prisma/backup-db.ts --self-test
 
 Admin rendered checks use a scratch Postgres (Docker, port 5433) and never the shared database: `prisma db push`, `prisma/seed-admin-user.ts`, `.agents/tasks/admin-improve/seed-leads-scratch.ts` (refuses any other DATABASE_URL), `npm run build`, `next start -p 3100`, then `.agents/tasks/admin-improve/run-verify.ps1` (lists, search, pages, CSV; add `-Mode empty` after `seed-leads-scratch.ts --empty`), `verify-upload.cjs`, `headers-http.cjs`, `headers-check.cjs`.
 
-`recheck.ps1` covers the five scan bugs and the LINE link in 40 checks. Last result (2026-11-23): 39 pass, 1 fail (the Chinese KB title, see backlog). Browser scripts need Playwright: `PW_PATH=C:\Users\P^chapol\AppData\Roaming\npm\node_modules\playwright`.
+`recheck.ps1` covers the five scan bugs and the LINE link in 40 checks. `.agents/tasks/fix-round2/e2e.ps1` covers the old-site redirects, the zh K1 title, the Thai login page and the honeypot fields in 18 checks. Last result (2026-11-23, production build on :3000): 40/40 and 18/18 pass. Browser scripts need Playwright: `PW_PATH=C:\Users\P^chapol\AppData\Roaming\npm\node_modules\playwright`.
 
 ## 10. Environment quirks (Windows, user name contains `^`)
 
@@ -151,7 +151,7 @@ Details and where to find each value are in `docs/owner-data-guide-th.md`.
 - Legal name (Thai and English) and full address.
 - LINE OA URL. The fallback `https://line.me/R/ti/p/@mypos` opens an "Add LINE friend" page. Ask the owner to confirm it is the company account.
 - Facebook, YouTube, TikTok, Instagram URLs, and Pixel IDs (GA4, Meta, TikTok).
-- Real list of old `.php` URLs for `src/data/legacyRedirects.ts` (currently only commented examples). Needed before the domain switch.
+- Old `.php` URLs: done from a crawl of the old site on 2026-11-23 (90 redirects in `src/data/legacyRedirects.ts`, list in `.agents/tasks/fix-round2/old-site.txt`, checked by `tests/unit/legacyRedirects.test.ts`). Once the domain is in Search Console, compare its indexed URLs with that list and add any that are missing.
 - Replace the confirmed renders on the live site with real photos: home hero video, `solution-self-order` slot, `a-beachside-resort-hotel` reference photo. Answer whether `software-hero` is real.
 - Blog cover images (all 11 posts have none; the article JSON-LD omits `image` as a result).
 - Datasheet PDFs per product (`datasheetUrl`, unset according to the README, not re-verified).
@@ -159,10 +159,10 @@ Details and where to find each value are in `docs/owner-data-guide-th.md`.
 
 ### 12.2 Code and content fixes
 
-1. Chinese title of the K1 paper article is wrong: it reads "修改文件 K1" (modify file). Should be "K1 更换打印纸". It is database content (`KbArticleTranslation`, locale `zh`, also the KB category label "修改文件"). Fix in `/admin/kb-articles`, or with a backed-up script.
-2. `README.md` is outdated (section 14). Rewrite it from this file.
-3. `PHOTO-CHECKLIST.md` uses emoji status markers, which the project rules forbid in stored content. Replace them when the file is next edited.
-4. Admin messages are in English in some places (login errors, admin-users errors) while the rest of the admin is Thai.
+1. Done 2026-11-23: zh title, summary and category of the K1 paper guide now read "K1 更换打印纸" / "更换打印纸" (`prisma/fix-zh-k1-title.ts`, backup `prisma/backups/fix-zh-k1-title-2026-11-23T08-12-28-034Z.json`, `--restore` available).
+2. Done 2026-11-23: `README.md` rewritten.
+3. Done 2026-11-23: `PHOTO-CHECKLIST.md` priority markers are text, not emoji.
+4. Done 2026-11-23: login page, login errors and the admin-users pages are Thai. Slug errors from `slugFormError` and the public quote form errors are still English.
 5. Hidden products are matched by exact slug with a 30 second proxy cache and a 300 second page cache. Document or move to a real `published` flag on `Product`.
 
 ### 12.3 Admin improvements, in suggested order
@@ -172,7 +172,7 @@ Found by reading the code on 2026-11-23. Status of the work on branch `admin-imp
 | Item | Status | What is code | What still needs the owner or the host |
 |---|---|---|---|
 | 1 Lead handling | Done in code, verified on a scratch DB | Filter (status, assignee, topic, date range), search, 25-row pages, internal note, assignee, CSV export (BOM, quoting, formula guard) on contact messages, quote requests, warranty claims; newsletter uses the same CSV route (`src/lib/leadList.ts`, `src/lib/csv.ts`) | Applied to the shared database on 2026-11-23 with the owner's approval (`.agents/tasks/admin-improve/apply-sql-log.txt`; backup `prisma/backups/lead-tables-2026-11-23T07-14-50-131Z.json`). The lead list queries were run against the real data; the pages were not opened in a browser. |
-| 5 Rate limiting and public form input | Partly done (2026-11-23) | Login: with no client IP the limit is kept per account, so five wrong passwords no longer lock every admin out. Public forms (contact, quote, warranty, newsletter): every field is length-capped, quote and warranty emails are validated, the quote cart is validated server-side (`src/lib/formInput.ts`, checked by `.agents/tasks/admin-improve/formInput-selftest.ts`). With no client IP the public form limiter is skipped instead of sharing one bucket. | `src/lib/rateLimit.ts` is still in memory. Host: the reverse proxy must append the real client IP to `x-forwarded-for` (`docs/deploy-checklist-th.md` row 6); without it the public form limiter does nothing and a directly exposed app can have the header forged. Moving the limiter to a shared store, and a honeypot field on the forms, are still open. |
+| 5 Rate limiting and public form input | Partly done (2026-11-23) | Login: with no client IP the limit is kept per account, so five wrong passwords no longer lock every admin out. Public forms (contact, quote, warranty, newsletter): every field is length-capped, quote and warranty emails are validated, the quote cart is validated server-side (`src/lib/formInput.ts`, checked by `.agents/tasks/admin-improve/formInput-selftest.ts`). With no client IP the public form limiter is skipped instead of sharing one bucket. | `src/lib/rateLimit.ts` is still in memory. Host: the reverse proxy must append the real client IP to `x-forwarded-for` (`docs/deploy-checklist-th.md` row 6); without it the public form limiter does nothing and a directly exposed app can have the header forged. Honeypot: done 2026-11-23 on contact, quote, warranty and newsletter (`HoneypotField`, `isBotSubmission`; a filled field gets a normal success reply and nothing is stored). Moving the limiter to a shared store is still open (needs a new table, so the owner's approval). |
 | 6 Upload hygiene | Done in code, self-tested with a stub storage client | Signature check, resize to WebP (max 2000 px), old file moved to `_trash/<yyyymm>/` on replace and delete (never deleted), Thai upload errors, `prisma/find-orphan-uploads.ts` (dry run) | 2026-11-23, owner approved: 24 orphans (about 9 MB) moved to `_trash/` with the real bucket; a second dry run found 0 orphans and all 77 referenced upload URLs return 200. Undo: `--restore prisma/backups/orphan-uploads-manifest-2026-11-23T07-53-21-337Z.json`. Emptying `_trash` still needs the owner. The replace/delete path in the admin is not yet tested against the real bucket. |
 | 8 Security headers | Done, report-only | `next.config.ts` sends nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy and `Content-Security-Policy-Report-Only` | Enforcing CSP needs the owner's approval and a clean run with real pixel IDs. HSTS goes on the proxy. |
 | 9 Notifications | Done | Amber banner on every admin page when neither LINE nor email is set | Set the credentials (`NOTIFY_*`, `RESEND_API_KEY`, LINE). |
@@ -183,7 +183,7 @@ Numbering note: the owner's request "1, 5, 6" was worked as lead handling, uploa
 1. **Lead handling.** `contact-messages`, `quote-requests` and `warranty-claims` list every row with no limit, no search, no status filter, no pagination. Orders are capped at 200 rows. Leads have a status but no internal note and no owner (orders have `adminNote`). Only the newsletter list exports CSV (a `data:` link). Add filter, search, pagination, a note and assignee field, and CSV export for all lead lists.
 2. **Audit trail.** Nothing records who changed or deleted a product, a setting or a lead status. Add an `AuditLog` table written by the admin actions (user, action, entity, time).
 3. **Roles.** Every admin can delete users, change payment settings and delete products. Add at least an owner role and an editor role.
-4. **Sessions.** The JWT lives 7 days. `requireAdmin()` rejects deleted users only, so changing a password does not end other sessions. Add a `tokenVersion` or `passwordChangedAt` check. No two-factor login. No current-password check when an admin edits an account.
+4. **Sessions.** Partly done 2026-11-23: the session token carries a fingerprint of the password hash (`passwordVersion` in `src/lib/adminAuth.ts`) and `requireAdmin()` rejects it when the password has changed, so a new password ends all other sessions (the admin who changed their own password gets a fresh cookie). No schema change. Tokens issued before this change have no fingerprint, so every admin must sign in once again after this code is running. Still open (needs UI and a Figma mockup first): two-factor login, a current-password check when an admin edits an account.
 5. **Rate limiting.** `src/lib/rateLimit.ts` is in memory: it resets on restart and is per instance. `clientIp()` trusts the rightmost `x-forwarded-for` value, which is correct only behind a proxy that appends the real client IP (nginx `proxy_add_x_forwarded_for`). Behind other setups it is wrong. Move to a shared store (database or Redis) before scaling out.
 6. **Upload hygiene.** Uploads are checked by the browser-supplied MIME type only, not by file signature, and are not resized. Deleting a record or replacing an image does not delete the old file from Supabase Storage (no removal calls were found), so orphans accumulate. Add signature checks, automatic resizing to WebP, and cleanup.
 7. **Content history.** `PageContent` keeps only `updatedAt`, so an overwritten text cannot be restored. Add a revisions table or at least a "previous value" column.
@@ -201,4 +201,4 @@ Numbering note: the owner's request "1, 5, 6" was worked as lead handling, uploa
 
 ## 14. Stale documents
 
-`README.md` still says: MySQL (it is PostgreSQL), uploads go to `public/uploads` on disk (they go to Supabase Storage; `/public/uploads` is only a gitignored leftover), 12 photo slots (there are about 30), and that the contact form sends nowhere (it saves a `ContactMessage` and sends team alerts). Its "still placeholder" and "Deploying" sections are partly obsolete too. Trust this file and the code over the README.
+`README.md` was rewritten on 2026-11-23 and matches the code. `/public/uploads` is a gitignored leftover from before Supabase Storage. If a document and the code disagree, trust the code and fix the document.

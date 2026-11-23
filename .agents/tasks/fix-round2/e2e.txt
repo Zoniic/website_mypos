@@ -1,0 +1,19 @@
+PASS | A2 redirect /products/F58.php | status=308 location=/products/mypos-f58 want=/products/mypos-f58
+PASS | A2 redirect /Mypos-Application.php | status=308 location=/software want=/software
+PASS | A2 redirect /Contact-MYPOS.php | status=308 location=/contact want=/contact
+PASS | A2 redirect /products/FM2200.php | status=308 location=/accessories want=/accessories
+PASS | A2 redirect /Dreamworld-Project.php | status=308 location=/references/dreamworld want=/references/dreamworld
+PASS | A2 redirect /products/K156W.php | status=308 location=/products/mypos-k156 want=/products/mypos-k156
+PASS | A2 redirect /products/K215A.php | status=308 location=/solutions/self-order want=/solutions/self-order
+PASS | A2 redirect /products/F82.php | status=308 location=/solutions/pos want=/solutions/pos
+PASS | A2 redirect /index.php | status=308 location=/ want=/
+PASS | A2 /products/F58.php ends on a live page | hop1=/products/mypos-f58 hop2=/th/products/mypos-f58 final=200
+PASS | A2 unknown .php is not redirected | status=404
+PASS | B1 zh KB title | h1=[K1 更换打印纸]
+PASS | B1 zh KB section has no wrong wording | status=200
+PASS | B2 login page Thai | status=200
+PASS | C4 honeypot on /th/contact | status=200 field=True
+PASS | C4 honeypot on /th/service | status=200 field=True
+PASS | C4 honeypot on /th/compare | status=200 field=True
+PASS | C4 honeypot on /th | status=200 field=True
+failures=0

@@ -1,160 +1,57 @@
 # MYPOS Website
 
-> **Start with [`HANDOFF.md`](./HANDOFF.md).** Parts of this README are out of date (database, uploads, photo slots, contact form). `HANDOFF.md` lists what is current.
+Marketing and lead-generation site for MYPOS (FMT Corporation), a Thai maker of POS terminals and self-order kiosks. Thai-first, with English and Chinese (`/th`, `/en`, `/zh`), and an admin panel at `/admin` that edits almost all content.
 
-Next.js (App Router) + TypeScript + Tailwind CSS + `next-intl` (th/en/zh) + MySQL (via Prisma) as the content backend, with a password-protected admin panel at `/admin`.
+**Read [`HANDOFF.md`](./HANDOFF.md) before changing anything.** It holds the project rules, the code map, the current state and the backlog. Owner-supplied values and where to enter them are in [`docs/owner-data-guide-th.md`](./docs/owner-data-guide-th.md); deployment steps are in [`docs/deploy-checklist-th.md`](./docs/deploy-checklist-th.md).
+
+## Stack
+
+- Next.js 16 (App Router, Turbopack), React 19, TypeScript, Tailwind CSS v4. This Next.js version differs from older ones: read `node_modules/next/dist/docs/` before changing Next APIs. Middleware lives in `src/proxy.ts`.
+- next-intl 4 for routing. Page copy is stored in the database (`PageContent`), not read from `messages/*.json` at runtime (those files are the seed and the fallback).
+- Prisma 6 with PostgreSQL. Uploaded files go to Supabase Storage (`src/lib/uploads.ts`), are checked by file signature and converted to WebP.
+- Icons: `lucide-react` only. No emoji, enforced by ESLint and by the admin forms (`DESIGN.md` §10).
 
 ## Running locally
 
 ```bash
-npm install
-npm run dev
+npm install          # also runs prisma generate
+npm run dev          # http://localhost:3000 (redirects to /th)
 ```
 
-Open http://localhost:3000 — it redirects to `/th` (default locale). Switch languages with the buttons in the header, or visit `/en` / `/zh` directly.
+Admin: http://localhost:3000/admin/login. The first admin account is created with `node node_modules/tsx/dist/cli.mjs prisma/seed-admin-user.ts` (reads `ADMIN_EMAIL` and `ADMIN_PASSWORD`).
 
-Admin panel: http://localhost:3000/admin/login (password is `ADMIN_PASSWORD` in `.env.local`).
+Environment files are gitignored: `.env` (read by the Prisma CLI) and `.env.local` (read by the app). Variable names and what they do are listed in `HANDOFF.md` §6. Never commit their values.
+
+## Checks
 
 ```bash
-npm run build   # production build
-npm run start   # run the production build locally
-npm run lint    # ESLint
+npx tsc --noEmit     # types
+npm run lint         # ESLint, including the Lucide/no-emoji rule
+npm test             # unit tests in tests/unit (no database needed)
+npm run build        # production build (some pages read the database while prerendering)
 ```
 
-### Environment variables
-
-Two files, both gitignored (see `.env.example` for the template):
-- `.env` — `DATABASE_URL` only (Prisma CLI reads `.env`, not `.env.local`).
-- `.env.local` — `DATABASE_URL` again (for the Next.js app at runtime), plus `ADMIN_PASSWORD` and `SESSION_SECRET`.
-
-**Change `ADMIN_PASSWORD` and `SESSION_SECRET` before deploying** — the checked-in values are dev-only placeholders.
-
-### After pulling schema changes
-
-Whenever `prisma/schema.prisma` changes (new tables/columns), run on a machine that can reach the MySQL server:
-
-```bash
-npx prisma generate   # regenerate the typed client
-npx prisma db push    # sync the schema to MySQL (no formal migrations)
-```
-
-Some features also ship a one-off, idempotent script to push new copy into the DB (since page/UI text lives in MySQL, not `messages/*.json` — see below). Run each once after its feature is deployed:
-```bash
-npx tsx prisma/add-contact-form-feedback-keys.ts   # contact form loading/success/error text
-npx tsx prisma/add-kb-namespace.ts                 # Knowledge Base landing/section/search text
-npx tsx prisma/update-software-features.ts         # ⚠️ overwrites software.features.items
-npx tsx prisma/add-legal-pages.ts                  # Privacy Policy / Terms / cookie banner text
-npx tsx prisma/add-official-partners-copy.ts        # About page "Official Partners" section text
-```
+GitHub Actions (`.github/workflows/ci.yml`) runs the type check, lint and unit tests on every push and pull request to `main`. Page-level checks that need a running server and database are scripts in `.agents/tasks/bug-fix/` (see `HANDOFF.md` §9).
 
 ## Project structure
 
 ```
-src/
-  app/[locale]/          # every public page, one folder per route (App Router)
-  app/admin/             # admin panel (outside the [locale] tree — no i18n prefix)
-    (dashboard)/           # authenticated pages: products/accessories/references/content CRUD
-    login/                 # login form + server action
-  components/
-    ui/                   # generic building blocks (Button, Breadcrumb, PlaceholderImage)
-    layout/                # Header, Footer, StickyMobileBar, LanguageSwitcher
-    sections/               # homepage/solution section blocks (Hero, FaqAccordion, ...)
-    products/                 # products listing/detail specific pieces
-    references/                # references page filter
-    seo/                        # JsonLd helper
-  data/                   # solutions config, legacy redirect map (static, not DB-backed)
-  i18n/                   # next-intl routing/navigation/request config
-  lib/
-    prisma.ts               # Prisma client singleton
-    products.ts              # DB-backed product queries (replaces the old static array)
-    messages.ts               # reconstructs next-intl's `messages` object from MySQL
-    adminAuth.ts                # session cookie sign/verify (jose)
-  config/site.ts          # company name, URL, phone, email, LINE/Facebook links
-prisma/
-  schema.prisma           # Product, Accessory, ReferenceCase (+ translations), PageContent
-  seed.ts                 # one-time migration from the old messages/*.json + data/products.ts
-messages/
-  th.json / en.json / zh.json   # NO LONGER read at runtime — kept only as the seed source
+src/app/[locale]/   public pages, one folder per route (add new ones to src/lib/routeMap.ts too)
+src/app/admin/      admin panel (outside the locale tree)
+src/components/     UI building blocks, layout, page sections, forms
+src/lib/            data access and shared helpers
+src/data/           static config, including legacyRedirects.ts (old .php URLs)
+src/proxy.ts        admin gate, old-slug redirects, real 404s, then next-intl
+prisma/             schema and data scripts (dry run by default; --write takes a backup first)
+tests/unit/         unit tests (node:test, run with tsx)
+docs/               Thai guides for the owner
+.agents/tasks/      audit reports, verification scripts and work logs (not part of the site)
 ```
 
-## Content is in MySQL, not static files
+## Content and data
 
-All page copy, products, accessories, and case studies live in the database and are edited through **`/admin`** — changes appear on the live site immediately (every `[locale]/*` page is force-dynamic; nothing is prerendered at build time). `messages/*.json` is no longer imported by the app; it's kept purely as the source the one-time `prisma/seed.ts` migration read from.
+Products, accessories, case studies, blog posts, knowledge-base articles and job postings each have a base table plus one translation row per locale. Other copy is in `PageContent`; settings such as contact details, Pixel IDs and stats are in `SiteSetting`; photo slots are in `SiteImage`. Leads (`ContactMessage`, `QuoteRequest`, `WarrantyClaim`) have a status, an internal note and an assignee, with search, filters and CSV export in the admin. Admin saves refresh the public pages at once; direct database writes show within 5 minutes.
 
-Data model (see `prisma/schema.prisma`):
-- **`Product`** + **`ProductTranslation`** (one row per locale: name, highlight) — specs/price/category are shared across locales.
-- **`Accessory`** + **`AccessoryTranslation`**.
-- **`ReferenceCase`** + **`ReferenceCaseTranslation`** (case studies on `/references` and each solution page).
-- **`PageContent`** — generic `(namespace, key, locale) -> value` store for everything else (hero text, FAQ, about, contact labels, ...). Arrays/objects (like FAQ items) are stored as a JSON string in `value`, and are validated before saving — invalid JSON is rejected with an error instead of corrupting the field. Edit these under **Admin → Page Content**.
-- **`SiteSetting`** — phone, email, LINE, Facebook, Google Maps embed URL, and homepage stats (businesses served / years / support). Edit under **Admin → Site Settings**.
-- **`SiteImage`** — named photo slots (homepage hero, about page ×2, each solution's photo, software page hero + 3 screenshots, contact page LINE QR code) — a fixed set of 12 known image spots the site's layout expects. Edit under **Admin → Site Photos**.
-- **`TrustLogo`** — the "Trusted by" logo strip on the homepage. Falls back to showing the name as text until a logo image is uploaded. Edit under **Admin → Trust Logos**.
-- **`OfficialPartner`** — companies MYPOS is an authorized/official partner of (payment gateways, banks, hardware manufacturers) — distinct from `TrustLogo`, which shows customers, not partners. Shown on the About page, optionally links out to the partner's website. Edit under **Admin → Official Partners**.
-- **`KbCategory`** + **`KbCategoryTranslation`** and **`KbArticle`** + **`KbArticleTranslation`** — the customer-facing Knowledge Base at `/knowledge-base` (self-serve manuals to reduce support load). Categories belong to a `section` (`hardware` or `software`); articles support a cover photo, an optional PDF download, an optional video link (YouTube/Google Drive, auto-embedded), and can optionally point at a `Product`/`Accessory` slug. Full-text search across title/summary/body. Edit under **Admin → KB Categories** / **Admin → KB Articles**.
+## Deployment
 
-### What's still not admin-editable
-
-- **Header/footer menu structure** (which links appear, their order) is hardcoded in `Header.tsx` / `Footer.tsx` — the page set is fixed by the file-based routes anyway, so this would need a dedicated menu-builder feature to become dynamic. Menu *labels* are editable via `nav.*` in Page Content.
-- **301 redirects** (`src/data/legacyRedirects.ts`) and **company name/domain** (`src/config/site.ts`) are still code, since they're deployment-level concerns rather than day-to-day content.
-
-## Adding a product / accessory / case study
-
-Use the admin panel: **Admin → Products/Accessories/Case Studies → New**. No code changes, no redeploy.
-
-## Uploading photos
-
-Product and accessory forms in the admin panel have a **Photos** section with file inputs. Each one shows the current photo (if any), the exact spec expected, and an instant preview of the file you just picked, before you save:
-
-- **Product main photo**: square, ≥1000×1000px, plain/white background preferred.
-- **Product gallery photos** (side/back/in-use): same spec, optional, up to 3.
-- **Accessory photo**: square, ≥800×800px.
-- All: JPG, PNG, or WebP, max 5MB.
-
-Uploaded files are saved to `public/uploads/{products|accessories}/` on the server disk (not committed to git — see `.gitignore`) and served at `/uploads/...`. **This only works when self-hosting** (a VPS, or `npm run start` on a persistent machine) — it will **not** work on Vercel, whose serverless functions have no persistent filesystem. If you deploy to Vercel later, this needs to be swapped for a cloud storage provider (S3, Cloudinary, Vercel Blob, etc.) — ask for that when you're ready.
-
-Pages fall back to a labeled gray placeholder tile automatically until a real photo is uploaded, so nothing breaks in the meantime.
-
-## Editing marketing copy (hero, FAQ, about, etc.)
-
-**Admin → Page Content**, pick the namespace (e.g. `home`, `about`, `solutions`), edit the field for each language, save. Each namespace editor has a **live preview panel** on the right (desktop) showing the actual public page for the selected language — it auto-refreshes after a successful save, or use the "Refresh" button anytime.
-
-## What's still placeholder — replace before launch
-
-- **All body copy** — written as reasonable placeholder text, not the real DEV-SPEC/prototype wording.
-- **Images** — every photo is a gray placeholder tile rendered via `next/image` at the correct aspect ratio (`src/components/ui/PlaceholderImage.tsx`). Swap the `src` for real photography; the layout won't need to change.
-- **Product prices, specs, datasheets** — mostly real now (pulled from the MYPOS brochure), but `datasheetUrl` is still unset on every product (the page shows a "coming soon" state) until you have real PDFs to link.
-- **Company details** — legal name, address, phone and email come only from **Admin → ตั้งค่าเว็บไซต์** (Company and Contact sections), read through `companyInfo()` in `src/lib/siteSettings.ts`; empty values are left out. What to enter and where to get each value: `docs/owner-data-guide-th.md`.
-- **Map** — `/contact` embeds a generic Google Maps query for "Bangkok, Thailand". Once you have a real address, update the `src` in `src/app/[locale]/contact/page.tsx`.
-- **LINE OA** — set the LINE chat link in Admin → ตั้งค่าเว็บไซต์. While it is empty, the mobile bar and the footer use `siteConfig.lineUrl` (`https://line.me/R/ti/p/@mypos`, the LINE ID from the brochure). The QR code is uploaded in Admin → รูปภาพและโลโก้ (`line-qr-code`).
-- **301 redirects** — `src/data/legacyRedirects.ts` has the mapping structure and commented examples, but no real entries yet. Fill it in from the old site's URL list / Search Console export.
-- **Contact form** — `src/components/contact/ContactForm.tsx` shows real loading/success/error UI, but still doesn't send anywhere yet (see Phase 8 below).
-- **Privacy Policy / Terms of Service** (`legal` namespace, `/privacy-policy` and `/terms-of-service`) — generic drafted boilerplate, not legal advice. **Have a lawyer review before relying on this in production**, especially the PDPA-related claims in the Privacy Policy.
-
-## Security notes
-
-- **Admin login rate limiting** (`src/lib/rateLimit.ts`) — 5 failed attempts per 15 minutes per IP, in-memory. This is best-effort on serverless platforms (each instance has separate memory); for a hard guarantee under serverless, swap to a shared store (Redis/Upstash).
-- **Cookie consent banner** (`src/components/layout/CookieConsent.tsx`) — currently only essential cookies are set (consent choice, language). If analytics/ads are added later, gate them behind this consent.
-
-## SEO
-
-- `robots.txt` and `sitemap.xml` are auto-generated (`src/app/robots.ts`, `src/app/sitemap.ts`) and unblock all crawlers.
-- Every page sets a unique title/description, canonical URL, and hreflang alternates for th/en/zh (`src/lib/seo.ts`).
-- Every page gets its own dynamically generated OG image (`src/lib/ogImage.tsx` + `opengraph-image.tsx` in each route folder).
-- Schema.org JSON-LD: `Organization`, `Product`, `FAQPage`, `BreadcrumbList`, `ItemList` where relevant.
-
-## Deploying
-
-Not yet deployed. To put this on Vercel:
-
-1. Push this repo to GitHub/GitLab/Bitbucket.
-2. Import it at vercel.com — Vercel auto-detects Next.js, no config needed.
-3. Add the same environment variables from `.env`/`.env.local` (`DATABASE_URL`, `ADMIN_PASSWORD`, `SESSION_SECRET`) in the Vercel project settings, with a strong password and secret for production.
-4. The MySQL server must be reachable from Vercel's servers — a local-network IP (like the current `192.168.0.222`) will **not** work once deployed. Either open that server to the internet with a firewall rule/VPN, or migrate to a hosted MySQL (PlanetScale, Railway, AWS RDS, etc.) before going live.
-5. Add `mypos.co.th` as a custom domain in the Vercel project settings and point your DNS at Vercel per their instructions.
-6. Once live, submit `https://mypos.co.th/sitemap.xml` to Google Search Console and request indexing.
-
-This requires your Vercel account, DNS access, and a decision on MySQL hosting, so it wasn't done automatically.
-
-## Lighthouse (last local run)
-
-Home page: Performance 93-96, Accessibility 100, Best Practices 100, SEO 92 (the SEO "canonical" flag is a false positive from testing on `localhost` instead of the real domain — canonical URLs are correctly set to `https://mypos.co.th/...` in the code). Re-run after deploying to get real-world numbers — a CDN-hosted deploy with real (optimized) images will likely improve LCP further.
+Not deployed yet: `https://mypos.co.th` still serves the old site. Before switching, follow `docs/deploy-checklist-th.md` (hosting, reverse proxy with `x-forwarded-for`, secrets, notification channels, database backups). Redirects from the old `.php` pages are in `src/data/legacyRedirects.ts`.
