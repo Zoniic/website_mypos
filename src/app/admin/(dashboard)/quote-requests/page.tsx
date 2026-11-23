@@ -1,7 +1,9 @@
 import { AdminGuide } from "../AdminGuide";
-import { updateQuoteRequestStatus } from "./actions";
+import { updateQuoteRequestStatus, updateQuoteRequestDetails } from "./actions";
 import { StatusSelect } from "../StatusSelect";
 import { LeadEmpty, LeadResultBar, LeadToolbar } from "../LeadToolbar";
+import { LeadAssignee } from "../LeadAssignee";
+import { LeadNote } from "../LeadNote";
 import { LeadPager } from "../LeadPager";
 import { LEAD_STATUS_LABELS, listAssigneeOptions, listQuoteRequests, parseLeadParams } from "@/lib/leadList";
 
@@ -57,12 +59,19 @@ export default async function AdminQuoteRequestsPage({
                   {request.createdAt.toLocaleString("th-TH")}
                 </p>
               </div>
-              <StatusSelect
+              <div className="flex w-full flex-col gap-2 sm:w-52">
+                <StatusSelect
                 defaultValue={request.status}
                 options={statusOptions}
                 labels={LEAD_STATUS_LABELS}
                 action={updateQuoteRequestStatus.bind(null, request.id)}
               />
+                <LeadAssignee
+                  assigneeId={request.assigneeId}
+                  admins={admins}
+                  action={updateQuoteRequestDetails.bind(null, request.id)}
+                />
+              </div>
             </div>
 
             {request.message && <p className="mt-3 text-sm text-text-2">{request.message}</p>}
@@ -83,6 +92,7 @@ export default async function AdminQuoteRequestsPage({
                 ))}
               </tbody>
             </table>
+            <LeadNote note={request.adminNote ?? ""} action={updateQuoteRequestDetails.bind(null, request.id)} />
           </div>
         ))}
       </div>

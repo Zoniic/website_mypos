@@ -1,6 +1,8 @@
-import { updateWarrantyClaimStatus } from "./actions";
+import { updateWarrantyClaimStatus, updateWarrantyClaimDetails } from "./actions";
 import { StatusSelect } from "../StatusSelect";
 import { LeadEmpty, LeadResultBar, LeadToolbar } from "../LeadToolbar";
+import { LeadAssignee } from "../LeadAssignee";
+import { LeadNote } from "../LeadNote";
 import { LeadPager } from "../LeadPager";
 import { LEAD_STATUS_LABELS, listAssigneeOptions, listWarrantyClaims, parseLeadParams } from "@/lib/leadList";
 
@@ -57,14 +59,22 @@ export default async function AdminWarrantyClaimsPage({
                 )}
                 <p className="mt-1 text-xs text-text-2">{claim.createdAt.toLocaleString("th-TH")}</p>
               </div>
-              <StatusSelect
+              <div className="flex w-full flex-col gap-2 sm:w-52">
+                <StatusSelect
                 defaultValue={claim.status}
                 options={statusOptions}
                 labels={LEAD_STATUS_LABELS}
                 action={updateWarrantyClaimStatus.bind(null, claim.id)}
               />
+                <LeadAssignee
+                  assigneeId={claim.assigneeId}
+                  admins={admins}
+                  action={updateWarrantyClaimDetails.bind(null, claim.id)}
+                />
+              </div>
             </div>
             <p className="mt-3 text-sm text-text-2">{claim.issue}</p>
+            <LeadNote note={claim.adminNote ?? ""} action={updateWarrantyClaimDetails.bind(null, claim.id)} />
           </div>
         ))}
       </div>

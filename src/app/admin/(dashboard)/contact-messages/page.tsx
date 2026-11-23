@@ -1,7 +1,9 @@
 import { AdminGuide } from "../AdminGuide";
-import { updateContactMessageStatus } from "./actions";
+import { updateContactMessageStatus, updateContactMessageDetails } from "./actions";
 import { StatusSelect } from "../StatusSelect";
 import { LeadEmpty, LeadResultBar, LeadToolbar } from "../LeadToolbar";
+import { LeadAssignee } from "../LeadAssignee";
+import { LeadNote } from "../LeadNote";
 import { LeadPager } from "../LeadPager";
 import { LEAD_STATUS_LABELS, listAssigneeOptions, listContactMessages, parseLeadParams } from "@/lib/leadList";
 
@@ -79,16 +81,24 @@ export default async function AdminContactMessagesPage({
                 )}
                 <p className="mt-1 text-xs text-text-2">{message.createdAt.toLocaleString("th-TH")}</p>
               </div>
-              <StatusSelect
+              <div className="flex w-full flex-col gap-2 sm:w-52">
+                <StatusSelect
                 defaultValue={message.status}
                 options={statusOptions}
                 labels={LEAD_STATUS_LABELS}
                 action={updateContactMessageStatus.bind(null, message.id)}
               />
+                <LeadAssignee
+                  assigneeId={message.assigneeId}
+                  admins={admins}
+                  action={updateContactMessageDetails.bind(null, message.id)}
+                />
+              </div>
             </div>
             {message.message && (
               <p className="mt-3 whitespace-pre-line text-sm text-text-2">{message.message}</p>
             )}
+            <LeadNote note={message.adminNote ?? ""} action={updateContactMessageDetails.bind(null, message.id)} />
           </div>
         ))}
       </div>

@@ -238,7 +238,7 @@ export function listAssigneeOptions() {
 
 export type LeadDetailsState = { ok: boolean; error?: string } | null;
 
-type ParsedDetails = { adminNote: string | null; assigneeId: number | null };
+type ParsedDetails = { adminNote?: string | null; assigneeId?: number | null };
 
 /** Pure validation of the note + assignee form fields. Existence of the assignee is checked separately. */
 export function parseLeadDetails(formData: FormData): { ok: true; value: ParsedDetails } | { ok: false; error: string } {
@@ -250,7 +250,14 @@ export function parseLeadDetails(formData: FormData): { ok: true; value: ParsedD
   if (note.length > LEAD_NOTE_MAX) return { ok: false, error: `โน้ตยาวเกิน ${LEAD_NOTE_MAX} ตัวอักษร` };
   const assignee = (assigneeRaw ?? "").trim();
   if (assignee !== "" && !/^\d{1,9}$/.test(assignee)) return { ok: false, error: "ข้อมูลผู้รับผิดชอบไม่ถูกต้อง" };
-  return { ok: true, value: { adminNote: note === "" ? null : note, assigneeId: assignee === "" ? null : Number(assignee) } };
+  // A field missing from the form is left unchanged, so the assignee select and the note box can save separately.
+  return {
+    ok: true,
+    value: {
+      ...(noteRaw !== null ? { adminNote: note === "" ? null : note } : {}),
+      ...(assigneeRaw !== null ? { assigneeId: assignee === "" ? null : Number(assignee) } : {}),
+    },
+  };
 }
 
 /**
@@ -262,11 +269,15 @@ export async function saveLeadDetails(kind: LeadKind, id: number, formData: Form
   const parsed = parseLeadDetails(formData);
   if (!parsed.ok) return { ok: false, error: parsed.error };
   const { adminNote, assigneeId } = parsed.value;
-  if (assigneeId !== null) {
+  if (assigneeId !== undefined && assigneeId !== null) {
     const admin = await prisma.adminUser.findUnique({ where: { id: assigneeId }, select: { id: true } });
     if (!admin) return { ok: false, error: "ไม่พบผู้รับผิดชอบที่เลือก" };
   }
-  const data = { adminNote, assigneeId };
+  const data = {
+    ...(adminNote !== undefined ? { adminNote } : {}),
+    ...(assigneeId !== undefined ? { assigneeId } : {}),
+  };
+  if (Object.keys(data).length === 0) return { ok: true };
   const result =
     kind === "contact"
       ? await prisma.contactMessage.updateMany({ where: { id }, data })
