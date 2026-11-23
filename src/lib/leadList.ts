@@ -16,6 +16,15 @@ export const LEAD_STATUSES: Record<LeadKind, readonly string[]> = {
   warranty: ["open", "in_progress", "resolved"],
 };
 
+export const LEAD_STATUS_LABELS: Record<string, string> = {
+  new: "ใหม่",
+  contacted: "ติดต่อแล้ว",
+  closed: "ปิดงาน",
+  open: "เปิดอยู่",
+  in_progress: "กำลังดำเนินการ",
+  resolved: "เสร็จแล้ว",
+};
+
 export const CONTACT_TOPICS = ["demo", "quote", "general", "support"] as const;
 
 export const LEAD_PAGE_SIZE = 25;

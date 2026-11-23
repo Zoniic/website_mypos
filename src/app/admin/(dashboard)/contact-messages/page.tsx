@@ -1,9 +1,12 @@
-import { prisma } from "@/lib/prisma";
 import { AdminGuide } from "../AdminGuide";
 import { updateContactMessageStatus } from "./actions";
 import { StatusSelect } from "../StatusSelect";
+import { LeadEmpty, LeadResultBar, LeadToolbar } from "../LeadToolbar";
+import { LeadPager } from "../LeadPager";
+import { LEAD_STATUS_LABELS, listAssigneeOptions, listContactMessages, parseLeadParams } from "@/lib/leadList";
 
 const statusOptions = ["new", "contacted", "closed"] as const;
+const basePath = "/admin/contact-messages";
 
 const topicLabels: Record<string, string> = {
   demo: "นัดสาธิต",
@@ -12,8 +15,16 @@ const topicLabels: Record<string, string> = {
   support: "แจ้งปัญหา/บริการ",
 };
 
-export default async function AdminContactMessagesPage() {
-  const messages = await prisma.contactMessage.findMany({ orderBy: { createdAt: "desc" } });
+export default async function AdminContactMessagesPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = parseLeadParams("contact", await searchParams);
+  const [{ rows: messages, page, pageCount, total }, admins] = await Promise.all([
+    listContactMessages(params),
+    listAssigneeOptions(),
+  ]);
 
   return (
     <div>
@@ -21,8 +32,24 @@ export default async function AdminContactMessagesPage() {
       <p className="mt-1 text-sm text-text-2">ข้อความจากฟอร์มหน้าติดต่อเรา และปุ่มนัดสาธิตบนเว็บ</p>
       <AdminGuide section="contactMessages" />
 
-      <div className="mt-6 space-y-4">
-        {messages.length === 0 && <p className="text-text-2">ยังไม่มีข้อความ</p>}
+      <LeadToolbar
+        kind="contact"
+        basePath={basePath}
+        params={params}
+        admins={admins}
+        searchPlaceholder="ค้นหาชื่อ เบอร์โทร สินค้า หรือข้อความ"
+      />
+      <LeadResultBar total={total} page={page} pageCount={pageCount} />
+
+      <div className="mt-3 space-y-4">
+        {messages.length === 0 && (
+          <LeadEmpty
+            params={params}
+            basePath={basePath}
+            emptyTitle="ยังไม่มีข้อความ"
+            emptyText="ข้อความจากฟอร์มหน้าติดต่อเราและปุ่มนัดสาธิตจะแสดงที่นี่"
+          />
+        )}
         {messages.map((message) => (
           <div key={message.id} className="rounded-xl border border-border p-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
@@ -55,6 +82,7 @@ export default async function AdminContactMessagesPage() {
               <StatusSelect
                 defaultValue={message.status}
                 options={statusOptions}
+                labels={LEAD_STATUS_LABELS}
                 action={updateContactMessageStatus.bind(null, message.id)}
               />
             </div>
@@ -64,6 +92,8 @@ export default async function AdminContactMessagesPage() {
           </div>
         ))}
       </div>
+
+      <LeadPager basePath={basePath} params={params} page={page} pageCount={pageCount} total={total} />
     </div>
   );
 }

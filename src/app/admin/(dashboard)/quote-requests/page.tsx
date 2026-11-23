@@ -1,26 +1,48 @@
-import { prisma } from "@/lib/prisma";
 import { AdminGuide } from "../AdminGuide";
 import { updateQuoteRequestStatus } from "./actions";
 import { StatusSelect } from "../StatusSelect";
+import { LeadEmpty, LeadResultBar, LeadToolbar } from "../LeadToolbar";
+import { LeadPager } from "../LeadPager";
+import { LEAD_STATUS_LABELS, listAssigneeOptions, listQuoteRequests, parseLeadParams } from "@/lib/leadList";
 
 const statusOptions = ["new", "contacted", "closed"] as const;
+const basePath = "/admin/quote-requests";
 
-export default async function AdminQuoteRequestsPage() {
-  const requests = await prisma.quoteRequest.findMany({
-    include: { items: true },
-    orderBy: { createdAt: "desc" },
-  });
+export default async function AdminQuoteRequestsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = parseLeadParams("quote", await searchParams);
+  const [{ rows: requests, page, pageCount, total }, admins] = await Promise.all([
+    listQuoteRequests(params),
+    listAssigneeOptions(),
+  ]);
 
   return (
     <div>
       <h1 className="text-2xl font-bold">ขอใบเสนอราคา</h1>
-      <p className="mt-1 text-sm text-text-2">
-        Submitted from the product compare/quote cart on the public site.
-      </p>
+      <p className="mt-1 text-sm text-text-2">คำขอที่ส่งจากตะกร้าเปรียบเทียบ/ขอใบเสนอราคาสินค้าบนหน้าเว็บ</p>
       <AdminGuide section="quoteRequests" />
 
-      <div className="mt-6 space-y-4">
-        {requests.length === 0 && <p className="text-text-2">No quote requests yet.</p>}
+      <LeadToolbar
+        kind="quote"
+        basePath={basePath}
+        params={params}
+        admins={admins}
+        searchPlaceholder="ค้นหาชื่อ บริษัท เบอร์โทร อีเมล หรือรุ่นสินค้า"
+      />
+      <LeadResultBar total={total} page={page} pageCount={pageCount} />
+
+      <div className="mt-3 space-y-4">
+        {requests.length === 0 && (
+          <LeadEmpty
+            params={params}
+            basePath={basePath}
+            emptyTitle="ยังไม่มีคำขอใบเสนอราคา"
+            emptyText="คำขอจากตะกร้าเปรียบเทียบสินค้าจะแสดงที่นี่"
+          />
+        )}
         {requests.map((request) => (
           <div key={request.id} className="rounded-xl border border-border p-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
@@ -38,6 +60,7 @@ export default async function AdminQuoteRequestsPage() {
               <StatusSelect
                 defaultValue={request.status}
                 options={statusOptions}
+                labels={LEAD_STATUS_LABELS}
                 action={updateQuoteRequestStatus.bind(null, request.id)}
               />
             </div>
@@ -63,6 +86,8 @@ export default async function AdminQuoteRequestsPage() {
           </div>
         ))}
       </div>
+
+      <LeadPager basePath={basePath} params={params} page={page} pageCount={pageCount} total={total} />
     </div>
   );
 }

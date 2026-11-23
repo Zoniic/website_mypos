@@ -1,21 +1,46 @@
-import { prisma } from "@/lib/prisma";
 import { updateWarrantyClaimStatus } from "./actions";
 import { StatusSelect } from "../StatusSelect";
+import { LeadEmpty, LeadResultBar, LeadToolbar } from "../LeadToolbar";
+import { LeadPager } from "../LeadPager";
+import { LEAD_STATUS_LABELS, listAssigneeOptions, listWarrantyClaims, parseLeadParams } from "@/lib/leadList";
 
 const statusOptions = ["open", "in_progress", "resolved"] as const;
+const basePath = "/admin/warranty-claims";
 
-export default async function AdminWarrantyClaimsPage() {
-  const claims = await prisma.warrantyClaim.findMany({
-    orderBy: { createdAt: "desc" },
-  });
+export default async function AdminWarrantyClaimsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = parseLeadParams("warranty", await searchParams);
+  const [{ rows: claims, page, pageCount, total }, admins] = await Promise.all([
+    listWarrantyClaims(params),
+    listAssigneeOptions(),
+  ]);
 
   return (
     <div>
       <h1 className="text-2xl font-bold">แจ้งซ่อม / เคลม</h1>
       <p className="mt-1 text-sm text-text-2">คำขอจากฟอร์มแจ้งซ่อมในหน้าบริการ</p>
 
-      <div className="mt-6 space-y-4">
-        {claims.length === 0 && <p className="text-text-2">ยังไม่มีงานแจ้งซ่อม</p>}
+      <LeadToolbar
+        kind="warranty"
+        basePath={basePath}
+        params={params}
+        admins={admins}
+        searchPlaceholder="ค้นหาชื่อ เบอร์โทร อีเมล Serial หรืออาการ"
+      />
+      <LeadResultBar total={total} page={page} pageCount={pageCount} />
+
+      <div className="mt-3 space-y-4">
+        {claims.length === 0 && (
+          <LeadEmpty
+            params={params}
+            basePath={basePath}
+            emptyTitle="ยังไม่มีงานแจ้งซ่อม"
+            emptyText="คำขอจากฟอร์มแจ้งซ่อมในหน้าบริการจะแสดงที่นี่"
+          />
+        )}
         {claims.map((claim) => (
           <div key={claim.id} className="rounded-xl border border-border p-4">
             <div className="flex flex-wrap items-start justify-between gap-4">
@@ -35,6 +60,7 @@ export default async function AdminWarrantyClaimsPage() {
               <StatusSelect
                 defaultValue={claim.status}
                 options={statusOptions}
+                labels={LEAD_STATUS_LABELS}
                 action={updateWarrantyClaimStatus.bind(null, claim.id)}
               />
             </div>
@@ -42,6 +68,8 @@ export default async function AdminWarrantyClaimsPage() {
           </div>
         ))}
       </div>
+
+      <LeadPager basePath={basePath} params={params} page={page} pageCount={pageCount} total={total} />
     </div>
   );
 }

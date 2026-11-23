@@ -4,10 +4,12 @@ export function StatusSelect({
   defaultValue,
   options,
   action,
+  labels,
 }: {
   defaultValue: string;
   options: readonly string[];
   action: (formData: FormData) => void;
+  labels?: Record<string, string>;
 }) {
   return (
     <form action={action}>
@@ -19,7 +21,7 @@ export function StatusSelect({
       >
         {options.map((option) => (
           <option key={option} value={option}>
-            {option}
+            {labels?.[option] ?? option}
           </option>
         ))}
       </select>
