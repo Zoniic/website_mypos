@@ -1,0 +1,9 @@
+/th status=200
+/en status=200
+/zh status=200
+/th/products status=200
+/th/knowledge-base status=200
+/th/contact status=200
+/admin/login status=200
+/th/knowledge-base/hardware status=200
+violations: 0

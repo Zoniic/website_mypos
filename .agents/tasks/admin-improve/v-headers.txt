@@ -1,0 +1,72 @@
+== /th -> 200
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: s-maxage=300, stale-while-revalidate=31535700
+== /en -> 200
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: s-maxage=300, stale-while-revalidate=31535700
+== /zh -> 200
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: s-maxage=300, stale-while-revalidate=31535700
+== /th/contact -> 200
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: s-maxage=300, stale-while-revalidate=31535700
+== /th/products -> 200
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: private, no-cache, no-store, max-age=0, must-revalidate
+== /admin/login -> 200
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: s-maxage=31536000
+== /admin -> 307 location=/admin/login
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: (absent)
+== /th/nonexistent-page-xyz -> 404
+   content-security-policy-report-only: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.googleadservices.com https://connect.facebook.net https://analytics.tiktok.com https://d.line-scdn.net; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://*.doubleclick.net https://www.googleadservices.com https://www.facebook.com https://connect.facebook.net https://analytics.tiktok.com https://*.tiktok.com https://tr.line.me https://*.supabase.co; img-src 'self' data: blob: https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://www.google.com https://www.facebook.com https://*.tiktok.com https://tr.line.me https://i.ytimg.com; media-src 'self' blob: https://*.supabase.co; frame-src 'self' https://*.supabase.co https://www.youtube.com https://www.youtube-nocookie.com https://drive.google.com https://www.google.com https://td.doubleclick.net; style-src 'self' 'unsafe-inline'; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'
+   content-security-policy: (absent)
+   x-content-type-options: nosniff
+   referrer-policy: strict-origin-when-cross-origin
+   x-frame-options: SAMEORIGIN
+   permissions-policy: camera=(), microphone=(), geolocation=()
+   strict-transport-security: (absent)
+   cache-control: private, no-cache, no-store, max-age=0, must-revalidate

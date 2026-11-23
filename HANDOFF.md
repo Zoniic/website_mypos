@@ -93,6 +93,7 @@ Every admin Server Action must call `requireAdmin()` itself (`src/lib/adminAuth.
 All of these default to a dry run. `--write` first saves a JSON backup to `prisma/backups/` (gitignored). Follow this convention for any new script.
 
 - `strip-emoji.ts` (`--self-test`), `migrate-slugs.ts`, `hide-test-product.ts` (`--restore`), `split-phone-numbers.ts`, `update-hub-seo-copy.ts` (`--restore`). All were applied to the shared database on 2026-11-21.
+- New (admin-improve): `backup-db.ts` (`--write`, `--verify <file>`, `--self-test`; JSON export, not a host backup) and `find-orphan-uploads.ts` (`--write`, `--restore <manifest>`, `--self-test`; moves unreferenced files to `_trash/`, never deletes).
 - Older `add-*.ts` and `seed*.ts` files are one-time idempotent copy seeders. `update-software-features.ts` overwrites `software.features.items`, so do not run it blindly.
 - Run TypeScript scripts with `node node_modules/tsx/dist/cli.mjs <file>` on this Windows machine.
 
@@ -106,7 +107,14 @@ node node_modules/tsx/dist/cli.mjs prisma/strip-emoji.ts --self-test
 node node_modules/tsx/dist/cli.mjs .agents/tasks/check-slugs.ts            # read-only, expects 0 unsafe slugs
 pwsh -NoProfile -File .agents/tasks/bug-fix/recheck.ps1                    # needs dev server on :3000, writes recheck.txt
 node .agents/tasks/bug-fix/recheck-404.cjs                                 # needs PW_PATH, see below
+node node_modules/tsx/dist/cli.mjs .agents/tasks/admin-improve/csv-selftest.ts
+node node_modules/tsx/dist/cli.mjs .agents/tasks/admin-improve/leadlist-selftest.ts
+node node_modules/tsx/dist/cli.mjs .agents/tasks/admin-improve/upload-selftest.ts
+node node_modules/tsx/dist/cli.mjs prisma/find-orphan-uploads.ts --self-test
+node node_modules/tsx/dist/cli.mjs prisma/backup-db.ts --self-test
 ```
+
+Admin rendered checks use a scratch Postgres (Docker, port 5433) and never the shared database: `prisma db push`, `prisma/seed-admin-user.ts`, `.agents/tasks/admin-improve/seed-leads-scratch.ts` (refuses any other DATABASE_URL), `npm run build`, `next start -p 3100`, then `.agents/tasks/admin-improve/run-verify.ps1` (lists, search, pages, CSV; add `-Mode empty` after `seed-leads-scratch.ts --empty`), `verify-upload.cjs`, `headers-http.cjs`, `headers-check.cjs`.
 
 `recheck.ps1` covers the five scan bugs and the LINE link in 40 checks. Last result (2026-11-23): 39 pass, 1 fail (the Chinese KB title, see backlog). Browser scripts need Playwright: `PW_PATH=C:\Users\P^chapol\AppData\Roaming\npm\node_modules\playwright`.
 
@@ -159,7 +167,18 @@ Details and where to find each value are in `docs/owner-data-guide-th.md`.
 
 ### 12.3 Admin improvements, in suggested order
 
-Found by reading the code on 2026-11-23. None of these were implemented.
+Found by reading the code on 2026-11-23. Status of the work on branch `admin-improve` (2026-11-23, not pushed, not deployed) is in the table below. The list after it is the original finding text.
+
+| Item | Status | What is code | What still needs the owner or the host |
+|---|---|---|---|
+| 1 Lead handling | Done in code, verified on a scratch DB | Filter (status, assignee, topic, date range), search, 25-row pages, internal note, assignee, CSV export (BOM, quoting, formula guard) on contact messages, quote requests, warranty claims; newsletter uses the same CSV route (`src/lib/leadList.ts`, `src/lib/csv.ts`) | Approve and apply `.agents/tasks/admin-improve/lead-fields.sql` to the shared database (additive nullable columns). Until then the three lead pages fail against the shared DB. |
+| 5 Rate limiting | Not done in code | Nothing changed in `src/lib/rateLimit.ts`; it is still in memory | Host: reverse proxy must append the real client IP to `x-forwarded-for` (`docs/deploy-checklist-th.md` row 6). Moving the limiter to a shared store is still open. |
+| 6 Upload hygiene | Done in code, self-tested with a stub storage client | Signature check, resize to WebP (max 2000 px), old file moved to `_trash/<yyyymm>/` on replace and delete (never deleted), Thai upload errors, `prisma/find-orphan-uploads.ts` (dry run) | Not tested against the real bucket. Owner approval needed before running the orphan script with `--write` or purging `_trash`. |
+| 8 Security headers | Done, report-only | `next.config.ts` sends nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy and `Content-Security-Policy-Report-Only` | Enforcing CSP needs the owner's approval and a clean run with real pixel IDs. HSTS goes on the proxy. |
+| 9 Notifications | Done | Amber banner on every admin page when neither LINE nor email is set | Set the credentials (`NOTIFY_*`, `RESEND_API_KEY`, LINE). |
+| 10 Backups | Partly | `prisma/backup-db.ts` (JSON export, dry run by default, `--write`, `--verify`) | Host backup schedule and restore test (checklist rows 10, 11, 13). The script is not a host backup. |
+
+Numbering note: the owner's request "1, 5, 6" was worked as lead handling, uploads and deploy-time values (headers, banner, backups, checklist). In the list below item 5 is rate limiting and item 6 is uploads, so item 5 is only covered on the host side. Confirm with the owner whether the shared rate-limit store is wanted.
 
 1. **Lead handling.** `contact-messages`, `quote-requests` and `warranty-claims` list every row with no limit, no search, no status filter, no pagination. Orders are capped at 200 rows. Leads have a status but no internal note and no owner (orders have `adminNote`). Only the newsletter list exports CSV (a `data:` link). Add filter, search, pagination, a note and assignee field, and CSV export for all lead lists.
 2. **Audit trail.** Nothing records who changed or deleted a product, a setting or a lead status. Add an `AuditLog` table written by the admin actions (user, action, entity, time).

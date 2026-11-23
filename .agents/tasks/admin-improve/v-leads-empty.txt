@@ -1,0 +1,15 @@
+PASS login redirects to /admin  [http://localhost:3100/admin]
+PASS /admin/contact-messages empty: no lead cards (1 box = empty-state)  [1]
+PASS /admin/contact-messages empty: empty text shown
+PASS /admin/contact-messages empty: CSV header only  [status=200 rows=1]
+PASS /admin/contact-messages empty: CSV BOM
+PASS /admin/quote-requests empty: no lead cards (1 box = empty-state)  [1]
+PASS /admin/quote-requests empty: empty text shown
+PASS /admin/quote-requests empty: CSV header only  [status=200 rows=1]
+PASS /admin/quote-requests empty: CSV BOM
+PASS /admin/warranty-claims empty: no lead cards (1 box = empty-state)  [1]
+PASS /admin/warranty-claims empty: empty text shown
+PASS /admin/warranty-claims empty: CSV header only  [status=200 rows=1]
+PASS /admin/warranty-claims empty: CSV BOM
+PASS newsletter empty CSV header only  [1]
+pass=14 fail=0

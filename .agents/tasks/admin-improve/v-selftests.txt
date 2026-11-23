@@ -1,0 +1,56 @@
+
+== .agents/tasks/admin-improve/upload-selftest.ts
+PASS  storagePathFromUrl ignores other host
+PASS  storagePathFromUrl ignores other bucket
+PASS  storagePathFromUrl ignores /images/...
+PASS  storagePathFromUrl ignores _trash, normalizes ..
+PASS  splitUrlList trims and drops empties
+PASS  referenced file is kept
+PASS  unreferenced file moved once to _trash/yyyymm/
+PASS  external and local URLs are ignored
+PASS  move failure does not throw, is reported and logged
+PASS  reference lookup failure keeps the file
+
+All checks passed.
+exit 0
+== .agents/tasks/admin-improve/csv-selftest.ts
+pass  formula @
+pass  formula after spaces
+pass  leading tab
+pass  leading CR
+pass  dash inside is untouched
+pass  null
+pass  undefined
+pass  number
+pass  date +07:00
+pass  BOM first
+pass  CRLF rows
+all pass
+exit 0
+== .agents/tasks/admin-improve/leadlist-selftest.ts
+pass  where unassigned
+pass  where status
+pass  quote search covers items
+FAIL  details empty
+  got      {"ok":true,"value":{}}
+  expected {"ok":true,"value":{"adminNote":null,"assigneeId":null}}
+pass  details trims
+pass  details note too long
+pass  details note 2000 ok
+pass  details bad assignee
+pass  details file as note
+1 failed
+exit 1
+== prisma/find-orphan-uploads.ts --self-test
+PASS  unreferenced old files are orphans
+PASS  files younger than 24h are skipped
+PASS  files with unknown age are skipped
+PASS  _trash is never touched
+PASS  summary counts per folder
+PASS  trash path
+
+All checks passed.
+exit 0
+== prisma/backup-db.ts --self-test
+All 10 checks passed
+exit 0
