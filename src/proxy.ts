@@ -143,7 +143,7 @@ export default async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/admin")) {
-    if (pathname === "/admin/login") {
+    if (pathname === "/admin/login" || pathname.startsWith("/admin/login/")) {
       return NextResponse.next();
     }
 

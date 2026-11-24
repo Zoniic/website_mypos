@@ -22,7 +22,7 @@ const OWNER_ONLY_FILES = ["(dashboard)/settings/actions.ts", "(dashboard)/admin-
 /** Own-account actions (step d) that act only on the session user. */
 const SELF_SERVICE: string[] = [];
 /** Public login flow: it creates the session, so it cannot require one. */
-const LOGIN_EXEMPT = ["login/actions.ts"];
+const LOGIN_EXEMPT = ["login/actions.ts", "login/2fa/actions.ts"];
 /** Route handlers that need no session by design (clearing cookies only). */
 const ROUTE_EXEMPT = ["logout/route.ts", "live/exit/route.ts"];
 
@@ -99,7 +99,7 @@ test("nav items flagged ownerOnly match the owner-only hrefs", () => {
 
 test("every actions file that writes to the database records it in the change history", () => {
   const WRITES = /\bprisma\.\w+\.(create|createMany|update|updateMany|upsert|delete|deleteMany)\(|\btx\.\w+\.(create|update|upsert|delete|deleteMany)\(/;
-  const RECORDS = /\b(auditEntity|auditKeyed|auditContent|auditSettings|auditNote|auditLogin|recordAudit)\(|\bwriteSetting\(\s*admin|\bstore\(admin|saveLeadDetails\([^)]*admin/;
+  const RECORDS = /\b(auditPasswordChange|auditEntity|auditKeyed|auditContent|auditSettings|auditNote|auditLogin|recordAudit)\(|\bwriteSetting\(\s*admin|\bstore\(admin|saveLeadDetails\([^)]*admin/;
   let checked = 0;
   for (const { file, label } of actionFiles) {
     const source = readFileSync(file, "utf8");
@@ -127,4 +127,14 @@ test("history export and history actions are owner-only", () => {
 test("the Page Content page only loads history for owners", () => {
   const page = readFileSync(join(ADMIN_DIR, "(dashboard)", "content", "[namespace]", "page.tsx"), "utf8");
   assert.match(page, /role === "owner" \? await pageContentHistoryCounts/);
+});
+
+test("two-step login step 2 needs the pending cookie, shares the limiter and never logs", () => {
+  const source = readFileSync(join(ADMIN_DIR, "login", "2fa", "actions.ts"), "utf8");
+  assert.match(source, /readPendingTwoFactor\(/);
+  assert.match(source, /isRateLimited\(clientKey\)/);
+  assert.match(source, /recordAttempt\(clientKey\)/);
+  assert.match(source, /recordAttempt\(userKey\)/);
+  assert.match(source, /finishLogin\(/);
+  assert.doesNotMatch(source, /console\./);
 });

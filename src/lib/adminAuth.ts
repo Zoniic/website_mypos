@@ -4,6 +4,13 @@ import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
 import { prisma } from "@/lib/prisma";
 import { can, isRole, type Permission, type Role } from "@/lib/permissions";
+import {
+  PENDING_2FA_COOKIE,
+  PENDING_2FA_SECONDS,
+  createPendingToken,
+  verifyPendingToken,
+  type PendingTwoFactor,
+} from "@/lib/twoFactorPure";
 
 export const ADMIN_SESSION_COOKIE = "mypos_admin_session";
 
@@ -83,6 +90,33 @@ export async function setSessionCookie(user: SessionUser, passwordHash: string):
     path: "/",
     maxAge: SESSION_MAX_AGE_SECONDS,
   });
+}
+
+/**
+ * Step 1 of a two-step login: the password was right but no session exists yet.
+ * Sets a 5-minute signed cookie that only /admin/login/2fa accepts.
+ */
+export async function setPendingTwoFactorCookie(userId: number, passwordHash: string): Promise<void> {
+  const token = await createPendingToken({ userId, pwv: passwordVersion(passwordHash) }, getSecret());
+  const cookieStore = await cookies();
+  cookieStore.set(PENDING_2FA_COOKIE, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/admin/login",
+    maxAge: PENDING_2FA_SECONDS,
+  });
+}
+
+/** The pending two-step login from the cookie, or null (missing, expired, forged). */
+export async function readPendingTwoFactor(): Promise<PendingTwoFactor | null> {
+  const cookieStore = await cookies();
+  return verifyPendingToken(cookieStore.get(PENDING_2FA_COOKIE)?.value, getSecret());
+}
+
+export async function clearPendingTwoFactorCookie(): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.set(PENDING_2FA_COOKIE, "", { path: "/admin/login", maxAge: 0 });
 }
 
 async function readSession(): Promise<SessionPayload | null> {
