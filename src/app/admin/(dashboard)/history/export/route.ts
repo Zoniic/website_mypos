@@ -1,5 +1,5 @@
 import type { NextRequest } from "next/server";
-import { requireOwner } from "@/lib/adminAuth";
+import { ForbiddenError, requireOwner } from "@/lib/adminAuth";
 import type { AuditChange } from "@/lib/audit";
 import { actionLabel, HISTORY_EXPORT_LIMIT, historyWhere, parseHistoryParams } from "@/lib/historyList";
 import { entityLabel } from "@/lib/auditRegistry";
@@ -8,7 +8,12 @@ import { prisma } from "@/lib/prisma";
 
 /** CSV of the change history for the current filters. Owner only, at most 20 000 history rows, never older than 1 year. */
 export async function GET(request: NextRequest) {
-  await requireOwner();
+  try {
+    await requireOwner();
+  } catch (error) {
+    if (error instanceof ForbiddenError) return new Response(error.message, { status: 403 });
+    throw error;
+  }
   const params = parseHistoryParams(Object.fromEntries(request.nextUrl.searchParams));
   const rows = await prisma.auditLog.findMany({
     where: historyWhere(params),
