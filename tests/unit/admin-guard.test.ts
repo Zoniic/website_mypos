@@ -138,3 +138,17 @@ test("two-step login step 2 needs the pending cookie, shares the limiter and nev
   assert.match(source, /finishLogin\(/);
   assert.doesNotMatch(source, /console\./);
 });
+
+test("the two-step libraries and account actions never log", () => {
+  for (const file of [join(ROOT, "src", "lib", "twoFactor.ts"), join(ADMIN_DIR, "(dashboard)", "account", "actions.ts")]) {
+    assert.doesNotMatch(readFileSync(file, "utf8"), /console\./, relative(ROOT, file));
+  }
+});
+
+test("account actions act on the signed-in admin only (no user id comes from the form)", () => {
+  const source = readFileSync(join(ADMIN_DIR, "(dashboard)", "account", "actions.ts"), "utf8");
+  assert.doesNotMatch(source, /formData\.get\(["'](userId|id|adminUserId)["']\)/);
+  assert.doesNotMatch(source, /requireOwner\(/);
+});
+
+

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, BellOff, X } from "lucide-react";
+import { ArrowRight, ArrowUpRight, BellOff, UserRound, X } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ADMIN_ICONS, findNavItem, type AdminNavGroup, type AdminNavItem, type BadgeKey } from "./adminNav";
 
@@ -77,7 +77,7 @@ function NoAlertChannelBanner() {
   );
 }
 
-function Account({ name, email }: { name?: string; email?: string }) {
+function Account({ name, email, onNavigate }: { name?: string; email?: string; onNavigate?: () => void }) {
   return (
     <div className="border-t border-border pt-4">
       {name && (
@@ -85,6 +85,14 @@ function Account({ name, email }: { name?: string; email?: string }) {
           เข้าสู่ระบบเป็น <span className="font-medium text-text-1">{name}</span>
         </p>
       )}
+      <Link
+        href="/admin/account"
+        onClick={onNavigate}
+        className="mx-2.5 mt-1 inline-flex items-center gap-1.5 rounded text-xs font-medium text-primary-700 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
+      >
+        <UserRound size={14} strokeWidth={1.75} aria-hidden="true" />
+        บัญชีของฉัน
+      </Link>
       <div className="mt-2 flex gap-2 px-2.5">
         <a href="/th" target="_blank" rel="noopener noreferrer" className="flex flex-1 items-center justify-center gap-1 rounded-lg border border-border-strong px-3 py-1.5 text-center text-xs text-text-2 hover:bg-surface-2">
           ดูหน้าเว็บ
@@ -167,7 +175,7 @@ export function AdminShell({
               <Nav nav={nav} badges={badges} onNavigate={() => setOpen(false)} />
             </div>
             <div className="px-3 pb-4">
-              <Account name={userName} email={userEmail} />
+              <Account name={userName} email={userEmail} onNavigate={() => setOpen(false)} />
             </div>
           </div>
         </div>
