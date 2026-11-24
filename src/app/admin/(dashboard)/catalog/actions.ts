@@ -228,7 +228,7 @@ export async function deleteBusinessType(slug: string): Promise<string> {
     "catalog.businessTypes",
     current.filter((b) => b.slug !== slug).map(({ slug, icon, published }) => ({ slug, icon, published })),
   );
-  const removedText = await prisma.pageContent.deleteMany({ where: { namespace: "industries", key: { startsWith: `.` } } });
+  const removedText = await prisma.pageContent.deleteMany({ where: { namespace: "industries", key: { startsWith: `${slug}.` } } });
   const layoutKey = `layout.industry:${slug}`;
   const layoutBefore = (await readSetting(layoutKey)) ?? null;
   await prisma.siteSetting.deleteMany({ where: { key: layoutKey } });
