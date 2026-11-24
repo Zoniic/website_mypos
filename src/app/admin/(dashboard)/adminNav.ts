@@ -7,6 +7,7 @@ import {
   FileText,
   Folder,
   Handshake,
+  History,
   House,
   Image,
   KeyRound,
@@ -76,6 +77,7 @@ export const ADMIN_ICONS = {
   briefcase: Briefcase,
   settings: Settings,
   key: KeyRound,
+  history: History,
 } as const satisfies Record<string, LucideIcon>;
 
 export const ADMIN_NAV: AdminNavGroup[] = [
@@ -132,6 +134,7 @@ export const ADMIN_NAV: AdminNavGroup[] = [
     items: [
       { href: "/admin/settings", label: "ตั้งค่าเว็บไซต์", hint: "ติดต่อ ชำระเงิน Pixel SEO", icon: "settings", ownerOnly: true },
       { href: "/admin/admin-users", label: "ผู้ดูแลระบบ", hint: "บัญชีทีมงานและบทบาท", icon: "key", ownerOnly: true },
+      { href: "/admin/history", label: "ประวัติการแก้ไข", hint: "ใครแก้อะไร เมื่อไร และกู้คืนข้อความเดิม", icon: "history", ownerOnly: true },
     ],
   },
 ];

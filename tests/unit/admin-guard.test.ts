@@ -83,7 +83,7 @@ test("every admin route handler checks the session", () => {
 });
 
 test("owner-only pages render the owner-only page for editors", () => {
-  for (const page of ["(dashboard)/settings/page.tsx", "(dashboard)/admin-users/page.tsx", "(dashboard)/admin-users/new/page.tsx", "(dashboard)/admin-users/[id]/edit/page.tsx"]) {
+  for (const page of ["(dashboard)/settings/page.tsx", "(dashboard)/admin-users/page.tsx", "(dashboard)/admin-users/new/page.tsx", "(dashboard)/admin-users/[id]/edit/page.tsx", "(dashboard)/history/page.tsx", "(dashboard)/history/[id]/page.tsx"]) {
     const source = readFileSync(join(ADMIN_DIR, page), "utf8");
     assert.match(source, /getAdminContext\(/, page);
     assert.match(source, /<OwnerOnly \/>/, page);
@@ -94,8 +94,7 @@ test("nav items flagged ownerOnly match the owner-only hrefs", () => {
   const items = ADMIN_NAV.flatMap((g) => g.items);
   for (const item of items) assert.equal(Boolean(item.ownerOnly), isOwnerOnlyHref(item.href), item.href);
   const present = items.filter((i) => i.ownerOnly).map((i) => i.href);
-  // The history entry is added in a later step.
-  for (const href of ownerOnlyHrefs.filter((h) => h !== "/admin/history")) assert.ok(present.includes(href), href);
+  for (const href of ownerOnlyHrefs) assert.ok(present.includes(href), href);
 });
 
 test("every actions file that writes to the database records it in the change history", () => {
@@ -114,4 +113,18 @@ test("every actions file that writes to the database records it in the change hi
 test("saveLeadDetails records the change when given the acting admin", () => {
   const source = readFileSync(join(ROOT, "src", "lib", "leadList.ts"), "utf8");
   assert.match(source, /auditEntity\(/);
+});
+
+test("history export and history actions are owner-only", () => {
+  const route = readFileSync(join(ADMIN_DIR, "(dashboard)", "history", "export", "route.ts"), "utf8");
+  assert.match(route, OWNER_GUARD);
+  const actions = readFileSync(join(ADMIN_DIR, "(dashboard)", "history", "actions.ts"), "utf8");
+  const fns = exportedFunctions(actions);
+  assert.deepEqual(fns.map((f) => f.name).sort(), ["getFieldHistory", "restoreAuditChange"]);
+  for (const fn of fns) assert.match(fn.body, OWNER_GUARD, fn.name);
+});
+
+test("the Page Content page only loads history for owners", () => {
+  const page = readFileSync(join(ADMIN_DIR, "(dashboard)", "content", "[namespace]", "page.tsx"), "utf8");
+  assert.match(page, /role === "owner" \? await pageContentHistoryCounts/);
 });
