@@ -38,6 +38,8 @@ const securityHeaders = [
 ];
 
 const nextConfig: NextConfig = {
+  // Self-contained server for the Docker image (.next/standalone).
+  output: "standalone",
   // Next.js 16 dev server blocks cross-origin requests to /_next/static
   // and RSC data fetches by default (only localhost is allowed). Without
   // this, opening the dev server from a LAN IP (e.g. testing on another

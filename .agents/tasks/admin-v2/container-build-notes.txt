@@ -1,0 +1,6 @@
+Build discovery (step e1), 2026-11-24, docker build in worktree admin-v2-deploy.
+- Without DATABASE_URL: npm run build fails at "Export encountered an error on /sitemap.xml/route" (prisma.kbArticle.findMany, env var not found). Pages read the database at build time.
+- With DATABASE_URL (scratch Postgres 5433 via host.docker.internal): build passes. Image size 395MB.
+- Dockerfile takes ARG DATABASE_URL in the build stage only; the runtime image does not contain it.
+- Runtime: container healthy, GET /api/health = 200 {"status":"ok"}, Cache-Control no-store, runs as user nextjs.
+- GET /th returned 500 against the scratch DB because PageContent is empty (MISSING_MESSAGE). Copy comes from the database, not messages/*.json. Not a packaging fault; needs a seeded database.

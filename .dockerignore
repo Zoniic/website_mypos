@@ -1,0 +1,17 @@
+.git
+.worktrees
+.agents
+.claude
+.impeccable
+.github
+node_modules
+.next
+.env
+.env.*
+!.env.example
+*.log
+prisma/backups
+tests
+docs
+Dockerfile
+.dockerignore
