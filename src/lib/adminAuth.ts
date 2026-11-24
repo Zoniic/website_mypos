@@ -3,12 +3,24 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
 import { prisma } from "@/lib/prisma";
+import { can, isRole, type Permission, type Role } from "@/lib/permissions";
 
 export const ADMIN_SESSION_COOKIE = "mypos_admin_session";
 
 export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 7;
 
 export type SessionUser = { userId: number; email: string; name: string };
+
+/** The signed-in admin plus the role read from the database on this request. */
+export type AdminContextUser = SessionUser & { role: Role };
+
+/** Thrown when a signed-in admin lacks the permission for an action. */
+export class ForbiddenError extends Error {
+  constructor(message = "ไม่มีสิทธิ์ทำรายการนี้") {
+    super(message);
+    this.name = "ForbiddenError";
+  }
+}
 
 function getSecret() {
   const secret = process.env.SESSION_SECRET;
@@ -29,7 +41,14 @@ export function passwordVersion(passwordHash: string): string {
 }
 
 export async function createSessionToken(user: SessionUser, passwordHash: string): Promise<string> {
-  return new SignJWT({ role: "admin", ...user, pwv: passwordVersion(passwordHash) })
+  // Pick the fields: the JWT claim `role: "admin"` means "is an admin", never owner/editor.
+  return new SignJWT({
+    role: "admin",
+    userId: user.userId,
+    email: user.email,
+    name: user.name,
+    pwv: passwordVersion(passwordHash),
+  })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setExpirationTime("7d")
@@ -86,11 +105,40 @@ export async function getSessionUser(): Promise<SessionUser | null> {
  * signed before the user's password last changed (or before this check
  * existed: tokens without a password fingerprint).
  */
-export async function requireAdmin(): Promise<SessionUser> {
+export async function requireAdmin(): Promise<AdminContextUser> {
   const payload = await readSession();
   const stored = payload
-    ? await prisma.adminUser.findUnique({ where: { id: payload.userId }, select: { passwordHash: true } })
+    ? await prisma.adminUser.findUnique({
+        where: { id: payload.userId },
+        select: { passwordHash: true, role: true },
+      })
     : null;
   if (!payload || !stored || payload.pwv !== passwordVersion(stored.passwordHash)) redirect("/admin/login");
-  return { userId: payload.userId, email: payload.email, name: payload.name };
+  // Unknown role values get the least privilege.
+  const role: Role = isRole(stored.role) ? stored.role : "editor";
+  return { userId: payload.userId, email: payload.email, name: payload.name, role };
+}
+
+/** Like requireAdmin(), and throws ForbiddenError unless the admin is an owner. */
+export async function requireOwner(): Promise<AdminContextUser> {
+  const user = await requireAdmin();
+  if (user.role !== "owner") throw new ForbiddenError();
+  return user;
+}
+
+/** Like requireAdmin(), and throws ForbiddenError unless the role has the permission. */
+export async function requirePermission(permission: Permission): Promise<AdminContextUser> {
+  const user = await requireAdmin();
+  if (!can(user.role, permission)) throw new ForbiddenError();
+  return user;
+}
+
+/** For pages: the admin, the role and a `can()` bound to it. Redirects like requireAdmin(). */
+export async function getAdminContext(): Promise<{
+  user: AdminContextUser;
+  role: Role;
+  can: (permission: Permission) => boolean;
+}> {
+  const user = await requireAdmin();
+  return { user, role: user.role, can: (permission) => can(user.role, permission) };
 }
