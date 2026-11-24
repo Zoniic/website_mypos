@@ -19,6 +19,7 @@
  * The public site caches this list for up to 5 minutes; restart the server
  * or save any page in the admin to see the change right away.
  */
+import { auditScriptRun } from "./script-audit";
 import { PrismaClient } from "@prisma/client";
 import fs from "node:fs";
 import path from "node:path";
@@ -62,6 +63,7 @@ async function main() {
       create: { key: HIDDEN_PRODUCTS_KEY, value: next.join(",") },
     });
     console.log("Applied.");
+    await auditScriptRun(prisma, "hide-test-product", 1, file);
   } finally {
     await prisma.$disconnect();
   }

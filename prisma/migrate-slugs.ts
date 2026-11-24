@@ -28,6 +28,7 @@
  * any page once in the admin to see the change right away.
  */
 import { PrismaClient } from "@prisma/client";
+import { auditScriptRun } from "./script-audit";
 import fs from "node:fs";
 import path from "node:path";
 import { isSafeSlug, slugify } from "../src/lib/slug";
@@ -142,6 +143,7 @@ async function main() {
       ),
     ]);
     console.log(`Applied ${total} change(s).`);
+    await auditScriptRun(prisma, "migrate-slugs", total, file);
   } finally {
     await prisma.$disconnect();
   }

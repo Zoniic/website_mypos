@@ -17,6 +17,7 @@
  * save any page once in the admin to see the change right away.
  */
 import { PrismaClient } from "@prisma/client";
+import { auditScriptRun } from "./script-audit";
 import fs from "node:fs";
 import path from "node:path";
 import { hasEmoji, stripEmoji } from "../src/lib/emoji";
@@ -124,6 +125,7 @@ async function main() {
       await target.save(id, data);
     }
     console.log(`Updated ${byRow.size} row(s).`);
+    await auditScriptRun(prisma, "strip-emoji", byRow.size, backupFile);
   } finally {
     await prisma.$disconnect();
   }

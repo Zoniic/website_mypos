@@ -25,6 +25,7 @@
  * direct database write.
  */
 import { PrismaClient } from "@prisma/client";
+import { auditScriptRun } from "./script-audit";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -95,6 +96,7 @@ async function main() {
       });
     }
     console.log(`Updated ${settingChanges.length} setting(s) and ${copyChanges.length} copy row(s).`);
+    await auditScriptRun(prisma, "split-phone-numbers", settingChanges.length + copyChanges.length, backupFile);
   } finally {
     await prisma.$disconnect();
   }

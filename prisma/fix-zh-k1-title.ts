@@ -12,6 +12,7 @@
  *
  * Run: node node_modules/tsx/dist/cli.mjs prisma/fix-zh-k1-title.ts [--write | --restore <file>]
  */
+import { auditScriptRun } from "./script-audit";
 import { PrismaClient } from "@prisma/client";
 import fs from "node:fs";
 import path from "node:path";
@@ -91,6 +92,7 @@ async function main() {
     ...(zhCategory && categoryName ? [prisma.kbCategoryTranslation.update({ where: { id: zhCategory.id }, data: { name: categoryName } })] : []),
   ]);
   console.log("Applied. The public site shows it within 5 minutes (cache), or at once after any admin save.");
+  await auditScriptRun(prisma, "fix-zh-k1-title", changes.length, file);
 }
 
 main()

@@ -21,6 +21,7 @@
  * any page in the admin to see the change right away.
  */
 import { PrismaClient } from "@prisma/client";
+import { auditScriptRun } from "./script-audit";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -177,6 +178,7 @@ async function main() {
       });
     }
     console.log(`Applied: ${changes.length} rows.`);
+    await auditScriptRun(prisma, "update-hub-seo-copy", changes.length, file);
   } finally {
     await prisma.$disconnect();
   }
