@@ -67,6 +67,7 @@ Local files `.env` (Prisma CLI) and `.env.local` (the app) are gitignored. AI to
 |---|---|
 | `DATABASE_URL` | PostgreSQL (both files) |
 | `SESSION_SECRET` | signs admin sessions (required) |
+| `TWO_FACTOR_ENCRYPTION_KEY` | base64, 32 bytes (`openssl rand -base64 32`). Encrypts two-step login secrets and keys the backup-code hashes. Never reuse `SESSION_SECRET`. Without it, accounts without two-step login work as before, and turning it on or signing in with a code fails closed with a Thai message. If it is lost or changed, every enrolled secret is unreadable: use the reset script for each account. |
 | `ADMIN_EMAIL`, `ADMIN_PASSWORD` | only `prisma/seed-admin-user.ts` creates the first admin |
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_STORAGE_BUCKET` | uploads (bucket defaults to `uploads`) |
 | `LINE_CHANNEL_ACCESS_TOKEN`, `LINE_CHANNEL_SECRET`, `LINE_NOTIFY_TO` | LINE alerts and webhook |
@@ -85,6 +86,7 @@ Sidebar groups are defined in `src/app/admin/(dashboard)/adminNav.ts`:
 - Website: edit-on-site (click text or photos on the live page), page content, photos and logos, section order, navigation.
 - Extra content: reference cases, blog, KB articles, KB categories, trust logos, official partners, careers.
 - Settings: site settings, admin users.
+- Account (every admin, `/admin/account`, linked as "บัญชีของฉัน" under the user name in the sidebar): turn two-step login on or off for your own account (authenticator app, QR plus manual key, 10 one-time backup codes shown once), change your own password. Two-step login is optional for everyone (decision R2c). Login step 2 is `/admin/login/2fa` (5-minute signed cookie `mypos_admin_2fa`, no session until the code is right). Wrong codes use the same 5-in-15-minutes limiter key as wrong passwords, plus a per-account key `2fa:user:<id>`. Code: `src/lib/twoFactor.ts`, `twoFactorPure.ts`, `totp.ts`, `secretBox.ts`, `backupCodes.ts`; checks: `tests/unit/twoFactor.test.ts`, `.agents/tasks/admin-v2/verify/twofa-db.ts` (scratch DB on port 5433 only).
 
 Every admin Server Action must call `requireAdmin()` itself (`src/lib/adminAuth.ts`). The `/admin` check in `proxy.ts` is only the first line, because actions are reachable as public endpoints.
 
@@ -95,6 +97,7 @@ All of these default to a dry run. `--write` first saves a JSON backup to `prism
 - `strip-emoji.ts` (`--self-test`), `migrate-slugs.ts`, `hide-test-product.ts` (`--restore`), `split-phone-numbers.ts`, `update-hub-seo-copy.ts` (`--restore`). All were applied to the shared database on 2026-11-21.
 - New (admin-improve): `backup-db.ts` (`--write`, `--verify <file>`, `--self-test`; JSON export, not a host backup) and `find-orphan-uploads.ts` (`--write`, `--restore <manifest>`, `--self-test`; moves unreferenced files to `_trash/`, never deletes).
 - Older `add-*.ts` and `seed*.ts` files are one-time idempotent copy seeders. `update-software-features.ts` overwrites `software.features.items`, so do not run it blindly.
+- `reset-2fa.ts --email <address> [--write] | --self-test` (R4a): turns off two-step login for one account (clears the encrypted secret, enabled date and last step, deletes its backup codes) and writes a `2fa_reset` history row (source `script`, OS user and host in the detail). Dry run by default. `--write` saves the encrypted blob in `prisma/backups/` first. Needs a shell with `DATABASE_URL` on the server.
 - Run TypeScript scripts with `node node_modules/tsx/dist/cli.mjs <file>` on this Windows machine.
 
 ## 9. Verification commands and scripts
