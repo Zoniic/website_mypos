@@ -2,6 +2,7 @@ import { createHash } from "node:crypto";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { SignJWT, jwtVerify } from "jose";
+import { secureCookieWanted } from "@/lib/cookieSecurity";
 import { prisma } from "@/lib/prisma";
 import { can, isRole, type Permission, type Role } from "@/lib/permissions";
 import {
@@ -85,7 +86,7 @@ export async function setSessionCookie(user: SessionUser, passwordHash: string):
   const cookieStore = await cookies();
   cookieStore.set(ADMIN_SESSION_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: await secureCookieWanted(),
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_MAX_AGE_SECONDS,
@@ -101,7 +102,7 @@ export async function setPendingTwoFactorCookie(userId: number, passwordHash: st
   const cookieStore = await cookies();
   cookieStore.set(PENDING_2FA_COOKIE, token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: await secureCookieWanted(),
     sameSite: "lax",
     path: "/admin/login",
     maxAge: PENDING_2FA_SECONDS,

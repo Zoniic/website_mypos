@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { SESSION_MAX_AGE_SECONDS, clearPendingTwoFactorCookie, setSessionCookie } from "@/lib/adminAuth";
 import { ADMIN_HINT_COOKIE } from "@/lib/editMode";
 import { auditLogin } from "@/lib/auditLog";
+import { secureCookieWanted } from "@/lib/cookieSecurity";
 
 type LoginUser = { id: number; email: string; name: string; passwordHash: string };
 
@@ -19,7 +20,7 @@ export async function finishLogin(user: LoginUser, detail?: string): Promise<nev
   // Readable hint (not a credential) so public pages can show "Edit this page".
   const cookieStore = await cookies();
   cookieStore.set(ADMIN_HINT_COOKIE, "1", {
-    secure: process.env.NODE_ENV === "production",
+    secure: await secureCookieWanted(),
     sameSite: "lax",
     path: "/",
     maxAge: SESSION_MAX_AGE_SECONDS,

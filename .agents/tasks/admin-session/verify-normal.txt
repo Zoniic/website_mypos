@@ -1,0 +1,7 @@
+PASS S1 session cookie stored over http (secure=false)
+PASS S2 refresh keeps the admin signed in  [http://100.85.228.83:3100/admin/quote-requests]
+PASS R1 new message appears without a manual refresh (within 45 s)
+PASS R2 still signed in after the background refresh  [http://100.85.228.83:3100/admin/contact-messages]
+PASS R3 no refresh while the admin is typing
+DONE pass=5 fail=0
+exit=0

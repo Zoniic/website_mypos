@@ -1,0 +1,3 @@
+PASS S1 session cookie stored over http (secure=undefined)
+PASS S2 control: refresh goes back to login (old bug)  [http://100.85.228.83:3100/admin/login]
+exit=0
