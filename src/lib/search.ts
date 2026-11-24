@@ -45,7 +45,7 @@ export async function searchSite(query: string, locale: string): Promise<SearchR
         type: "accessory",
         title: accessory.name,
         snippet: accessory.description,
-        href: `/accessories`,
+        href: `/accessories/${accessory.slug}`,
       });
     }
   }

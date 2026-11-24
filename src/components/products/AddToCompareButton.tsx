@@ -1,8 +1,9 @@
 "use client";
 
-import { useQuoteCart } from "@/lib/quoteCart";
+import { useQuoteCart, type QuoteItemKind } from "@/lib/quoteCart";
 
 export function AddToCompareButton({
+  kind = "product",
   slug,
   name,
   imageUrl,
@@ -10,20 +11,22 @@ export function AddToCompareButton({
   addLabel,
   removeLabel,
 }: {
+  kind?: QuoteItemKind;
   slug: string;
   name: string;
   imageUrl?: string;
-  priceFrom: number;
+  /** null = ask for a price. */
+  priceFrom: number | null;
   addLabel: string;
   removeLabel: string;
 }) {
   const { addItem, removeItem, isInCart } = useQuoteCart();
-  const inCart = isInCart(slug);
+  const inCart = isInCart(slug, kind);
 
   return (
     <button
       type="button"
-      onClick={() => (inCart ? removeItem(slug) : addItem({ slug, name, imageUrl, priceFrom }))}
+      onClick={() => (inCart ? removeItem(slug, kind) : addItem({ kind, slug, name, imageUrl, priceFrom }))}
       aria-pressed={inCart}
       className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-button border px-6 py-3.5 text-lg font-semibold outline-offset-2 transition-all hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 ${
         inCart

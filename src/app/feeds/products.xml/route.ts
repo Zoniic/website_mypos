@@ -103,10 +103,10 @@ export async function GET() {
         id: `accessory-${a.slug}`,
         title: tr?.name ?? a.slug,
         description: tr?.description || tr?.name || a.slug,
-        link: `${siteConfig.url}/${LOCALE}/accessories`,
+        link: `${siteConfig.url}/${LOCALE}/accessories/${encodeURIComponent(a.slug)}`,
         images: [absoluteUrl(a.imageUrl!)],
         price: a.onlinePrice!,
-        availability: "in_stock",
+        availability: availability(a.stockStatus),
         productType: "POS & Self-service > Accessories",
       });
     }

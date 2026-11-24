@@ -76,8 +76,8 @@ export const ENTITIES: Record<string, EntityConfig> = {
   Product: translated("Product", "สินค้า", "product", "productTranslation", "productId", ["name", "highlight"], "name", "/admin/products", {
     slugRelations: ["categories", "businessTypes", "relatedProducts"],
   }),
-  Accessory: translated("Accessory", "อุปกรณ์เสริม", "accessory", "accessoryTranslation", "accessoryId", ["name", "description"], "name", "/admin/accessories", {
-    slugRelations: ["categories"],
+  Accessory: translated("Accessory", "อุปกรณ์เสริม", "accessory", "accessoryTranslation", "accessoryId", ["name", "description", "specs"], "name", "/admin/accessories", {
+    slugRelations: ["categories", "compatibleProducts"],
   }),
   ReferenceCase: translated(
     "ReferenceCase", "ผลงานลูกค้า", "referenceCase", "referenceCaseTranslation", "caseId",

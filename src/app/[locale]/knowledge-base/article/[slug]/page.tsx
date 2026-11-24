@@ -144,7 +144,7 @@ export default async function KbArticlePage({
               </Link>
             )}
             {linkedAccessory && (
-              <Link href="/accessories" className="mt-1 block font-semibold hover:underline">
+              <Link href={`/accessories/${linkedAccessory.slug}`} className="mt-1 block font-semibold hover:underline">
                 {linkedAccessory.translations[0]?.name ?? linkedAccessory.slug}
               </Link>
             )}

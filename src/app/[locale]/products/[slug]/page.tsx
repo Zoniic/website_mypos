@@ -20,6 +20,9 @@ import { AddToCartButton } from "@/components/commerce/AddToCartButton";
 import { MarketplaceLinks } from "@/components/commerce/MarketplaceLinks";
 import { TrackView } from "@/components/analytics/TrackView";
 import { absoluteUrl, schemaAvailability } from "@/lib/structuredData";
+import { getAccessoriesForProduct } from "@/lib/accessories";
+import { AccessoryCard } from "@/components/accessories/AccessoryCard";
+import { ACCESSORY_COPY_NAMESPACE, accessoryCopy } from "@/data/accessoryCopy";
 
 
 // Empty list = render each page on its first visit, then serve it from
@@ -85,6 +88,8 @@ export default async function ProductDetailPage({
   const settings = await getSiteSettings();
 
   const related = await getRelatedProducts(product, locale);
+  const accessories = await getAccessoriesForProduct(product.slug, locale);
+  const tCopy = await getTranslations({ locale, namespace: ACCESSORY_COPY_NAMESPACE });
 
   const specRows = [
     { label: tDetail("screenSize"), value: product.specs.screenSize },
@@ -266,6 +271,17 @@ export default async function ProductDetailPage({
             </section>
           );
         })()}
+
+      {accessories.length > 0 && (
+        <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+          <h2 className="text-2xl font-bold tracking-tight">{accessoryCopy(tCopy, locale, "forProductTitle")}</h2>
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {accessories.map((item) => (
+              <AccessoryCard key={item.slug} item={item} shopOn={isOnlineOrderingOn(settings)} heading="h3" />
+            ))}
+          </div>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">

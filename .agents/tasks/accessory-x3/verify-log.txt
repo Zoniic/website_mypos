@@ -1,0 +1,41 @@
+PASS A1 admin edit form shows the new sections
+PASS A2 saved price, stock, lead time and video  [1234|preorder|7|t]
+PASS A3 saved works-with machines  [mypos-k1,mypos-k156]
+PASS A4 saved Thai specs  [ประเภท: เครื่องพิมพ์ความร้อน หน้ากว้างกระดาษ: 80 mm บรรทัดผิดรูปแบบ การเชื่อมต่อ: USB, LAN]
+PASS A5 change history row written  [1]
+PASS L1 list page 200  [200]
+PASS L2 every card links to its detail page  [9]
+PASS L3 C300H card shows price and pre-order badge  [เครื่องปริ้นเตอร์ Xprnter C300H เริ่มต้น ฿1,234 สินค้าพรีออเดอร์ ประมาณ 7 วัน ดูรายละเอียด]
+PASS L4 card without price shows no price line  [เครื่องแสกน FM2200 มีสินค้าพร้อมส่ง ดูรายละเอียด]
+PASS L5 + button toggles to added
+PASS D1 detail page 200  [200]
+PASS D2 detail h1 is the accessory name  [เครื่องปริ้นเตอร์ Xprnter C300H]
+PASS D3 price and stock shown
+PASS D4 works-with chips link to the machines  [2]
+PASS D5 spec list: 3 valid rows, bad line skipped  [3]
+PASS D6 video embedded
+PASS D7 related accessories strip
+PASS D8 add-to-quote button toggles
+PASS D9 Product JSON-LD with price 1234 and PreOrder  [{"@type":"Offer","url":"https://mypos.co.th/th/accessories/mypos-c300h","priceCurrency":"THB","price":1234,"availability":"https://schema.org/PreOrder","itemCondition":"https://schema.org/NewCondition","seller":{"@type":"Organization","name]
+PASS D10 request-quote button links to the contact form  [1]
+PASS D11 detail without price/specs renders without empty sections  [status=200 dlRows=0 top=เครื่องแสกน FM2200 มีสินค้าพร้อมส่ง FM2200 เป็นเครื่องสแกนบาร์โค้ดแบบ 2D ไร้สาย (Wireless Barcode Scanner) ที่รองรับการ]
+PASS P1 product page shows 'accessories for this machine' with C300H
+PASS P2 product without linked accessories has no such section
+PASS C1 quote list has 3 lines (2 accessories, 1 machine)  [3]
+PASS C2 type column shows เครื่อง and อุปกรณ์เสริม
+PASS C3 accessory without price shows สอบถามราคา
+PASS C4 names link to the right detail pages
+PASS C5 quote request stored with all 3 lines  [mypos-fm2200x1,mypos-c300hx1,mypos-k156x1,mypos-fm2200x1,mypos-c300hx1,mypos-k156x1,mypos-fm2200x1,mypos-c300hx1,mypos-k156x1]
+PASS C6 old saved list loads as a machine line  [สินค้า ประเภท ราคาเริ่มต้น จำนวน K1 old เครื่อง ฿100 นำออก]
+PASS R1 unknown accessory slug returns 404  [404]
+PASS R2 old-style slug redirects 308 to the stored slug  [308 /th/accessories/mypos-c300h]
+PASS R3 old site FM2200.php redirects to the accessory page  [308 /accessories/mypos-fm2200]
+PASS R4 sitemap lists accessory pages
+PASS I1 English page uses English copy and English specs  [200]
+PASS I2 Chinese page uses Chinese copy  [200]
+PASS I3 Chinese quote list type column
+PASS M1 detail page has no sideways scroll at 390 px  [0]
+PASS M2 list page has no sideways scroll at 390 px
+PASS Z1 no console errors on the visited pages  []
+DONE pass=39 fail=0
+exit=0

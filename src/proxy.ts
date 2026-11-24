@@ -49,6 +49,7 @@ async function isUnknownFixedSlug(pathname: string): Promise<boolean> {
 // A slug matches when it differs only in case, spacing, punctuation or encoding.
 const legacySlugRoutes: { pattern: RegExp; load: () => Promise<string[]> }[] = [
   { pattern: /^(\/(?:[a-z]{2}\/)?products\/)([^/]+)\/?$/, load: loadProductSlugs },
+  { pattern: /^(\/(?:[a-z]{2}\/)?accessories\/)([^/]+)\/?$/, load: loadAccessorySlugs },
   { pattern: /^(\/(?:[a-z]{2}\/)?knowledge-base\/article\/)([^/]+)\/?$/, load: loadKbArticleSlugs },
 ];
 
@@ -74,6 +75,10 @@ async function loadProductSlugs(): Promise<string[]> {
   ]);
   const hiddenSlugs = parseHiddenSlugs(hidden?.value);
   return rows.map((r) => r.slug).filter((s) => !hiddenSlugs.includes(s));
+}
+
+async function loadAccessorySlugs(): Promise<string[]> {
+  return (await prisma.accessory.findMany({ select: { slug: true } })).map((r) => r.slug);
 }
 
 async function loadKbArticleSlugs(): Promise<string[]> {
@@ -114,9 +119,14 @@ async function isMissingPage(request: NextRequest): Promise<boolean> {
   try {
     switch (match.kind) {
       case "product":
+      case "accessory":
       case "kbArticle": {
         const [name, load] =
-          match.kind === "product" ? ["/products/", loadProductSlugs] : ["/knowledge-base/article/", loadKbArticleSlugs];
+          match.kind === "product"
+            ? ["/products/", loadProductSlugs]
+            : match.kind === "accessory"
+              ? ["/accessories/", loadAccessorySlugs]
+              : ["/knowledge-base/article/", loadKbArticleSlugs];
         if (hasSlug(await cachedSlugs(name, load), match.slug)) return false;
         // Not in the 30 s cache: it may have just been created, so ask the DB once.
         return !hasSlug(await load(), match.slug);

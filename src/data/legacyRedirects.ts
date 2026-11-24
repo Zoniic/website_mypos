@@ -10,8 +10,10 @@
  *  - a page goes to a product page only when the model is exactly the same
  *    (F58, T70, K156A/K156W -> K156);
  *  - discontinued models go to their product line (POS, self-order kiosk);
- *  - cash drawers, scanners, printers, paper and labels go to Accessories
- *    (accessories have no detail pages).
+ *  - an accessory page goes to the accessory detail page when the model is
+ *    the same (FM2200; F-330K-4B4C is the F-330K drawer with a 4-note,
+ *    4-coin tray);
+ *  - other cash drawers, scanners, printers, paper and labels go to Accessories.
  *
  * `destination` has no locale prefix: the i18n proxy adds /th (default).
  * Paths with a dot (".php") never reach src/proxy.ts, so these redirects are
@@ -90,6 +92,10 @@ export const legacyRedirects: LegacyRedirect[] = [
     "/products/K215W.php",
   ]),
 
+  // Same accessory model on the new site.
+  ...to("/accessories/mypos-fm2200", ["/products/FM2200.php"]),
+  ...to("/accessories/mypos-f-330k", ["/products/F-330K-4B4C.php"]),
+
   // Peripherals and consumables.
   ...to("/accessories", [
     "/Cash-Drawer.php",
@@ -99,11 +105,9 @@ export const legacyRedirects: LegacyRedirect[] = [
     "/products/Label-Sticker.php",
     "/products/Thermal-Paper.php",
     "/products/F-330F-5B2C.php",
-    "/products/F-330K-4B4C.php",
     "/products/F-400A-5B3C.php",
     "/products/F-400K-5B5C.php",
     "/products/F-405-5B4C.php",
-    "/products/FM2200.php",
     "/products/HR11.php",
     "/products/HR100.php",
     "/products/HR2081.php",

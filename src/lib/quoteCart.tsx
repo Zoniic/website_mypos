@@ -3,33 +3,48 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { slugKey } from "@/lib/slug";
 
+/** A machine (/products) or an accessory (/accessories). Lists saved before accessories could be added have no kind: they are machines. */
+export type QuoteItemKind = "product" | "accessory";
+
 export type QuoteCartItem = {
+  kind: QuoteItemKind;
   slug: string;
   name: string;
   imageUrl?: string;
-  priceFrom: number;
+  /** "Starting at" price; null = ask for a price (accessories without a price). */
+  priceFrom: number | null;
   quantity: number;
 };
 
 type QuoteCartContextValue = {
   items: QuoteCartItem[];
-  addItem: (product: Omit<QuoteCartItem, "quantity">) => void;
-  removeItem: (slug: string) => void;
-  setQuantity: (slug: string, quantity: number) => void;
+  addItem: (item: Omit<QuoteCartItem, "quantity" | "kind"> & { kind?: QuoteItemKind }) => void;
+  removeItem: (slug: string, kind?: QuoteItemKind) => void;
+  setQuantity: (slug: string, quantity: number, kind?: QuoteItemKind) => void;
   clear: () => void;
-  isInCart: (slug: string) => boolean;
+  isInCart: (slug: string, kind?: QuoteItemKind) => boolean;
 };
 
 const QuoteCartContext = createContext<QuoteCartContextValue | null>(null);
 
 const STORAGE_KEY = "mypos-quote-cart";
 
-/** Lists saved before the slugs were made URL-safe hold old slugs ("mypos-K1"): map them to the new ones. */
-function normaliseSavedItems(items: QuoteCartItem[]): QuoteCartItem[] {
+const same = (item: QuoteCartItem, slug: string, kind: QuoteItemKind) => item.slug === slug && item.kind === kind;
+
+/**
+ * Lists saved before the slugs were made URL-safe hold old slugs ("mypos-K1"): map them to the new ones.
+ * Lists saved before accessories could be added have no kind: those lines are machines.
+ */
+function normaliseSavedItems(items: Partial<QuoteCartItem>[]): QuoteCartItem[] {
   const merged: QuoteCartItem[] = [];
   for (const item of items) {
-    const slug = slugKey(String(item.slug)) || item.slug;
-    if (!merged.some((m) => m.slug === slug)) merged.push({ ...item, slug });
+    if (typeof item?.slug !== "string" || typeof item.name !== "string") continue;
+    const kind: QuoteItemKind = item.kind === "accessory" ? "accessory" : "product";
+    // Only machine slugs were migrated; accessory slugs are kept as saved.
+    const slug = kind === "product" ? slugKey(item.slug) || item.slug : item.slug;
+    const priceFrom = typeof item.priceFrom === "number" && Number.isFinite(item.priceFrom) ? item.priceFrom : null;
+    const quantity = Math.max(1, Math.round(Number(item.quantity)) || 1);
+    if (!merged.some((m) => same(m, slug, kind))) merged.push({ kind, slug, name: item.name, imageUrl: item.imageUrl, priceFrom, quantity });
   }
   return merged;
 }
@@ -48,7 +63,7 @@ export function QuoteCartProvider({ children }: { children: ReactNode }) {
       if (raw) {
         const parsed: unknown = JSON.parse(raw);
         // eslint-disable-next-line react-hooks/set-state-in-effect
-        if (Array.isArray(parsed)) setItems(normaliseSavedItems(parsed as QuoteCartItem[]));
+        if (Array.isArray(parsed)) setItems(normaliseSavedItems(parsed as Partial<QuoteCartItem>[]));
       }
     } catch {
       // Ignore malformed/unavailable localStorage — cart just starts empty.
@@ -64,22 +79,22 @@ export function QuoteCartProvider({ children }: { children: ReactNode }) {
   const value = useMemo<QuoteCartContextValue>(
     () => ({
       items,
-      addItem: (product) => {
+      addItem: ({ kind = "product", ...item }) => {
         setItems((prev) => {
-          if (prev.some((item) => item.slug === product.slug)) return prev;
-          return [...prev, { ...product, quantity: 1 }];
+          if (prev.some((existing) => same(existing, item.slug, kind))) return prev;
+          return [...prev, { ...item, kind, quantity: 1 }];
         });
       },
-      removeItem: (slug) => {
-        setItems((prev) => prev.filter((item) => item.slug !== slug));
+      removeItem: (slug, kind = "product") => {
+        setItems((prev) => prev.filter((item) => !same(item, slug, kind)));
       },
-      setQuantity: (slug, quantity) => {
+      setQuantity: (slug, quantity, kind = "product") => {
         setItems((prev) =>
-          prev.map((item) => (item.slug === slug ? { ...item, quantity: Math.max(1, quantity) } : item))
+          prev.map((item) => (same(item, slug, kind) ? { ...item, quantity: Math.max(1, quantity) } : item))
         );
       },
       clear: () => setItems([]),
-      isInCart: (slug) => items.some((item) => item.slug === slug),
+      isInCart: (slug, kind = "product") => items.some((item) => same(item, slug, kind)),
     }),
     [items]
   );

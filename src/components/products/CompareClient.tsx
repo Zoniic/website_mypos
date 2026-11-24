@@ -4,9 +4,11 @@ import { useActionState, useEffect } from "react";
 import { track } from "@/lib/analytics";
 import { submitWithoutReset } from "@/lib/submitWithoutReset";
 import Image from "next/image";
-import { useTranslations, useFormatter } from "next-intl";
+import { ImageOff } from "lucide-react";
+import { useTranslations, useFormatter, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { useQuoteCart } from "@/lib/quoteCart";
+import { ACCESSORY_COPY_NAMESPACE, accessoryCopy, type AccessoryCopyKey } from "@/data/accessoryCopy";
 import { submitQuoteRequest, type SubmitQuoteState } from "@/app/[locale]/compare/actions";
 import { HoneypotField } from "@/components/ui/HoneypotField";
 
@@ -14,6 +16,9 @@ const initialState: SubmitQuoteState = { status: "idle" };
 
 export function CompareClient() {
   const t = useTranslations("compare");
+  const tCopy = useTranslations(ACCESSORY_COPY_NAMESPACE);
+  const locale = useLocale();
+  const copy = (key: AccessoryCopyKey) => accessoryCopy(tCopy, locale, key);
   const format = useFormatter();
   const { items, removeItem, setQuantity, clear } = useQuoteCart();
   const [state, formAction, isPending] = useActionState(submitQuoteRequest, initialState);
@@ -58,10 +63,11 @@ export function CompareClient() {
   return (
     <div className="mt-8 space-y-10">
       <div className="overflow-x-auto rounded-xl border border-border">
-        <table className="w-full min-w-[480px] text-left text-sm">
+        <table className="w-full min-w-[560px] text-left text-sm">
           <thead className="bg-surface-0 text-text-2">
             <tr>
               <th className="px-4 py-3 font-medium">{t("product")}</th>
+              <th className="px-4 py-3 font-medium">{copy("typeHeader")}</th>
               <th className="px-4 py-3 font-medium">{t("price")}</th>
               <th className="px-4 py-3 font-medium">{t("quantity")}</th>
               <th className="px-4 py-3 font-medium" />
@@ -69,38 +75,52 @@ export function CompareClient() {
           </thead>
           <tbody className="divide-y divide-border">
             {items.map((item) => (
-              <tr key={item.slug}>
+              <tr key={`${item.kind}-${item.slug}`}>
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-3">
-                    {item.imageUrl && (
-                      <span className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md bg-surface-2">
+                    <span className="relative flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-md bg-surface-2 text-text-2">
+                      {item.imageUrl ? (
                         <Image src={item.imageUrl} alt="" fill sizes="48px" className="object-cover" />
-                      </span>
-                    )}
+                      ) : (
+                        <ImageOff size={18} strokeWidth={1.75} aria-hidden="true" />
+                      )}
+                    </span>
                     <Link
-                      href={`/products/${item.slug}`}
+                      href={item.kind === "accessory" ? `/accessories/${item.slug}` : `/products/${item.slug}`}
                       className="rounded-sm font-medium text-text-1 outline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                     >
                       {item.name}
                     </Link>
                   </div>
                 </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`inline-block whitespace-nowrap rounded-full px-2.5 py-1 text-xs font-medium ${
+                      item.kind === "accessory" ? "bg-primary-400/10 text-primary-600" : "bg-surface-2 text-text-2"
+                    }`}
+                  >
+                    {copy(item.kind === "accessory" ? "kindAccessory" : "kindProduct")}
+                  </span>
+                </td>
                 <td className="px-4 py-3 font-mono text-text-2">
-                  {format.number(item.priceFrom, { style: "currency", currency: "THB", maximumFractionDigits: 0 })}
+                  {item.priceFrom === null
+                    ? <span className="font-sans">{copy("askPrice")}</span>
+                    : format.number(item.priceFrom, { style: "currency", currency: "THB", maximumFractionDigits: 0 })}
                 </td>
                 <td className="px-4 py-3">
                   <input
                     type="number"
                     min={1}
                     value={item.quantity}
-                    onChange={(event) => setQuantity(item.slug, Number(event.target.value))}
+                    aria-label={`${t("quantity")} ${item.name}`}
+                    onChange={(event) => setQuantity(item.slug, Number(event.target.value), item.kind)}
                     className="w-16 rounded-lg border border-border-strong bg-surface-0 px-2 py-1 text-sm focus-visible:border-primary-400 focus-visible:ring-2 focus-visible:ring-primary-400/40"
                   />
                 </td>
                 <td className="px-4 py-3 text-right">
                   <button
                     type="button"
-                    onClick={() => removeItem(item.slug)}
+                    onClick={() => removeItem(item.slug, item.kind)}
                     className="cursor-pointer rounded-sm text-sm text-text-2 outline-offset-2 transition-colors hover:text-error focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400"
                   >
                     {t("remove")}

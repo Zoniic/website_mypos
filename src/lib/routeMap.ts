@@ -30,10 +30,11 @@ const STATIC_PAGES = new Set([
 
 const KB_SECTIONS = new Set(["hardware", "software"]);
 
-export type DynamicKind = "product" | "kbArticle" | "blog" | "career" | "reference" | "order";
+export type DynamicKind = "product" | "accessory" | "kbArticle" | "blog" | "career" | "reference" | "order";
 
 const DYNAMIC_PREFIXES: [string, DynamicKind][] = [
   ["products", "product"],
+  ["accessories", "accessory"],
   ["knowledge-base/article", "kbArticle"],
   ["blog", "blog"],
   ["careers", "career"],

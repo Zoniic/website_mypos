@@ -2431,5 +2431,14 @@
     "taxInvoice": "税务发票",
     "taxIdLabel": "税号",
     "bookmark": "请收藏此页面以便稍后查看订单状态。此链接仅供您本人使用。"
+  },
+  "accessoryDetail": {
+    "compatibleTitle": "适用机型",
+    "relatedTitle": "搭配使用的配件",
+    "forProductTitle": "适用于本机的配件",
+    "askPrice": "询价",
+    "typeHeader": "类型",
+    "kindProduct": "设备",
+    "kindAccessory": "配件"
   }
 }

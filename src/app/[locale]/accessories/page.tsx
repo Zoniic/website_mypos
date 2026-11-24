@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/Button";
 import { getAllAccessories } from "@/lib/accessories";
 import { getSiteSettings, isOnlineOrderingOn } from "@/lib/siteSettings";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { absoluteUrl } from "@/lib/structuredData";
+import { absoluteUrl, schemaAvailability } from "@/lib/structuredData";
+import { accessoryDisplayPrice } from "@/lib/accessoryPrice";
 import { AccessoriesExplorer } from "@/components/accessories/AccessoriesExplorer";
 import { getCatalog, publishedCategories } from "@/lib/catalog";
 
@@ -59,12 +60,13 @@ export default async function AccessoriesPage({
   const shopOn = isOnlineOrderingOn(settings);
 
   // Priced accessories as Products with offers, so they can show price in search.
-  const pageUrl = `${siteConfig.url}/${locale}/accessories`;
-  const priced = items.filter((item) => shopOn && item.onlinePrice !== undefined);
+  const priced = items
+    .map((item) => ({ item, price: accessoryDisplayPrice(item, shopOn) }))
+    .filter((entry): entry is { item: (typeof items)[number]; price: number } => entry.price !== null);
   const itemListSchema = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    itemListElement: priced.map((item, index) => ({
+    itemListElement: priced.map(({ item, price }, index) => ({
       "@type": "ListItem",
       position: index + 1,
       item: {
@@ -72,14 +74,15 @@ export default async function AccessoriesPage({
         name: item.name,
         description: item.description,
         sku: item.slug,
+        url: `${siteConfig.url}/${locale}/accessories/${item.slug}`,
         brand: { "@type": "Brand", name: "MYPOS" },
         ...(item.imageUrl ? { image: absoluteUrl(item.imageUrl) } : {}),
         offers: {
           "@type": "Offer",
-          url: pageUrl,
+          url: `${siteConfig.url}/${locale}/accessories/${item.slug}`,
           priceCurrency: "THB",
-          price: item.onlinePrice,
-          availability: "https://schema.org/InStock",
+          price,
+          availability: schemaAvailability(item.stockStatus),
           itemCondition: "https://schema.org/NewCondition",
         },
       },

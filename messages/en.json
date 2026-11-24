@@ -2431,5 +2431,14 @@
     "taxInvoice": "Tax invoice",
     "taxIdLabel": "Tax ID",
     "bookmark": "Bookmark this page to check your order status later. This link is private to you."
+  },
+  "accessoryDetail": {
+    "compatibleTitle": "Works with",
+    "relatedTitle": "Goes well with",
+    "forProductTitle": "Accessories for this machine",
+    "askPrice": "Ask for a price",
+    "typeHeader": "Type",
+    "kindProduct": "Machine",
+    "kindAccessory": "Accessory"
   }
 }

@@ -5,15 +5,15 @@ generator client {
 /// Admin panel users — replaces the single shared ADMIN_PASSWORD.
 /// Bootstrap the first user with: npx tsx prisma/seed-admin-user.ts
 model AdminUser {
-  id                      Int              @id @default(autoincrement())
-  email                   String           @unique
+  id                      Int               @id @default(autoincrement())
+  email                   String            @unique
   passwordHash            String
   name                    String
-  createdAt               DateTime         @default(now())
-  updatedAt               DateTime         @updatedAt
+  createdAt               DateTime          @default(now())
+  updatedAt               DateTime          @updatedAt
   lastLoginAt             DateTime?
   /// "owner" or "editor". Existing admins become owners through the column default.
-  role                    String           @default("owner")
+  role                    String            @default("owner")
   /// AES-256-GCM blob (src/lib/secretBox.ts). Null until two-step login is set up.
   totpSecretEnc           String?
   /// Set when the admin confirmed the first code. Two-step login is on when this is set.
@@ -104,13 +104,15 @@ model Product {
   shopeeUrl   String?
   lazadaUrl   String?
 
-  translations        ProductTranslation[]
-  categories          Category[]
-  businessTypes       BusinessType[]
+  translations          ProductTranslation[]
+  categories            Category[]
+  businessTypes         BusinessType[]
   /// Self many-to-many. The app connects both directions on save so the
   /// relation behaves symmetrically (A related to B implies B related to A).
-  relatedProducts     Product[]            @relation("RelatedProducts")
-  relatedProductsBack Product[]            @relation("RelatedProducts")
+  relatedProducts       Product[]            @relation("RelatedProducts")
+  relatedProductsBack   Product[]            @relation("RelatedProducts")
+  /// Accessories that work with this machine (set on the accessory form).
+  compatibleAccessories Accessory[]          @relation("AccessoryCompatibleProducts")
 }
 
 /// Product/accessory category (self-order, weigh-pay, pos, ticketing).
@@ -157,8 +159,23 @@ model Accessory {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  translations AccessoryTranslation[]
-  categories   Category[]
+  /// "Starting at" price (THB) shown on the card and detail page. Null = ask for a price.
+  priceFrom    Int?
+  /// "in_stock" | "preorder" | "out_of_stock" (same values as Product.stockStatus).
+  stockStatus  String  @default("in_stock")
+  /// Estimated lead time in days when not in stock.
+  leadTimeDays Int?
+  /// Up to 3 extra photos, comma-separated public URLs (same format as Product.galleryUrls).
+  galleryUrls  String  @default("")
+  /// Spec sheet PDF. Public URL under /uploads/accessories/.
+  datasheetUrl String?
+  /// Optional video (YouTube/Vimeo/Drive link), embedded on the detail page.
+  videoUrl     String?
+
+  translations       AccessoryTranslation[]
+  categories         Category[]
+  /// Machines this accessory works with. Shown on both detail pages.
+  compatibleProducts Product[]              @relation("AccessoryCompatibleProducts")
 }
 
 model AccessoryTranslation {
@@ -167,6 +184,8 @@ model AccessoryTranslation {
   locale      String
   name        String
   description String @db.Text
+  /// Spec rows, one "Label: value" per line. Shown as the spec list on the detail page.
+  specs       String @default("") @db.Text
 
   accessory Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
 

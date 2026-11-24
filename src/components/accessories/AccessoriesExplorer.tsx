@@ -1,13 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
-import { useFormatter, useTranslations } from "next-intl";
-import { FadeIn } from "@/components/ui/FadeIn";
-import { PlaceholderImage } from "@/components/ui/PlaceholderImage";
+import { useTranslations } from "next-intl";
 import type { Accessory } from "@/lib/accessories";
 import type { ProductCategory } from "@/lib/products";
-import { AddToCartButton } from "@/components/commerce/AddToCartButton";
+import { AccessoryCard } from "@/components/accessories/AccessoryCard";
 
 
 export function AccessoriesExplorer({
@@ -26,12 +23,10 @@ export function AccessoriesExplorer({
   filterLabel: string;
   allLabel: string;
   noResults: string;
-  /** Online ordering is enabled: show price + "Add to cart" on priced items. */
+  /** Online ordering is enabled: an accessory without its own price shows its online price. */
   shopOn?: boolean;
 }) {
   const t = useTranslations("productsCommon");
-  const tShop = useTranslations("shop");
-  const format = useFormatter();
   const [category, setCategory] = useState(initialCategory);
 
   const availableCategories = useMemo(() => {
@@ -71,67 +66,11 @@ export function AccessoriesExplorer({
         </p>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {filtered.map((item, index) => (
-            <FadeIn key={item.slug} delay={(index % 8) * 0.06}>
-              <div
-                data-edit-admin={`/admin/goto/accessory/${item.slug}`}
-                className="group flex h-full flex-col overflow-hidden rounded-card border border-border bg-surface-1/40 p-4 transition-all hover:-translate-y-1 hover:border-primary-400/40 hover:shadow-[var(--shadow-card-hover)]"
-              >
-                <div className="overflow-hidden rounded-lg">
-                  <PlaceholderImage
-                    ratio="1/1"
-                    label={`${item.name} photo`}
-                    src={item.imageUrl}
-                    className="transition-transform duration-500 ease-out group-hover:scale-105"
-                  />
-                </div>
-                <h2 className="mt-4 text-base font-semibold">{item.name}</h2>
-                <p className="mt-1 text-sm text-text-2">{item.description}</p>
-                {((shopOn && item.onlinePrice !== undefined) || item.shopeeUrl || item.lazadaUrl) && (
-                  <div className="mt-auto pt-4">
-                    {shopOn && item.onlinePrice !== undefined && (
-                      <>
-                        <p className="font-display text-xl font-semibold">
-                          {format.number(item.onlinePrice, { style: "currency", currency: "THB", maximumFractionDigits: 0 })}
-                          <span className="ml-1.5 font-sans text-xs font-normal text-text-2">{tShop("priceInclVat")}</span>
-                        </p>
-                        <AddToCartButton
-                          kind="accessory"
-                          slug={item.slug}
-                          name={item.name}
-                          imageUrl={item.imageUrl}
-                          unitPrice={item.onlinePrice}
-                          category="accessory"
-                          size="md"
-                          className="mt-3"
-                          labels={{ add: tShop("addToCart"), added: tShop("added"), viewCart: tShop("viewCart") }}
-                        />
-                      </>
-                    )}
-                    {(item.shopeeUrl || item.lazadaUrl) && (
-                      <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-                        {item.shopeeUrl && (
-                          <a href={item.shopeeUrl} target="_blank" rel="noopener noreferrer" data-item-name={item.name} className="inline-flex items-center gap-1 font-medium text-[#c4391d] underline-offset-4 hover:underline">
-                            Shopee
-                            <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
-                          </a>
-                        )}
-                        {item.lazadaUrl && (
-                          <a href={item.lazadaUrl} target="_blank" rel="noopener noreferrer" data-item-name={item.name} className="inline-flex items-center gap-1 font-medium text-[#0f136d] underline-offset-4 hover:underline">
-                            Lazada
-                            <ArrowUpRight size={14} strokeWidth={1.75} aria-hidden="true" />
-                          </a>
-                        )}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
-            </FadeIn>
+          {filtered.map((item) => (
+            <AccessoryCard key={item.slug} item={item} shopOn={shopOn} />
           ))}
         </div>
       )}
     </div>
   );
 }
-

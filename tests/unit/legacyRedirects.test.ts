@@ -10,7 +10,15 @@ test("every old URL has exactly one redirect", () => {
 });
 
 test("every redirect points at a page the new site actually has", () => {
-  const knownRecords = new Set(["/products/mypos-f58", "/products/mypos-t70", "/products/mypos-k156", "/references/dreamworld", "/references/ruengrawin-metal"]);
+  const knownRecords = new Set([
+    "/products/mypos-f58",
+    "/products/mypos-t70",
+    "/products/mypos-k156",
+    "/accessories/mypos-fm2200",
+    "/accessories/mypos-f-330k",
+    "/references/dreamworld",
+    "/references/ruengrawin-metal",
+  ]);
   for (const { source, destination } of legacyRedirects) {
     assert.ok(!/^\/(th|en|zh)(\/|$)/.test(destination), `${source}: destination must not carry a locale`);
     const match = matchPublicRoute(`/th${destination === "/" ? "" : destination}`);

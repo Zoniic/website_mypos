@@ -3,6 +3,7 @@ import { siteConfig } from "@/config/site";
 import { routing } from "@/i18n/routing";
 import { getCatalog, publishedBusinessTypes, publishedSolutions } from "@/lib/catalog";
 import { getAllProductSlugs } from "@/lib/products";
+import { getAllAccessorySlugs } from "@/lib/accessories";
 import { getAllKbArticleSlugs } from "@/lib/kb";
 import { getAllReferenceCaseSlugs } from "@/lib/references";
 import { getAllBlogPosts } from "@/lib/blog";
@@ -33,9 +34,10 @@ const staticPaths = [
 ];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [catalog, productSlugs, kbArticleSlugs, referenceSlugs, blogPosts, jobs] = await Promise.all([
+  const [catalog, productSlugs, accessorySlugs, kbArticleSlugs, referenceSlugs, blogPosts, jobs] = await Promise.all([
     getCatalog(),
     getAllProductSlugs(),
+    getAllAccessorySlugs(),
     getAllKbArticleSlugs(),
     getAllReferenceCaseSlugs(),
     getAllBlogPosts(routing.defaultLocale),
@@ -48,6 +50,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...publishedSolutions(catalog).map((s) => `/solutions/${s.slug}`),
     ...publishedBusinessTypes(catalog).map((t) => `/industries/${t.slug}`),
     ...productSlugs.map((slug) => `/products/${slug}`),
+    ...accessorySlugs.map((slug) => `/accessories/${slug}`),
     ...kbArticleSlugs.map((slug) => `/knowledge-base/article/${slug}`),
     ...referenceSlugs.map((slug) => `/references/${slug}`),
     ...blogPosts.map((post) => `/blog/${post.slug}`),

@@ -1,0 +1,55 @@
+scratch started 2026-11-24T15:42:57
+f65f9786852e44819001799077243360e3b2d2b2b12cd20f51d94778c00f69c8
+pg ready=True
+Environment variables loaded from .env
+Prisma schema loaded from .agents\tasks\accessory-x3\old-schema.prisma
+Datasource "db": PostgreSQL database "mypos_scratch", schema "public" at "localhost:5433"
+
+Your database is now in sync with your Prisma schema. Done in 1.01s
+
+== db push old schema exit=0
+Accessory: 9
+AccessoryTranslation: 27
+BlogPost: 11
+BlogPostTranslation: 33
+BusinessType: 11
+Category: 8
+JobPosting: 0
+JobPostingTranslation: 0
+KbArticle: 1
+KbArticleTranslation: 3
+KbCategory: 1
+KbCategoryTranslation: 3
+OfficialPartner: 2
+PageContent: 2190
+Product: 12
+ProductTranslation: 36
+ReferenceCase: 9
+ReferenceCaseTranslation: 27
+SiteImage: 14
+SiteSetting: 14
+TrustLogo: 19
+_AccessoryToCategory: 35
+_BusinessTypeToProduct: 94
+_CategoryToProduct: 37
+_RelatedProducts: 36
+== copy exit=0
+STATE new columns=0/7 [] new table=0/1 accessories=9 translations=27 products=12
+STATE new columns=0/7 [] new table=0/1 accessories=9 translations=27 products=12
+6 statements, all additive
+OK ALTER TABLE "Accessory" ADD COLUMN     "datasheetUrl" TEXT,
+OK ALTER TABLE "AccessoryTranslation" ADD COLUMN     "specs" TEXT NOT NULL DEFAULT ''
+OK CREATE TABLE "_AccessoryCompatibleProducts" (
+OK CREATE INDEX "_AccessoryCompatibleProducts_B_index" ON "_AccessoryCompatibleProducts"("B")
+OK ALTER TABLE "_AccessoryCompatibleProducts" ADD CONSTRAINT "_AccessoryCompatibleProducts_A_
+OK ALTER TABLE "_AccessoryCompatibleProducts" ADD CONSTRAINT "_AccessoryCompatibleProducts_B_
+COMMITTED
+AFTER new columns=7/7 new table=1/1 accessories=9 translations=27 products=12
+== apply exit=0
+STATE new columns=7/7 [Accessory.datasheetUrl,Accessory.galleryUrls,Accessory.leadTimeDays,Accessory.priceFrom,Accessory.stockStatus,Accessory.videoUrl,AccessoryTranslation.specs] new table=1/1 accessories=9 translations=27 products=12
+ERROR (nothing applied if this happened before COMMITTED) Some new objects already exist; not applying
+== second apply (must refuse) exit=1
+No difference detected.
+
+== migrate diff exit=0 (0 = scratch DB matches schema.prisma)
+scratch finished 2026-11-24T15:43:28

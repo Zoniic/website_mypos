@@ -119,7 +119,10 @@ export async function isStoragePathReferenced(path: string): Promise<boolean> {
       where: { OR: [{ imageUrl: has }, { galleryUrls: has }, { datasheetUrl: has }] },
       select: { id: true },
     }),
-    prisma.accessory.findFirst({ where: { imageUrl: has }, select: { id: true } }),
+    prisma.accessory.findFirst({
+      where: { OR: [{ imageUrl: has }, { galleryUrls: has }, { datasheetUrl: has }] },
+      select: { id: true },
+    }),
     prisma.referenceCase.findFirst({
       where: { OR: [{ imageUrl: has }, { logoUrl: has }] },
       select: { id: true },
