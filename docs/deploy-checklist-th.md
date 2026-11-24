@@ -33,6 +33,38 @@
 | 13 | สำรองไฟล์รูปใน Supabase Storage | host | ข้อ 10 และ 12 ไม่รวมไฟล์รูป ตรวจใน Supabase Dashboard > Storage ว่ามีวิธีสำรอง bucket ของเว็บ | | | |
 | 14 | สลับโดเมน | host | ทำตามส่วนที่ 11 ของ `docs/owner-data-guide-th.md` | | | |
 
+## ขึ้นเว็บด้วย container
+ใช้ได้กับผู้ให้บริการที่รัน Docker image (ข้อเสนอเบื้องต้นคือ Railway ภูมิภาคสิงคโปร์ แต่เจ้าของ **ยังไม่ได้ยืนยัน** ผู้ให้บริการ แพ็กเกจ หรือภูมิภาคของ Supabase) ในโปรเจกต์มี `Dockerfile`, `.dockerignore` และ `railway.json` (ใช้เฉพาะถ้าเลือก Railway ไฟล์นี้ไม่มีรหัสลับ) ไม่มีใครสมัครบริการหรือขึ้นเว็บแล้ว ณ ตอนเขียน
+- image ไม่มีรหัสลับอยู่ข้างใน ทุกค่าส่งเป็น environment variable ตอนรัน ห้ามคัดลอกไฟล์ `.env*` เข้า image
+- ตอน build หน้าบางหน้า (เช่น `/sitemap.xml`) อ่านฐานข้อมูล ทดสอบแล้ว build ล้มเหลวถ้าไม่มี `DATABASE_URL` จึงต้องส่ง `DATABASE_URL` เป็นตัวแปรตอน build (build variable) ด้วย (ใช้ URL แบบ pooled ของ Supabase ได้) ค่านี้อยู่เฉพาะขั้น build ไม่อยู่ใน image ที่รัน
+- ต้องรันแบบ 1 replica เท่านั้น (ตัวจำกัดจำนวนการส่งฟอร์มและแคชเก็บในหน่วยความจำของแต่ละ process)
+- ปิดเครื่องแบบสุภาพ: โฮสต์ต้องส่ง `SIGTERM` และรอ 10 ถึง 30 วินาทีให้คำขอที่ค้างอยู่เสร็จก่อนปิด
+- health check: path `/api/health` ตอบ `200 {"status":"ok"}` ไม่ตรวจฐานข้อมูล (ฐานข้อมูลล่มจะไม่ทำให้โฮสต์รีสตาร์ตเว็บที่ยังปกติ)
+- พอร์ตเริ่มต้น 3000 (ตั้งด้วย `PORT` ได้) ตัวเว็บฟังที่ `0.0.0.0`
+### สิ่งที่เจ้าของต้องจัดหา
+| # | รายการ | ต้องทำที่ไหน | วิธีตรวจ | ยืนยันเมื่อ | โดย | หลักฐาน |
+|---|---|---|---|---|---|---|
+| 15 | บัญชีผู้ให้บริการ container, แพ็กเกจ และผู้จ่ายค่าบริการ | host | เจ้าของระบุชื่อผู้ให้บริการ แพ็กเกจ และคนที่จ่าย (ยังไม่ยืนยัน) | | | |
+| 16 | ภูมิภาคของเว็บและของ Supabase | host | เลือกภูมิภาคใกล้กัน (ข้อเสนอ: สิงคโปร์) ดูภูมิภาคของ Supabase ที่ Dashboard > Project Settings ถ้าอยู่คนละภูมิภาค หน้าเว็บจะช้าลง | | | |
+| 17 | ตั้ง environment variable ครบ (ชื่อเท่านั้น ห้ามวางค่าในเอกสารนี้) | host | ดูตารางตัวแปรด้านล่าง ตั้งใน dashboard ของโฮสต์ ไม่ใส่ใน git | | | |
+| 18 | build variable `DATABASE_URL` | host | ตั้งเป็น build variable ด้วย ไม่เช่นนั้น build ล้มเหลว | | | |
+| 19 | health check และ 1 replica | host | ตั้ง health check path เป็น `/api/health` เปิด `https://<โดเมนของโฮสต์>/api/health` ต้องได้ `{"status":"ok"}` และตั้งจำนวน replica เป็น 1 | | | |
+| 20 | ใช้ `admin-v2.sql` กับฐานข้อมูลก่อนรับทราฟฟิก | host (ฐานข้อมูล) | รันไฟล์ `.agents/tasks/admin-v2/admin-v2.sql` ก่อนที่ image ใหม่จะรับผู้ใช้ แล้วล็อกอิน `/admin` ได้ | | | |
+| 21 | `x-forwarded-for` ของโฮสต์ | host | proxy ของโฮสต์ต้องเติม IP จริงของผู้ใช้ (ดูข้อ 6) ตรวจจริง ห้ามสันนิษฐาน | | | |
+| 22 | Server Action หลัง proxy | app | ถ้าบันทึกในหลังบ้านแล้วขึ้น "Invalid Server Actions request" ให้ตั้ง `serverActions.allowedOrigins` ใน `next.config.ts` เป็นโดเมนจริง | | | |
+| 23 | รีเซ็ต 2FA ของแอดมิน | host (shell) | รัน `prisma/reset-2fa.ts` ต้องมี shell ที่ตั้ง `DATABASE_URL` ไว้ วิธีเข้า shell ขึ้นกับผู้ให้บริการ เจ้าของต้องยืนยัน | | | |
+### ตัวแปร environment (ชื่อเท่านั้น)
+| ชื่อ | ใช้ทำอะไร | หมายเหตุ |
+|---|---|---|
+| `DATABASE_URL` | ฐานข้อมูล PostgreSQL | ต้องมีทั้งตอน build และตอนรัน |
+| `SESSION_SECRET` | เซ็นเซสชันแอดมิน | สุ่มยาวอย่างน้อย 32 ตัวอักษร (ข้อ 7) |
+| `TWO_FACTOR_ENCRYPTION_KEY` | เข้ารหัสความลับ 2FA ของแอดมิน | base64 ขนาด 32 ไบต์ ห้ามทำหาย ถ้าหาย ต้องรีเซ็ต 2FA ทุกบัญชี ชื่อนี้ต้องตรงกับที่โค้ดหลังบ้านใช้ |
+| `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `SUPABASE_STORAGE_BUCKET` | อัปโหลดไฟล์ | bucket เริ่มต้น `uploads` |
+| `LINE_CHANNEL_ACCESS_TOKEN`, `LINE_CHANNEL_SECRET`, `LINE_NOTIFY_TO` | แจ้งเตือน LINE | ข้อ 8 |
+| `RESEND_API_KEY`, `NOTIFY_EMAIL_FROM`, `NOTIFY_EMAIL_TO` | แจ้งเตือนอีเมล | ข้อ 9 |
+| `NEXT_PUBLIC_GA_ID` | GA4 สำรอง | ไม่บังคับ ต้องมีตอน build ถ้าจะใช้ |
+| `PORT` | พอร์ตที่เว็บฟัง | ไม่บังคับ ค่าเริ่มต้น 3000 |
+| `NEXT_SERVER_ACTIONS_ENCRYPTION_KEY` | คีย์ Server Action | ไม่บังคับ |
 ## ตัวอย่างการตั้ง header ที่ nginx
 
 ใช้เมื่อเว็บอยู่หลัง nginx ให้ตัวเว็บส่ง header ของข้อ 1 เอง nginx เพิ่มเฉพาะ HSTS ห้ามประกาศ header ข้อ 1 ซ้ำใน nginx
