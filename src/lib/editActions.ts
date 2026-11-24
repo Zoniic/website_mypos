@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { auditContent, auditKeyed, loadContentRows, readSettingValues } from "@/lib/auditLog";
 import { requireEditor } from "@/lib/editMode";
 import { emojiValuesError } from "@/lib/emoji";
 import { revalidatePublicSite } from "@/lib/siteCache";
@@ -29,7 +30,7 @@ export async function getContentRow(rowId: number): Promise<ContentRow | null> {
 }
 
 export async function saveContentRow(namespace: string, key: string, values: Record<string, string>): Promise<string> {
-  await requireEditor();
+  const admin = await requireEditor();
   const emojiError = emojiValuesError(values);
   if (emojiError) return emojiError;
   const existing = await prisma.pageContent.count({ where: { namespace, key } });
@@ -45,6 +46,7 @@ export async function saveContentRow(namespace: string, key: string, values: Rec
       }
     }
   }
+  const existingRows = await loadContentRows(namespace, key);
   for (const locale of LOCALES) {
     if (values[locale] === undefined) continue;
     await prisma.pageContent.upsert({
@@ -53,26 +55,35 @@ export async function saveContentRow(namespace: string, key: string, values: Rec
       update: { value: values[locale] },
     });
   }
+  await auditContent(
+    admin,
+    namespace,
+    existingRows,
+    LOCALES.filter((l) => values[l] !== undefined).map((l) => ({ key, locale: l, value: values[l] })),
+    { source: "live" },
+  );
   revalidatePublicSite();
   return "saved";
 }
 
 /** Section order/visibility from the on-page toolbar; \`variant\` = this page only. */
 export async function saveSectionLayout(page: string, layoutJson: string, variant?: string): Promise<string> {
-  await requireEditor();
+  const admin = await requireEditor();
   if (!isPageKey(page) || (variant && !isLayoutVariant(page, variant))) return "ไม่รู้จักหน้านี้";
   const parsed = parseStoredLayout(layoutJson);
   if (!parsed) return "ข้อมูลไม่ถูกต้อง";
   const key = layoutSettingKey(page, variant);
   const value = JSON.stringify(resolveLayout(page, parsed));
+  const previousValue = (await readSettingValues([key]))[key] ?? null;
   await prisma.siteSetting.upsert({ where: { key }, create: { key, value }, update: { value } });
+  await auditKeyed(admin, "SiteSetting", key, previousValue, value, { source: "live" });
   revalidatePublicSite();
   return "saved";
 }
 
 /** Replaces the photo in a Site Photos slot (or the logo). */
 export async function uploadSlotImage(formData: FormData): Promise<string> {
-  await requireEditor();
+  const admin = await requireEditor();
   const slot = String(formData.get("slot") ?? "");
   if (!(await getAllImageSlots()).some((s) => s.key === slot)) return "ไม่รู้จักตำแหน่งรูปนี้";
   let url: string | null;
@@ -84,6 +95,7 @@ export async function uploadSlotImage(formData: FormData): Promise<string> {
   if (!url) return "เลือกไฟล์รูปก่อน";
   const previous = await prisma.siteImage.findUnique({ where: { key: slot }, select: { url: true } });
   await prisma.siteImage.upsert({ where: { key: slot }, create: { key: slot, url }, update: { url } });
+  await auditKeyed(admin, "SiteImage", slot, previous?.url ?? null, url, { source: "live" });
   await trashReplacedFiles([previous?.url]);
   revalidatePublicSite();
   return "saved";

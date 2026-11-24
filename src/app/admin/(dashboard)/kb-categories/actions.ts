@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -25,7 +26,7 @@ function revalidateKb() {
 }
 
 export async function createKbCategory(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
@@ -55,6 +56,7 @@ export async function createKbCategory(_prevState: string | null, formData: Form
   }
 
   revalidateKb();
+  await auditEntity(admin, "KbCategory", null, await loadSnapshot("KbCategory", category.id));
   redirect("/admin/kb-categories");
 }
 
@@ -63,7 +65,8 @@ export async function updateKbCategory(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("KbCategory", categoryId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
@@ -88,11 +91,13 @@ export async function updateKbCategory(
   }
 
   revalidateKb();
+  await auditEntity(admin, "KbCategory", before, await loadSnapshot("KbCategory", categoryId));
   redirect("/admin/kb-categories");
 }
 
 export async function deleteKbCategory(categoryId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("KbCategory", categoryId);
   const articleCount = await prisma.kbArticle.count({ where: { categoryId } });
   if (articleCount > 0) {
     throw new Error(
@@ -100,6 +105,7 @@ export async function deleteKbCategory(categoryId: number) {
     );
   }
   await prisma.kbCategory.delete({ where: { id: categoryId } });
+  await auditEntity(admin, "KbCategory", before, null);
   revalidateKb();
   redirect("/admin/kb-categories");
 }

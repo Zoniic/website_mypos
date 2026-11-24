@@ -97,3 +97,21 @@ test("nav items flagged ownerOnly match the owner-only hrefs", () => {
   // The history entry is added in a later step.
   for (const href of ownerOnlyHrefs.filter((h) => h !== "/admin/history")) assert.ok(present.includes(href), href);
 });
+
+test("every actions file that writes to the database records it in the change history", () => {
+  const WRITES = /\bprisma\.\w+\.(create|createMany|update|updateMany|upsert|delete|deleteMany)\(|\btx\.\w+\.(create|update|upsert|delete|deleteMany)\(/;
+  const RECORDS = /\b(auditEntity|auditKeyed|auditContent|auditSettings|auditNote|auditLogin|recordAudit)\(|\bwriteSetting\(\s*admin|\bstore\(admin|saveLeadDetails\([^)]*admin/;
+  let checked = 0;
+  for (const { file, label } of actionFiles) {
+    const source = readFileSync(file, "utf8");
+    if (!WRITES.test(source)) continue;
+    checked++;
+    assert.match(source, RECORDS, `${label} writes data but never records it in the history`);
+  }
+  assert.ok(checked >= 18, `checked only ${checked} files`);
+});
+
+test("saveLeadDetails records the change when given the acting admin", () => {
+  const source = readFileSync(join(ROOT, "src", "lib", "leadList.ts"), "utf8");
+  assert.match(source, /auditEntity\(/);
+});

@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, auditPasswordChange, loadSnapshot } from "@/lib/auditLog";
 import { requireOwner, setSessionCookie } from "@/lib/adminAuth";
 import { AdminUserRuleError, checkActingPassword, parseRole, withOwnerGuard } from "@/lib/adminUsers";
 
@@ -22,7 +23,7 @@ function isUniqueConstraintError(error: unknown): boolean {
 }
 
 export async function createAdminUser(_prevState: string | null, formData: FormData) {
-  await requireOwner();
+  const admin = await requireOwner();
   const email = String(formData.get("email") ?? "").trim().toLowerCase();
   const name = String(formData.get("name") ?? "").trim();
   const password = String(formData.get("password") ?? "");
@@ -33,13 +34,18 @@ export async function createAdminUser(_prevState: string | null, formData: FormD
   if (password.length < 8) return "รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร";
 
   const passwordHash = await bcrypt.hash(password, 10);
+  let created;
   try {
-    await prisma.adminUser.create({ data: { email, name, passwordHash, role } });
+    created = await prisma.adminUser.create({
+      data: { email, name, passwordHash, role },
+      select: { id: true, email: true, name: true, role: true },
+    });
   } catch (error) {
     if (isUniqueConstraintError(error)) return `อีเมล "${email}" มีในระบบแล้ว`;
     throw error;
   }
 
+  await auditEntity(admin, "AdminUser", null, created);
   revalidatePath("/admin/admin-users");
   redirect("/admin/admin-users");
 }
@@ -78,9 +84,16 @@ export async function updateAdminUser(
 
   let updated: { id: number; email: string; name: string; passwordHash: string };
   try {
-    updated = await withOwnerGuard({ kind: "setRole", id: targetId, role }, (tx) =>
-      tx.adminUser.update({ where: { id: targetId }, data })
-    );
+    updated = await withOwnerGuard({ kind: "setRole", id: targetId, role }, async (tx) => {
+      const db = tx as unknown as typeof prisma;
+      const before = await loadSnapshot("AdminUser", targetId, db);
+      const result = await tx.adminUser.update({ where: { id: targetId }, data });
+      const after = await loadSnapshot("AdminUser", targetId, db);
+      const options = { client: db, transactional: true };
+      await auditEntity(session, "AdminUser", before, after, { ...options, action: role !== target.role ? "role_change" : undefined });
+      if (password) await auditPasswordChange(session, targetId, result.email, options);
+      return result;
+    });
   } catch (error) {
     if (error instanceof AdminUserRuleError) return error.message;
     if (isUniqueConstraintError(error)) return `อีเมล "${email}" มีในระบบแล้ว`;
@@ -107,7 +120,10 @@ export async function deleteAdminUser(targetId: number) {
   await withOwnerGuard({ kind: "delete", id: targetId }, async (tx) => {
     const count = await tx.adminUser.count();
     if (count <= 1) throw new AdminUserRuleError("ลบผู้ดูแลคนสุดท้ายไม่ได้");
+    const db = tx as unknown as typeof prisma;
+    const before = await loadSnapshot("AdminUser", targetId, db);
     await tx.adminUser.delete({ where: { id: targetId } });
+    await auditEntity(session, "AdminUser", before, null, { client: db, transactional: true });
   });
 
   revalidatePath("/admin/admin-users");

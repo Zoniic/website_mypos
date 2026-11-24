@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { slugFormError } from "@/lib/slug";
 
 const locales = ["th", "en", "zh"] as const;
@@ -35,7 +36,7 @@ function revalidateCareerPaths(slug?: string) {
 }
 
 export async function createJobPosting(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readJobFields(formData);
@@ -65,11 +66,13 @@ export async function createJobPosting(_prevState: string | null, formData: Form
   }
 
   revalidateCareerPaths();
+  await auditEntity(admin, "JobPosting", null, await loadSnapshot("JobPosting", job.id));
   redirect("/admin/careers");
 }
 
 export async function updateJobPosting(jobId: number, _prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("JobPosting", jobId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readJobFields(formData);
@@ -105,12 +108,15 @@ export async function updateJobPosting(jobId: number, _prevState: string | null,
   }
 
   revalidateCareerPaths(fields.slug);
+  await auditEntity(admin, "JobPosting", before, await loadSnapshot("JobPosting", jobId));
   redirect("/admin/careers");
 }
 
 export async function deleteJobPosting(jobId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("JobPosting", jobId);
   await prisma.jobPosting.delete({ where: { id: jobId } });
+  await auditEntity(admin, "JobPosting", before, null);
   revalidateCareerPaths();
   redirect("/admin/careers");
 }

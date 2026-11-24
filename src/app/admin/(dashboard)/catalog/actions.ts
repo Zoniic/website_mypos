@@ -4,6 +4,8 @@ import { requireAdmin } from "@/lib/adminAuth";
 import { emojiValuesError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
+import { auditKeyed, auditNote } from "@/lib/auditLog";
+import type { AdminContextUser } from "@/lib/adminAuth";
 import {
   BUSINESS_ICONS,
   MACHINE_KINDS,
@@ -33,9 +35,11 @@ async function readSetting(key: string) {
   return (await prisma.siteSetting.findUnique({ where: { key } }))?.value;
 }
 
-async function writeSetting(key: string, value: unknown) {
+async function writeSetting(admin: AdminContextUser, key: string, value: unknown, detail?: string) {
   const json = JSON.stringify(value);
+  const previous = (await readSetting(key)) ?? null;
   await prisma.siteSetting.upsert({ where: { key }, create: { key, value: json }, update: { value: json } });
+  await auditKeyed(admin, "SiteSetting", key, previous, json, { detail });
 }
 
 /** Thai name required; English/Chinese fall back to it. */
@@ -70,7 +74,7 @@ export async function createSolution(input: {
   group: string;
   blurb: Names;
 }): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiValuesError({ ...input.names, ...input.blurb });
   if (emojiError) return emojiError;
   const slug = input.slug.trim().toLowerCase();
@@ -99,10 +103,11 @@ export async function createSolution(input: {
     if (blurb) await upsertContent("industries", `common.solutionBlurbs.${key}`, locale, blurb);
   }
   // Products and accessories are tagged with the line's own category.
+  await auditNote(admin, "SiteSetting", "catalog.solutions", "create", `เพิ่มสายสินค้า ${slug} คัดลอกข้อความจาก ${template.slug} ${copied} รายการ`);
   await prisma.category.upsert({ where: { slug }, create: { slug }, update: {} });
 
   const current = parseCustomSolutions(await readSetting("catalog.solutions"));
-  await writeSetting("catalog.solutions", [
+  await writeSetting(admin, "catalog.solutions", [
     ...current.map(({ slug, category, machine, group, published }) => ({ slug, category, machine, group, published })),
     { slug, category: slug, machine: input.machine, group: input.group, published: false },
   ]);
@@ -115,7 +120,7 @@ export async function createBusinessType(input: {
   template: string;
   icon: string;
 }): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiValuesError(input.names);
   if (emojiError) return emojiError;
   const slug = input.slug.trim().toLowerCase();
@@ -136,10 +141,11 @@ export async function createBusinessType(input: {
     await upsertContent("industries", `${slug}.metaTitle`, locale, `${name} | MYPOS`);
     await upsertContent("productsCommon", `businessTypes.${slug}`, locale, name);
   }
+  await auditNote(admin, "SiteSetting", "catalog.businessTypes", "create", `เพิ่มประเภทธุรกิจ ${slug} คัดลอกข้อความจาก ${input.template} ${copied} รายการ`);
   await prisma.businessType.upsert({ where: { slug }, create: { slug }, update: {} });
 
   const current = parseCustomBusinessTypes(await readSetting("catalog.businessTypes"));
-  await writeSetting("catalog.businessTypes", [
+  await writeSetting(admin, "catalog.businessTypes", [
     ...current.map(({ slug, icon, published }) => ({ slug, icon, published })),
     { slug, icon: input.icon, published: false },
   ]);
@@ -150,12 +156,13 @@ export async function updateSolution(
   slug: string,
   change: { machine?: string; group?: string; published?: boolean },
 ): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const current = parseCustomSolutions(await readSetting("catalog.solutions"));
   if (!current.some((s) => s.slug === slug)) return "สายสินค้าในระบบแก้ได้ที่เมนูและลิงก์ กับข้อความทุกหน้า เท่านั้น";
   if (change.machine && !MACHINE_KINDS.includes(change.machine as MachineKind)) return "ภาพเครื่องไม่ถูกต้อง";
   if (change.group && !(SOLUTION_GROUPS as readonly string[]).includes(change.group)) return "กลุ่มเมนูไม่ถูกต้อง";
   await writeSetting(
+    admin,
     "catalog.solutions",
     current.map(({ slug: s, category, machine, group, published }) =>
       s === slug
@@ -167,11 +174,12 @@ export async function updateSolution(
 }
 
 export async function updateBusinessType(slug: string, change: { icon?: string; published?: boolean }): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const current = parseCustomBusinessTypes(await readSetting("catalog.businessTypes"));
   if (!current.some((b) => b.slug === slug)) return "ประเภทธุรกิจในระบบแก้ได้ที่เมนูและลิงก์ กับข้อความทุกหน้า เท่านั้น";
   if (change.icon && !(BUSINESS_ICONS as readonly string[]).includes(change.icon)) return "ไอคอนไม่ถูกต้อง";
   await writeSetting(
+    admin,
     "catalog.businessTypes",
     current.map(({ slug: s, icon, published }) =>
       s === slug ? { slug: s, icon: change.icon ?? icon, published: change.published ?? published } : { slug: s, icon, published },
@@ -185,15 +193,16 @@ export async function updateBusinessType(slug: string, change: { icon?: string; 
  * products already tagged with it keep saving; untag them if it's gone for good.
  */
 export async function deleteSolution(slug: string): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const current = parseCustomSolutions(await readSetting("catalog.solutions"));
   const line = current.find((s) => s.slug === slug);
   if (!line) return "ลบได้เฉพาะสายสินค้าที่เพิ่มเอง";
   await writeSetting(
+    admin,
     "catalog.solutions",
     current.filter((s) => s.slug !== slug).map(({ slug, category, machine, group, published }) => ({ slug, category, machine, group, published })),
   );
-  await prisma.pageContent.deleteMany({
+  const removedText = await prisma.pageContent.deleteMany({
     where: {
       OR: [
         { namespace: "solutions", key: { startsWith: `${line.key}.` } },
@@ -202,19 +211,28 @@ export async function deleteSolution(slug: string): Promise<string> {
       ],
     },
   });
-  await prisma.siteSetting.deleteMany({ where: { key: `layout.solution:${slug}` } });
+  const layoutKey = `layout.solution:${slug}`;
+  const layoutBefore = (await readSetting(layoutKey)) ?? null;
+  await prisma.siteSetting.deleteMany({ where: { key: layoutKey } });
+  await auditKeyed(admin, "SiteSetting", layoutKey, layoutBefore, null);
+  await auditNote(admin, "SiteSetting", "catalog.solutions", "delete", `ลบสายสินค้า ${slug} และข้อความ ${removedText.count} รายการ`);
   return done();
 }
 
 export async function deleteBusinessType(slug: string): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const current = parseCustomBusinessTypes(await readSetting("catalog.businessTypes"));
   if (!current.some((b) => b.slug === slug)) return "ลบได้เฉพาะประเภทธุรกิจที่เพิ่มเอง";
   await writeSetting(
+    admin,
     "catalog.businessTypes",
     current.filter((b) => b.slug !== slug).map(({ slug, icon, published }) => ({ slug, icon, published })),
   );
-  await prisma.pageContent.deleteMany({ where: { namespace: "industries", key: { startsWith: `${slug}.` } } });
-  await prisma.siteSetting.deleteMany({ where: { key: `layout.industry:${slug}` } });
+  const removedText = await prisma.pageContent.deleteMany({ where: { namespace: "industries", key: { startsWith: `.` } } });
+  const layoutKey = `layout.industry:${slug}`;
+  const layoutBefore = (await readSetting(layoutKey)) ?? null;
+  await prisma.siteSetting.deleteMany({ where: { key: layoutKey } });
+  await auditKeyed(admin, "SiteSetting", layoutKey, layoutBefore, null);
+  await auditNote(admin, "SiteSetting", "catalog.businessTypes", "delete", `ลบประเภทธุรกิจ ${slug} และข้อความ ${removedText.count} รายการ`);
   return done();
 }

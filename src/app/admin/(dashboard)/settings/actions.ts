@@ -5,6 +5,7 @@ import { emojiFormError } from "@/lib/emoji";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
+import { auditKeyed, auditSettings, readSettingValues } from "@/lib/auditLog";
 import { STAT_MAX_LENGTH, isGoogleMapsEmbedUrl, isShowableStat } from "@/lib/siteDisplay";
 import { saveUploadedHeroBackground } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
@@ -82,7 +83,7 @@ function read(formData: FormData, key: string) {
 }
 
 export async function updateSiteSettings(_prevState: string | null, formData: FormData) {
-  await requireOwner();
+  const admin = await requireOwner();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   // Validate everything first so a bad ID never leaves settings half-saved.
@@ -146,7 +147,9 @@ export async function updateSiteSettings(_prevState: string | null, formData: Fo
 
   if (errors.length) return errors.join("\n");
 
+  const before = await readSettingValues(Object.keys(values));
   for (const [key, value] of Object.entries(values)) await save(key, value);
+  await auditSettings(admin, before, values);
 
   let heroVideoUrl: string | null;
   try {
@@ -164,6 +167,7 @@ export async function updateSiteSettings(_prevState: string | null, formData: Fo
       select: { value: true },
     });
     await save("heroVideoUrl", heroVideoUrl);
+    await auditKeyed(admin, "SiteSetting", "heroVideoUrl", previous?.value ?? null, heroVideoUrl);
     await trashReplacedFiles([previous?.value]);
   }
 

@@ -8,6 +8,7 @@ import { SESSION_MAX_AGE_SECONDS, setSessionCookie } from "@/lib/adminAuth";
 import { clearAttempts, isRateLimited, recordAttempt } from "@/lib/rateLimit";
 import { ADMIN_HINT_COOKIE } from "@/lib/editMode";
 import { clientIp } from "@/lib/clientIp";
+import { auditLogin } from "@/lib/auditLog";
 
 /**
  * Limit key for failed logins. Without a reverse proxy there is no client IP
@@ -53,5 +54,6 @@ export async function loginAction(_prevState: string | null, formData: FormData)
     maxAge: SESSION_MAX_AGE_SECONDS,
   });
 
+  await auditLogin({ userId: user.id, email: user.email, name: user.name });
   redirect("/admin");
 }

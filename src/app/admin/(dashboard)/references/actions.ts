@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { saveUploadedImage } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
@@ -46,7 +47,7 @@ async function readReferenceImageFields(
 }
 
 export async function createReference(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
@@ -89,6 +90,7 @@ export async function createReference(_prevState: string | null, formData: FormD
   }
 
   revalidateReferencePaths(slug);
+  await auditEntity(admin, "ReferenceCase", null, await loadSnapshot("ReferenceCase", referenceCase.id));
   redirect("/admin/references");
 }
 
@@ -97,7 +99,8 @@ export async function updateReference(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("ReferenceCase", caseId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
@@ -151,12 +154,15 @@ export async function updateReference(
   ]);
 
   revalidateReferencePaths(slug);
+  await auditEntity(admin, "ReferenceCase", before, await loadSnapshot("ReferenceCase", caseId));
   redirect("/admin/references");
 }
 
 export async function deleteReference(caseId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("ReferenceCase", caseId);
   const deleted = await prisma.referenceCase.delete({ where: { id: caseId } });
+  await auditEntity(admin, "ReferenceCase", before, null);
   await trashReplacedFiles([deleted.imageUrl, deleted.logoUrl]);
   revalidateReferencePaths();
   redirect("/admin/references");

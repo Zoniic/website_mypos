@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { saveUploadedImage, saveUploadedPdf } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
@@ -57,7 +58,7 @@ function revalidateKb(categorySlug?: string, articleSlug?: string) {
 }
 
 export async function createKbArticle(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readArticleFields(formData);
@@ -94,6 +95,7 @@ export async function createKbArticle(_prevState: string | null, formData: FormD
   }
 
   revalidateKb();
+  await auditEntity(admin, "KbArticle", null, await loadSnapshot("KbArticle", article.id));
   redirect("/admin/kb-articles");
 }
 
@@ -102,7 +104,8 @@ export async function updateKbArticle(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("KbArticle", articleId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readArticleFields(formData);
@@ -152,12 +155,15 @@ export async function updateKbArticle(
   ]);
 
   revalidateKb();
+  await auditEntity(admin, "KbArticle", before, await loadSnapshot("KbArticle", articleId));
   redirect("/admin/kb-articles");
 }
 
 export async function deleteKbArticle(articleId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("KbArticle", articleId);
   const deleted = await prisma.kbArticle.delete({ where: { id: articleId } });
+  await auditEntity(admin, "KbArticle", before, null);
   await trashReplacedFiles([deleted.coverImageUrl, deleted.pdfUrl]);
   revalidateKb();
   redirect("/admin/kb-articles");

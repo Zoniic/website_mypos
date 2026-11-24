@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { saveUploadedImage } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
@@ -34,7 +35,7 @@ function revalidateBlogPaths(slug?: string) {
 }
 
 export async function createBlogPost(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readPostFields(formData);
@@ -74,11 +75,13 @@ export async function createBlogPost(_prevState: string | null, formData: FormDa
   }
 
   revalidateBlogPaths();
+  await auditEntity(admin, "BlogPost", null, await loadSnapshot("BlogPost", post.id));
   redirect("/admin/blog");
 }
 
 export async function updateBlogPost(postId: number, _prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("BlogPost", postId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readPostFields(formData);
@@ -126,12 +129,15 @@ export async function updateBlogPost(postId: number, _prevState: string | null, 
   if (existing.coverImageUrl !== coverImageUrl) await trashReplacedFiles([existing.coverImageUrl]);
 
   revalidateBlogPaths(fields.slug);
+  await auditEntity(admin, "BlogPost", before, await loadSnapshot("BlogPost", postId));
   redirect("/admin/blog");
 }
 
 export async function deleteBlogPost(postId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("BlogPost", postId);
   const deleted = await prisma.blogPost.delete({ where: { id: postId } });
+  await auditEntity(admin, "BlogPost", before, null);
   await trashReplacedFiles([deleted.coverImageUrl]);
   revalidateBlogPaths();
   redirect("/admin/blog");

@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { saveUploadedImage } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
@@ -47,7 +48,7 @@ function readCategories(formData: FormData): string[] {
 }
 
 export async function createAccessory(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
@@ -93,6 +94,7 @@ export async function createAccessory(_prevState: string | null, formData: FormD
   }
 
   revalidateAccessoryPaths();
+  await auditEntity(admin, "Accessory", null, await loadSnapshot("Accessory", accessory.id));
   redirect("/admin/accessories");
 }
 
@@ -101,7 +103,8 @@ export async function updateAccessory(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("Accessory", accessoryId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const slug = String(formData.get("slug") ?? "").trim();
@@ -160,12 +163,15 @@ export async function updateAccessory(
   if (existing.imageUrl !== imageUrl) await trashReplacedFiles([existing.imageUrl]);
 
   revalidateAccessoryPaths();
+  await auditEntity(admin, "Accessory", before, await loadSnapshot("Accessory", accessoryId));
   redirect("/admin/accessories");
 }
 
 export async function deleteAccessory(accessoryId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("Accessory", accessoryId);
   const deleted = await prisma.accessory.delete({ where: { id: accessoryId } });
+  await auditEntity(admin, "Accessory", before, null);
   await trashReplacedFiles([deleted.imageUrl]);
   revalidateAccessoryPaths();
   redirect("/admin/accessories");

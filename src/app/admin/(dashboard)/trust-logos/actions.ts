@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { saveUploadedImage } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
 
@@ -14,7 +15,7 @@ function revalidateHome() {
 }
 
 export async function createTrustLogo(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const name = String(formData.get("name") ?? "").trim();
@@ -32,9 +33,10 @@ export async function createTrustLogo(_prevState: string | null, formData: FormD
   }
 
   const count = await prisma.trustLogo.count();
-  await prisma.trustLogo.create({ data: { name, imageUrl, sortOrder: count } });
+  const created = await prisma.trustLogo.create({ data: { name, imageUrl, sortOrder: count } });
 
   revalidateHome();
+  await auditEntity(admin, "TrustLogo", null, await loadSnapshot("TrustLogo", created.id));
   redirect("/admin/trust-logos");
 }
 
@@ -43,7 +45,8 @@ export async function updateTrustLogo(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("TrustLogo", logoId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const name = String(formData.get("name") ?? "").trim();
@@ -69,12 +72,15 @@ export async function updateTrustLogo(
   if (existing.imageUrl !== imageUrl) await trashReplacedFiles([existing.imageUrl]);
 
   revalidateHome();
+  await auditEntity(admin, "TrustLogo", before, await loadSnapshot("TrustLogo", logoId));
   redirect("/admin/trust-logos");
 }
 
 export async function deleteTrustLogo(logoId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("TrustLogo", logoId);
   const deleted = await prisma.trustLogo.delete({ where: { id: logoId } });
+  await auditEntity(admin, "TrustLogo", before, null);
   await trashReplacedFiles([deleted.imageUrl]);
   revalidateHome();
   redirect("/admin/trust-logos");

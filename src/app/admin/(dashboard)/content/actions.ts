@@ -5,6 +5,7 @@ import { emojiFormError } from "@/lib/emoji";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
+import { auditContent, loadContentRows } from "@/lib/auditLog";
 
 const locales = ["th", "en", "zh"] as const;
 
@@ -13,7 +14,7 @@ export async function updateContent(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const updates: { key: string; locale: string; value: string }[] = [];
@@ -42,6 +43,7 @@ export async function updateContent(
     }
   }
 
+  const existing = await loadContentRows(namespace);
   for (const update of updates) {
     await prisma.pageContent.upsert({
       where: { namespace_key_locale: { namespace, key: update.key, locale: update.locale } },
@@ -50,6 +52,7 @@ export async function updateContent(
     });
   }
 
+  await auditContent(admin, namespace, existing, updates);
   revalidatePath("/[locale]", "layout");
   return "saved";
 }

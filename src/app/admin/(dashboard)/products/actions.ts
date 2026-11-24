@@ -9,6 +9,7 @@ import { prisma } from "@/lib/prisma";
 import { saveUploadedImage } from "@/lib/uploads";
 import { splitUrlList, trashReplacedFiles } from "@/lib/storageCleanup";
 import { slugFormError } from "@/lib/slug";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 
 const locales = ["th", "en", "zh"] as const;
 const GALLERY_SLOTS = 3;
@@ -97,7 +98,7 @@ function revalidateProductPaths(slug: string) {
 }
 
 export async function createProduct(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readProductFields(formData);
@@ -144,6 +145,7 @@ export async function createProduct(_prevState: string | null, formData: FormDat
     });
   }
 
+  await auditEntity(admin, "Product", null, await loadSnapshot("Product", product.id));
   revalidateProductPaths(fields.slug);
   redirect("/admin/products");
 }
@@ -153,7 +155,7 @@ export async function updateProduct(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const fields = readProductFields(formData);
@@ -164,6 +166,7 @@ export async function updateProduct(
 
   const existing = await prisma.product.findUnique({ where: { id: productId } });
   if (!existing) return "Product not found.";
+  const before = await loadSnapshot("Product", productId);
 
   let images: { imageUrl: string | null; galleryUrls: string };
   try {
@@ -217,14 +220,17 @@ export async function updateProduct(
   await trashReplacedFiles(
     [existing.imageUrl, ...splitUrlList(existing.galleryUrls)].filter((url) => !url || !keptUrls.has(url))
   );
+  await auditEntity(admin, "Product", before, await loadSnapshot("Product", productId));
 
   revalidateProductPaths(fields.slug);
   redirect("/admin/products");
 }
 
 export async function deleteProduct(productId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("Product", productId);
   const product = await prisma.product.delete({ where: { id: productId } });
+  await auditEntity(admin, "Product", before, null);
   await trashReplacedFiles([
     product.imageUrl,
     ...splitUrlList(product.galleryUrls),

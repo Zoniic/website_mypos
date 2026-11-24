@@ -6,6 +6,7 @@ import { emojiFormError } from "@/lib/emoji";
 import { revalidatePath } from "@/lib/siteCache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 import { saveUploadedImage } from "@/lib/uploads";
 import { trashReplacedFiles } from "@/lib/storageCleanup";
 
@@ -14,7 +15,7 @@ function revalidateAbout() {
 }
 
 export async function createOfficialPartner(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const name = String(formData.get("name") ?? "").trim();
@@ -33,9 +34,10 @@ export async function createOfficialPartner(_prevState: string | null, formData:
   }
 
   const count = await prisma.officialPartner.count();
-  await prisma.officialPartner.create({ data: { name, imageUrl, websiteUrl, sortOrder: count } });
+  const created = await prisma.officialPartner.create({ data: { name, imageUrl, websiteUrl, sortOrder: count } });
 
   revalidateAbout();
+  await auditEntity(admin, "OfficialPartner", null, await loadSnapshot("OfficialPartner", created.id));
   redirect("/admin/official-partners");
 }
 
@@ -44,7 +46,8 @@ export async function updateOfficialPartner(
   _prevState: string | null,
   formData: FormData
 ) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("OfficialPartner", partnerId);
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   const name = String(formData.get("name") ?? "").trim();
@@ -74,12 +77,15 @@ export async function updateOfficialPartner(
   if (existing.imageUrl !== imageUrl) await trashReplacedFiles([existing.imageUrl]);
 
   revalidateAbout();
+  await auditEntity(admin, "OfficialPartner", before, await loadSnapshot("OfficialPartner", partnerId));
   redirect("/admin/official-partners");
 }
 
 export async function deleteOfficialPartner(partnerId: number) {
-  await requireAdmin();
+  const admin = await requireAdmin();
+  const before = await loadSnapshot("OfficialPartner", partnerId);
   const deleted = await prisma.officialPartner.delete({ where: { id: partnerId } });
+  await auditEntity(admin, "OfficialPartner", before, null);
   await trashReplacedFiles([deleted.imageUrl]);
   revalidateAbout();
   redirect("/admin/official-partners");

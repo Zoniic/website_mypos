@@ -3,6 +3,8 @@
 import { requireAdmin } from "@/lib/adminAuth";
 import { revalidatePath } from "@/lib/siteCache";
 import { prisma } from "@/lib/prisma";
+import { auditKeyed, readSettingValues } from "@/lib/auditLog";
+import type { AdminContextUser } from "@/lib/adminAuth";
 import { getCatalog } from "@/lib/catalog";
 import {
   CUSTOM_PREFIX,
@@ -16,9 +18,11 @@ import {
   type MenuKey,
 } from "@/lib/siteStructure";
 
-async function store(key: string, value: unknown) {
+async function store(admin: AdminContextUser, key: string, value: unknown) {
   const json = JSON.stringify(value);
+  const previous = (await readSettingValues([key]))[key] ?? null;
   await prisma.siteSetting.upsert({ where: { key }, create: { key, value: json }, update: { value: json } });
+  await auditKeyed(admin, "SiteSetting", key, previous, json);
   revalidatePath("/admin/navigation");
 }
 
@@ -31,7 +35,7 @@ function parse(json: string): unknown {
 }
 
 export async function saveMenu(menu: string, json: string): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   if (!(MENU_KEYS as readonly string[]).includes(menu)) return "Unknown menu.";
   const data = parse(json);
   if (!Array.isArray(data)) return "Menu data is invalid.";
@@ -50,30 +54,32 @@ export async function saveMenu(menu: string, json: string): Promise<string> {
   }
   if (errors.length) return [...new Set(errors)].join("\n");
 
-  await store(menu, resolveMenu(menu as MenuKey, data, await getCatalog()));
+  await store(admin, menu, resolveMenu(menu as MenuKey, data, await getCatalog()));
   return "saved";
 }
 
 export async function saveIndustrySolutions(json: string): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const data = parse(json);
   if (typeof data !== "object" || data === null) return "Data is invalid.";
-  await store("map.industrySolutions", resolveIndustrySolutions(data, await getCatalog()));
+  await store(admin, "map.industrySolutions", resolveIndustrySolutions(data, await getCatalog()));
   return "saved";
 }
 
 export async function saveOnlineSolutions(json: string): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   const data = parse(json);
   if (!Array.isArray(data)) return "Data is invalid.";
-  await store("map.onlineSolutions", resolveOnlineSolutions(data, await getCatalog()));
+  await store(admin, "map.onlineSolutions", resolveOnlineSolutions(data, await getCatalog()));
   return "saved";
 }
 
 export async function resetStructure(key: string): Promise<string> {
-  await requireAdmin();
+  const admin = await requireAdmin();
   if (!(STRUCTURE_KEYS as readonly string[]).includes(key)) return "Unknown setting.";
+  const previous = (await readSettingValues([key]))[key] ?? null;
   await prisma.siteSetting.deleteMany({ where: { key } });
+  await auditKeyed(admin, "SiteSetting", key, previous, null);
   revalidatePath("/admin/navigation");
   return "saved";
 }

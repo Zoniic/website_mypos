@@ -1,5 +1,6 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
+import { auditEntity, loadSnapshot } from "@/lib/auditLog";
 
 /**
  * Shared query layer for the admin lead lists (contact messages, quote
@@ -264,7 +265,12 @@ export function parseLeadDetails(formData: FormData): { ok: true; value: ParsedD
  * Saves note + assignee for one lead. The calling server action must have
  * called requireAdmin() already. Checks the id and that the assignee exists.
  */
-export async function saveLeadDetails(kind: LeadKind, id: number, formData: FormData): Promise<LeadDetailsState> {
+export async function saveLeadDetails(
+  kind: LeadKind,
+  id: number,
+  formData: FormData,
+  actor?: { userId: number; email: string; name: string },
+): Promise<LeadDetailsState> {
   if (!Number.isInteger(id) || id <= 0) return { ok: false, error: "ไม่พบรายการ" };
   const parsed = parseLeadDetails(formData);
   if (!parsed.ok) return { ok: false, error: parsed.error };
@@ -278,6 +284,8 @@ export async function saveLeadDetails(kind: LeadKind, id: number, formData: Form
     ...(assigneeId !== undefined ? { assigneeId } : {}),
   };
   if (Object.keys(data).length === 0) return { ok: true };
+  const type = kind === "contact" ? "ContactMessage" : kind === "quote" ? "QuoteRequest" : "WarrantyClaim";
+  const before = actor ? await loadSnapshot(type, id) : null;
   const result =
     kind === "contact"
       ? await prisma.contactMessage.updateMany({ where: { id }, data })
@@ -285,5 +293,6 @@ export async function saveLeadDetails(kind: LeadKind, id: number, formData: Form
         ? await prisma.quoteRequest.updateMany({ where: { id }, data })
         : await prisma.warrantyClaim.updateMany({ where: { id }, data });
   if (result.count === 0) return { ok: false, error: "ไม่พบรายการ" };
+  if (actor && before) await auditEntity(actor, type, before, await loadSnapshot(type, id));
   return { ok: true };
 }
