@@ -12,9 +12,53 @@ model AdminUser {
   createdAt               DateTime         @default(now())
   updatedAt               DateTime         @updatedAt
   lastLoginAt             DateTime?
+  /// "owner" or "editor". Existing admins become owners through the column default.
+  role                    String           @default("owner")
+  /// AES-256-GCM blob (src/lib/secretBox.ts). Null until two-step login is set up.
+  totpSecretEnc           String?
+  /// Set when the admin confirmed the first code. Two-step login is on when this is set.
+  totpEnabledAt           DateTime?
+  /// Last accepted 30-second step; blocks reuse of a code.
+  totpLastStep            Int?
+  backupCodes             AdminBackupCode[]
   assignedContactMessages ContactMessage[]
   assignedQuoteRequests   QuoteRequest[]
   assignedWarrantyClaims  WarrantyClaim[]
+}
+
+/// Single-use recovery codes for two-step login. Only a keyed hash is stored.
+model AdminBackupCode {
+  id          Int       @id @default(autoincrement())
+  adminUserId Int
+  adminUser   AdminUser @relation(fields: [adminUserId], references: [id], onDelete: Cascade)
+  codeHash    String
+  usedAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([adminUserId, codeHash])
+}
+
+/// Change history of admin edits. Kept 1 year (src/lib/audit.ts).
+/// actorId has no foreign key on purpose: deleting a user keeps the history.
+model AuditLog {
+  id             Int      @id @default(autoincrement())
+  createdAt      DateTime @default(now())
+  actorId        Int?
+  actorEmail     String
+  actorName      String
+  action         String
+  entityType     String
+  entityId       String
+  entityLabel    String
+  source         String   @default("admin")
+  detail         String?
+  restoredFromId Int?
+  changes        Json
+
+  @@index([createdAt])
+  @@index([entityType, entityId, createdAt])
+  @@index([actorId, createdAt])
+  @@index([action, createdAt])
 }
 
 datasource db {
