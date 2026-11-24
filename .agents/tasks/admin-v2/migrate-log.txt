@@ -1,0 +1,71 @@
+migrate started 2026-11-24T13:19:37
+== check before exit=0 ==
+STATE adminUser new columns=0/4 [] new tables=0/2 [] admins=8
+== backup AdminUser exit=0 ==
+STATE adminUser new columns=0/4 [] new tables=0/2 [] admins=8
+BACKUP admin-v2-before-2026-11-24T06-19-41-181Z.json rows=8
+== apply exit=0 ==
+STATE adminUser new columns=0/4 [] new tables=0/2 [] admins=8
+9 statements, all additive
+OK ALTER TABLE "AdminUser" ADD COLUMN     "role" TEXT NOT NULL DEFAULT 'owner',
+OK CREATE TABLE "AdminBackupCode" (
+OK CREATE TABLE "AuditLog" (
+OK CREATE UNIQUE INDEX "AdminBackupCode_adminUserId_codeHash_key" ON "AdminBackupCode"("admin
+OK CREATE INDEX "AuditLog_createdAt_idx" ON "AuditLog"("createdAt")
+OK CREATE INDEX "AuditLog_entityType_entityId_createdAt_idx" ON "AuditLog"("entityType", "ent
+OK CREATE INDEX "AuditLog_actorId_createdAt_idx" ON "AuditLog"("actorId", "createdAt")
+OK CREATE INDEX "AuditLog_action_createdAt_idx" ON "AuditLog"("action", "createdAt")
+OK ALTER TABLE "AdminBackupCode" ADD CONSTRAINT "AdminBackupCode_adminUserId_fkey" FOREIGN KE
+COMMITTED
+AFTER new columns=4/4 new tables=2/2 admins=8
+== check after exit=0 ==
+STATE adminUser new columns=4/4 [role,totpEnabledAt,totpLastStep,totpSecretEnc] new tables=2/2 [AdminBackupCode,AuditLog] admins=8
+ROLES owner=8
+== full backup with new schema exit=0 ==
+Exported rows:
+  AdminUser                    8
+  Product                      12
+  Category                     8
+  BusinessType                 11
+  ProductTranslation           36
+  Accessory                    9
+  AccessoryTranslation         27
+  ReferenceCase                9
+  ReferenceCaseTranslation     27
+  PageContent                  2187
+  SiteSetting                  14
+  SiteImage                    14
+  TrustLogo                    19
+  OfficialPartner              2
+  KbCategory                   1
+  KbCategoryTranslation        3
+  KbArticle                    1
+  KbArticleTranslation         3
+  BlogPost                     11
+  BlogPostTranslation          33
+  JobPosting                   0
+  JobPostingTranslation        0
+  NewsletterSubscriber         1
+  ContactMessage               1
+  QuoteRequest                 1
+  QuoteRequestItem             2
+  WarrantyClaim                0
+  Order                        0
+  OrderItem                    0
+  total                        2440
+
+Written: D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\full-2026-11-24T06-19-46-816Z.json
+This is a data export, not a host backup. Check it with --verify.
+full backup file: full-2026-11-24T06-19-46-816Z.json
+== verify exit=0 ==
+  same  SiteSetting                  file=14 live=14
+  same  TrustLogo                    file=19 live=19
+  same  WarrantyClaim                file=0 live=0
+All counts match.
+== lead queries on real data exit=0 ==
+contact OK total=1 rows=1 firstHasNoteField=true
+quotes OK total=1 rows=1 items=2
+warranty OK total=0 rows=0
+contact filtered OK total=0
+assignee options OK count=8
+migrate finished 2026-11-24T13:20:25

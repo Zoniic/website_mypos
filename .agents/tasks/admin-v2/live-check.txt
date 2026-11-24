@@ -1,0 +1,11 @@
+PASS | /api/health | status=200 
+PASS | /th | status=200 
+PASS | /en | status=200 
+PASS | /zh | status=200 
+PASS | /th/products | status=200 
+PASS | /th/contact | status=200 
+PASS | /admin/login | status=200 
+PASS | /admin | status=307 /admin/login
+PASS | /admin/history | status=307 /admin/login
+PASS | /admin/account | status=307 /admin/login
+failures=0

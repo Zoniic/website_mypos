@@ -1,13 +1,13 @@
-Recheck started 2026-11-23T15:23:23
+Recheck started 2026-11-24T13:23:40
 PASS | bug1 KB article th | status=200 h1=[เปลี่ยนกระดาษ K1]
 PASS | bug1 KB article en | status=200 h1=[Change paper K1]
 PASS | bug1 KB article zh | status=200 h1=[K1 更换打印纸]
 PASS | bug1 old KB URL with spaces | status=308 location=/th/knowledge-base/article/change-paper-k1
 PASS | bug2 old mixed-case product URL | status=308 location=/th/products/mypos-k1
 PASS | bug2 lowercase product URL | status=200
-PASS | sitemap readable | status=200 urls=201
+PASS | sitemap readable | status=200 urls=204
 PASS | bug2 sitemap URLs URL-safe | unsafe=0 
-PASS | bug4 every sitemap URL returns 200 | checked=201 not200=0 
+PASS | bug4 every sitemap URL returns 200 | checked=204 not200=0 
 PASS | bug3 contact map th | status=200 embedIframe=False openInMapsLink=True nonEmbedIframe=False
 PASS | bug3 contact map en | status=200 embedIframe=False openInMapsLink=True nonEmbedIframe=False
 PASS | bug3 contact map zh | status=200 embedIframe=False openInMapsLink=True nonEmbedIframe=False
@@ -39,4 +39,4 @@ PASS | LINE link /th | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
 PASS | LINE link /en/products | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
 PASS | LINE link /zh/contact | lineHrefs=https://line.me/R/ti/p/@mypos emptyHref=0
 PASS | content zh KB article title | h1=[K1 更换打印纸]
-Recheck finished 2026-11-23T15:23:56, failures=0
+Recheck finished 2026-11-24T13:24:47, failures=0
