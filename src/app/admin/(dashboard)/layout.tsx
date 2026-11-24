@@ -1,4 +1,6 @@
-import { getSessionUser } from "@/lib/adminAuth";
+import { getAdminContext } from "@/lib/adminAuth";
+import { filterNavForRole } from "@/lib/permissions";
+import { ADMIN_NAV } from "./adminNav";
 import { hasNotificationChannel } from "@/lib/notify";
 import { prisma } from "@/lib/prisma";
 import { AdminShell } from "./AdminShell";
@@ -7,8 +9,8 @@ import { AdminShell } from "./AdminShell";
 export const dynamic = "force-dynamic";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const [session, orders, quotes, messages, warranty] = await Promise.all([
-    getSessionUser(),
+  const [{ user: session, role }, orders, quotes, messages, warranty] = await Promise.all([
+    getAdminContext(),
     prisma.order.count({ where: { status: "pending_payment" } }),
     prisma.quoteRequest.count({ where: { status: "new" } }),
     prisma.contactMessage.count({ where: { status: "new" } }),
@@ -16,7 +18,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
   ]);
 
   return (
-    <AdminShell badges={{ orders, quotes, messages, warranty }} userName={session?.name} userEmail={session?.email} noAlertChannel={!hasNotificationChannel()}>
+    <AdminShell nav={filterNavForRole(role, ADMIN_NAV)} badges={{ orders, quotes, messages, warranty }} userName={session?.name} userEmail={session?.email} noAlertChannel={!hasNotificationChannel()}>
       {children}
     </AdminShell>
   );

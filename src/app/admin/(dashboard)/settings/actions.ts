@@ -1,6 +1,6 @@
 "use server";
 
-import { requireAdmin } from "@/lib/adminAuth";
+import { requireOwner } from "@/lib/adminAuth";
 import { emojiFormError } from "@/lib/emoji";
 // Purges the public site cache as well as the given path (see lib/siteCache).
 import { revalidatePath } from "@/lib/siteCache";
@@ -82,7 +82,7 @@ function read(formData: FormData, key: string) {
 }
 
 export async function updateSiteSettings(_prevState: string | null, formData: FormData) {
-  await requireAdmin();
+  await requireOwner();
   const emojiError = emojiFormError(formData);
   if (emojiError) return emojiError;
   // Validate everything first so a bad ID never leaves settings half-saved.

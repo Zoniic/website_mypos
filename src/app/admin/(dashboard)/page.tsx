@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
-import { getSessionUser } from "@/lib/adminAuth";
+import { getAdminContext } from "@/lib/adminAuth";
+import { filterNavForRole } from "@/lib/permissions";
 import { ADMIN_NAV } from "./adminNav";
 import { AdminIcon } from "./AdminShell";
 
@@ -10,8 +11,8 @@ const ghostButton =
   "rounded-button border border-border-strong bg-bg px-4 py-2 text-sm font-semibold text-text-1 hover:bg-surface-2";
 
 export default async function AdminDashboardPage() {
-  const [session, orders, quotes, messages, warranty, products, posts] = await Promise.all([
-    getSessionUser(),
+  const [{ user: session, role }, orders, quotes, messages, warranty, products, posts] = await Promise.all([
+    getAdminContext(),
     prisma.order.count({ where: { status: "pending_payment" } }),
     prisma.quoteRequest.count({ where: { status: "new" } }),
     prisma.contactMessage.count({ where: { status: "new" } }),
@@ -30,7 +31,7 @@ export default async function AdminDashboardPage() {
 
   return (
     <div>
-      <p className="text-sm text-text-2">{session ? `สวัสดี ${session.name}` : "สวัสดี"}</p>
+      <p className="text-sm text-text-2">{`สวัสดี ${session.name}`}</p>
       <h1 className="mt-1 text-2xl font-bold">หน้าหลัก</h1>
       <p className="mt-1 text-sm text-text-2">แก้ไขอะไรในหลังบ้าน เว็บจะอัปเดตทันที ไม่ต้อง build ใหม่</p>
 
@@ -75,7 +76,7 @@ export default async function AdminDashboardPage() {
       </section>
 
       <section className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-        {ADMIN_NAV.filter((group) => group.title !== "ภาพรวม").map((group) => (
+        {filterNavForRole(role, ADMIN_NAV).filter((group) => group.title !== "ภาพรวม").map((group) => (
           <div key={group.title} className="rounded-xl border border-border bg-bg p-4">
             <h2 className="font-semibold">{group.title}</h2>
             <ul className="mt-2 divide-y divide-border">

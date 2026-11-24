@@ -1,8 +1,12 @@
+import { getAdminContext } from "@/lib/adminAuth";
 import { getSiteSettings } from "@/lib/siteSettings";
 import { AdminGuide } from "../AdminGuide";
+import { OwnerOnly } from "../OwnerOnly";
 import { SettingsForm } from "./SettingsForm";
 
 export default async function AdminSettingsPage() {
+  const { role } = await getAdminContext();
+  if (role !== "owner") return <OwnerOnly />;
   const settings = await getSiteSettings();
 
   return (

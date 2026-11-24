@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, BellOff, X } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { ADMIN_ICONS, ADMIN_NAV, findNavItem, type AdminNavItem, type BadgeKey } from "./adminNav";
+import { ADMIN_ICONS, findNavItem, type AdminNavGroup, type AdminNavItem, type BadgeKey } from "./adminNav";
 
 export function AdminIcon({ name, className = "" }: { name: keyof typeof ADMIN_ICONS; className?: string }) {
   const Icon = ADMIN_ICONS[name];
@@ -36,12 +36,12 @@ function NavLink({ item, active, count, onNavigate }: { item: AdminNavItem; acti
   );
 }
 
-function Nav({ badges, onNavigate }: { badges: Record<BadgeKey, number>; onNavigate?: () => void }) {
+function Nav({ nav, badges, onNavigate }: { nav: AdminNavGroup[]; badges: Record<BadgeKey, number>; onNavigate?: () => void }) {
   const pathname = usePathname();
   const current = findNavItem(pathname)?.item.href;
   return (
     <nav className="space-y-5" aria-label="เมนูหลังบ้าน">
-      {ADMIN_NAV.map((group) => (
+      {nav.map((group) => (
         <div key={group.title}>
           <p className="px-2.5 pb-1 text-xs font-semibold text-text-3">{group.title}</p>
           <ul className="space-y-0.5">
@@ -102,12 +102,15 @@ function Account({ name, email }: { name?: string; email?: string }) {
 
 export function AdminShell({
   children,
+  nav,
   badges,
   userName,
   userEmail,
   noAlertChannel = false,
 }: {
   children: React.ReactNode;
+  /** Sidebar groups, already filtered for the signed-in role. */
+  nav: AdminNavGroup[];
   badges: Record<BadgeKey, number>;
   userName?: string;
   userEmail?: string;
@@ -128,7 +131,7 @@ export function AdminShell({
           <span className="rounded bg-surface-2 px-1.5 py-0.5 text-[11px] font-semibold text-text-2">หลังบ้าน</span>
         </Link>
         <div className="flex-1 overflow-y-auto px-3 pb-4">
-          <Nav badges={badges} />
+          <Nav nav={nav} badges={badges} />
         </div>
         <div className="px-3 pb-4">
           <Account name={userName} email={userEmail} />
@@ -161,7 +164,7 @@ export function AdminShell({
               </button>
             </div>
             <div className="flex-1 overflow-y-auto px-3 pb-4">
-              <Nav badges={badges} onNavigate={() => setOpen(false)} />
+              <Nav nav={nav} badges={badges} onNavigate={() => setOpen(false)} />
             </div>
             <div className="px-3 pb-4">
               <Account name={userName} email={userEmail} />

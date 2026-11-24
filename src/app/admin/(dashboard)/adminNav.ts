@@ -43,6 +43,8 @@ export type AdminNavItem = {
   badge?: BadgeKey;
   /** Route handler (edit-on-site): plain link, never prefetched. */
   external?: boolean;
+  /** Owners only: hidden from editors in the sidebar and dashboard (and enforced on the server). */
+  ownerOnly?: boolean;
 };
 
 export type AdminNavGroup = { title: string; items: AdminNavItem[] };
@@ -128,8 +130,8 @@ export const ADMIN_NAV: AdminNavGroup[] = [
   {
     title: "ตั้งค่า",
     items: [
-      { href: "/admin/settings", label: "ตั้งค่าเว็บไซต์", hint: "ติดต่อ ชำระเงิน Pixel SEO", icon: "settings" },
-      { href: "/admin/admin-users", label: "ผู้ดูแลระบบ", hint: "บัญชีทีมงาน", icon: "key" },
+      { href: "/admin/settings", label: "ตั้งค่าเว็บไซต์", hint: "ติดต่อ ชำระเงิน Pixel SEO", icon: "settings", ownerOnly: true },
+      { href: "/admin/admin-users", label: "ผู้ดูแลระบบ", hint: "บัญชีทีมงานและบทบาท", icon: "key", ownerOnly: true },
     ],
   },
 ];
