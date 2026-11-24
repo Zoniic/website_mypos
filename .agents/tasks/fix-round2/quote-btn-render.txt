@@ -1,0 +1,28 @@
+PASS | th desktop 1440 items=0 text shown | text="ใบเสนอราคา" icon=true
+PASS | th desktop 1440 items=2 text shown | text="2 ใบเสนอราคา" icon=true
+PASS | th desktop 1440 items=2 count | aria-label="เปรียบเทียบ/ขอใบเสนอราคา (2)"
+PASS | th desktop 1100 items=0 icon only | text=""
+PASS | th desktop 1100 items=2 icon only | text="2"
+PASS | th desktop 1100 items=2 count | aria-label="เปรียบเทียบ/ขอใบเสนอราคา (2)"
+PASS | th mobile 390 items=0 mobile button | visible=0
+PASS | th mobile 390 items=2 mobile button | visible=1
+PASS | th mobile 390 items=2 count | aria-label="เปรียบเทียบ/ขอใบเสนอราคา (2)"
+PASS | en desktop 1440 items=0 text shown | text="Quote" icon=true
+PASS | en desktop 1440 items=2 text shown | text="2 Quote" icon=true
+PASS | en desktop 1440 items=2 count | aria-label="Compare / Get Quote (2)"
+PASS | en desktop 1100 items=0 icon only | text=""
+PASS | en desktop 1100 items=2 icon only | text="2"
+PASS | en desktop 1100 items=2 count | aria-label="Compare / Get Quote (2)"
+PASS | en mobile 390 items=0 mobile button | visible=0
+PASS | en mobile 390 items=2 mobile button | visible=1
+PASS | en mobile 390 items=2 count | aria-label="Compare / Get Quote (2)"
+PASS | zh desktop 1440 items=0 text shown | text="报价" icon=true
+PASS | zh desktop 1440 items=2 text shown | text="2 报价" icon=true
+PASS | zh desktop 1440 items=2 count | aria-label="对比/获取报价 (2)"
+PASS | zh desktop 1100 items=0 icon only | text=""
+PASS | zh desktop 1100 items=2 icon only | text="2"
+PASS | zh desktop 1100 items=2 count | aria-label="对比/获取报价 (2)"
+PASS | zh mobile 390 items=0 mobile button | visible=0
+PASS | zh mobile 390 items=2 mobile button | visible=1
+PASS | zh mobile 390 items=2 count | aria-label="对比/获取报价 (2)"
+failures=0

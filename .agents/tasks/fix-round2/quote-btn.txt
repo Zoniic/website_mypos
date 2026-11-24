@@ -1,0 +1,26 @@
+== dry run ==
+existing rows: none
+to insert: th, en, zh
+Dry run: nothing written. Re-run with --write.
+== write ==
+existing rows: none
+to insert: th, en, zh
+messages/th.json updated
+messages/en.json updated
+messages/zh.json updated
+backup: add-nav-compare-short-2026-11-24T07-05-37-334Z.json
+inserted 3 rows. The site shows them within 5 minutes (cache).
+== tsc ==
+tsc exit=0
+== lint ==
+lint exit=0
+== test ==
+ℹ tests 176
+ℹ pass 176
+ℹ fail 0
+test exit=0
+== build ==
+●  (SSG)      prerendered as static HTML (uses generateStaticParams)
+ƒ  (Dynamic)  server-rendered on demand
+
+build exit=0

@@ -38,7 +38,8 @@
       "vending": "ขายอัตโนมัติ 24 ชม.",
       "ticketing": "ระบบจำหน่ายตั๋วอัตโนมัติ",
       "backOffice": "ระบบหลังบ้าน"
-    }
+    },
+    "compareShort": "ใบเสนอราคา"
   },
   "search": {
     "metaTitle": "ค้นหา | MYPOS",

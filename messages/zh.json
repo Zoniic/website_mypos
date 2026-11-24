@@ -38,7 +38,8 @@
       "vending": "24 小时自动售卖",
       "ticketing": "自动售票系统",
       "backOffice": "后台系统"
-    }
+    },
+    "compareShort": "报价"
   },
   "search": {
     "metaTitle": "搜索 | MYPOS",

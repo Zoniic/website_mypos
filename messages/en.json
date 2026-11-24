@@ -38,7 +38,8 @@
       "vending": "24-hour vending",
       "ticketing": "Automated ticketing",
       "backOffice": "Back office"
-    }
+    },
+    "compareShort": "Quote"
   },
   "search": {
     "metaTitle": "Search | MYPOS",

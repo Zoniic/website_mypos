@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronDown, Menu, Search, X } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
@@ -55,6 +55,8 @@ function useDropdown() {
 // Lower-traffic content pages, grouped under one "Resources" menu instead of
 // each claiming a top-level nav slot.
 const trailingLinks = [{ key: "about", href: "/about" }] as const;
+
+const COMPARE_SHORT_FALLBACK: Record<string, string> = { th: "ใบเสนอราคา", en: "Quote", zh: "报价" };
 
 const navLinkClass =
   "relative rounded-sm py-2 text-sm font-medium text-text-2 outline-offset-4 hover:text-text-1 after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[image:var(--gradient-primary)] after:transition-transform after:duration-300 hover:after:scale-x-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400";
@@ -189,6 +191,10 @@ export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav
   const t = useTranslations("nav");
   const tCommon = useTranslations("common");
   const tIndustries = useTranslations("industries.common");
+  const locale = useLocale();
+  // Short visible label of the quote-list button. Copy lives in the DB (nav.compareShort);
+  // the fallback covers the time before prisma/add-nav-compare-short.ts has run.
+  const compareShort = t.has("compareShort") ? t("compareShort") : (COMPARE_SHORT_FALLBACK[locale] ?? COMPARE_SHORT_FALLBACK.th);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Menus come from the admin (Navigation); see lib/navView.ts.
@@ -263,7 +269,7 @@ export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav
           >
             <Search size={18} strokeWidth={1.75} aria-hidden="true" />
           </Link>
-          <CompareCartLink label={t("compare")} />
+          <CompareCartLink label={t("compare")} shortLabel={compareShort} />
           {shopOn && <ShopCartLink label={t("cart")} />}
           <LanguageSwitcher />
           <Button href="/contact?topic=demo" variant="primary" size="sm">
@@ -271,7 +277,10 @@ export function Header({ shopOn = false, nav, logoUrl }: { shopOn?: boolean; nav
           </Button>
         </div>
 
-        {shopOn && <ShopCartLink label={t("cart")} className="ml-auto mr-1 lg:hidden" />}
+        <div className="ml-auto mr-1 flex items-center gap-1 lg:hidden">
+          <CompareCartLink label={t("compare")} hideWhenEmpty className="p-2.5" />
+          {shopOn && <ShopCartLink label={t("cart")} />}
+        </div>
         <button
           type="button"
           className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-md p-2.5 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary-400 lg:hidden"
