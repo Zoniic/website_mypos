@@ -1,0 +1,74 @@
+migrate started 2026-11-24T16:03:33
+target host: aws-0-ap-southeast-1.pooler.supabase.com
+== check before
+STATE new columns=0/7 [] new table=0/1 accessories=9 translations=27 products=12
+== check before exit=0
+== backup accessories
+STATE new columns=0/7 [] new table=0/1 accessories=9 translations=27 products=12
+BACKUP accessory-x3-before-2026-11-24T09-03-37-393Z.json accessories=9 translations=27 categoryLinks=35
+== backup accessories exit=0
+== apply
+STATE new columns=0/7 [] new table=0/1 accessories=9 translations=27 products=12
+6 statements, all additive
+OK ALTER TABLE "Accessory" ADD COLUMN     "datasheetUrl" TEXT,
+OK ALTER TABLE "AccessoryTranslation" ADD COLUMN     "specs" TEXT NOT NULL DEFAULT ''
+OK CREATE TABLE "_AccessoryCompatibleProducts" (
+OK CREATE INDEX "_AccessoryCompatibleProducts_B_index" ON "_AccessoryCompatibleProducts"("B")
+OK ALTER TABLE "_AccessoryCompatibleProducts" ADD CONSTRAINT "_AccessoryCompatibleProducts_A_
+OK ALTER TABLE "_AccessoryCompatibleProducts" ADD CONSTRAINT "_AccessoryCompatibleProducts_B_
+COMMITTED
+AFTER new columns=7/7 new table=1/1 accessories=9 translations=27 products=12
+== apply exit=0
+== check after
+STATE new columns=7/7 [Accessory.datasheetUrl,Accessory.galleryUrls,Accessory.leadTimeDays,Accessory.priceFrom,Accessory.stockStatus,Accessory.videoUrl,AccessoryTranslation.specs] new table=1/1 accessories=9 translations=27 products=12
+== check after exit=0
+== copy keys dry run
+existing rows: 0
+to insert: 21 (th.compatibleTitle, th.relatedTitle, th.forProductTitle, th.askPrice, th.typeHeader, th.kindProduct, th.kindAccessory, en.compatibleTitle, en.relatedTitle, en.forProductTitle, en.askPrice, en.typeHeader, en.kindProduct, en.kindAccessory, zh.compatibleTitle, zh.relatedTitle, zh.forProductTitle, zh.askPrice, zh.typeHeader, zh.kindProduct, zh.kindAccessory)
+Dry run: nothing written. Re-run with --write.
+== copy keys dry run exit=0
+== copy keys write
+existing rows: 0
+to insert: 21 (th.compatibleTitle, th.relatedTitle, th.forProductTitle, th.askPrice, th.typeHeader, th.kindProduct, th.kindAccessory, en.compatibleTitle, en.relatedTitle, en.forProductTitle, en.askPrice, en.typeHeader, en.kindProduct, en.kindAccessory, zh.compatibleTitle, zh.relatedTitle, zh.forProductTitle, zh.askPrice, zh.typeHeader, zh.kindProduct, zh.kindAccessory)
+backup: add-accessory-detail-keys-2026-11-24T09-03-42-730Z.json
+inserted 21 rows. The site shows them within 5 minutes (cache).
+== copy keys write exit=0
+== full backup with new schema
+Exported rows:
+  AdminUser                    8
+  AdminBackupCode              0
+  AuditLog                     4
+  Product                      12
+  Category                     8
+  BusinessType                 11
+  ProductTranslation           36
+  Accessory                    9
+  AccessoryTranslation         27
+  ReferenceCase                9
+  ReferenceCaseTranslation     27
+  PageContent                  2211
+  SiteSetting                  14
+  SiteImage                    14
+  TrustLogo                    19
+  OfficialPartner              2
+  KbCategory                   1
+  KbCategoryTranslation        3
+  KbArticle                    1
+  KbArticleTranslation         3
+  BlogPost                     11
+  BlogPostTranslation          33
+  JobPosting                   0
+  JobPostingTranslation        0
+  NewsletterSubscriber         1
+  ContactMessage               1
+  QuoteRequest                 1
+  QuoteRequestItem             2
+  WarrantyClaim                0
+  Order                        0
+  OrderItem                    0
+  total                        2468
+
+Written: D:\Folk\Own_Dir\FMT\DEV\mypos website\prisma\backups\full-2026-11-24T09-03-43-314Z.json
+This is a data export, not a host backup. Check it with --verify.
+== full backup with new schema exit=0
+migrate finished 2026-11-24T16:03:50

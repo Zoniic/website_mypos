@@ -1,0 +1,23 @@
+PASS L1 list page: every card is a link  [9]
+PASS L2 + adds to the quote list
+PASS D-mypos-c300h detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╕¢α╕úα╕┤α╣ëα╕Öα╣Çα╕òα╕¡α╕úα╣î Xprnter C300H]
+PASS D-mypos-f-330k detail page 200 with a name  [200 α╕Ñα╕┤α╣ëα╕çα╕èα╕▒α╕üα╣Çα╕üα╣çα╕Üα╣Çα╕çα╕┤α╕Ö F-330K]
+PASS D-mypos-fm2200 detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╣üα╕¬α╕üα╕Ö FM2200]
+PASS D-mypos-label9210 detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╕₧α╕┤α╕íα╕₧α╣îα╕ëα╕Ñα╕▓α╕üα╕äα╕ºα╕▓α╕íα╕úα╣ëα╕¡α╕Ö LABEL9210]
+PASS D-mypos-acc03 detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╕èα╕▒α╣êα╕çα╕Öα╣ëα╕│α╕½α╕Öα╕▒α╕ü ACC03]
+PASS D-mypos-scale-acs detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╕èα╕▒α╣êα╕çα╕Öα╣ëα╕│α╕½α╕Öα╕▒α╕ü Scale ACS]
+PASS D-mypos-imo-printer detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╕¢α╕úα╕┤α╣ëα╕Öα╣Çα╕òα╕¡α╕úα╣î IMO Printer]
+PASS D-mypos-pager-20-pcs detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╣Çα╕úα╕╡α╕óα╕üα╕äα╕┤α╕º Pager 20 Pcs]
+PASS D-mypos-pager-30-pcs detail page 200 with a name  [200 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╣Çα╕úα╕╡α╕óα╕üα╕äα╕┤α╕º Pager 30 Pcs]
+PASS I-en en detail page 200  [200]
+PASS I-zh zh detail page 200  [200]
+PASS P1 product page still 200  [200]
+PASS C1 quote list shows type column and both kinds  [α╕¬α╕┤α╕Öα╕äα╣ëα╕▓ α╕¢α╕úα╕░α╣Çα╕áα╕ù α╕úα╕▓α╕äα╕▓α╣Çα╕úα╕┤α╣êα╕íα╕òα╣ëα╕Ö α╕êα╕│α╕Öα╕ºα╕Ö α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╣üα╕¬α╕üα╕Ö FM2200 α╕¡α╕╕α╕¢α╕üα╕úα╕ôα╣îα╣Çα╕¬α╕úα╕┤α╕í α╕¬α╕¡α╕Üα╕ûα╕▓α╕íα╕úα╕▓α╕äα╕▓ α╕Öα╕│α╕¡α╕¡α╕ü α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕çα╕¬α╕▒α╣êα╕çα╕¡α╕▓α╕½α╕▓α╕úα╕öα╣ëα╕ºα╕óα╕òα╕Öα╣Çα╕¡α╕ç Android K156 α╣Çα╕äα╕úα╕╖α╣êα╕¡α╕ç α╕┐21,000 α╕Öα╕│α╕¡α╕¡α╕ü]
+PASS C2 accessory without price shows α╕¬α╕¡α╕Üα╕ûα╕▓α╕íα╕úα╕▓α╕äα╕▓
+PASS R1 unknown accessory 404  [404]
+PASS R2 FM2200.php redirects to the accessory page  [308 /accessories/mypos-fm2200]
+PASS R3 sitemap lists accessory pages
+PASS H1 home page 200  [200]
+PASS Z1 no page errors  []
+DONE pass=21 fail=0
+exit=0
