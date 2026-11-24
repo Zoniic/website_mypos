@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import {
   recordAudit,
+  retentionCutoff,
   type AuditAction,
   type AuditActor,
   type AuditChange,
@@ -219,4 +220,15 @@ export async function auditLogin(user: ActingUser, detail?: string): Promise<boo
     detail: detail ?? null,
     changes: [],
   });
+}
+
+/** Number of history rows per Page Content key of a namespace, within the retention period. */
+export async function pageContentHistoryCounts(namespace: string): Promise<Record<string, number>> {
+  const prefix = `${namespace}.`;
+  const groups = await prisma.auditLog.groupBy({
+    by: ["entityId"],
+    where: { entityType: "PageContent", entityId: { startsWith: prefix }, createdAt: { gte: retentionCutoff() } },
+    _count: { _all: true },
+  });
+  return Object.fromEntries(groups.map((g) => [g.entityId.slice(prefix.length), g._count._all]));
 }

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { getAdminContext } from "@/lib/adminAuth";
+import { pageContentHistoryCounts } from "@/lib/auditLog";
 import { prisma } from "@/lib/prisma";
 import { ContentForm } from "../ContentForm";
 
@@ -9,6 +11,9 @@ export default async function EditContentNamespacePage({
   params: Promise<{ namespace: string }>;
 }) {
   const { namespace } = await params;
+  // History is owner-only: editors get no history button and no history query.
+  const { role } = await getAdminContext();
+  const historyCounts = role === "owner" ? await pageContentHistoryCounts(namespace) : undefined;
 
   const rows = await prisma.pageContent.findMany({
     where: { namespace },
@@ -31,7 +36,7 @@ export default async function EditContentNamespacePage({
         intact (only edit the text inside the quotes). Invalid JSON is rejected before saving.
       </p>
 
-      <ContentForm namespace={namespace} keys={keys} values={values} />
+      <ContentForm namespace={namespace} keys={keys} values={values} historyCounts={historyCounts} />
     </div>
   );
 }

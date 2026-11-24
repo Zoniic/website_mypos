@@ -8,6 +8,7 @@ import { getPreviewPath } from "./previewPaths";
 import { CharCounter, SeoHint } from "../SeoHint";
 import { ContentGuidePanel, getContentGuide } from "./ContentGuidePanel";
 import { ListField, parseList } from "./ListField";
+import { FieldHistory } from "./FieldHistory";
 
 const PREVIEW_LOCALES = ["th", "en", "zh"] as const;
 
@@ -36,10 +37,13 @@ export function ContentForm({
   namespace,
   keys,
   values,
+  historyCounts,
 }: {
   namespace: string;
   keys: string[];
   values: Record<string, string>;
+  /** Owners only: number of history rows per key. Undefined hides the history button. */
+  historyCounts?: Record<string, number>;
 }) {
   const boundAction = updateContent.bind(null, namespace);
   const [status, formAction, isPending] = useActionState(boundAction, null);
@@ -49,6 +53,20 @@ export function ContentForm({
   const [previewLocale, setPreviewLocale] = useState<(typeof PREVIEW_LOCALES)[number]>("th");
   const [previewNonce, setPreviewNonce] = useState(0);
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [applied, setApplied] = useState<Record<string, { locale: (typeof PREVIEW_LOCALES)[number]; value: string; nonce: number }>>({});
+
+  // "ใช้ค่านี้": puts an old value into the field. Nothing is saved until the form is submitted.
+  function applyOldValue(key: string, locale: (typeof PREVIEW_LOCALES)[number], value: string) {
+    const field = formRef.current?.elements.namedItem(`${key}__${locale}`);
+    if (field instanceof HTMLTextAreaElement) {
+      Object.getOwnPropertyDescriptor(HTMLTextAreaElement.prototype, "value")?.set?.call(field, value);
+      field.dispatchEvent(new Event("input", { bubbles: true }));
+      field.focus();
+    } else {
+      setApplied((prev) => ({ ...prev, [key]: { locale, value, nonce: (prev[key]?.nonce ?? 0) + 1 } }));
+    }
+  }
 
   // Auto-refresh the preview iframe right after a successful save — computed
   // during render (not an effect) by comparing against the previous status.
@@ -72,7 +90,7 @@ export function ContentForm({
 
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_420px]">
-      <form onSubmit={submitWithoutReset(formAction)} className="max-w-4xl space-y-6">
+      <form ref={formRef} onSubmit={submitWithoutReset(formAction)} className="max-w-4xl space-y-6">
         {keys.map((key) => {
           // JSON lists get the form editor; everything else stays a textarea per language.
           const lists = listValues(key, values);
@@ -85,7 +103,7 @@ export function ContentForm({
             })()}
             {seoFieldKind(key) && <SeoHint type={seoFieldKind(key)!} />}
             {lists ? (
-              <ListField fieldKey={key} values={lists} />
+              <ListField fieldKey={key} values={lists} applied={applied[key]} />
             ) : (
             <div className="mt-2 grid gap-3 sm:grid-cols-3">
               {(["th", "en", "zh"] as const).map((locale) => {
@@ -118,6 +136,14 @@ export function ContentForm({
                 );
               })}
             </div>
+            )}
+            {historyCounts && (historyCounts[key] ?? 0) > 0 && (
+              <FieldHistory
+                namespace={namespace}
+                fieldKey={key}
+                count={historyCounts[key] ?? 0}
+                onUse={(locale, value) => applyOldValue(key, locale, value)}
+              />
             )}
           </fieldset>
           );

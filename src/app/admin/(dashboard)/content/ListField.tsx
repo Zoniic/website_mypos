@@ -163,13 +163,32 @@ function ListEditor({ items, onChange }: { items: Item[]; onChange: (items: Item
 const LOCALES = ["th", "en", "zh"] as const;
 
 /** List field for all three languages, with a tab per language. */
-export function ListField({ fieldKey, values }: { fieldKey: string; values: Record<(typeof LOCALES)[number], Item[]> }) {
+export function ListField({
+  fieldKey,
+  values,
+  applied,
+}: {
+  fieldKey: string;
+  values: Record<(typeof LOCALES)[number], Item[]>;
+  /** An old value picked from the field history: replaces that language's list (not saved until the form is). */
+  applied?: { locale: (typeof LOCALES)[number]; value: string; nonce: number };
+}) {
   const [lists, setLists] = useState(values);
+  const [seenNonce, setSeenNonce] = useState(0);
   const [locale, setLocale] = useState<(typeof LOCALES)[number]>("th");
   const [raw, setRaw] = useState(false);
   const [rawDraft, setRawDraft] = useState("");
   const [rawError, setRawError] = useState(false);
 
+  if (applied && applied.nonce !== seenNonce) {
+    setSeenNonce(applied.nonce);
+    const parsed = parseList(applied.value);
+    if (parsed) {
+      setLists({ ...lists, [applied.locale]: parsed });
+      setLocale(applied.locale);
+      setRaw(false);
+    }
+  }
   function openRaw() {
     setRawDraft(JSON.stringify(lists[locale], null, 2));
     setRawError(false);
