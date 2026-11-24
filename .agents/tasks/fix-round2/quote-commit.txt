@@ -1,0 +1,4 @@
+[main 9e92cbb] feat(header): quote-list button uses a list icon with a visible 'ใบเสนอราคา' label (xl+), icon and count below xl, and appears in the mobile bar when the list has items
+ 14 files changed, 230 insertions(+), 17 deletions(-)
+HEAD=9e92cbb ahead=1
+uncommitted outside .agents:
