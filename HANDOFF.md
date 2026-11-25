@@ -111,6 +111,7 @@ Local files `.env` (Prisma CLI) and `.env.local` (the app) are gitignored. AI to
 | `LINE_CHANNEL_ACCESS_TOKEN`, `LINE_CHANNEL_SECRET`, `LINE_NOTIFY_TO` | LINE alerts and webhook |
 | `RESEND_API_KEY`, `NOTIFY_EMAIL_FROM`, `NOTIFY_EMAIL_TO` | email alerts |
 | `NEXT_PUBLIC_GA_ID` | optional GA4 fallback (the admin setting wins) |
+| `ADMIN_BASE_URL` | optional. Origin of the "open in admin" link in LINE and email alerts (`src/lib/alertLink.ts`), e.g. `http://192.168.0.109:3000` on the test server. Empty = `https://mypos.co.th`, which still serves the old site. LINE links get `openExternalBrowser=1` so they open in the phone's browser, where the admin is signed in, not in LINE's in-app browser. |
 | `ADMIN_COOKIE_SECURE` | optional `true` / `false`. Unset: admin cookies are Secure only when the request arrived over HTTPS (`x-forwarded-proto`, else the `Origin` of the login post). Before 2026-11-24 they were always Secure in production, so over plain http (the test server) the browser dropped them and every refresh went back to the login page. |
 
 Trap seen on 2026-11-24: a `DATABASE_URL` left in the shell environment (for example a scratch URL) wins over `.env`. Scripts that must hit the shared DB load it from `.env` explicitly and print the target host (`.agents/tasks/accessory-x3/run-migrate.ps1`).

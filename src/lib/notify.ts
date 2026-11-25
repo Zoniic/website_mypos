@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import { alertLink } from "@/lib/alertLink";
 
 /**
  * Instant alerts to the MYPOS team for new orders and leads, via:
@@ -64,12 +64,13 @@ async function post(url: string, token: string, body: unknown) {
 }
 
 export async function notifyTeam(alert: TeamAlert): Promise<void> {
-  const link = `${siteConfig.url}${alert.adminPath}`;
-  const text = [alert.title, "", ...alert.lines, "", `เปิดในระบบหลังบ้าน: ${link}`].join("\n").slice(0, 4900);
+  const textFor = (channel: "line" | "email") =>
+    [alert.title, "", ...alert.lines, "", `เปิดในระบบหลังบ้าน: ${alertLink(alert.adminPath, channel)}`].join("\n").slice(0, 4900);
   const jobs: Promise<unknown>[] = [];
 
   const lineToken = process.env.LINE_CHANNEL_ACCESS_TOKEN;
   if (lineToken) {
+    const text = textFor("line");
     for (const to of lineTargets()) {
       jobs.push(post("https://api.line.me/v2/bot/message/push", lineToken, { to, messages: [{ type: "text", text }] }));
     }
@@ -79,7 +80,7 @@ export async function notifyTeam(alert: TeamAlert): Promise<void> {
   const from = process.env.NOTIFY_EMAIL_FROM;
   const to = emailTargets();
   if (resendKey && from && to.length) {
-    jobs.push(post("https://api.resend.com/emails", resendKey, { from, to, subject: alert.title, text }));
+    jobs.push(post("https://api.resend.com/emails", resendKey, { from, to, subject: alert.title, text: textFor("email") }));
   }
 
   const results = await Promise.allSettled(jobs);
