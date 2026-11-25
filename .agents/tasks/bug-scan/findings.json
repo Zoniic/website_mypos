@@ -1,0 +1,212 @@
+[
+ {
+  "phase": "P",
+  "kind": "http-404",
+  "where": "/th/products/tongluay",
+  "detail": "/th/products/500"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/th/products/tongluay",
+  "detail": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ },
+ {
+  "phase": "P",
+  "kind": "http-404",
+  "where": "/en/products/tongluay",
+  "detail": "/en/products/500"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/en/products/tongluay",
+  "detail": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ },
+ {
+  "phase": "P",
+  "kind": "http-404",
+  "where": "/zh/products/tongluay",
+  "detail": "/zh/products/500"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/zh/products/tongluay",
+  "detail": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/th/accessories/mypos-c300h",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/th/accessories/mypos-c300h",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/en/accessories/mypos-c300h",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/en/accessories/mypos-c300h",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/zh/accessories/mypos-c300h",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "P",
+  "kind": "console-error",
+  "where": "/zh/accessories/mypos-c300h",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "B",
+  "kind": "button-click-failed",
+  "where": "/th [ตั้งค่าคุกกี้]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "B",
+  "kind": "button-http-404",
+  "where": "/th/products/tongluay [นำออกจากรายการเปรียบเทียบ]",
+  "detail": "/th/products/500"
+ },
+ {
+  "phase": "B",
+  "kind": "button-console-error",
+  "where": "/th/products/tongluay [นำออกจากรายการเปรียบเทียบ]",
+  "detail": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+ },
+ {
+  "phase": "B",
+  "kind": "button-click-failed",
+  "where": "/th [ตั้งค่าคุกกี้]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "B",
+  "kind": "button-console-error",
+  "where": "/th/accessories/mypos-c300h [เพิ่มไปเปรียบเทียบ/ขอใบเสนอราคา]",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "B",
+  "kind": "button-console-error",
+  "where": "/th/accessories/mypos-c300h [เพิ่มไปเปรียบเทียบ/ขอใบเสนอราคา]",
+  "detail": "Failed to load resource: net::ERR_FAILED"
+ },
+ {
+  "phase": "F",
+  "kind": "contact-no-success",
+  "where": "/th/contact",
+  "detail": "หน้าแรก\n/\nติดต่อเรา\nติดต่อเรา\n\nช่องทางที่เร็วที่สุดคือแชท LINE ทีมงานตอบกลับภายในเวลาทำการ\n\nแชทผ่าน LINE\n\nสแกน QR หรือกดปุ่มเพื่อแชทกับทีมขายได้ทันที\n\nโทรหาเรา\nสำนักงาน\n02 521 7155-59\nฝ่ายขาย\n086 688 9050\nอีเมล\nSales@fmtcorp.co.th\nแผนที่บริษัท\n\nกรุงเทพฯ ประเทศไทย\n\nเปิดใน Google Maps\nหรือฝากข้อความไว"
+ },
+ {
+  "phase": "F",
+  "kind": "warranty-no-success",
+  "where": "/th/service",
+  "detail": "หน้าแรก\n/\nบริการ\n\nบริการหลังการขาย\n\nดูแลตลอดอายุการใช้งาน ไม่ทิ้งลูกค้าหลังขาย\n\nทีมซัพพอร์ตคนไทยของเราพร้อมดูแลตั้งแต่ติดตั้งวันแรกจนถึงบริการหลังการขายตลอดอายุการใช้งานเครื่อง\n\nติดต่อทีมบริการ\nบริการของเรา\nติดตั้งหน้างาน (Onsite)\n\nทีมช่างลงพื้นที่ติดตั้งและอบรมการใช้งานให้ถึงร้าน ไม่ต้องขนเครื่องไป"
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/catalog []",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-no-effect",
+  "where": "/admin/layout-editor [คืนค่าเริ่มต้น]",
+  "detail": "zone=main"
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน จอเรียกคิว ลง]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน Vending Machine Online ขึ้น]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน Vending Machine Offline ลง]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน ตู้ขายตั๋ว ขึ้น]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน คำนวณความคุ้มค่า ลง]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน จอเรียกคิว ไปหลัง]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน ตู้สั่งอาหารด้วยตนเอง ไปก่อน]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "button-click-failed",
+  "where": "/admin/navigation [เลื่อน Vending Machine Online ไปหลัง]",
+  "detail": "click failed: locator.click: Timeout 5000ms exceeded."
+ },
+ {
+  "phase": "A",
+  "kind": "save-unchanged-error",
+  "where": "/admin/accessories/3/edit",
+  "detail": "อุปกรณ์เสริม"
+ },
+ {
+  "phase": "A",
+  "kind": "save-unchanged-error",
+  "where": "/admin/kb-categories/2/edit",
+  "detail": "หมวดคลังความรู้"
+ },
+ {
+  "phase": "A",
+  "kind": "save-unchanged-error",
+  "where": "/admin/trust-logos/1/edit",
+  "detail": "โลโก้ลูกค้า"
+ },
+ {
+  "phase": "A",
+  "kind": "save-unchanged-error",
+  "where": "/admin/official-partners/1/edit",
+  "detail": "พาร์ทเนอร์"
+ },
+ {
+  "phase": "A",
+  "kind": "save-unchanged-error",
+  "where": "/admin/admin-users/1/edit",
+  "detail": "ผู้ดูแลระบบ"
+ }
+]

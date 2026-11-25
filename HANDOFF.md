@@ -1,8 +1,35 @@
 # MYPOS website: handoff for the next AI or developer
 
-Written 2026-11-23 against commit `a9092b6` on `main` (`origin/main` is identical). Read this file first, then `AGENTS.md`, `PRODUCT.md` and `DESIGN.md`. Where this file and `README.md` disagree, this file is correct (see "Stale documents").
+Written 2026-11-23, updated 2026-11-24 against commit `1709138` on `main` (`origin/main` is identical, CI green). Read this file first, then `AGENTS.md`, `PRODUCT.md` and `DESIGN.md`. Where this file and `README.md` disagree, this file is correct (see "Stale documents").
 
 The owner communicates in Thai. Reply to the owner in Thai, keep answers short, and offer short answer codes ("1a 2b") for decisions.
+
+## 0. Start here: open decisions and next steps (2026-11-24)
+
+A full bug scan finished on 2026-11-24 (section 11.2). The owner has **not answered yet**. Ask these again before doing anything else:
+
+| Code | Finding | Proposed fix |
+|---|---|---|
+| B1 | **Security, critical.** `next@16.3.6` has published advisories (RCE in image optimization with SVG, RCE in `use cache` with typed arrays, SSRF, cache poisoning). Fixed in 16.4.5+; latest 16.x is 16.4.6. | B1-a: upgrade `next` and `eslint-config-next` to 16.4.6, then tsc, lint, test, build, rescan. B1-b: not now. Prisma CLI advisories (deepmerge-ts, effect, via `@prisma/config`) are dev-tool only and need Prisma 7 (major): recommended to leave. |
+| B2 | Product `tongluay` has `datasheetUrl = "500"`, so its page loads `/th/products/500` (404 in the console). Product `test` (hidden) has `TEST` in datasheet and video. The product form accepts any text in Datasheet URL and Video URL (`src/app/admin/(dashboard)/products/actions.ts`, `readProductFields`). | B2-a: accept only `https://` or a site path starting with `/` (as the accessory form already does), and clear the `500` value in the shared DB with a backup first. B2-b: form only. |
+| B3 | `src/components/seo/JsonLd.tsx` uses plain `JSON.stringify`. Admin text containing `</script>` breaks out of the JSON-LD tag (stored XSS by any admin, including the new editor role). | Replace `<` with `\u003c` in the output. One line, no visible change. |
+| B4 | `/admin/catalog` uses the text glyph "+" as an icon twice (`CatalogEditor.tsx` `<summary>` lines 174 and 313). Breaks the Lucide-only rule. | B4-a: Lucide `Plus` icon. B4-b: Figma mockup first. |
+| B5 | Product `tongluay` is public and in the sitemap. | B5-a: it is a test product, add it to the hidden list (`hiddenProductSlugs` setting). B5-b: it is real, leave it. |
+
+After the owner answers: fix, run `npx tsc --noEmit`, `npm run lint`, `npm test`, build, rerun the scan (section 9, "Whole-site scan"), commit, and ask before pushing.
+
+Other things waiting on the owner (not code):
+
+- **L1:** the owner will upload the real MYPOS logo in `/admin/photos`. Today the logo slot `site/logo-1795417904617.png` shows a "ซื้อแล้วไม่รับเปลี่ยน" sign instead of the logo. Do not replace it yourself.
+- **Secrets were pasted in chat** on 2026-11-24 (the shared `DATABASE_URL` with password, and `SUPABASE_SERVICE_ROLE_KEY`). The owner was told to rotate both; not yet confirmed. After rotating, `.env` and `.env.local` on this machine and on the test server must be updated.
+- Hosting: a container host is proposed (Railway, Singapore; Supabase is `ap-southeast-1`). Plan (Hobby or Pro) not chosen.
+- Two-step login: not used yet; `TWO_FACTOR_ENCRYPTION_KEY` is not set.
+- Accessory data: the new accessory fields (price, stock, gallery, specs, PDF, works-with machines) are all empty in the shared DB. The owner fills them in `/admin/accessories`.
+- Leftover folders that could not be deleted (locked): `.worktrees\admin-v2` and `D:\Folk\Own_Dir\FMT\DEV\mypos-website-wt`. The owner deletes them by hand. `git stash@{0}` holds an old `uploads.ts` lint edit; the 3 modified files under `.agents/tasks/design-10/review-v2/` are not ours, do not touch them.
+
+**Rule: every visible UI change needs a Figma mockup approved by the owner before coding.** Figma file `RfzIGGGsN5zgLssxmgHouj`. Recent approved pages: "ACCESSORY v1" (node 194:2), "HEADER v1" (185:2), admin v2 (163:2), icon kit "ADMIN-IMPROVE v1 - Kit (icons)". In Figma plugin code use `String.fromCharCode(10)` for newlines, and re-read node text instead of trusting a screenshot taken right after an edit.
+
+**Test server:** the owner runs this repo on a Debian test server under PM2, opened over plain `http://<IP>:3000`. It must run the production build (`npm ci`, `npm run build`, `pm2` running `next start`), not `next dev`; dev mode caused buttons to fail there (blocked cross-origin dev requests). Update steps after a push: `git pull`, `npm ci`, `npm run build`, `pm2 restart <app>`.
 
 ## 1. What this project is
 
@@ -12,7 +39,7 @@ Production state: **this app is not deployed.** `https://mypos.co.th/` still ser
 
 ## 2. Stack (verified in the repo)
 
-- Next.js 16.3.6 (App Router, Turbopack), React 19.2.4, TypeScript, Tailwind CSS v4.
+- Next.js 16.3.6 (App Router, Turbopack; has known advisories, see section 0 B1), React 19.2.4, TypeScript, Tailwind CSS v4. `next.config.ts` sets `output: "standalone"`: `next start` warns but works; the Docker image runs `node .next/standalone/server.js`.
 - **Next.js 16 differs from older versions.** Read the matching guide in `node_modules/next/dist/docs/` before changing any Next API. Middleware is `src/proxy.ts`, not `middleware.ts`.
 - next-intl 4 for routing. Page copy is **not** read from `messages/*.json` at runtime. It lives in the database (`PageContent`) and is edited in the admin. `messages/*.json` is only the seed source and the fallback.
 - Prisma 6 with PostgreSQL (`prisma/schema.prisma`). Uploads go to Supabase Storage (`src/lib/uploads.ts`, `src/lib/supabase.ts`).
@@ -29,6 +56,9 @@ Production state: **this app is not deployed.** `https://mypos.co.th/` still ser
 6. **Contact numbers**: office `02 521 7155-59` (label สำนักงาน), sales `086 688 9050` (label ฝ่ายขาย), email `Sales@fmtcorp.co.th`. Both numbers are shown separately. The mobile bar Call button dials sales. JSON-LD uses the office number.
 7. **Ask the owner before `git push`.** Never run destructive git commands. Data scripts must take a backup first (section 8).
 8. **Caching.** Public pages are cached. Admin saves call `revalidatePublicSite()` (`src/lib/siteCache.ts`). A direct database write is visible after up to 300 seconds. The proxy caches slug lists and the catalog for 30 seconds.
+9. **Visible UI changes need an owner-approved Figma mockup first** (section 0).
+10. **Schema changes are additive only and need the owner's approval before they touch the shared database.** Pattern used for admin v2 and accessory X3: generate SQL with `prisma migrate diff --from-schema-datamodel <old schema from git show> --to-schema-datamodel prisma/schema.prisma --script`, write an undo SQL, write a guarded apply script (`--check`, `--backup`, `--apply` in one transaction, refuses non-additive statements and refuses to run twice), prove it on the scratch DB (apply, second apply refuses, `migrate diff --from-url <scratch> --exit-code` reports no difference), then run on the shared DB and take `prisma/backup-db.ts --write` afterwards. Examples: `.agents/tasks/accessory-x3/apply-schema.ts`, `run-migrate.ps1`, `migrate-log.txt`.
+11. **New copy keys:** page copy comes from `PageContent` only. Add keys with a create-only script that also updates `messages/*.json` (examples `prisma/add-nav-compare-short.ts`, `prisma/add-accessory-detail-keys.ts`), and give the code a fallback until the script has run (`src/data/accessoryCopy.ts`, `accessoryCopy()`).
 
 ## 4. Code map
 
@@ -40,7 +70,7 @@ src/app/feeds/           product feed
 src/components/          ui, layout, sections, products, commerce, contact, edit (edit-on-site overlay), seo
 src/lib/                 all data access and helpers (products.ts, kb.ts, blog.ts, orders.ts, siteSettings.ts, ...)
 src/proxy.ts             admin gate, legacy-slug 308s, real 404s, then next-intl
-src/data/                static config: solutions, categories, legacyRedirects.ts (empty, see backlog)
+src/data/                static config: solutions, categories, legacyRedirects.ts (90 old .php URLs), accessoryCopy.ts
 prisma/                  schema, seed, and one-off data scripts (section 8)
 docs/owner-data-guide-th.md   what the owner must supply and where to enter it (Thai)
 .agents/tasks/           audit reports, scan scripts and design-run logs (not part of the site; ESLint ignores it)
@@ -58,6 +88,10 @@ Important files:
 - `src/lib/audit.ts` (diff, redaction, retention), `auditLog.ts`, `auditRegistry.ts` (entity labels, restorable fields), `auditRestore.ts`; screens in `src/app/admin/(dashboard)/history/`. A new admin write path must call `recordAudit`; `tests/unit/admin-guard.test.ts` checks this.
 - `src/lib/twoFactor.ts`, `twoFactorPure.ts`, `totp.ts`, `secretBox.ts`, `backupCodes.ts`: two-step login (details in section 7).
 - `Dockerfile`, `.dockerignore`, `src/app/api/health/route.ts` (liveness only, no database), `docs/deploy-checklist-th.md`: container packaging.
+- Accessories work like products (X3, 2026-11-24): `src/lib/accessories.ts` (`getAccessoryBySlug`, `getRelatedAccessories` by shared category, `getAccessoriesForProduct`, `getAllAccessorySlugs`), `src/lib/specLines.ts` (specs typed as one `Label: value` per line), `src/lib/accessoryPrice.ts`, `src/components/accessories/AccessoryCard.tsx`, detail page `src/app/[locale]/accessories/[slug]/`, admin form `src/app/admin/(dashboard)/accessories/` (`productOptions.ts` for the works-with checkboxes). Product pages show "accessories for this machine". Route kind `accessory` in `routeMap.ts` and `proxy.ts`; accessories are in the sitemap.
+- Quote list: `src/lib/quoteCart.tsx` (localStorage `mypos-quote-cart`, items carry `kind: "product" | "accessory"`, `priceFrom: number | null`; lists saved before have no kind and load as machines), `src/components/products/CompareClient.tsx` (type column, "ask for a price"). The server (`compare/actions.ts`, `parseQuoteLines`) stores slug, name and quantity only.
+- Header quote button: `src/components/products/CompareCartLink.tsx`, `src/components/layout/Header.tsx` (`ClipboardList` icon, label from `nav.compareShort` with a fallback).
+- Admin cookies: `src/lib/cookieSecurity.ts` decides the Secure flag from the real protocol (see `ADMIN_COOKIE_SECURE` in section 6). `src/app/admin/(dashboard)/LeadAutoRefresh.tsx` refreshes the dashboard and lead lists every 30 seconds and when the tab becomes visible, never while a field has focus.
 
 ## 5. Data model in one paragraph
 
@@ -77,6 +111,9 @@ Local files `.env` (Prisma CLI) and `.env.local` (the app) are gitignored. AI to
 | `LINE_CHANNEL_ACCESS_TOKEN`, `LINE_CHANNEL_SECRET`, `LINE_NOTIFY_TO` | LINE alerts and webhook |
 | `RESEND_API_KEY`, `NOTIFY_EMAIL_FROM`, `NOTIFY_EMAIL_TO` | email alerts |
 | `NEXT_PUBLIC_GA_ID` | optional GA4 fallback (the admin setting wins) |
+| `ADMIN_COOKIE_SECURE` | optional `true` / `false`. Unset: admin cookies are Secure only when the request arrived over HTTPS (`x-forwarded-proto`, else the `Origin` of the login post). Before 2026-11-24 they were always Secure in production, so over plain http (the test server) the browser dropped them and every refresh went back to the login page. |
+
+Trap seen on 2026-11-24: a `DATABASE_URL` left in the shell environment (for example a scratch URL) wins over `.env`. Scripts that must hit the shared DB load it from `.env` explicitly and print the target host (`.agents/tasks/accessory-x3/run-migrate.ps1`).
 
 Notifications are skipped silently when not configured. `/admin/launch` shows whether they are on. If neither channel is set, nobody is told about new leads except by the admin badges.
 
@@ -123,7 +160,13 @@ node node_modules/tsx/dist/cli.mjs prisma/backup-db.ts --self-test
 
 Admin rendered checks use a scratch Postgres (Docker, port 5433) and never the shared database: `prisma db push`, `prisma/seed-admin-user.ts`, `.agents/tasks/admin-improve/seed-leads-scratch.ts` (refuses any other DATABASE_URL), `npm run build`, `next start -p 3100`, then `.agents/tasks/admin-improve/run-verify.ps1` (lists, search, pages, CSV; add `-Mode empty` after `seed-leads-scratch.ts --empty`), `verify-upload.cjs`, `headers-http.cjs`, `headers-check.cjs`.
 
-Admin v2 (roles, history, two-step login): unit tests run with `npm test` (175 tests at `1ea4a18`; `tests/unit/twoFactor.test.ts` expects `TWO_FACTOR_ENCRYPTION_KEY` to be unset in the shell). Rendered checks need a scratch Postgres with `.agents/tasks/admin-v2/admin-v2-schema.sql` applied (`.agents/tasks/admin-v2/scratch-pg.ps1`, port 5433, never the shared DB), then `.agents/tasks/admin-v2/verify/run-v2.ps1` (seeds with `seed-v2-verify.ts`, builds, starts `next start -p 3100`, runs `v2-ui.cjs` for roles and history and `v2-2fa.cjs` for two-step login; needs `PW_PATH`). DB-level checks: `roles-db.ts`, `history-db.ts`, `twofa-db.ts` in the same folder, run with `node node_modules/tsx/dist/cli.mjs`. The report is `.agents/tasks/admin-v2/verify.md` (53/53 and 29/29 at `1ea4a18`). That folder is not tracked by this branch.
+Admin v2 (roles, history, two-step login): unit tests run with `npm test` (176 tests at `1709138`; `tests/unit/twoFactor.test.ts` expects `TWO_FACTOR_ENCRYPTION_KEY` to be unset in the shell). Rendered checks need a scratch Postgres with `.agents/tasks/admin-v2/admin-v2-schema.sql` applied (`.agents/tasks/admin-v2/scratch-pg.ps1`, port 5433, never the shared DB), then `.agents/tasks/admin-v2/verify/run-v2.ps1` (seeds with `seed-v2-verify.ts`, builds, starts `next start -p 3100`, runs `v2-ui.cjs` for roles and history and `v2-2fa.cjs` for two-step login; needs `PW_PATH`). DB-level checks: `roles-db.ts`, `history-db.ts`, `twofa-db.ts` in the same folder, run with `node node_modules/tsx/dist/cli.mjs`. The report is `.agents/tasks/admin-v2/verify.md` (53/53 and 29/29 at `1ea4a18`). That folder is not tracked by this branch.
+
+Scratch database for rendered checks (2026-11-24): Docker container `mypos-scratch-pg` on port 5433 (user/password/db `scratch`/`scratch`/`mypos_scratch`, kept, stopped). `.agents/tasks/accessory-x3/scratch.ps1` recreates it from the old schema and copies public content from the shared DB with read-only SELECTs (`copy-to-scratch.ts`; no leads, admins or history leave the shared DB), then applies the X3 SQL. `seed-scratch-admin.ts` creates `owner@scratch.test` / `scratch-only-Passw0rd` (scratch only). Start the app against it with `$env:DATABASE_URL='postgresql://scratch:scratch@localhost:5433/mypos_scratch'; node node_modules\next\dist\bin\next start -p 3100`.
+
+- Accessory X3: `.agents/tasks/accessory-x3/verify-x3.ps1` (39 browser checks on scratch, last 39/39), `live-check.ps1` (21 read-only checks against the shared DB, last 21/21).
+- Admin session and auto-refresh: `.agents/tasks/admin-session/run-verify.ps1 control 1` (old behaviour with `ADMIN_COOKIE_SECURE=true`, refresh goes to login) and `run-verify.ps1 normal 0` (5/5). Uses `http://<LAN IP>:3100`, the server must listen on `-H 0.0.0.0`.
+- **Whole-site scan:** `.agents/tasks/bug-scan/prep.ps1` (starts scratch, seeds sample leads) then `run-scan.ps1` with the scratch server on :3100. `scan.cjs` opens every sitemap page in th/en/zh plus compare/search/checkout, checks status, JS and console errors, broken images, h1 count, raw message keys, overflow at 1440 and 390 px, every internal link, clicks every button (reloading the page per button, skipping form submits and destructive labels in the admin), submits the public forms, opens every admin page and one new/edit form of each kind, clicks admin buttons and saves each edit form unchanged. Analytics and pixels are blocked during the scan. Results: `findings.json`, `scan-log.txt`. Known false positives, checked by `investigate.cjs` (`inv-log.txt`): `button-click-failed` for buttons with a disabled twin of the same label (navigation editor) or inside a closed `<details>` (catalog), `button-no-effect` for buttons behind `window.confirm` (Playwright dismisses dialogs), contact and warranty "no success" (the success text did not match the scanner's regex), and `save-unchanged-error` (the selector matched the red Delete button). `ERR_FAILED` on `mypos-c300h` is the scratch-only test video.
 
 `recheck.ps1` covers the five scan bugs and the LINE link in 40 checks. `.agents/tasks/fix-round2/e2e.ps1` covers the old-site redirects, the zh K1 title, the Thai login page and the honeypot fields in 18 checks. Last result (2026-11-23, production build on :3000): 40/40 and 18/18 pass. Browser scripts need Playwright: `PW_PATH=C:\Users\P^chapol\AppData\Roaming\npm\node_modules\playwright`.
 
@@ -134,6 +177,10 @@ Admin v2 (roles, history, two-step login): unit tests run with `npm test` (175 t
 - Long multi-line terminal output is sometimes lost. Write results to a file and read the file.
 - `Remove-Item` can be denied. Use the editor's delete tool instead.
 - Dev server: `npm run dev` on port 3000. Do not leave long-running servers behind.
+- Inline `pwsh` commands with quotes, `$` or `++` are often mangled by the agent terminal. Put the commands in a `.ps1` file under `.agents/tasks/` and run `pwsh -NoProfile -File <file>`, writing output to a text file.
+- Thai text printed by Node to the console comes out garbled; read the output file or write JSON instead.
+- A local `next build` caches ISR pages from whatever `DATABASE_URL` it was built with. Rebuild against the shared DB after scratch runs (`.agents/tasks/accessory-x3/build-live.ps1`).
+- `gh` is authenticated as `Zoniic` with the workflow scope. After a push, watch CI with `gh run watch <id> --exit-status` (`.agents/tasks/admin-session/push.ps1`).
 - The machine is set to stay awake (lid action on AC: do nothing). A Windows Update restart was pending on 2026-11-20.
 
 ## 11. Current state and history
@@ -144,6 +191,15 @@ Done and pushed:
 - Bug scan fixes: KB article 404 (slug decoding), lowercase slugs plus 308 redirects, real HTTP 404s, contact map fallback (iframe only for a real embed URL), stats band filtering, `TEST` product hidden.
 - SEO week 1: `companyInfo()` as the single source of company data, LINE fallback link, hub page titles and descriptions, Blog JSON-LD fix, owner guide.
 - Office and sales phone numbers shown separately.
+- 2026-11-23: 90 old-site redirects, honeypot fields, unit tests and CI, README rewrite, zh K1 title fix.
+- 2026-11-24, admin v2 (change history, owner/editor roles, optional two-step login, Docker packaging): merged, schema applied to the shared DB with backups (`.agents/tasks/admin-v2/migrate-log.txt`), pushed (`8b37136`). All 8 existing admins are owners.
+- 2026-11-24, header quote button (`ClipboardList` icon, label "ใบเสนอราคา" at 1280 px and up, icon and count below, shown in the mobile bar only when the list has items): `9e92cbb`.
+- 2026-11-24, accessories work like products (X3): clickable cards, "+" add to quote, detail pages, price/stock/gallery/specs/PDF/video, works-with machines shown on both sides, type column in the quote list, old `FM2200.php` and `F-330K-4B4C.php` redirect to the accessory pages. Code `1d60443`. Schema applied to the shared DB on 2026-11-24 (7 columns, table `_AccessoryCompatibleProducts`, 21 copy rows; backups `prisma/backups/accessory-x3-before-2026-11-24T09-03-37-393Z.json`, `full-2026-11-24T09-03-43-314Z.json`; log `.agents/tasks/accessory-x3/migrate-log.txt`), pushed `3210213`. Undo SQL: `.agents/tasks/accessory-x3/accessory-x3-undo.sql` (drops the new data).
+- 2026-11-24, admin fixes (`1709138`, pushed, CI green): login no longer lost on refresh over plain http (Secure flag follows the protocol), lead lists refresh themselves every 30 seconds. The owner confirmed the test-server buttons work after switching to production mode.
+
+### 11.2 Bug scan 2026-11-24
+
+Scanned on the scratch DB with a build of `1709138`: 238 pages (th/en/zh), every internal link, every button, every public form, every admin page and form. Clean: no broken internal links, no mobile overflow, no dead public buttons, all public forms store their row, every admin edit form saves unchanged without an error, menu reorder buttons work. Real findings are B1 to B5 in section 0. `npm audit --omit=dev`: 1 critical and 5 high (next, and Prisma dev tooling).
 
 Redesign: the owner reviewed three rounds of Figma mockups (file key `RfzIGGGsN5zgLssxmgHouj`) and **rejected them. The current site design stays.** Do not start a redesign unless the owner asks. The Figma pages are only reference material. The run logs are in `.agents/tasks/design-10/` (concepts, reviews, `homes-v3.png`).
 
@@ -163,7 +219,8 @@ Details and where to find each value are in `docs/owner-data-guide-th.md`.
 - Old `.php` URLs: done from a crawl of the old site on 2026-11-23 (90 redirects in `src/data/legacyRedirects.ts`, list in `.agents/tasks/fix-round2/old-site.txt`, checked by `tests/unit/legacyRedirects.test.ts`). Once the domain is in Search Console, compare its indexed URLs with that list and add any that are missing.
 - Replace the confirmed renders on the live site with real photos: home hero video, `solution-self-order` slot, `a-beachside-resort-hotel` reference photo. Answer whether `software-hero` is real.
 - Blog cover images (all 11 posts have none; the article JSON-LD omits `image` as a result).
-- Datasheet PDFs per product (`datasheetUrl`, unset according to the README, not re-verified).
+- Datasheet PDFs per product (`datasheetUrl`; `tongluay` holds the invalid value `500`, see B2).
+- Accessory prices, stock, specs, photos and works-with machines (all empty after X3).
 - Deployment: no production deploy exists. Decide hosting, the `x-forwarded-for` setup (section 12.3), `SESSION_SECRET`, notification credentials, and the domain switch.
 
 ### 12.2 Code and content fixes
@@ -176,7 +233,7 @@ Details and where to find each value are in `docs/owner-data-guide-th.md`.
 
 ### 12.3 Admin improvements, in suggested order
 
-Found by reading the code on 2026-11-23. Status of the work on branch `admin-improve` (2026-11-23, not pushed, not deployed) is in the table below. The list after it is the original finding text.
+Found by reading the code on 2026-11-23. The table below was written on 2026-11-23. **Since then items 2, 3 and 4 (branch `admin-v2`) were merged into `main`, their SQL was applied to the shared DB and pushed on 2026-11-24** (section 11); read "branch `admin-v2`, not pushed" and "owner must approve the SQL" in the table as done. The list after the table is the original finding text.
 
 | Item | Status | What is code | What still needs the owner or the host |
 |---|---|---|---|

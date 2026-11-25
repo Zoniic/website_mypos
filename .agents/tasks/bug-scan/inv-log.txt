@@ -1,0 +1,27 @@
+CONTACT status: ["ส่งข้อความเรียบร้อยแล้ว\n\nทีมงานของเราจะติดต่อกลับโดยเร็วที่สุด"] alert: [] db rows: 1
+WARRANTY forms on /th/service: 1
+WARRANTY fields: INPUT:website:text:false INPUT:name:text:true INPUT:phone:text:true INPUT:email:email:true INPUT:serialNumber:text:false TEXTAREA:issue:textarea:true
+WARRANTY status: ["ส่งแบบฟอร์มแจ้งเคลมเรียบร้อยแล้ว\n\nทีมซัพพอร์ตจะติดต่อกลับภายใน 1-2 วันทำการ"] alert: [""] db: 1
+COOKIE footer button covered by: flex w-full shrink-0 gap-2 sm:w-auto
+COOKIE click after accept: ok
+COOKIE banner visible again: true
+NAV "เลื่อน จอเรียกคิว ลง": disabled,enabled
+  click ok
+  order changed: true
+NAV "เลื่อน ตู้ขายตั๋ว ขึ้น": disabled,enabled
+  click ok
+  order changed: true
+NAV "เลื่อน คำนวณความคุ้มค่า ลง": disabled,enabled
+  click ok
+  order changed: true
+CATALOG unnamed buttons: 2 ["<button type=\"button\" class=\"rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] outline-offset-2 focus-visible:outline foc disabled=false visible=true","<button type=\"button\" class=\"rounded-button bg-[image:var(--gradient-primary)] px-5 py-2 text-sm font-semibold text-white shadow-[var(--shadow-glow-primary)] outline-offset-2 focus-visible:outline foc disabled=false visible=true"]
+SAVE /admin/accessories/3/edit [บันทึก] -> /admin/accessories formError=[]
+SAVE /admin/kb-categories/2/edit [บันทึก] -> /admin/kb-categories formError=[]
+SAVE /admin/trust-logos/1/edit [บันทึก] -> /admin/trust-logos formError=[]
+SAVE /admin/official-partners/1/edit [บันทึก] -> /admin/official-partners formError=[]
+SAVE /admin/admin-users/1/edit [บันทึก] -> /admin/admin-users formError=[]
+SAVE /admin/products/16/edit [บันทึก] -> /admin/products formError=[]
+SAVE /admin/blog/1/edit [บันทึก] -> /admin/blog formError=[]
+SAVE /admin/references/1/edit [บันทึก] -> /admin/references formError=[]
+SAVE /admin/kb-articles/1/edit [บันทึก] -> /admin/kb-articles formError=[]
+exit=0
